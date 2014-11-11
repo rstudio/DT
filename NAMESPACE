@@ -1,0 +1,2 @@
+export(datatable)
+importFrom(htmltools,tags)
