@@ -1,0 +1,13 @@
+Package: DT
+Type: Package
+Title: R Interface to the jQuery Plug-in DataTables
+Version: 0.0.0
+Date: 2014-11-11
+Author: Yihui Xie
+Maintainer: Yihui Xie <xie@yihui.name>
+Description: Ports the JavaScript library DataTables into R. It can be used
+    in HTML pages rendered from R (e.g. via R Markdown or Shiny).
+License: GPL-3
+Imports:
+    htmltools,
+    htmlwidgets
