@@ -31,6 +31,9 @@ datatable(iris, options = list(order = list(), columnDefs = list(list(
     "}")
 ))))
 
+# show the next page after the table is initialized
+datatable(iris, callback = 'function(table) {table.page("next").draw(false);}')
+
 # display some big numbers, right-align them, and format the 3rd column
 m = as.data.frame(matrix(rnorm(100, 1e5, 1e6), 20))
 datatable(m, options = list(
