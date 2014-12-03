@@ -8,6 +8,8 @@ Maintainer: Yihui Xie <xie@yihui.name>
 Description: Ports the JavaScript library DataTables into R. It can be used
     in HTML pages rendered from R (e.g. via R Markdown or Shiny).
 License: GPL-3
+Depends:
+    R (>= 3.1.1)
 Imports:
     htmltools,
     htmlwidgets
