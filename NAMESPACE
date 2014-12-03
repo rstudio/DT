@@ -1,2 +1,4 @@
+export(JS)
 export(datatable)
 importFrom(htmltools,tags)
+importFrom(htmlwidgets,JS)
