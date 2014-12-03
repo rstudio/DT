@@ -10,9 +10,12 @@ importRd = function(names, package) {
 
 #' @importFrom htmlwidgets JS
 #' @export JS
+#' @importFrom magrittr %>%
+#' @export %>%
 if (file_test('-d', 'man')) local({
   owd = setwd('man'); on.exit(setwd(owd))
   importRd('JS', 'htmlwidgets')
+  importRd('%>%', 'magrittr')
 })
 
 rm(importRd)
