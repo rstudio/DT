@@ -25,16 +25,9 @@ numeric, or logical)}
 \item{digits}{the number of decimal places to round to}
 }
 \description{
-Format numeric columns in a table.
+Format numeric columns in a table as currency or percentages, or round
+numbers to a specified number of decimal places.
 }
-\section{Functions}{
-\itemize{
-\item \code{}: Format numbers as currency.
-
-\item \code{}: Format numbers as percentages.
-
-\item \code{}: Round numbers to a specified number of decimal places.
-}}
 \examples{
 library(DT)
 m = cbind(matrix(rnorm(120, 1e+05, 1e+06), 40), runif(40), rnorm(40, 100))

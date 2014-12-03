@@ -9,14 +9,14 @@ format_columns = function(table, columns, template, ...) {
 
 #' Format table columns
 #'
-#' Format numeric columns in a table.
+#' Format numeric columns in a table as currency or percentages, or round
+#' numbers to a specified number of decimal places.
 #' @param table a table object created from \code{\link{datatable}()}
 #' @param columns the indices of the columns to be formatted (can be character,
 #'   numeric, or logical)
 #' @param currency the currency symbol
 #' @param interval put a marker after how many digits of the numbers
 #' @param mark the marker after every \code{interval} decimals in the numbers
-#' @describeIn format_currency Format numbers as currency.
 #' @export
 #' @examples library(DT)
 #' m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
@@ -33,14 +33,14 @@ format_currency = function(table, columns, currency = '$', interval = 3, mark = 
 }
 
 #' @export
-#' @describeIn format_currency Format numbers as percentages.
+#' @rdname format_currency
 #' @param digits the number of decimal places to round to
 format_percentage = function(table, columns, digits = 0) {
   format_columns(table, columns, tpl_percentage, digits)
 }
 
 #' @export
-#' @describeIn format_currency Round numbers to a specified number of decimal places.
+#' @rdname format_currency
 format_round = function(table, columns, digits = 2) {
   format_columns(table, columns, tpl_round, digits)
 }
