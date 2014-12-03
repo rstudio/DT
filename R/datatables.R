@@ -8,10 +8,14 @@
 #'   \url{http://datatables.net/reference/option/}); the character options
 #'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 #'   JavaScript code instead of normal character strings
+#' @param callback a JavaScript callback function to be applied to the
+#'   DataTables instance
 #' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R
-datatable = function(data, id = NULL, options = list(order = list())) {
+datatable = function(
+  data, id = NULL, options = list(order = list()), callback = 'function(table) {}'
+) {
   isDF = is.data.frame(data)
   if (isDF) data = as.data.frame(data) else {
     if (!is.matrix(data))
@@ -30,7 +34,8 @@ datatable = function(data, id = NULL, options = list(order = list())) {
     data = if (isDF) unname(as.list(data)) else unname(data)
   }
   params = list(
-    data = data, isDF = isDF, table = as.character(table), options = options
+    data = data, isDF = isDF, table = as.character(table), options = options,
+    callback = paste(callback, collapse = '\n')
   )
 
   htmlwidgets::createWidget('datatables', params, package = 'DT')

@@ -5,8 +5,12 @@ HTMLWidgets.widget({
     var $el = $(el), cells = data.data, thiz = this;
     if (data.isDF === true) cells = HTMLWidgets.transposeArray2D(cells);
     $el.append(data.table);
-    $el.find('table').DataTable($.extend({
+    var table = $el.find('table').DataTable($.extend({
       data: cells
-    }, data.options || {}))
+    }, data.options || {}));
+    if (typeof data.callback === 'string') {
+      var callback = eval('(' + data.callback + ')');
+      if (typeof callback === 'function') callback(table);
+    }
   }
 })

@@ -2,7 +2,8 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, id = NULL, options = list(order = list()))
+datatable(data, id = NULL, options = list(order = list()), 
+    callback = "function(table) {}")
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -13,6 +14,9 @@ datatable(data, id = NULL, options = list(order = list()))
 \url{http://datatables.net/reference/option/}); the character options
 wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 JavaScript code instead of normal character strings}
+
+\item{callback}{a JavaScript callback function to be applied to the
+DataTables instance}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
