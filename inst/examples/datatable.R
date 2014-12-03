@@ -28,7 +28,7 @@ datatable(iris, options = list(columnDefs = list(list(
     "return type === 'display' && data.length > 6 ?",
     "'<span title=\"'+data+'\">'+data.substr( 0, 6 )+'...</span>' : data;",
     "}")
-))))
+))), callback = 'function(table) {table.page(7).draw(false);}')
 
 # show the next page after the table is initialized
 datatable(iris, callback = 'function(table) {table.page("next").draw(false);}')
