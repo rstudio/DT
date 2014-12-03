@@ -32,9 +32,9 @@ library(DT)
 # default sorting
 datatable(iris)
 
-# align the first 4 columns to the right
+# center the 5th column
 datatable(iris, options = list(
-  columnDefs = list(list(className = 'dt-right', targets = 0:3))
+  columnDefs = list(list(className = 'dt-center', targets = 4))
 ))
 
 # sort column 2 (ascending) and 4 (descending)
@@ -42,7 +42,6 @@ datatable(mtcars, options = list(order = list(list(1, 'asc'), list(3, 'desc'))))
 
 # the initComplete callback
 datatable(iris, options = list(
-  order = list(),
   initComplete = JS(
     "function(settings, json) {",
     "alert('Initialization complete!');",
@@ -50,14 +49,14 @@ datatable(iris, options = list(
 ))
 
 # if the data is wider than 6 chars, use first 6 + ...
-datatable(iris, options = list(order = list(), columnDefs = list(list(
+datatable(iris, options = list(columnDefs = list(list(
   targets = 4,
   render = JS(
     "function ( data, type, full, meta ) {",
     "return type === 'display' && data.length > 6 ?",
     "'<span title=\\"'+data+'\\">'+data.substr( 0, 6 )+'...</span>' : data;",
     "}")
-))))
+))), callback = 'function(table) {table.page(7).draw(false);}')
 
 # show the next page after the table is initialized
 datatable(iris, callback = 'function(table) {table.page("next").draw(false);}')
@@ -65,7 +64,6 @@ datatable(iris, callback = 'function(table) {table.page("next").draw(false);}')
 # display some big numbers, right-align them, and format the 3rd column
 m = as.data.frame(matrix(rnorm(100, 1e5, 1e6), 20))
 datatable(m, options = list(
-  columnDefs = list(list(className = 'dt-right', targets = '_all')),
   rowCallback = JS(
     "function(row, data) {",
     "var num = '$' + data[2].toString().replace(/\\\\B(?=(\\\\d{3})+(?!\\\\d))/g, ',');",
