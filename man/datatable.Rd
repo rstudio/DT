@@ -3,7 +3,7 @@
 \title{Create an HTML table widget using the DataTables library}
 \usage{
 datatable(data, id = NULL, options = list(order = list()), 
-    callback = "function(table) {}")
+    callback = "function(table) {}", container)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -17,6 +17,10 @@ JavaScript code instead of normal character strings}
 
 \item{callback}{a JavaScript callback function to be applied to the
 DataTables instance}
+
+\item{container}{a sketch of the HTML table to be filled with data cells; by
+default, it is generated from \code{htmltools::tags$table()} with a table
+header consisting of the column names of the data}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
@@ -69,6 +73,20 @@ datatable(m, options = list(
     "}")
 ))
 
+# a custom table container
+sketch = with(htmltools::tags, table(
+  thead(
+    tr(
+      th(rowspan = 2, 'Species'),
+      th(colspan = 2, 'Sepal'),
+      th(colspan = 2, 'Petal')
+    ),
+    tr(
+      lapply(rep(c('Length', 'Width'), 2), th)
+    )
+  )
+))
+datatable(iris[, c(5, 1:4)], container = sketch)
 
 # some edge cases
 m = matrix(nrow = 0, ncol = 5, dimnames = list(NULL, letters[1:5]))
