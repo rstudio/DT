@@ -55,7 +55,9 @@ datatable = function(
     callback = paste(callback, collapse = '\n'), colnames = colnames
   )
 
-  htmlwidgets::createWidget('datatables', params, package = 'DT')
+  htmlwidgets::createWidget(
+    'datatables', params, package = 'DT', width = '100%', height = 'auto'
+  )
 }
 
 # fix some WAT's in RJSONIO that I discovered in shiny:::dataTablesJSON()
