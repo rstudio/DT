@@ -4,9 +4,9 @@ library(DT)
 # default sorting
 datatable(iris)
 
-# align the first 4 columns to the right
+# center the 5th column
 datatable(iris, options = list(
-  columnDefs = list(list(className = 'dt-right', targets = 0:3))
+  columnDefs = list(list(className = 'dt-center', targets = 4))
 ))
 
 # sort column 2 (ascending) and 4 (descending)
@@ -36,7 +36,6 @@ datatable(iris, callback = 'function(table) {table.page("next").draw(false);}')
 # display some big numbers, right-align them, and format the 3rd column
 m = as.data.frame(matrix(rnorm(100, 1e5, 1e6), 20))
 datatable(m, options = list(
-  columnDefs = list(list(className = 'dt-right', targets = '_all')),
   rowCallback = JS(
     "function(row, data) {",
     "var num = '$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');",
