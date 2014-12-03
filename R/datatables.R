@@ -17,7 +17,7 @@
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, id = NULL, options = list(order = list()), callback = 'function(table) {}',
+  data, id = NULL, options = list(), callback = 'function(table) {}',
   container
 ) {
   isDF = is.data.frame(data)
