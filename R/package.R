@@ -2,9 +2,9 @@
 ## Rd for them to avoid R CMD check NOTE's
 
 importRd = function(names, package) {
-  library(package, character.only = TRUE)
   for (name in names) suppressMessages(utils::promptImport(
-    name, name = name, importedFrom = package
+    NULL, name = gsub('%', '\\\\%', name), importedFrom = package,
+    filename = tempfile('import', '.', '.Rd')
   ))
 }
 
