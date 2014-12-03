@@ -1,4 +1,4 @@
-# DT: an R interface to the DataTables library
+# An R interface to the DataTables library
 
 This package provides a function `datatable()` to display R data via the [DataTables](http://datatables.net/) library (N.B. not to be confused with the **data.table** package).
 
