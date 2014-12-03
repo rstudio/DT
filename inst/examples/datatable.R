@@ -14,7 +14,6 @@ datatable(mtcars, options = list(order = list(list(1, 'asc'), list(3, 'desc'))))
 
 # the initComplete callback
 datatable(iris, options = list(
-  order = list(),
   initComplete = JS(
     "function(settings, json) {",
     "alert('Initialization complete!');",
@@ -22,7 +21,7 @@ datatable(iris, options = list(
 ))
 
 # if the data is wider than 6 chars, use first 6 + ...
-datatable(iris, options = list(order = list(), columnDefs = list(list(
+datatable(iris, options = list(columnDefs = list(list(
   targets = 4,
   render = JS(
     "function ( data, type, full, meta ) {",

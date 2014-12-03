@@ -30,6 +30,9 @@ datatable = function(
   # TODO: how to deal with row names?
   rownames(data) = NULL
 
+  # make sure the table is _not_ ordered by default (change the DataTables defalt)
+  if (is.null(options[['order']])) options$order = list()
+
   colnames = colnames(data)
   if (missing(container))
     container = tags$table(id = id, tags$thead(tags$tr(lapply(colnames, tags$th))))
