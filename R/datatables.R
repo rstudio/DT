@@ -6,8 +6,8 @@
 #' @param id the id for the table
 #' @param options a list of initialization options (see
 #'   \url{http://datatables.net/reference/option/}); the character options
-#'   wrapped in \code{I()} will be treated as literal JavaScript code instead of
-#'   normal character strings
+#'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
+#'   JavaScript code instead of normal character strings
 #' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R

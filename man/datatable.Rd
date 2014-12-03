@@ -11,8 +11,8 @@ datatable(data, id = NULL, options = list(order = list()))
 
 \item{options}{a list of initialization options (see
 \url{http://datatables.net/reference/option/}); the character options
-wrapped in \code{I()} will be treated as literal JavaScript code instead of
-normal character strings}
+wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
+JavaScript code instead of normal character strings}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
