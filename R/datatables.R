@@ -21,14 +21,22 @@ datatable = function(
   container
 ) {
   isDF = is.data.frame(data)
-  if (isDF) data = as.data.frame(data) else {
+  if (isDF) {
+    data = as.data.frame(data)
+    numc = unname(which(sapply(data, is.numeric)))
+  } else {
     if (!is.matrix(data))
       stop("'data' must be either a matrix or a data frame")
     if (length(colnames(data)) != ncol(data))
       stop("The 'data' matrix must have column names")
+    numc = if (is.numeric(data)) seq_len(ncol(data))
   }
   # TODO: how to deal with row names?
   rownames(data) = NULL
+
+  # align numeric columns to the right
+  if (length(numc))
+    options = append_columnDefs(options, list(className = 'dt-right', targets = numc - 1))
 
   # make sure the table is _not_ ordered by default (change the DataTables defalt)
   if (is.null(options[['order']])) options$order = list()
@@ -58,4 +66,12 @@ fix_WAT = function(data) {
   # toJSON(list(x = matrix(nrow = 0, ncol = 1))) => {"x": } (shiny#299)
   if (is.matrix(data) && nrow(data) == 0) return(list())
   data
+}
+
+append_columnDefs = function(options, def) {
+  defs = options[['columnDefs']]
+  if (is.null(defs)) defs = list()
+  defs[[length(defs) + 1]] = def
+  options$columnDefs = defs
+  options
 }
