@@ -45,6 +45,20 @@ datatable(m, options = list(
     "}")
 ))
 
+# a custom table container
+sketch = with(htmltools::tags, table(
+  thead(
+    tr(
+      th(rowspan = 2, 'Species'),
+      th(colspan = 2, 'Sepal'),
+      th(colspan = 2, 'Petal')
+    ),
+    tr(
+      lapply(rep(c('Length', 'Width'), 2), th)
+    )
+  )
+))
+datatable(iris[, c(5, 1:4)], container = sketch)
 
 # some edge cases
 m = matrix(nrow = 0, ncol = 5, dimnames = list(NULL, letters[1:5]))

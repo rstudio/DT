@@ -10,11 +10,15 @@
 #'   JavaScript code instead of normal character strings
 #' @param callback a JavaScript callback function to be applied to the
 #'   DataTables instance
+#' @param container a sketch of the HTML table to be filled with data cells; by
+#'   default, it is generated from \code{htmltools::tags$table()} with a table
+#'   header consisting of the column names of the data
 #' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, id = NULL, options = list(order = list()), callback = 'function(table) {}'
+  data, id = NULL, options = list(order = list()), callback = 'function(table) {}',
+  container
 ) {
   isDF = is.data.frame(data)
   if (isDF) data = as.data.frame(data) else {
@@ -27,7 +31,8 @@ datatable = function(
   rownames(data) = NULL
 
   colnames = colnames(data)
-  table = tags$table(id = id, tags$thead(tags$tr(lapply(colnames, tags$th))))
+  if (missing(container))
+    container = tags$table(id = id, tags$thead(tags$tr(lapply(colnames, tags$th))))
 
   data = fix_WAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
@@ -35,7 +40,7 @@ datatable = function(
     data = if (isDF) unname(as.list(data)) else unname(data)
   }
   params = list(
-    data = data, isDF = isDF, table = as.character(table), options = options,
+    data = data, isDF = isDF, container = as.character(container), options = options,
     callback = paste(callback, collapse = '\n'), colnames = colnames
   )
 

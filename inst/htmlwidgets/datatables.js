@@ -4,7 +4,7 @@ HTMLWidgets.widget({
   renderValue: function(el, data) {
     var $el = $(el), cells = data.data, thiz = this;
     if (data.isDF === true) cells = HTMLWidgets.transposeArray2D(cells);
-    $el.append(data.table);
+    $el.append(data.container);
     var table = $el.find('table').DataTable($.extend({
       data: cells
     }, data.options || {}));
