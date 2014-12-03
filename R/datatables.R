@@ -26,7 +26,8 @@ datatable = function(
   # TODO: how to deal with row names?
   rownames(data) = NULL
 
-  table = tags$table(id = id, tags$thead(tags$tr(lapply(colnames(data), tags$th))))
+  colnames = colnames(data)
+  table = tags$table(id = id, tags$thead(tags$tr(lapply(colnames, tags$th))))
 
   data = fix_WAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
@@ -35,7 +36,7 @@ datatable = function(
   }
   params = list(
     data = data, isDF = isDF, table = as.character(table), options = options,
-    callback = paste(callback, collapse = '\n')
+    callback = paste(callback, collapse = '\n'), colnames = colnames
   )
 
   htmlwidgets::createWidget('datatables', params, package = 'DT')
