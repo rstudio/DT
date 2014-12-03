@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
 Title: R Interface to the jQuery Plug-in DataTables
-Version: 0.0.1
+Version: 0.0.2
 Date: 2014-11-11
 Author: Yihui Xie
 Maintainer: Yihui Xie <xie@yihui.name>
