@@ -1,0 +1,255 @@
+---
+title: "An Introduction to the DT Package"
+author: "Yihui Xie"
+date: '`r Sys.Date()`'
+output:
+  knitr:::html_vignette:
+    number_sections: yes
+    toc: yes
+vignette: |
+  %\VignetteIndexEntry{An Introduction to the DT Package}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+---
+
+<style type="text/css">
+table, table th, table td {
+  border: none;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy = FALSE)
+```
+
+# Introduction
+
+The R package **DT** provides an R interface to the JavaScript library [**DataTables**](http://datatables.net). We can display R data objects (matrices or data frames) as tables on HTML pages, and **DataTables** provides filtering, pagination, sorting, and many other features in the tables.
+
+You can install the development version of the package from Github:
+
+```{r message=FALSE}
+if (!require("DT")) devtools::install_github("rstudio/DT")
+sessionInfo()
+```
+
+# Usage and Examples
+
+## Usage
+
+The main function in this package is `datatable()`. It creates an HTML widget to display R data objects with **DataTables**.
+
+```{r code=formatR::usage(datatable), eval=FALSE}
+```
+
+## Hello World
+
+Here is a "hello world" example with zero configuration:
+
+```{r}
+library(DT)
+datatable(iris)
+```
+
+## Default Configurations
+
+The **DT** package modified the default behavior of **DataTables** in these aspects:
+
+- the table is not ordered by default (**DataTables** orders a table by its first column by default);
+- numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;
+
+## DataTables Options
+
+We can pass [initialization options](http://datatables.net/reference/option) to `datatable()` via the `options` argument. For example, we center the 5th column in the table below^[To know more about `columnDefs` and `className`, see [this reference page](http://datatables.net/reference/option/columns.className).], and customize the length menu:
+
+```{r}
+datatable(head(iris, 20), options = list(
+  columnDefs = list(list(className = 'dt-center', targets = 4)),
+  pageLength = 5,
+  lengthMenu = c(5, 10, 15, 20)
+))
+```
+
+The target column index is 4 but we expect to center the 5th column. This might be a little surprising to R users, and is also what we need to be very careful about. Because JavaScript indexes from 0 instead of 1, the index of the 5th element is 4.
+
+## Examples
+
+### Sorting
+
+We can use the `order` option to specify how we want to order the rows. For example, we sort the table by columns 2 (ascending) and 4 (descending):
+
+```{r}
+datatable(head(mtcars, 30), options = list(
+  order = list(list(1, 'asc'), list(3, 'desc'))
+))
+```
+
+Again, please keep in mind that JavaScript indexes from 0, and the column indices here should be 1 and 3, respectively.
+
+### Callbacks in Options
+
+We can also customize the callbacks in **DataTables** options. For example, we use the `initComplete` callback function in `options` to change the background color of the table header to black after the initialization:
+
+```{r}
+datatable(head(iris, 20), options = list(
+  initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+    "}")
+))
+```
+
+The function `JS()` tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using **RJSONIO**) and decode it in the browser.
+
+### The `callback` argument
+
+The `datatable()` function provided an argument `callback` that allows us to provide a JavaScript function, which will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
+
+```{r}
+datatable(head(iris, 30), callback = 'function(table) {table.page("next").draw(false);}')
+```
+
+Please note this `callback` argument is only an argument of the `datatable()` function, and do not confuse it with the callbacks in the **DataTables** options. The purpose of this argument is to allow users to manipulate the **DataTables** object after its creation.
+
+### Column Rendering
+
+We can define a custom rendering function for particular columns in the option `columnDefs`. For example, we abbreviate character strings that are wider than 6 characters using the first 6 characters plus an ellipsis (...), and the full character string will be displayed as a tooltip when you mouse over the cell^[See the documentation for [columns.render](http://datatables.net/reference/option/columns.render).]:
+
+```{r}
+datatable(iris[c(1:20, 51:60, 101:120), ], options = list(columnDefs = list(list(
+  targets = 4,
+  render = JS(
+    "function(data, type, full, meta) {",
+    "return type === 'display' && data.length > 6 ?",
+    "'<span title=\"'+data+'\">'+data.substr( 0, 6 )+'...</span>' : data;",
+    "}")
+))), callback = 'function(table) {table.page(3).draw(false);}')
+```
+
+We used the `callback` argument in `datatable()` above, to navigate to the 4th page after the table is created.
+
+### Row Rendering
+
+Similarly, we can define how to render data in the rows using the `rowCallback` option. In the following example, we display some big numbers, format the 3rd column as currency, and order by this column:
+
+```{r rand.seed=set.seed(123)}
+m = as.data.frame(matrix(rnorm(100, 1e5, 1e6), 20))
+datatable(m, options = list(
+  rowCallback = JS(
+    "function(row, data) {",
+    "var num = '$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');",
+    "$('td:eq(2)', row).html(num);",
+    "}")
+), callback = "function(table) {table.order([2, 'asc']).draw()}")
+```
+
+You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix `$` to the number. You should know `data[2]` means the 3rd element in the row now.
+
+Since it is common for users to format numbers in the data columns, we have provided a few simple helper functions in this package to do these tasks in a much easier way, so you do not have to write the JavaScript by yourself.
+
+### Custom Table Headers
+
+```{r comment=''}
+# a custom table container
+sketch = with(htmltools::tags, table(
+  thead(
+    tr(
+      th(rowspan = 2, 'Species'),
+      th(colspan = 2, 'Sepal'),
+      th(colspan = 2, 'Petal')
+    ),
+    tr(
+      lapply(rep(c('Length', 'Width'), 2), th)
+    )
+  )
+))
+print(sketch)
+
+datatable(iris[1:20, c(5, 1:4)], container = sketch)
+```
+
+## Format Columns
+
+We can use the functions `format*()` to format the table columns as currency, percentages, or round numbers. Here are some examples:
+
+```{r rand.seed=set.seed(123)}
+m = cbind(matrix(rnorm(60, 1e5, 1e6), 20), runif(20), rnorm(20, 100))
+colnames(m) = head(LETTERS, ncol(m))
+head(m)
+
+# format the columns A and C as currency, and D as percentages
+datatable(m) %>% formatCurrency(c('A', 'C')) %>% formatPercentage('D', 2)
+
+# the first two columns are Euro currency, and round column E to 3 decimal places
+datatable(m) %>% formatCurrency(1:2, '\U20AC') %>% formatRound('E', 3)
+```
+
+Under the hood, these formatting functions are just wrappers for the `rowCallback` option to generate appropriate JavaScript code.
+
+# Server-side Processing
+
+We have been using client-side processing in all the above examples, i.e., searching, pagination, and ordering are done using JavaScript in the web browser. When the size of the data is huge, it may be more efficient to process the data on the server. DataTables supports retrieving data from a server by sending Ajax requests, a.k.a the ["server-side processing"](http://datatables.net/examples/data_sources/server_side.html).
+
+To enable server-side processing, we need to use the option `serverSide`, e.g.,
+
+```r
+datatable(..., options = list(serverSide = TRUE))
+```
+
+In fact, `datatable()` has an argument `server` that can be set to `TRUE`, which will automatically set `serverSide = TRUE` in `options`.
+
+## A JSONP Example
+
+Now let's try the [JSONP data source example](http://datatables.net/examples/server_side/jsonp.html) on the DataTables website. It is fairly simple to reproduce that example here using the `datatable()` function with an option `ajax` that specifies the data URL:
+
+```{r}
+employee = data.frame(
+  `First name` = character(), `Last name` = character(), Position = character(),
+  Office = character(), `Start date` = character(), Salary = numeric(),
+  check.names = FALSE
+)
+datatable(employee, server = TRUE, options = list(
+  processing = TRUE,
+  ajax = list(
+    url = 'http://datatables.net/examples/server_side/scripts/jsonp.php',
+    dataType = 'jsonp'
+  )
+))
+```
+
+## A Shiny Example (Experimental)
+
+If you have used **DataTables** in **shiny** before, you might know that **shiny** uses the server-side processing model for **DataTables**, which basically means the data is processed through R, and R will return the JSON data to the client. The key pieces that makes this work are two functions: `session$registerDataObj()`, and `shiny:::dataTablesJSON()`. The former registers a data object in the shiny session and returns a URL, which can be used as the server URL for `datatable()`; the latter was designed to process the data according to the Ajax request sent from **DataTables** and return JSON data. We can put these two pieces together and use them in a shiny app. There is an example in the **DT** package, which you can run by
+
+```{r eval=FALSE}
+shiny::runApp(system.file('examples', 'DT-shiny', package = 'DT'))
+```
+
+Below is the source code of the example app:
+
+### ui.R
+
+```{r include=FALSE}
+DTShinyEx = function(file) {
+  readLines(system.file('examples', 'DT-shiny', file, package = 'DT'))
+}
+```
+
+```{r ui, code=DTShinyEx('ui.R'), eval=FALSE}
+```
+
+### server.R
+
+```{r server, code=DTShinyEx('server.R'), eval=FALSE}
+```
+
+That is more or less how **DataTables** has been working internally in **shiny**.
+
+# Interaction with Shiny
+
+How to listen to DataTables events, and pass data back to R?
+
+To be continued...
+
+# DataTables Extensions
+
+To be continued...
