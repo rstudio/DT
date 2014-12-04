@@ -4,8 +4,15 @@
 importRd = function(names, package) {
   for (name in names) suppressMessages(utils::promptImport(
     NULL, name = gsub('%', '\\\\%', name), importedFrom = package,
-    filename = tempfile('import', '.', '.Rd')
+    filename = importFilename(name)
   ))
+}
+
+# make sure the filename is valid
+importFilename = function(name) {
+  if (!grepl('^[A-Za-z0-9._-]+$', name))
+    name = paste(as.character(charToRaw(name)), collapse = '')
+  paste0(name, '.Rd')
 }
 
 #' @importFrom htmlwidgets JS
@@ -19,3 +26,4 @@ if (file_test('-d', 'man')) local({
 })
 
 rm(importRd)
+rm(importFilename)
