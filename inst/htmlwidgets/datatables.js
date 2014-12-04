@@ -5,9 +5,11 @@ HTMLWidgets.widget({
     var $el = $(el), cells = data.data, thiz = this;
     if (data.isDF === true) cells = HTMLWidgets.transposeArray2D(cells);
     $el.append(data.container);
-    var table = $el.find('table').DataTable($.extend({
+    var options = {};
+    if (cells !== null) options = {
       data: cells
-    }, data.options || {}));
+    };
+    var table = $el.find('table').DataTable($.extend(options, data.options || {}));
     if (typeof data.callback === 'string') {
       var callback = eval('(' + data.callback + ')');
       if (typeof callback === 'function') callback(table);

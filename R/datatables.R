@@ -13,12 +13,15 @@
 #' @param container a sketch of the HTML table to be filled with data cells; by
 #'   default, it is generated from \code{htmltools::tags$table()} with a table
 #'   header consisting of the column names of the data
+#' @param server whether to use server-side processing; if \code{TRUE}, you must
+#'   provide a server URL so that DataTables can send Ajax requests to retrieve
+#'   data from the server
 #' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
   data, id = NULL, options = list(), callback = 'function(table) {}',
-  container
+  container, server = FALSE
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -45,11 +48,18 @@ datatable = function(
   if (missing(container))
     container = tags$table(id = id, tags$thead(tags$tr(lapply(colnames, tags$th))))
 
+  # in the server mode, we should not store the full data in JSON
+  if (server) {
+    data = NULL; isDF = FALSE
+    options$serverSide = TRUE
+  }
+
   data = fix_WAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
   if (inherits(data, 'list')) isDF = FALSE else {
     data = if (isDF) unname(as.list(data)) else unname(data)
   }
+
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
     callback = paste(callback, collapse = '\n'), colnames = colnames
