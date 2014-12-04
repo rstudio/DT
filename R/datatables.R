@@ -39,7 +39,7 @@ datatable = function(
 
   # align numeric columns to the right
   if (length(numc))
-    options = append_columnDefs(options, list(className = 'dt-right', targets = numc - 1))
+    options = appendColumnDefs(options, list(className = 'dt-right', targets = numc - 1))
 
   # make sure the table is _not_ ordered by default (change the DataTables defalt)
   if (is.null(options[['order']])) options$order = list()
@@ -54,7 +54,7 @@ datatable = function(
     options$serverSide = TRUE
   }
 
-  data = fix_WAT(data)
+  data = fixWAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
   if (inherits(data, 'list')) isDF = FALSE else {
     data = if (isDF) unname(as.list(data)) else unname(data)
@@ -71,7 +71,7 @@ datatable = function(
 }
 
 # fix some WAT's in RJSONIO that I discovered in shiny:::dataTablesJSON()
-fix_WAT = function(data) {
+fixWAT = function(data) {
   # toJSON(list(x = matrix(1:2))) => {x: [ [1], [2] ]}, however,
   # toJSON(list(x = matrix(1))) => {x: [ 1 ]} (loss of dimension, shiny#429)
   if (length(data) && all(dim(data) == 1)) return(list(list(unname(data[1, 1]))))
@@ -80,7 +80,7 @@ fix_WAT = function(data) {
   data
 }
 
-append_columnDefs = function(options, def) {
+appendColumnDefs = function(options, def) {
   defs = options[['columnDefs']]
   if (is.null(defs)) defs = list()
   defs[[length(defs) + 1]] = def

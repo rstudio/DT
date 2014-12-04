@@ -1,6 +1,6 @@
-format_columns = function(table, columns, template, ...) {
+formatColumns = function(table, columns, template, ...) {
   attr = table$x
-  attr$options$rowCallback = append_formatter(
+  attr$options$rowCallback = appendFormatter(
     attr$options$rowCallback, columns, attr$colnames, template, ...
   )
   table$x = attr
@@ -24,25 +24,25 @@ format_columns = function(table, columns, template, ...) {
 #' m
 #'
 #' # format the columns A and C as currency, and D as percentages
-#' datatable(m) %>% format_currency(c('A', 'C')) %>% format_percentage('D', 2)
+#' datatable(m) %>% formatCurrency(c('A', 'C')) %>% formatPercentage('D', 2)
 #'
 #' # the first two columns are Euro currency, and round column E to 3 decimal places
-#' datatable(m) %>% format_currency(1:2, '\U20AC') %>% format_round('E', 3)
-format_currency = function(table, columns, currency = '$', interval = 3, mark = ',') {
-  format_columns(table, columns, tpl_currency, currency, interval, mark)
+#' datatable(m) %>% formatCurrency(1:2, '\U20AC') %>% formatRound('E', 3)
+formatCurrency = function(table, columns, currency = '$', interval = 3, mark = ',') {
+  formatColumns(table, columns, tplCurrency, currency, interval, mark)
 }
 
 #' @export
-#' @rdname format_currency
+#' @rdname formatCurrency
 #' @param digits the number of decimal places to round to
-format_percentage = function(table, columns, digits = 0) {
-  format_columns(table, columns, tpl_percentage, digits)
+formatPercentage = function(table, columns, digits = 0) {
+  formatColumns(table, columns, tplPercentage, digits)
 }
 
 #' @export
-#' @rdname format_currency
-format_round = function(table, columns, digits = 2) {
-  format_columns(table, columns, tpl_round, digits)
+#' @rdname formatCurrency
+formatRound = function(table, columns, digits = 2) {
+  formatColumns(table, columns, tplRound, digits)
 }
 
 # turn character/logical indices to numeric indices
@@ -54,7 +54,7 @@ name2int = function(name, names) {
   unname(names[name])
 }
 
-append_formatter = function(js, name, names, template, ...) {
+appendFormatter = function(js, name, names, template, ...) {
   js = if (length(js) == 0) c('function(row, data) {', '}') else {
     unlist(strsplit(as.character(js), '\n'))
   }
@@ -65,21 +65,21 @@ append_formatter = function(js, name, names, template, ...) {
   ))
 }
 
-tpl_currency = function(cols, currency, interval, mark) {
+tplCurrency = function(cols, currency, interval, mark) {
   sprintf(
     "$('td:eq(%d)', row).html('%s' + data[%d].toString().replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
     cols, currency, cols, interval, mark
   )
 }
 
-tpl_percentage = function(cols, digits) {
+tplPercentage = function(cols, digits) {
   sprintf(
     "$('td:eq(%d)', row).html((data[%d] * 100).toFixed(%d) + '%%');",
     cols, cols, digits
   )
 }
 
-tpl_round = function(cols, digits) {
+tplRound = function(cols, digits) {
   sprintf(
     "$('td:eq(%d)', row).html((data[%d] + 0).toFixed(%d));",
     cols, cols, digits
