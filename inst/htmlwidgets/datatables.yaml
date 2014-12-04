@@ -4,7 +4,7 @@ dependencies:
     src: "lib/jquery"
     script: jquery.min.js
   - name: datatables
-    version: 1.10.3
+    version: 1.10.4
     src: "lib/datatables"
     script: js/jquery.dataTables.min.js
     stylesheet: css/jquery.dataTables.min.css
