@@ -150,7 +150,7 @@ Since it is common for users to format numbers in the data columns, we have prov
 
 ```{r comment=''}
 # a custom table container
-sketch = with(htmltools::tags, table(
+sketch = htmltools::withTags(table(
   thead(
     tr(
       th(rowspan = 2, 'Species'),
