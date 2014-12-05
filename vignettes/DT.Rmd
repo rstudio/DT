@@ -146,7 +146,7 @@ You need to learn JavaScript regular expressions to understand the above callbac
 
 Since it is common for users to format numbers in the data columns, we have provided a few simple helper functions in this package to do these tasks in a much easier way, so you do not have to write the JavaScript by yourself.
 
-### Custom Table Headers
+## Custom Table Headers
 
 ```{r comment=''}
 # a custom table container
