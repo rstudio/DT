@@ -71,7 +71,7 @@ datatable(head(iris, 20), options = list(
 
 The target column index is 4 but we expect to center the 5th column. This might be a little surprising to R users, and is also what we need to be very careful about. Because JavaScript indexes from 0 instead of 1, the index of the 5th element is 4.
 
-## Examples
+## Examples of DataTables Options
 
 ### Sorting
 
