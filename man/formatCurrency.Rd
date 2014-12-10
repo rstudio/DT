@@ -1,3 +1,4 @@
+% Please edit documentation in R/format.R
 \name{formatCurrency}
 \alias{formatCurrency}
 \alias{formatPercentage}

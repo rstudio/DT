@@ -1,3 +1,4 @@
+% Please edit documentation in R/datatables.R
 \name{datatable}
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}

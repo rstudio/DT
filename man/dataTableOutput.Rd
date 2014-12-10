@@ -1,3 +1,4 @@
+% Please edit documentation in R/shiny.R
 \name{dataTableOutput}
 \alias{dataTableOutput}
 \alias{renderDataTable}
