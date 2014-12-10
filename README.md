@@ -9,6 +9,6 @@ This package provides a function `datatable()` to display R data via the [DataTa
 This package is not on CRAN yet, and you can install it with **devtools**:
 
 ```r
-devtools::install_github(c('ramnathv/htmlwidgets', 'rstudio/DT'))
+devtools::install_github('rstudio/DT')
 # then try DT::datatable(iris) as a hello world example
 ```
