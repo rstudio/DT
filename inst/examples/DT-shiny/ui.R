@@ -1,5 +1,5 @@
 library(shiny)
-if (packageVersion('shiny') <= '0.10.2') stop('This app requires shiny > 0.10.2')
+if (packageVersion('shiny') <= '0.10.2.2') stop('This app requires shiny > 0.10.2.2')
 
 shinyUI(fluidPage(
   title = 'Use the DT package in shiny',
