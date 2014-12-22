@@ -56,9 +56,12 @@ datatable = function(
 
   data = fixWAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
-  if (inherits(data, 'list')) isDF = FALSE else {
-    data = if (isDF) unname(as.list(data)) else unname(data)
+  if (inherits(data, 'list')) isDF = FALSE else if (isDF) {
+    # see rstudio/DT#5 (list(1, 2) => [1, 2] but we really need [[1], [2]]; this
+    # is fine: list(3:4, 5:6) => [[3, 4], [5, 6]])
+    data = if (nrow(data) == 1) lapply(as.list(data), list) else as.list(data)
   }
+  data = unname(data)
 
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
