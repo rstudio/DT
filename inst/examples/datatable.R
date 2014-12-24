@@ -1,3 +1,4 @@
+# !formatR
 library(DT)
 
 # see the package vignette for examples
