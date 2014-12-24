@@ -30,7 +30,7 @@ datatable = function(
   } else {
     if (!is.matrix(data))
       stop("'data' must be either a matrix or a data frame")
-    if (length(colnames(data)) != ncol(data))
+    if (length(colnames(data)) != ncol(data) && missing(container))
       stop("The 'data' matrix must have column names")
     numc = if (is.numeric(data)) seq_len(ncol(data))
   }
