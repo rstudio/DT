@@ -16,12 +16,21 @@
 #' @param server whether to use server-side processing; if \code{TRUE}, you must
 #'   provide a server URL so that DataTables can send Ajax requests to retrieve
 #'   data from the server
+#' @param escape whether to escape HTML entities in the table: \code{TRUE} means
+#'   to escape the whole table, and \code{FALSE} means not to escape it;
+#'   alternatively, you can specify numeric column indices or column names to
+#'   indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
+#'   \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
+#'   third), or \code{c('Species', 'Sepal.Length')}
+#' @note You are recommended to escape the table content for security reasons
+#'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
+#'   web applications.
 #' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
   data, id = NULL, options = list(), callback = 'function(table) {}',
-  container, server = FALSE
+  container, server = FALSE, escape = TRUE
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -45,8 +54,10 @@ datatable = function(
   if (is.null(options[['order']])) options$order = list()
 
   colnames = colnames(data)
-  if (missing(container))
-    container = tags$table(id = id, tags$thead(tags$tr(lapply(colnames, tags$th))))
+  if (missing(container)) container = tags$table(
+    id = id,
+    tags$thead(tags$tr(lapply(escapeColNames(colnames, escape), tags$th)))
+  )
 
   # in the server mode, we should not store the full data in JSON
   if (server) {
@@ -54,6 +65,7 @@ datatable = function(
     options$serverSide = TRUE
   }
 
+  data = escapeData(data, escape, colnames)
   data = fixWAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
   if (inherits(data, 'list')) isDF = FALSE else if (isDF) {
@@ -89,4 +101,44 @@ appendColumnDefs = function(options, def) {
   defs[[length(defs) + 1]] = def
   options$columnDefs = defs
   options
+}
+
+# convert character indices to numeric
+convertIdx = function(i, names, n = length(names), invert = FALSE) {
+  if (!is.character(i)) return({
+    if (invert) {
+      if (is.numeric(i)) -i else if (is.logical(i)) !i else {
+        stop('Indices must be either character, numeric, or logical')
+      }
+    } else i
+  })
+  if (is.null(names)) stop('The data must have column names')
+  o = setNames(seq_len(n), names)
+  i = o[i]
+  if (any(is.na(i)))
+    stop("Some column names in the 'escape' argument not found in data")
+  if (invert) o[-i] else i
+}
+
+#' @importFrom htmltools HTML htmlEscape
+escapeData = function(data, i, colnames) {
+  if (is.null(data) || prod(dim(data)) == 0 || identical(i, FALSE)) return(data)
+  i = convertIdx(i, colnames, ncol(data))
+  # only escape character columns (no need to escape numeric or logical columns)
+  if (is.list(data)) {
+    data[i] = lapply(data[i], function(x) {
+      if (is.character(x) || is.factor(x)) htmlEscape(x) else x
+    })
+  } else if (is.matrix(data)) {
+    if (is.character(data)) data[, i] = htmlEscape(data[, i])
+  } else stop('Wrong data for datatable()')
+  data
+}
+
+escapeColNames = function(colnames, i) {
+  if (isTRUE(i)) return(colnames)  # tags$th will escape them
+  i = convertIdx(i, colnames, length(colnames), invert = TRUE)
+  colnames = as.list(colnames)
+  colnames[i] = lapply(colnames[i], HTML)
+  colnames
 }
