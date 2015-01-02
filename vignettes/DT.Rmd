@@ -19,6 +19,7 @@ table, table th, table td {
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(tidy = FALSE)
+set.seed(0102)
 ```
 
 # Introduction
