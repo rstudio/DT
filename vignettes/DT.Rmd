@@ -247,6 +247,20 @@ DTShinyEx = function(file) {
 
 That is more or less how **DataTables** has been working internally in **shiny**.
 
+Please note this example is _experimental_, and may have many rough edges. You may not really need server-side processing at all: client-side DataTables may just suffice. Here is a minimal example of client-side DataTables:
+
+```{r eval=FALSE}
+library(shiny)
+shinyApp(
+  ui = fluidPage(DT::dataTableOutput('tbl')),
+  server = function(input, output) {
+    output$tbl = DT::renderDataTable({
+      DT::datatable(iris)
+    })
+  }
+)
+```
+
 # Interaction with Shiny
 
 How to listen to DataTables events, and pass data back to R?
