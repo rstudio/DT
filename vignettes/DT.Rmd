@@ -147,6 +147,22 @@ You need to learn JavaScript regular expressions to understand the above callbac
 
 Since it is common for users to format numbers in the data columns, we have provided a few simple helper functions in this package to do these tasks in a much easier way, so you do not have to write the JavaScript by yourself.
 
+## Custom Column Names
+
+By default, `datatable()` shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.
+
+```{r}
+# colnames(iris) is a character vector of length 5, and we replace it
+datatable(head(iris), colnames = c('Hello', 'World', 'Yes', 'Great', 'Perfect'))
+```
+
+This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want to replace the 2nd name to be `'A Nicer Name'`, you can use `datatable(..., colnames = c('A Nicer Name' = 2))`; or if you want to replace the name `'X5'` with `'A Better Name'`, you can use `colnames = c('A Better Name' = 'X5')`.
+
+```{r}
+datatable(head(iris), colnames = c('Better Sepal Width' = 'Sepal.Width'))
+datatable(head(iris), colnames = c('Better Sepal Width' = 2, 'Perfect Sepal Length' = 1))
+```
+
 ## Custom Table Headers
 
 ```{r comment=''}
