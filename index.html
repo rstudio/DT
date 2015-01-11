@@ -10,7 +10,7 @@
 
 <meta name="author" content="Yihui Xie" />
 
-<meta name="date" content="2015-01-02" />
+<meta name="date" content="2015-01-11" />
 
 <title>An Introduction to the DT Package</title>
 
@@ -59,7 +59,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="header">
 <h1 class="title">An Introduction to the DT Package</h1>
 <h4 class="author"><em>Yihui Xie</em></h4>
-<h4 class="date"><em>2015-01-02</em></h4>
+<h4 class="date"><em>2015-01-11</em></h4>
 </div>
 
 <div id="TOC">
@@ -77,8 +77,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li><a href="#column-rendering"><span class="toc-section-number">2.5.4</span> Column Rendering</a></li>
 <li><a href="#row-rendering"><span class="toc-section-number">2.5.5</span> Row Rendering</a></li>
 </ul></li>
-<li><a href="#custom-table-headers"><span class="toc-section-number">2.6</span> Custom Table Headers</a></li>
-<li><a href="#format-columns"><span class="toc-section-number">2.7</span> Format Columns</a></li>
+<li><a href="#custom-column-names"><span class="toc-section-number">2.6</span> Custom Column Names</a></li>
+<li><a href="#custom-table-headers"><span class="toc-section-number">2.7</span> Custom Table Headers</a></li>
+<li><a href="#format-columns"><span class="toc-section-number">2.8</span> Format Columns</a></li>
 </ul></li>
 <li><a href="#server-side-processing"><span class="toc-section-number">3</span> Server-side Processing</a><ul>
 <li><a href="#a-jsonp-example"><span class="toc-section-number">3.1</span> A JSONP Example</a></li>
@@ -121,9 +122,9 @@ table, table th, table td {
 ## [1] DT_0.0.6
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] RJSONIO_1.3-0      digest_0.6.7       evaluate_0.5.6    
-##  [4] formatR_1.0.2      htmltools_0.2.7    htmlwidgets_0.3.2 
-##  [7] knitr_1.8.12       magrittr_1.5       rmarkdown_0.4.2   
+##  [1] RJSONIO_1.3-0      digest_0.6.8       evaluate_0.5.5    
+##  [4] formatR_1.0.2      htmltools_0.2.6    htmlwidgets_0.3.2 
+##  [7] knitr_1.8.15       magrittr_1.5       rmarkdown_0.4.2   
 ## [10] stringi_0.4-1      stringr_0.9.0.9000 tools_3.1.2       
 ## [13] yaml_2.1.13</code></pre>
 </div>
@@ -133,7 +134,7 @@ table, table th, table td {
 <h2><span class="header-section-number">2.1</span> Usage</h2>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">id =</span> <span class="ot">NULL</span>, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">callback =</span> <span class="st">&quot;function(table) {}&quot;</span>, 
-    container, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>)</code></pre>
+    colnames, container, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>)</code></pre>
 </div>
 <div id="hello-world" class="section level2">
 <h2><span class="header-section-number">2.2</span> Hello World</h2>
@@ -402,8 +403,86 @@ table, table th, table td {
 <p>Since it is common for users to format numbers in the data columns, we have provided a few simple helper functions in this package to do these tasks in a much easier way, so you do not have to write the JavaScript by yourself.</p>
 </div>
 </div>
+<div id="custom-column-names" class="section level2">
+<h2><span class="header-section-number">2.6</span> Custom Column Names</h2>
+<p>By default, <code>datatable()</code> shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># colnames(iris) is a character vector of length 5, and we replace it</span>
+<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">'Hello'</span>, <span class="st">'World'</span>, <span class="st">'Yes'</span>, <span class="st">'Great'</span>, <span class="st">'Perfect'</span>))</code></pre>
+<p><div id="htmlwidget-9623" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-9623">{ "x": {
+ "data": [
+ [               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th>Hello</th>\n      <th>World</th>\n      <th>Yes</th>\n      <th>Great</th>\n      <th>Perfect</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "columnDefs": [
+ {
+ "className": "dt-right",
+"targets": [                 0,                 1,                 2,                 3 ] 
+} 
+],
+"order": [] 
+},
+"callback": "function(table) {}",
+"colnames": [ "Hello", "World", "Yes", "Great", "Perfect" ] 
+},"evals": [  ] }</script></p>
+<p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want to replace the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">'Better Sepal Width'</span> =<span class="st"> 'Sepal.Width'</span>))</code></pre>
+<p><div id="htmlwidget-6014" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-6014">{ "x": {
+ "data": [
+ [               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Better Sepal Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "columnDefs": [
+ {
+ "className": "dt-right",
+"targets": [                 0,                 1,                 2,                 3 ] 
+} 
+],
+"order": [] 
+},
+"callback": "function(table) {}",
+"colnames": [ "Sepal.Length", "Better Sepal Width", "Petal.Length", "Petal.Width", "Species" ] 
+},"evals": [  ] }</script></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">'Better Sepal Width'</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">'Perfect Sepal Length'</span> =<span class="st"> </span><span class="dv">1</span>))</code></pre>
+<p><div id="htmlwidget-5150" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5150">{ "x": {
+ "data": [
+ [               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th>Perfect Sepal Length</th>\n      <th>Better Sepal Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "columnDefs": [
+ {
+ "className": "dt-right",
+"targets": [                 0,                 1,                 2,                 3 ] 
+} 
+],
+"order": [] 
+},
+"callback": "function(table) {}",
+"colnames": [ "Perfect Sepal Length", "Better Sepal Width", "Petal.Length", "Petal.Width", "Species" ] 
+},"evals": [  ] }</script></p>
+</div>
 <div id="custom-table-headers" class="section level2">
-<h2><span class="header-section-number">2.6</span> Custom Table Headers</h2>
+<h2><span class="header-section-number">2.7</span> Custom Table Headers</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table container</span>
 sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<span class="kw">table</span>(
   <span class="kw">thead</span>(
@@ -434,8 +513,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
   &lt;/thead&gt;
 &lt;/table&gt; </code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris[<span class="dv">1</span>:<span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>:<span class="dv">4</span>)], <span class="dt">container =</span> sketch)</code></pre>
-<p><div id="htmlwidget-9623" style="width:100%;height:auto;" class="datatables"></div>
-<script type="application/json" data-for="htmlwidget-9623">{ "x": {
+<p><div id="htmlwidget-4026" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-4026">{ "x": {
  "data": [
  [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ],
 [               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
@@ -459,7 +538,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 },"evals": [  ] }</script></p>
 </div>
 <div id="format-columns" class="section level2">
-<h2><span class="header-section-number">2.7</span> Format Columns</h2>
+<h2><span class="header-section-number">2.8</span> Format Columns</h2>
 <p>We can use the functions <code>format*()</code> to format the table columns as currency, percentages, or round numbers. Here are some examples:</p>
 <pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="kw">runif</span>(<span class="dv">20</span>), <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))
 m[, <span class="dv">1</span>:<span class="dv">3</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">1</span>:<span class="dv">3</span>])
