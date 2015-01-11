@@ -10,6 +10,14 @@
 #'   JavaScript code instead of normal character strings
 #' @param callback a JavaScript callback function to be applied to the
 #'   DataTables instance
+#' @param colnames if missing, the column names of the data; otherwise it can be
+#'   an unnamed character vector of names you want to show in the table header
+#'   instead of the default data column names; alternatively, you can provide a
+#'   \emph{named} numeric or character vector of the form \code{'newName1' = i1,
+#'   'newName2' = i2} or \code{c('newName1' = 'oldName1', 'newName2' =
+#'   'oldName2', ...)}, where \code{newName} is the new name you want to show in
+#'   the table, and \code{i} or \code{oldName} is the index of the current
+#'   column name
 #' @param container a sketch of the HTML table to be filled with data cells; by
 #'   default, it is generated from \code{htmltools::tags$table()} with a table
 #'   header consisting of the column names of the data
@@ -30,7 +38,7 @@
 #' @example inst/examples/datatable.R
 datatable = function(
   data, id = NULL, options = list(), callback = 'function(table) {}',
-  container, server = FALSE, escape = TRUE
+  colnames, container, server = FALSE, escape = TRUE
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -39,7 +47,7 @@ datatable = function(
   } else {
     if (!is.matrix(data))
       stop("'data' must be either a matrix or a data frame")
-    if (length(colnames(data)) != ncol(data) && missing(container))
+    if (length(base::colnames(data)) != ncol(data) && missing(container))
       stop("The 'data' matrix must have column names")
     numc = if (is.numeric(data)) seq_len(ncol(data))
   }
@@ -53,7 +61,17 @@ datatable = function(
   # make sure the table is _not_ ordered by default (change the DataTables defalt)
   if (is.null(options[['order']])) options$order = list()
 
-  colnames = colnames(data)
+  if (missing(colnames)) {
+    colnames = base::colnames(data)
+  } else if (!is.null(names(colnames))) {
+    # e.g. colnames = c('Sepal Width' = 'Sepal.Width' or 2) => make the 2nd
+    # column name 'Sepal Width'
+    cn = base::colnames(data)
+    i = convertIdx(colnames, cn)
+    cn[i] = names(colnames)
+    colnames = cn
+  }
+
   if (missing(container)) container = tags$table(
     id = id,
     tags$thead(tags$tr(lapply(escapeColNames(colnames, escape), tags$th)))
