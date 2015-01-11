@@ -3,8 +3,8 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, id = NULL, options = list(), callback = "function(table) {}", container, 
-    server = FALSE, escape = TRUE)
+datatable(data, id = NULL, options = list(), callback = "function(table) {}", colnames, 
+    container, server = FALSE, escape = TRUE)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -18,6 +18,15 @@ JavaScript code instead of normal character strings}
 
 \item{callback}{a JavaScript callback function to be applied to the
 DataTables instance}
+
+\item{colnames}{if missing, the column names of the data; otherwise it can be
+an unnamed character vector of names you want to show in the table header
+instead of the default data column names; alternatively, you can provide a
+\emph{named} numeric or character vector of the form \code{'newName1' = i1,
+'newName2' = i2} or \code{c('newName1' = 'oldName1', 'newName2' =
+'oldName2', ...)}, where \code{newName} is the new name you want to show in
+the table, and \code{i} or \code{oldName} is the index of the current
+column name}
 
 \item{container}{a sketch of the HTML table to be filled with data cells; by
 default, it is generated from \code{htmltools::tags$table()} with a table
