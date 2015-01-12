@@ -59,6 +59,10 @@ appendFormatter = function(js, name, names, template, ...) {
     unlist(strsplit(as.character(js), '\n'))
   }
   i = name2int(name, names) - 1
+  if (any(is.na(i))) stop(
+    'You specified the columns: ', paste(name, collapse = ', '), ', ',
+    'but the column names of the data are ', paste(names, collapse = ', ')
+  )
   JS(append(
     js, after = 1,
     template(i, ...)
