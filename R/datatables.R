@@ -61,12 +61,12 @@ datatable = function(
   # make sure the table is _not_ ordered by default (change the DataTables defalt)
   if (is.null(options[['order']])) options$order = list()
 
+  cn = base::colnames(data)
   if (missing(colnames)) {
-    colnames = base::colnames(data)
+    colnames = cn
   } else if (!is.null(names(colnames))) {
     # e.g. colnames = c('Sepal Width' = 'Sepal.Width' or 2) => make the 2nd
     # column name 'Sepal Width'
-    cn = base::colnames(data)
     i = convertIdx(colnames, cn)
     cn[i] = names(colnames)
     colnames = cn
@@ -95,7 +95,7 @@ datatable = function(
 
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
-    callback = paste(callback, collapse = '\n'), colnames = colnames
+    callback = paste(callback, collapse = '\n'), colnames = cn
   )
 
   htmlwidgets::createWidget(
