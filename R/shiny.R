@@ -2,8 +2,8 @@
 #'
 #' These two functions are like most \code{fooOutput()} and \code{renderFoo()}
 #' functions in the \pkg{shiny} package. The former is used to create a
-#' container for table, and the latter is used in the server logic to
-#' render the table.
+#' container for table, and the latter is used in the server logic to render the
+#' table.
 #' @inheritParams shiny::dataTableOutput
 #' @param width the width of the table container
 #' @param height the height of the table container

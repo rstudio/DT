@@ -25,8 +25,8 @@ is useful if you want to save an expression in a variable.}
 \description{
 These two functions are like most \code{fooOutput()} and \code{renderFoo()}
 functions in the \pkg{shiny} package. The former is used to create a
-container for table, and the latter is used in the server logic to
-render the table.
+container for table, and the latter is used in the server logic to render the
+table.
 }
 \examples{
 \donttest{library(shiny)
