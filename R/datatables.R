@@ -83,6 +83,16 @@ datatable = function(
     options$serverSide = TRUE
   }
 
+  # rstudio/DT#13: convert date/time to character
+  if (isDF) for (j in seq_len(ncol(data))) {
+    if (inherits(data[, j], 'Date')) {
+      data[, j] = as.character(data[, j])
+    } else if (inherits(data[, j], c('POSIXlt', 'POSIXct'))) {
+      data[, j] = sub('(\\d{2})(\\d{2})$', '\\1:\\2', format(
+        data[, j], '%Y-%m-%dT%H:%M:%OS6%z'
+      ))
+    }
+  }
   data = escapeData(data, escape, colnames)
   data = fixWAT(data)
   # do not use is.list() because is.list(data frame) is TRUE
