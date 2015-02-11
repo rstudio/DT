@@ -84,4 +84,11 @@ datatable(as.data.frame(m))
 m = data.frame(a = 1, b = 2, c = 3)
 datatable(m)
 datatable(as.matrix(m))
+
+# dates
+datatable(data.frame(
+  date = seq(as.Date("2015-01-01"), by = "day", length.out = 5), x = 1:5
+))
+datatable(data.frame(x = Sys.Date()))
+datatable(data.frame(x = Sys.time()))
 }
