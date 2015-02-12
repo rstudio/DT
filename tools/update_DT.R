@@ -1,5 +1,5 @@
 owd = setwd('tools')
-ver = '1.10.5'
+ver = DT:::DataTablesVersion
 out = sprintf('DataTables-%s.zip', ver)
 unlink('DataTables*', recursive = TRUE)
 download.file(sprintf('http://datatables.net/releases/DataTables-%s.zip', ver), out, mode = 'wb')
