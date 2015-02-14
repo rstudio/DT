@@ -85,7 +85,7 @@ tplPercentage = function(cols, digits) {
 
 tplRound = function(cols, digits) {
   sprintf(
-    "$('td:eq(%d)', row).html((data[%d] + 0).toFixed(%d));",
+    "var d = parseFloat(data[%d]); $('td:eq(%d)', row).html(isNaN(d) ? '' : d.toFixed(%d));",
     cols, cols, digits
   )
 }
