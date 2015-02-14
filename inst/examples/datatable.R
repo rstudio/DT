@@ -37,3 +37,47 @@ datatable(data.frame(
 ))
 datatable(data.frame(x = Sys.Date()))
 datatable(data.frame(x = Sys.time()))
+
+# DataTables extensions
+datatable(
+  cbind(ID = seq_len(nrow(iris)), iris), extensions = 'AutoFill',
+  callback = 'function(table) {new $.fn.dataTable.AutoFill(table);}'
+)
+
+datatable(iris, extensions = 'ColReorder', options = list(dom = 'Rlfrtip'))
+
+datatable(iris, extensions = 'ColVis', options = list(dom = 'C<"clear">lfrtip'))
+
+m = as.data.frame(matrix(rnorm(100), 5))
+m = cbind(ID = seq_len(nrow(m)), m)
+datatable(
+  m, extensions = 'FixedColumns',
+  callback = 'function(table){new $.fn.dataTable.FixedColumns(table);}',
+  options = list(
+    paging = FALSE,
+    scrollX = TRUE,
+    scrollY = '300px',
+    scrollCollapse = TRUE
+  )
+)
+
+datatable(
+  iris, options = list(pageLength = 50), extensions = 'FixedHeader',
+  callback = 'function(table) {new $.fn.dataTable.FixedHeader(table);}'
+)
+
+datatable(
+  iris, extensions = 'KeyTable',
+  callback = 'function(table) {$.fn.dataTable.KeyTable(table);}'
+)
+
+datatable(iris, extensions = 'Responsive', options = list(responsive = TRUE))
+
+m = matrix(runif(50000 * 4), ncol = 4, dimnames = list(NULL, letters[1:4]))
+m = cbind(id = seq_len(nrow(m)), round(m, 2))
+datatable(m, extensions = 'Scroller', options = list(
+  deferRender = TRUE,
+  dom = "frtiS",
+  scrollY = 200,
+  scrollCollapse = TRUE
+))
