@@ -38,7 +38,7 @@
 #' @example inst/examples/datatable.R
 datatable = function(
   data, id = NULL, options = list(), callback = 'function(table) {}',
-  colnames, container, server = FALSE, escape = TRUE
+  colnames, container, server = FALSE, escape = TRUE, extensions = NULL
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -109,7 +109,8 @@ datatable = function(
   )
 
   htmlwidgets::createWidget(
-    'datatables', params, package = 'DT', width = '100%', height = 'auto'
+    'datatables', params, package = 'DT', width = '100%', height = 'auto',
+    dependencies = lapply(extensions, extDependency)
   )
 }
 
@@ -169,4 +170,24 @@ escapeColNames = function(colnames, i) {
   colnames = as.list(colnames)
   colnames[i] = lapply(colnames[i], HTML)
   colnames
+}
+
+extPath = function() {
+  system.file('htmlwidgets', 'lib', 'datatables', 'extensions', package = 'DT')
+}
+
+extAll = function() {
+  gsub('^dataTables.|.min.js$', '', list.files(extPath(), 'min[.]js$'))
+}
+
+extDependency = function(extension) {
+  # correct ExtName to extName just in case
+  extension = sub('^(.)', '\\L\\1', extension, perl = TRUE)
+  if (!(extension %in% extAll())) stop('The extension ', extension, 'does not exist')
+  js = sprintf('dataTables.%s.min.js', extension)
+  css = sprintf('dataTables.%s.min.css', extension)
+  htmltools::htmlDependency(
+    paste('datatables', extension, sep = '-'), DataTablesVersion, extPath(),
+    script = js, stylesheet = css
+  )
 }
