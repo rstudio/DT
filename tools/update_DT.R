@@ -47,9 +47,9 @@ lapply(list.files(), function(Ext) {
   ext = sub('^(.)', '\\L\\1', Ext, perl = TRUE)
   in_dir(file.path(Ext, 'css'), encode_img(sprintf('dataTables.%s.min.css', ext)))
 })
-file.copy(
+file.copy(c(
   list.files('.', '[.]min[.](css|js)$', recursive = TRUE),
-  dt_path('extensions'), overwrite = TRUE
-)
+  file.path('TableTools', 'swf', c('copy_csv_xls.swf', 'copy_csv_xls_pdf.swf'))
+), dt_path('extensions'), overwrite = TRUE)
 
 setwd(owd)
