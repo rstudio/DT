@@ -78,7 +78,7 @@ tplCurrency = function(cols, currency, interval, mark) {
 
 tplPercentage = function(cols, digits) {
   sprintf(
-    "$('td:eq(%d)', row).html((data[%d] * 100).toFixed(%d) + '%%');",
+    "var d = parseFloat(data[%d]); $('td:eq(%d)', row).html(isNaN(d) ? '' : (d * 100).toFixed(%d) + '%%');",
     cols, cols, digits
   )
 }
