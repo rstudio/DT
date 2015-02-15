@@ -27,7 +27,12 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #' @rdname dataTableOutput
 #' @inheritParams shiny::renderDataTable
 #' @param expr an expression to create a table widget
-renderDataTable = function(expr, env = parent.frame(), quoted = FALSE) {
+renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
+  if (length(list(...))) warning(
+    "Arguments in addition to 'expr', 'env', and 'quoted' are ignored. ",
+    "If you came from shiny::renderDataTable(), you may want to pass ",
+    "these arguments to DT::datatable() instead."
+  )
   if (!quoted) expr = substitute(expr)
   htmlwidgets::shinyRenderWidget(expr, dataTableOutput, env, quoted = TRUE)
 }
