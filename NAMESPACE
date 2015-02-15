@@ -1,5 +1,6 @@
 export("%>%")
 export(JS)
+export(copySWF)
 export(dataTableOutput)
 export(datatable)
 export(formatCurrency)
