@@ -52,4 +52,17 @@ file.copy(c(
   file.path('TableTools', 'swf', c('copy_csv_xls.swf', 'copy_csv_xls_pdf.swf'))
 ), dt_path('extensions'), overwrite = TRUE)
 
+in_dir(dt_path('extensions'), local({
+  for (f in list.files('.', '[.]min[.](css|js)$')) {
+    d = gsub('^dataTables.|.min.(css|js)$', '', f)
+    if (!file_test('-d', d)) dir.create(d)
+    file.rename(f, file.path(d, f))
+  }
+}))
+
+in_dir(dt_path(), {
+  unlink('../datatables-extensions', recursive = TRUE)
+  file.rename('extensions', '../datatables-extensions')
+})
+
 setwd(owd)

@@ -170,12 +170,12 @@ escapeColNames = function(colnames, i) {
   colnames
 }
 
-extPath = function() {
-  system.file('htmlwidgets', 'lib', 'datatables', 'extensions', package = 'DT')
+extPath = function(...) {
+  system.file('htmlwidgets', 'lib', 'datatables-extensions', ..., package = 'DT')
 }
 
 extAll = function() {
-  gsub('^dataTables.|.min.js$', '', list.files(extPath(), 'min[.]js$'))
+  list.dirs(extPath(), FALSE, FALSE)
 }
 
 extDependency = function(extension) {
@@ -185,7 +185,7 @@ extDependency = function(extension) {
   js = sprintf('dataTables.%s.min.js', extension)
   css = sprintf('dataTables.%s.min.css', extension)
   htmltools::htmlDependency(
-    paste('datatables', extension, sep = '-'), DataTablesVersion, extPath(),
+    paste('datatables', extension, sep = '-'), DataTablesVersion, extPath(extension),
     script = js, stylesheet = css
   )
 }
@@ -205,10 +205,7 @@ extDependency = function(extension) {
 copySWF = function(dest = '.', pdf = FALSE) {
   if (!file_test('-d', dest)) stop("'dest' must be a directory")
   swf = if (pdf) 'copy_csv_xls_pdf.swf' else 'copy_csv_xls.swf'
-  file.copy(
-    system.file('htmlwidgets', 'lib', 'datatables', 'extensions', swf, package = 'DT'),
-    dest, overwrite = TRUE
-  )
+  file.copy(extPath(swf), dest, overwrite = TRUE)
   if (sub('/$', '', dest) == 'www') dest = sub('www/?', '', dest)
   file.path(dest, swf, fsep = '/')
 }
