@@ -119,6 +119,9 @@ img {
         <li><a href="extensions.html">Extensions</a></li>
         <li><a href="shiny.html">Shiny</a></li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/rstudio/DT" title="View Source on Github"><span class="glyphicon glyphicon-download"></span></a></li>
+      </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </nav><!--/.navbar -->
@@ -1442,8 +1445,9 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
 // manage active state of menu based on current page
 $(document).ready(function () {
     // active menu
-    href = window.location.pathname
-    href = href.substr(href.lastIndexOf('/') + 1)
+    var href = window.location.pathname;
+    href = href.substr(href.lastIndexOf('/') + 1);
+    if (href === '') href = 'index.html';
     $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>
