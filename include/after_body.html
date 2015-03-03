@@ -2,8 +2,9 @@
 // manage active state of menu based on current page
 $(document).ready(function () {
     // active menu
-    href = window.location.pathname
-    href = href.substr(href.lastIndexOf('/') + 1)
+    var href = window.location.pathname;
+    href = href.substr(href.lastIndexOf('/') + 1);
+    if (href === '') href = 'index.html';
     $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>
