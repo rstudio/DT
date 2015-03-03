@@ -1,0 +1,106 @@
+---
+title: 'DT: An R interface to the DataTables library'
+---
+
+---
+
+The R package **DT** provides an R interface to the JavaScript library [**DataTables**](http://datatables.net). R data objects (matrices or data frames) can be displayed as tables on HTML pages, and **DataTables** provides filtering, pagination, sorting, and many other features in the tables.
+
+You can install the development version of the package from Github:
+
+```{r message=FALSE}
+if (!require("DT")) devtools::install_github("rstudio/DT")
+sessionInfo()
+```
+
+# Usage
+
+The main function in this package is `datatable()`. It creates an HTML widget to display R data objects with **DataTables**.
+
+```{r code=formatR::usage(datatable), eval=FALSE}
+```
+
+Here is a "hello world" example with zero configuration:
+
+```{r}
+library(DT)
+datatable(iris)
+```
+
+# Arguments
+
+If you are familiar with **DataTables** already, you may use the `options` argument to customize the table. See the page [Options](options.html) for details. Here we explain the rest of the arguments of the `datatable()` function.
+
+## Custom Column Names
+
+By default, `datatable()` shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.
+
+```{r}
+# colnames(iris) is a character vector of length 5, and we replace it
+datatable(head(iris), colnames = c('Here', 'Are', 'Some', 'New', 'Names'))
+```
+
+This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be `'A Nicer Name'`, you can use `datatable(..., colnames = c('A Nicer Name' = 2))`; or if you want to replace the name `'X5'` with `'A Better Name'`, you can use `colnames = c('A Better Name' = 'X5')`.
+
+```{r}
+datatable(head(iris), colnames = c('A Better Name' = 'Sepal.Width'))
+datatable(head(iris), colnames = c('Another Better Name' = 2, 'Yet Another Name' = 4))
+```
+
+## Custom Table Container
+
+The `container` argument allows you to provide a different table container to hold the table cells. By default, the container is generated from the column names. Below is an example of a custom table header:
+
+```{r comment=''}
+# a custom table container
+sketch = htmltools::withTags(table(
+  thead(
+    tr(
+      th(rowspan = 2, 'Species'),
+      th(colspan = 2, 'Sepal'),
+      th(colspan = 2, 'Petal')
+    ),
+    tr(
+      lapply(rep(c('Length', 'Width'), 2), th)
+    )
+  )
+))
+print(sketch)
+
+datatable(iris[1:20, c(5, 1:4)], container = sketch)
+```
+
+## The `callback` argument
+
+The argument `callback` takes a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
+
+```{r}
+datatable(head(iris, 30), callback = 'function(table) {table.page("next").draw(false);}')
+```
+
+Please note this `callback` argument is only an argument of the `datatable()` function, and do not confuse it with the callbacks in the **DataTables** [options](options.html). The purpose of this argument is to allow users to manipulate the **DataTables** object after its creation.
+
+## Escaping Table Content
+
+The argument `escape` determines whether the HTML entities in the table are escaped or not. There can be potential security problems when the table is rendered in dynamic web applications such as Shiny if you do not escape them. Here is a quick example:
+
+```{r}
+m = matrix(c(
+  '<b>Bold</b>', '<em>Emphasize</em>', '<a href="http://rstudio.com">RStudio</a>',
+  '<a href="#" onclick="alert(\'Hello World\');">Hello</a>'
+), 2)
+colnames(m) = c('<span style="color:red">Column 1</span>', '<em>Column 2</em>')
+datatable(m)  # escape = TRUE by default
+datatable(m, escape = FALSE)
+```
+
+Besides `TRUE` and `FALSE`, you can also specify which columns you want to escape, e.g.
+
+```{r eval=FALSE}
+datatable(m, escape = 1)  # escape the first column
+datatable(m, escape = 2)  # escape the second column
+datatable(m, escape = c(TRUE, FALSE))  # escape the first column
+colnames(m) = c('V1', 'V2')
+datatable(m, escape = 'V1')
+```
+

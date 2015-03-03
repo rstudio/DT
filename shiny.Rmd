@@ -1,0 +1,3 @@
+How to listen to DataTables events, and pass data back to R?
+
+To be continued...

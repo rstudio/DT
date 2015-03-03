@@ -1,0 +1,105 @@
+---
+title: DataTables Options
+---
+
+---
+
+**DataTables** has a large number of [initialization options](http://datatables.net/reference/option), which make it very flexible to customize the table. You can write these options in a list in R, and `datatable()` will automatically convert them to JSON as needed by **DataTables**.
+
+# Default Configurations
+
+The **DT** package modified the default behavior of **DataTables** in these aspects:
+
+- the table is not ordered by default (**DataTables** orders a table by its first column by default);
+- numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;
+
+# Initialization Options
+
+We can pass initialization options to `datatable()` via the `options` argument. For example, we center the 5th column in the table below^[To know more about `columnDefs` and `className`, see [this reference page](http://datatables.net/reference/option/columns.className).], and customize the length menu:
+
+```{r}
+datatable(head(iris, 20), options = list(
+  columnDefs = list(list(className = 'dt-center', targets = 4)),
+  pageLength = 5,
+  lengthMenu = c(5, 10, 15, 20)
+))
+```
+
+The target column index is 4 but we expect to center the 5th column. This might be a little surprising to R users, and is also what we need to be very careful about. Because JavaScript indexes from 0 instead of 1, the index of the 5th element is 4.
+
+# Examples of DataTables Options
+
+## Sorting
+
+We can use the `order` option to specify how we want to order the rows. For example, we sort the table by columns 2 (ascending) and 4 (descending):
+
+```{r}
+datatable(head(mtcars, 30), options = list(
+  order = list(list(1, 'asc'), list(3, 'desc'))
+))
+```
+
+Again, please keep in mind that JavaScript indexes from 0, and the column indices here should be 1 and 3, respectively.
+
+## DOM Elements
+
+By default, the table has these DOM elements: the length menu, the search box, the table, the information summary, and the pagination control. You can choose to display a subset of these elements using the [`dom`](http://datatables.net/reference/option/dom) option. Here are some examples:
+
+```{r}
+# only display the table, and nothing else
+datatable(head(iris), options = list(dom = 't'))
+# the filtering box and the table
+datatable(head(iris), options = list(dom = 'ft'))
+```
+
+
+## Callbacks in Options
+
+We can also customize the callbacks in **DataTables** options. For example, we use the `initComplete` callback function in `options` to change the background color of the table header to black after the initialization:
+
+```{r}
+datatable(head(iris, 20), options = list(
+  initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+    "}")
+))
+```
+
+The function `JS()` tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using **RJSONIO**) and decode it in the browser.
+
+## Column Rendering
+
+We can define a custom rendering function for particular columns in the option `columnDefs`. For example, we abbreviate character strings that are wider than 6 characters using the first 6 characters plus an ellipsis (...), and the full character string will be displayed as a tooltip when you mouse over the cell^[See the documentation for [columns.render](http://datatables.net/reference/option/columns.render).]:
+
+```{r}
+datatable(iris[c(1:20, 51:60, 101:120), ], options = list(columnDefs = list(list(
+  targets = 4,
+  render = JS(
+    "function(data, type, full, meta) {",
+    "return type === 'display' && data.length > 6 ?",
+    "'<span title=\"' + data + '\">' + data.substr(0, 6) + '...</span>' : data;",
+    "}")
+))), callback = 'function(table) {table.page(3).draw(false);}')
+```
+
+We used the `callback` argument in `datatable()` above, to navigate to the 4th page after the table is created.
+
+## Row Rendering
+
+Similarly, we can define how to render data in the rows using the `rowCallback` option. In the following example, we display some big numbers, format the 3rd column as currency, and order by this column:
+
+```{r rand.seed=set.seed(123)}
+m = as.data.frame(matrix(round(rnorm(100, 1e5, 1e6)), 20))
+datatable(m, options = list(
+  rowCallback = JS(
+    "function(row, data) {",
+    "var num = '$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');",
+    "$('td:eq(2)', row).html(num);",
+    "}")
+), callback = "function(table) {table.order([2, 'asc']).draw()}")
+```
+
+You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix `$` to the number. You should know `data[2]` means the 3rd element in the row now.
+
+Since it is common for users to format numbers in the data columns, we have provided a few simple helper [functions](functions.html) (e.g. `formatCurrency()`) in this package to do these tasks in a much easier way, so you do not have to write the JavaScript code by yourself.

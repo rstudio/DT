@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>The FixedHeader Extension</title>
+
+<script src="libs/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="libs/datatables/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/datatables-fixedHeader/dataTables.fixedHeader.min.css" rel="stylesheet" />
+<script src="libs/datatables-fixedHeader/dataTables.fixedHeader.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">The FixedHeader Extension</h1>
+</div>
+
+
+<p>Here is an example of the <code>FixedHeader</code> extension. Scroll down the page, and you will always see the table header.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
+  iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>), <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,
+  <span class="dt">callback =</span> <span class="st">&#39;function(table) {new $.fn.dataTable.FixedHeader(table);}&#39;</span>
+)</code></pre>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5716">{ "x": {
+ "data": [
+ [               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1,               5.4,               5.1,               4.6,               5.1,               4.8,                 5,                 5,               5.2,               5.2,               4.7,               4.8,               5.4,               5.2,               5.5,               4.9,                 5,               5.5,               4.9,               4.4,               5.1,                 5,               4.5,               4.4,                 5,               5.1,               4.8,               5.1,               4.6,               5.3,                 5,                 7,               6.4,               6.9,               5.5,               6.5,               5.7,               6.3,               4.9,               6.6,               5.2,                 5,               5.9,                 6,               6.1,               5.6,               6.7,               5.6,               5.8,               6.2,               5.6,               5.9,               6.1,               6.3,               6.1,               6.4,               6.6,               6.8,               6.7,                 6,               5.7,               5.5,               5.5,               5.8,                 6,               5.4,                 6,               6.7,               6.3,               5.6,               5.5,               5.5,               6.1,               5.8,                 5,               5.6,               5.7,               5.7,               6.2,               5.1,               5.7,               6.3,               5.8,               7.1,               6.3,               6.5,               7.6,               4.9,               7.3,               6.7,               7.2,               6.5,               6.4,               6.8,               5.7,               5.8,               6.4,               6.5,               7.7,               7.7,                 6,               6.9,               5.6,               7.7,               6.3,               6.7,               7.2,               6.2,               6.1,               6.4,               7.2,               7.4,               7.9,               6.4,               6.3,               6.1,               7.7,               6.3,               6.4,                 6,               6.9,               6.7,               6.9,               5.8,               6.8,               6.7,               6.7,               6.3,               6.5,               6.2,               5.9 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9,               3.4,               3.4,               2.9,               3.1,               3.7,               3.4,                 3,                 3,                 4,               4.4,               3.9,               3.5,               3.8,               3.8,               3.4,               3.7,               3.6,               3.3,               3.4,                 3,               3.4,               3.5,               3.4,               3.2,               3.1,               3.4,               4.1,               4.2,               3.1,               3.2,               3.5,               3.6,                 3,               3.4,               3.5,               2.3,               3.2,               3.5,               3.8,                 3,               3.8,               3.2,               3.7,               3.3,               3.2,               3.2,               3.1,               2.3,               2.8,               2.8,               3.3,               2.4,               2.9,               2.7,                 2,                 3,               2.2,               2.9,               2.9,               3.1,                 3,               2.7,               2.2,               2.5,               3.2,               2.8,               2.5,               2.8,               2.9,                 3,               2.8,                 3,               2.9,               2.6,               2.4,               2.4,               2.7,               2.7,                 3,               3.4,               3.1,               2.3,                 3,               2.5,               2.6,                 3,               2.6,               2.3,               2.7,                 3,               2.9,               2.9,               2.5,               2.8,               3.3,               2.7,                 3,               2.9,                 3,                 3,               2.5,               2.9,               2.5,               3.6,               3.2,               2.7,                 3,               2.5,               2.8,               3.2,                 3,               3.8,               2.6,               2.2,               3.2,               2.8,               2.8,               2.7,               3.3,               3.2,               2.8,                 3,               2.8,                 3,               2.8,               3.8,               2.8,               2.8,               2.6,                 3,               3.4,               3.1,                 3,               3.1,               3.1,               3.1,               2.7,               3.2,               3.3,                 3,               2.5,                 3,               3.4,                 3 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5,               1.7,               1.5,                 1,               1.7,               1.9,               1.6,               1.6,               1.5,               1.4,               1.6,               1.6,               1.5,               1.5,               1.4,               1.5,               1.2,               1.3,               1.4,               1.3,               1.5,               1.3,               1.3,               1.3,               1.6,               1.9,               1.4,               1.6,               1.4,               1.5,               1.4,               4.7,               4.5,               4.9,                 4,               4.6,               4.5,               4.7,               3.3,               4.6,               3.9,               3.5,               4.2,                 4,               4.7,               3.6,               4.4,               4.5,               4.1,               4.5,               3.9,               4.8,                 4,               4.9,               4.7,               4.3,               4.4,               4.8,                 5,               4.5,               3.5,               3.8,               3.7,               3.9,               5.1,               4.5,               4.5,               4.7,               4.4,               4.1,                 4,               4.4,               4.6,                 4,               3.3,               4.2,               4.2,               4.2,               4.3,                 3,               4.1,                 6,               5.1,               5.9,               5.6,               5.8,               6.6,               4.5,               6.3,               5.8,               6.1,               5.1,               5.3,               5.5,                 5,               5.1,               5.3,               5.5,               6.7,               6.9,                 5,               5.7,               4.9,               6.7,               4.9,               5.7,                 6,               4.8,               4.9,               5.6,               5.8,               6.1,               6.4,               5.6,               5.1,               5.6,               6.1,               5.6,               5.5,               4.8,               5.4,               5.6,               5.1,               5.1,               5.9,               5.7,               5.2,                 5,               5.2,               5.4,               5.1 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3,               0.2,               0.4,               0.2,               0.5,               0.2,               0.2,               0.4,               0.2,               0.2,               0.2,               0.2,               0.4,               0.1,               0.2,               0.2,               0.2,               0.2,               0.1,               0.2,               0.2,               0.3,               0.3,               0.2,               0.6,               0.4,               0.3,               0.2,               0.2,               0.2,               0.2,               1.4,               1.5,               1.5,               1.3,               1.5,               1.3,               1.6,                 1,               1.3,               1.4,                 1,               1.5,                 1,               1.4,               1.3,               1.4,               1.5,                 1,               1.5,               1.1,               1.8,               1.3,               1.5,               1.2,               1.3,               1.4,               1.4,               1.7,               1.5,                 1,               1.1,                 1,               1.2,               1.6,               1.5,               1.6,               1.5,               1.3,               1.3,               1.3,               1.2,               1.4,               1.2,                 1,               1.3,               1.2,               1.3,               1.3,               1.1,               1.3,               2.5,               1.9,               2.1,               1.8,               2.2,               2.1,               1.7,               1.8,               1.8,               2.5,                 2,               1.9,               2.1,                 2,               2.4,               2.3,               1.8,               2.2,               2.3,               1.5,               2.3,                 2,                 2,               1.8,               2.1,               1.8,               1.8,               1.8,               2.1,               1.6,               1.9,                 2,               2.2,               1.5,               1.4,               2.3,               2.4,               1.8,               1.8,               2.1,               2.4,               2.3,               1.9,               2.3,               2.5,               2.3,               1.9,                 2,               2.3,               1.8 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica" ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "pageLength":                50,
+"columnDefs": [
+ {
+ "className": "dt-right",
+"targets": [                 0,                 1,                 2,                 3 ] 
+} 
+],
+"order": [] 
+},
+"callback": "function(table) {new $.fn.dataTable.FixedHeader(table);}",
+"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+},"evals": [  ] }</script></p>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

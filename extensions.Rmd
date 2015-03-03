@@ -1,0 +1,136 @@
+**DataTables** has a number of extensions, and all of them have been integrated into **DT**. You can use the `extensions` argument of `datatable()` to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. `extensions = c('AutoFill', 'ColReorder')`.
+
+# AutoFill
+
+With the `AutoFill` extension, you will see a plus sign in the bottom-right corner of a cell when you mouse over the cell. You can drag the sign to automatically fill the column.
+
+```{r}
+datatable(
+  cbind(ID = seq_len(nrow(iris)), iris), extensions = 'AutoFill',
+  callback = 'function(table) {new $.fn.dataTable.AutoFill(table);}'
+)
+```
+
+# ColReorder
+
+You can click and drag the table header to move a certain column to a different place using the `ColReorder` extension.
+
+```{r}
+datatable(iris, extensions = 'ColReorder', options = list(dom = 'Rlfrtip'))
+```
+
+# ColVis
+
+The `ColVis` extension adds a button to the table to show/hide certain columns.
+
+```{r}
+datatable(iris, extensions = 'ColVis', options = list(dom = 'C<"clear">lfrtip'))
+```
+
+# FixedColumns
+
+When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) so that they will be visible when you scroll the table horizontally.
+
+```{r}
+m = as.data.frame(round(matrix(rnorm(100), 5), 5))
+m = cbind(ID = seq_len(nrow(m)), m)
+datatable(
+  m, extensions = 'FixedColumns',
+  callback = 'function(table){new $.fn.dataTable.FixedColumns(table);}',
+  options = list(
+    dom = 't',
+    scrollX = TRUE,
+    scrollCollapse = TRUE
+  )
+)
+```
+
+# FixedHeader
+
+You may want the table header to be always visible when scrolling down the table, and you can use the `FixedHeader` extension in this case.
+
+```{r eval=FALSE}
+datatable(
+  iris, options = list(pageLength = 50), extensions = 'FixedHeader',
+  callback = 'function(table) {new $.fn.dataTable.FixedHeader(table);}'
+)
+```
+
+Since we have a navigation bar on the top of this page, this extension does not work well on this particular page (the table header will be hidden behind the navigation bar). Please see [this separate page](fixedheader.html) for a real example.
+
+# KeyTable
+
+The `KeyTable` extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
+
+```{r}
+datatable(
+  iris, extensions = 'KeyTable',
+  callback = 'function(table) {$.fn.dataTable.KeyTable(table);}'
+)
+```
+
+# Responsive
+
+The `Responsive` extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.
+
+```{r}
+datatable(iris, extensions = 'Responsive', options = list(responsive = TRUE))
+```
+
+# Scroller
+
+When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. The `Scroller` extension makes it possible to only render the visible portion of the table.
+
+```{r}
+m = matrix(runif(1000 * 4), ncol = 4, dimnames = list(NULL, letters[1:4]))
+m = cbind(id = seq_len(nrow(m)), round(m, 2))
+datatable(m, extensions = 'Scroller', options = list(
+  deferRender = TRUE,
+  dom = "frtiS",
+  scrollY = 200,
+  scrollCollapse = TRUE
+))
+```
+
+# TableTools
+
+The `TableTools` extension adds a button toolbar to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Unlike other extensions, it has a special dependency on a Flash SWF file, which you have to copy to your application. The function `DT::copySWF()` was designed to do this job, and it returns a character string that can be used as the `sSwfPath` option of `TableTools`. Please also note that you must view the table via an HTTP server when you enable this extension, because the SWF file does not work on a static HTML page when opened locally without an HTTP server. There are several possible solutions, e.g.
+
+- render the table in a [Shiny](shiny.html) app (since **shiny** will start a server to serve the app)
+- if you rendered the table to a static HTML page (e.g. in an R Markdown document), you can
+    - publish the HTML page to a website (e.g. Github pages)
+    - serve the HTML page locally (e.g. using the [**servr**](https://github.com/yihui/servr) package)
+
+This page is currently hosted on Github, so you should see the toolbar from `TableTools` below:
+
+```{r}
+datatable(
+  iris, extensions = 'TableTools', options = list(
+    dom = 'T<"clear">lfrtip',
+    tableTools = list(sSwfPath = copySWF())
+  )
+)
+```
+
+If you want to view this page locally, you cannot just click and open the file `extensions.html`. Instead, you may run `servr::httd()` in R to host the website locally.
+
+As mentioned before, you can use this extension in a Shiny app, and here is a minimal example. You may save the R code below to a file named `app.R`, and create a directory named `www` under the directory of `app.R`. Then `shiny::runApp()` should launch the app of the table rendered with `TableTools`.
+
+```{r eval=FALSE, message=FALSE}
+library(shiny)
+library(DT)
+shinyApp(
+  ui = fluidPage(dataTableOutput('foo')),
+  server = function(input, output) {
+    output$foo = renderDataTable({
+      datatable(
+        iris, extensions = 'TableTools', options = list(
+          dom = 'T<"clear">lfrtip',
+          tableTools = list(sSwfPath = copySWF('www'))
+        )
+      )
+    })
+  }
+)
+```
+
