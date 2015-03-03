@@ -8,7 +8,7 @@ unzip(out)
 # base64 encode images into CSS
 encode_img = function(css) {
   x = readLines(css)
-  m = gregexpr('"?[.][.][^"]+?[.]png"?', x)
+  m = gregexpr('("?)[.][.][^"]+?[.]png\\1', x)
   regmatches(x, m) = lapply(regmatches(x, m), function(ps) {
     ps = gsub('^"|"$', '', ps)
     sapply(ps, knitr::image_uri)
