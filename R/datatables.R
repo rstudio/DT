@@ -3,7 +3,6 @@
 #' This function creates an HTML widget to display rectangular data (a matrix or
 #' data frame) using the JavaScript library DataTables.
 #' @param data a data object (either a matrix or a data frame)
-#' @param id the id for the table
 #' @param options a list of initialization options (see
 #'   \url{http://datatables.net/reference/option/}); the character options
 #'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
@@ -37,7 +36,7 @@
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, id = NULL, options = list(), callback = 'function(table) {}',
+  data, options = list(), callback = 'function(table) {}',
   colnames, container, server = FALSE, escape = TRUE, extensions = NULL
 ) {
   isDF = is.data.frame(data)
@@ -73,7 +72,6 @@ datatable = function(
   }
 
   if (missing(container)) container = tags$table(
-    id = id,
     tags$thead(tags$tr(lapply(escapeColNames(colnames, escape), tags$th)))
   )
 

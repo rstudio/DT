@@ -3,13 +3,11 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, id = NULL, options = list(), callback = "function(table) {}", colnames, 
-    container, server = FALSE, escape = TRUE, extensions = NULL)
+datatable(data, options = list(), callback = "function(table) {}", colnames, container, 
+    server = FALSE, escape = TRUE, extensions = NULL)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
-
-\item{id}{the id for the table}
 
 \item{options}{a list of initialization options (see
 \url{http://datatables.net/reference/option/}); the character options
