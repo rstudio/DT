@@ -57,7 +57,7 @@ datatable = function(
   if (length(numc))
     options = appendColumnDefs(options, list(className = 'dt-right', targets = numc - 1))
 
-  # make sure the table is _not_ ordered by default (change the DataTables defalt)
+  # make sure the table is _not_ ordered by default (change the DataTables default)
   if (is.null(options[['order']])) options$order = list()
 
   cn = base::colnames(data)
