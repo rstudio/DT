@@ -29,6 +29,33 @@ body {
 </style>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
 
 
 </head>
@@ -81,8 +108,23 @@ img {
 
 
 
-<p>How to listen to DataTables events, and pass data back to R?</p>
-<p>To be continued…</p>
+<div id="render-a-table" class="section level1">
+<h1><span class="header-section-number">1</span> Render A Table</h1>
+<p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>dataTableOutput()</code> and <code>renderDataTable()</code> in <strong>DT</strong> (instead of <strong>shiny</strong>):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">shinyApp</span>(
+  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
+  <span class="dt">server =</span> function(input, output) {
+    output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>({
+      DT::<span class="kw">datatable</span>(iris)
+    })
+  }
+)</code></pre>
+</div>
+<div id="interaction-with-shiny" class="section level1">
+<h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
+<p>TODO…</p>
+</div>
 
 <script>
 // manage active state of menu based on current page

@@ -194,16 +194,7 @@ if (<span class="kw">packageVersion</span>(<span class="st">&#39;shiny&#39;</spa
   output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(widget)
 })</code></pre>
 <p>That is more or less how <strong>DataTables</strong> has been working internally in <strong>shiny</strong>.</p>
-<p>Please note this example is <em>experimental</em>, and may have many rough edges. You may not really need server-side processing at all: client-side DataTables may just suffice. Here is a minimal example of client-side DataTables:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-<span class="kw">shinyApp</span>(
-  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
-  <span class="dt">server =</span> function(input, output) {
-    output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>({
-      DT::<span class="kw">datatable</span>(iris)
-    })
-  }
-)</code></pre>
+<p>Please note this example is <em>experimental</em>, and may have many rough edges. You may not really need server-side processing at all: client-side DataTables may just suffice.</p>
 </div>
 </div>
 

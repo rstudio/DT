@@ -1,3 +1,19 @@
-How to listen to DataTables events, and pass data back to R?
+# Render A Table
 
-To be continued...
+Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions `dataTableOutput()` and `renderDataTable()` in **DT** (instead of **shiny**):
+
+```{r eval=FALSE}
+library(shiny)
+shinyApp(
+  ui = fluidPage(DT::dataTableOutput('tbl')),
+  server = function(input, output) {
+    output$tbl = DT::renderDataTable({
+      DT::datatable(iris)
+    })
+  }
+)
+```
+
+# Interaction with Shiny
+
+TODO...
