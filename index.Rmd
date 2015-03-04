@@ -70,6 +70,19 @@ print(sketch)
 datatable(iris[1:20, c(5, 1:4)], container = sketch)
 ```
 
+You can also add a footer to the table container, and here is an example:
+
+```{r comment=''}
+# a custom table with both header and footer
+sketch = htmltools::withTags(table(
+  tableHeader(iris, 'head'),
+  tableHeader(iris, 'foot')
+))
+print(sketch)
+
+datatable(head(iris, 10), container = sketch, options = list(pageLength = 5, dom = 'tip'))
+```
+
 ## The `callback` argument
 
 The argument `callback` takes a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
