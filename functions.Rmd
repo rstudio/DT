@@ -17,3 +17,16 @@ datatable(m) %>% formatCurrency(1:2, '\U20AC') %>% formatRound('E', 3)
 ```
 
 Under the hood, these formatting functions are just wrappers for the `rowCallback` option to generate the appropriate JavaScript code.
+
+# Table Utilities
+
+The `tableHeader()` function is a wrapper of `htmltools::tags` to generate a table header or footer. It may be convenient when you want to define a custom [table container](./).
+
+```{r comment='', render=print}
+tableHeader(iris)
+tableHeader(colnames(iris))  # equivalent to tableHeader(iris)
+tableHeader(iris, 'foot')  # footer
+
+library(htmltools)
+tags$table(tableHeader(iris, 'head'), tableHeader(iris, 'foot'))
+```

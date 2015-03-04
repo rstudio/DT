@@ -207,6 +207,62 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 },"evals": [ "options.rowCallback" ] }</script></p>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 </div>
+<div id="table-utilities" class="section level1">
+<h1><span class="header-section-number">2</span> Table Utilities</h1>
+<p>The <code>tableHeader()</code> function is a wrapper of <code>htmltools::tags</code> to generate a table header or footer. It may be convenient when you want to define a custom <a href="./">table container</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableHeader</span>(iris)</code></pre>
+<pre><code>&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Sepal.Length&lt;/th&gt;
+    &lt;th&gt;Sepal.Width&lt;/th&gt;
+    &lt;th&gt;Petal.Length&lt;/th&gt;
+    &lt;th&gt;Petal.Width&lt;/th&gt;
+    &lt;th&gt;Species&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt; </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableHeader</span>(<span class="kw">colnames</span>(iris))  <span class="co"># equivalent to tableHeader(iris)</span></code></pre>
+<pre><code>&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Sepal.Length&lt;/th&gt;
+    &lt;th&gt;Sepal.Width&lt;/th&gt;
+    &lt;th&gt;Petal.Length&lt;/th&gt;
+    &lt;th&gt;Petal.Width&lt;/th&gt;
+    &lt;th&gt;Species&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt; </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableHeader</span>(iris, <span class="st">&#39;foot&#39;</span>)  <span class="co"># footer</span></code></pre>
+<pre><code>&lt;tfoot&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Sepal.Length&lt;/th&gt;
+    &lt;th&gt;Sepal.Width&lt;/th&gt;
+    &lt;th&gt;Petal.Length&lt;/th&gt;
+    &lt;th&gt;Petal.Width&lt;/th&gt;
+    &lt;th&gt;Species&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/tfoot&gt; </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(htmltools)
+tags$<span class="kw">table</span>(<span class="kw">tableHeader</span>(iris, <span class="st">&#39;head&#39;</span>), <span class="kw">tableHeader</span>(iris, <span class="st">&#39;foot&#39;</span>))</code></pre>
+<pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Sepal.Length&lt;/th&gt;
+      &lt;th&gt;Sepal.Width&lt;/th&gt;
+      &lt;th&gt;Petal.Length&lt;/th&gt;
+      &lt;th&gt;Petal.Width&lt;/th&gt;
+      &lt;th&gt;Species&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Sepal.Length&lt;/th&gt;
+      &lt;th&gt;Sepal.Width&lt;/th&gt;
+      &lt;th&gt;Petal.Length&lt;/th&gt;
+      &lt;th&gt;Petal.Width&lt;/th&gt;
+      &lt;th&gt;Species&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt; </code></pre>
+</div>
 
 <script>
 // manage active state of menu based on current page
