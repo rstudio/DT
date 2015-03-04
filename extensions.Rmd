@@ -92,6 +92,8 @@ datatable(m, extensions = 'Scroller', options = list(
 ))
 ```
 
+You can also save the data as JSON in a file and load it via the `ajax` option. See a live example in Shiny [here](https://yihui.shinyapps.io/DT-scroller/).
+
 # TableTools
 
 The `TableTools` extension adds a button toolbar to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Unlike other extensions, it has a special dependency on a Flash SWF file, which you have to copy to your application. The function `DT::copySWF()` was designed to do this job, and it returns a character string that can be used as the `sSwfPath` option of `TableTools`. Please also note that you must view the table via an HTTP server when you enable this extension, because the SWF file does not work on a static HTML page when opened locally without an HTTP server. There are several possible solutions, e.g.
