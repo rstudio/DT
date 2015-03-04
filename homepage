@@ -1,6 +1,0 @@
-#!/bin/sh
-
-touch .nojekyll
-cp ~/R/DT/doc/DT.html index.html
-git add index.html && git commit -m"update homepage" && git push origin gh-pages
-
