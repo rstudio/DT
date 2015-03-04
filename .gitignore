@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 tools/DataTables*
+rsconnect/
+large.txt
