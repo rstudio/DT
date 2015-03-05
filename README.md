@@ -12,3 +12,5 @@ This package is not on CRAN yet, and you can install it with **devtools**:
 devtools::install_github('rstudio/DT')
 # then try DT::datatable(iris) as a hello world example
 ```
+
+See the full documentation at <http://rstudio.github.io/DT>.
