@@ -80,6 +80,14 @@ datatable = function(
     options$serverSide = TRUE
   }
 
+  # automatically configure options and callback for extensions
+  if ('Responsive' %in% extensions) options$responsive = TRUE
+  # these extensions need to be initialized via new $.fn.dataTable...
+  extNew = intersect(extensions, c('AutoFill', 'FixedColumns', 'FixedHeader', 'KeyTable'))
+  if (missing(callback) && length(extNew)) {
+    callback = c('function(table) {', sprintf('new $.fn.dataTable.%s(table);', extNew), '}')
+  }
+
   # rstudio/DT#13: convert date/time to character
   if (isDF) for (j in seq_len(ncol(data))) {
     if (inherits(data[, j], 'Date')) {
