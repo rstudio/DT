@@ -27,6 +27,7 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #' @rdname dataTableOutput
 #' @inheritParams shiny::renderDataTable
 #' @param expr an expression to create a table widget
+#' @param ... currently ignored, with a warning message
 renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   if (length(list(...))) warning(
     "Arguments in addition to 'expr', 'env', and 'quoted' are ignored. ",

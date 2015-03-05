@@ -21,6 +21,8 @@ renderDataTable(expr, env = parent.frame(), quoted = FALSE, ...)
 
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
+
+\item{...}{currently ignored, with a warning message}
 }
 \description{
 These two functions are like most \code{fooOutput()} and \code{renderFoo()}
