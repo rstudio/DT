@@ -15,7 +15,11 @@ wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 JavaScript code instead of normal character strings}
 
 \item{callback}{a JavaScript callback function to be applied to the
-DataTables instance}
+DataTables instance; if extensions are used, a default callback will be
+automatically set up to initialize the extensions, and you have to provide
+a different different callback function if you want further customization
+of the extensions, which will require you to learn more about DataTables
+extensions and JavaScript}
 
 \item{colnames}{if missing, the column names of the data; otherwise it can be
 an unnamed character vector of names you want to show in the table header
@@ -40,6 +44,9 @@ alternatively, you can specify numeric column indices or column names to
 indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 third), or \code{c('Species', 'Sepal.Length')}}
+
+\item{extensions}{a character vector of the names of the DataTables
+extensions (\url{http://datatables.net/extensions/index})}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
