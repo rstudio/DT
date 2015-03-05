@@ -75,8 +75,8 @@ You can also add a footer to the table container, and here is an example:
 ```{r comment=''}
 # a custom table with both header and footer
 sketch = htmltools::withTags(table(
-  tableHeader(iris, 'head'),
-  tableHeader(iris, 'foot')
+  tableHeader(iris),
+  tableFooter(iris)
 ))
 print(sketch)
 

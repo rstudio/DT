@@ -133,8 +133,7 @@ img {
 <h1><span class="header-section-number">1</span> AutoFill</h1>
 <p>With the <code>AutoFill</code> extension, you will see a plus sign in the bottom-right corner of a cell when you mouse over the cell. You can drag the sign to automatically fill the column.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  <span class="kw">cbind</span>(<span class="dt">ID =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(iris)), iris), <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>,
-  <span class="dt">callback =</span> <span class="st">&#39;function(table) {new $.fn.dataTable.AutoFill(table);}&#39;</span>
+  <span class="kw">cbind</span>(<span class="dt">ID =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(iris)), iris), <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>
 )</code></pre>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5716">{ "x": {
@@ -157,7 +156,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {new $.fn.dataTable.AutoFill(table);}",
+"callback": "function(table) {\nnew $.fn.dataTable.AutoFill(table);\n}",
 "colnames": [ "ID", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 </div>
@@ -226,7 +225,6 @@ img {
 m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">ID =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), m)
 <span class="kw">datatable</span>(
   m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,
-  <span class="dt">callback =</span> <span class="st">&#39;function(table){new $.fn.dataTable.FixedColumns(table);}&#39;</span>,
   <span class="dt">options =</span> <span class="kw">list</span>(
     <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
     <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,
@@ -272,7 +270,7 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">ID =<
 ],
 "order": [] 
 },
-"callback": "function(table){new $.fn.dataTable.FixedColumns(table);}",
+"callback": "function(table) {\nnew $.fn.dataTable.FixedColumns(table);\n}",
 "colnames": [ "ID", "V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12", "V13", "V14", "V15", "V16", "V17", "V18", "V19", "V20" ] 
 },"evals": [  ] }</script></p>
 </div>
@@ -280,18 +278,14 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">ID =<
 <h1><span class="header-section-number">5</span> FixedHeader</h1>
 <p>You may want the table header to be always visible when scrolling down the table, and you can use the <code>FixedHeader</code> extension in this case.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>), <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,
-  <span class="dt">callback =</span> <span class="st">&#39;function(table) {new $.fn.dataTable.FixedHeader(table);}&#39;</span>
+  iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>), <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>
 )</code></pre>
 <p>Since we have a navigation bar on the top of this page, this extension does not work well on this particular page (the table header will be hidden behind the navigation bar). Please see <a href="fixedheader.html">this separate page</a> for a real example.</p>
 </div>
 <div id="keytable" class="section level1">
 <h1><span class="header-section-number">6</span> KeyTable</h1>
 <p>The <code>KeyTable</code> extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  iris, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>,
-  <span class="dt">callback =</span> <span class="st">&#39;function(table) {$.fn.dataTable.KeyTable(table);}&#39;</span>
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>)</code></pre>
 <p><div id="htmlwidget-57" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-57">{ "x": {
  "data": [
@@ -312,14 +306,14 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">ID =<
 ],
 "order": [] 
 },
-"callback": "function(table) {$.fn.dataTable.KeyTable(table);}",
+"callback": "function(table) {\nnew $.fn.dataTable.KeyTable(table);\n}",
 "colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 </div>
 <div id="responsive" class="section level1">
 <h1><span class="header-section-number">7</span> Responsive</h1>
 <p>The <code>Responsive</code> extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">extensions =</span> <span class="st">&#39;Responsive&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">responsive =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">extensions =</span> <span class="st">&#39;Responsive&#39;</span>)</code></pre>
 <p><div id="htmlwidget-1001" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-1001">{ "x": {
  "data": [
@@ -332,14 +326,14 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">ID =<
 "isDF": true,
 "container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
- "responsive": true,
-"columnDefs": [
+ "columnDefs": [
  {
  "className": "dt-right",
 "targets": [                 0,                 1,                 2,                 3 ] 
 } 
 ],
-"order": [] 
+"order": [],
+"responsive": true 
 },
 "callback": "function(table) {}",
 "colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 

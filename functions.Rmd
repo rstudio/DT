@@ -20,13 +20,13 @@ Under the hood, these formatting functions are just wrappers for the `rowCallbac
 
 # Table Utilities
 
-The `tableHeader()` function is a wrapper of `htmltools::tags` to generate a table header or footer. It may be convenient when you want to define a custom [table container](./).
+The functions `tableHeader()` and `tableFooter` are wrappers of `htmltools::tags` to generate a table header or footer. It may be convenient when you want to define a custom [table container](./).
 
 ```{r comment='', render=print}
 tableHeader(iris)
 tableHeader(colnames(iris))  # equivalent to tableHeader(iris)
-tableHeader(iris, 'foot')  # footer
+tableFooter(iris)  # footer
 
 library(htmltools)
-tags$table(tableHeader(iris, 'head'), tableHeader(iris, 'foot'))
+tags$table(tableHeader(iris), tableFooter(iris))
 ```

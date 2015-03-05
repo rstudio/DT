@@ -6,8 +6,7 @@ With the `AutoFill` extension, you will see a plus sign in the bottom-right corn
 
 ```{r}
 datatable(
-  cbind(ID = seq_len(nrow(iris)), iris), extensions = 'AutoFill',
-  callback = 'function(table) {new $.fn.dataTable.AutoFill(table);}'
+  cbind(ID = seq_len(nrow(iris)), iris), extensions = 'AutoFill'
 )
 ```
 
@@ -36,7 +35,6 @@ m = as.data.frame(round(matrix(rnorm(100), 5), 5))
 m = cbind(ID = seq_len(nrow(m)), m)
 datatable(
   m, extensions = 'FixedColumns',
-  callback = 'function(table){new $.fn.dataTable.FixedColumns(table);}',
   options = list(
     dom = 't',
     scrollX = TRUE,
@@ -51,8 +49,7 @@ You may want the table header to be always visible when scrolling down the table
 
 ```{r eval=FALSE}
 datatable(
-  iris, options = list(pageLength = 50), extensions = 'FixedHeader',
-  callback = 'function(table) {new $.fn.dataTable.FixedHeader(table);}'
+  iris, options = list(pageLength = 50), extensions = 'FixedHeader'
 )
 ```
 
@@ -63,10 +60,7 @@ Since we have a navigation bar on the top of this page, this extension does not 
 The `KeyTable` extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
 
 ```{r}
-datatable(
-  iris, extensions = 'KeyTable',
-  callback = 'function(table) {$.fn.dataTable.KeyTable(table);}'
-)
+datatable(iris, extensions = 'KeyTable')
 ```
 
 # Responsive
@@ -74,7 +68,7 @@ datatable(
 The `Responsive` extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.
 
 ```{r}
-datatable(iris, extensions = 'Responsive', options = list(responsive = TRUE))
+datatable(iris, extensions = 'Responsive')
 ```
 
 # Scroller

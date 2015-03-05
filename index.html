@@ -135,13 +135,13 @@ img {
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.12
+## [1] DT_0.0.14
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.8       evaluate_0.5.5     formatR_1.0.3     
 ##  [4] htmltools_0.2.6    htmlwidgets_0.3.2  knitr_1.9.1       
 ##  [7] magrittr_1.5       methods_3.1.2      RJSONIO_1.3-0     
-## [10] rmarkdown_0.5.1    stringi_0.4-1      stringr_0.9.0.9000
+## [10] rmarkdown_0.5.3.1  stringi_0.4-1      stringr_0.9.0.9000
 ## [13] tools_3.1.2        yaml_2.1.13</code></pre>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
@@ -315,8 +315,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <p>You can also add a footer to the table container, and here is an example:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table with both header and footer</span>
 sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<span class="kw">table</span>(
-  <span class="kw">tableHeader</span>(iris, <span class="st">&#39;head&#39;</span>),
-  <span class="kw">tableHeader</span>(iris, <span class="st">&#39;foot&#39;</span>)
+  <span class="kw">tableHeader</span>(iris),
+  <span class="kw">tableFooter</span>(iris)
 ))
 <span class="kw">print</span>(sketch)</code></pre>
 <pre><code>&lt;table&gt;

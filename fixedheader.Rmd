@@ -9,7 +9,6 @@ Here is an example of the `FixedHeader` extension. Scroll down the page, and you
 
 ```{r}
 datatable(
-  iris, options = list(pageLength = 50), extensions = 'FixedHeader',
-  callback = 'function(table) {new $.fn.dataTable.FixedHeader(table);}'
+  iris, options = list(pageLength = 50), extensions = 'FixedHeader'
 )
 ```
