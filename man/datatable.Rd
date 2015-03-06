@@ -3,8 +3,8 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, options = list(), callback = "function(table) {}", colnames, container, 
-    server = FALSE, escape = TRUE, extensions = NULL)
+datatable(data, options = list(), callback = "function(table) {}", rownames, colnames, 
+    container, server = FALSE, escape = TRUE, extensions = NULL)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -20,6 +20,10 @@ automatically set up to initialize the extensions, and you have to provide
 a different different callback function if you want further customization
 of the extensions, which will require you to learn more about DataTables
 extensions and JavaScript}
+
+\item{rownames}{\code{TRUE} (show row names) or \code{FALSE} (hide row names)
+or a character vector of row names; by default, the row names are displayed
+in the first column of the table if exist (not \code{NULL})}
 
 \item{colnames}{if missing, the column names of the data; otherwise it can be
 an unnamed character vector of names you want to show in the table header
