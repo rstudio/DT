@@ -37,3 +37,21 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   if (!quoted) expr = substitute(expr)
   htmlwidgets::shinyRenderWidget(expr, dataTableOutput, env, quoted = TRUE)
 }
+
+#' @export
+appendCheckboxes = function(data, id, after = TRUE) {
+  check = checkboxRows(data, id)
+  if (after) cbind(data, ' ' = check) else cbind(' ' = check, data)
+}
+
+#' @export
+checkboxRows = function(data, id) {
+  sprintf('<input id="%s%s" type="checkbox"/>', id, seq_len(nrow(data)))
+}
+
+#' @export
+selectedRows = function(input, data, id) {
+  sapply(seq_len(nrow(data)), function(i) {
+    isTRUE(input[[sprintf('%s%s', id, i)]])
+  })
+}
