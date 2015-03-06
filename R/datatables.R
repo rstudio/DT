@@ -13,6 +13,9 @@
 #'   a different different callback function if you want further customization
 #'   of the extensions, which will require you to learn more about DataTables
 #'   extensions and JavaScript
+#' @param rownames \code{TRUE} (show row names) or \code{FALSE} (hide row names)
+#'   or a character vector of row names; by default, the row names are displayed
+#'   in the first column of the table if exist (not \code{NULL})
 #' @param colnames if missing, the column names of the data; otherwise it can be
 #'   an unnamed character vector of names you want to show in the table header
 #'   instead of the default data column names; alternatively, you can provide a
@@ -43,7 +46,7 @@
 #' @example inst/examples/datatable.R
 datatable = function(
   data, options = list(), callback = 'function(table) {}',
-  colnames, container, server = FALSE, escape = TRUE, extensions = NULL
+  rownames, colnames, container, server = FALSE, escape = TRUE, extensions = NULL
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -56,8 +59,17 @@ datatable = function(
       stop("The 'data' matrix must have column names")
     numc = if (is.numeric(data)) seq_len(ncol(data))
   }
-  # TODO: how to deal with row names?
-  rownames(data) = NULL
+  # deal with row names: rownames = TRUE or missing, use rownames(data)
+  rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
+    if (is.character(rownames)) rownames  # use custom row names
+  }
+  if (length(rn)) {
+    data = cbind(' ' = rn, data)
+    numc = numc + 1  # move indices of numeric columns to the right by 1
+    options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
+  }
+
+  base::rownames(data) = NULL
 
   # align numeric columns to the right
   if (length(numc))
@@ -76,6 +88,9 @@ datatable = function(
     cn[i] = names(colnames)
     colnames = cn
   }
+  # when rownames = TRUE, user may have only provided colnames for original
+  # data, and we need to add a name for the first column, i.e. row names
+  if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
 
   if (missing(container))
     container = tags$table(tableHeader(colnames, escape))
