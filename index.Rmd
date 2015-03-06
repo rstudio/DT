@@ -31,6 +31,23 @@ datatable(iris)
 
 If you are familiar with **DataTables** already, you may use the `options` argument to customize the table. See the page [Options](options.html) for details. Here we explain the rest of the arguments of the `datatable()` function.
 
+## Display Row Names
+
+If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument `rownames = FALSE`, and you can also change row names by providing a different character vector to `rownames`.
+
+```{r}
+datatable(head(mtcars))
+datatable(head(mtcars), rownames = FALSE)  # no row names
+datatable(head(mtcars), rownames = head(LETTERS))  # new row names
+```
+
+Row names are essentialy a new column added to the original data (via `cbind(rownames(data), data)`). This has an important consequence in terms of the column indices. JavaScript indexes from 0 instead of 1, so the index of the _n_-th element is actually _n - 1_.^[By comparison, R indexes from 1.] When thinking of the column indices (which you will often have to do if you customize [options](options.html)), use
+
+- _n - 1_ as the index of the _n_-th column in the _original data_ if you do not display row names;
+- _n_ as the index of the _n_-th column in the _original data_ if you want to display row names, because the original index is _n - 1_ in JavaScript but we added the row names as the first column, and _(n - 1) + 1_ = _n_;
+
+It is very important to remember this when using DataTables [options](options.html).
+
 ## Custom Column Names
 
 By default, `datatable()` shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.
