@@ -105,6 +105,25 @@ datatable(
 )
 ```
 
+## Table Caption
+
+You can add a table caption via the `caption` argument. It can be either a character vector, or a tag object created from `htmltools::tags$caption()`. See this [blog post](http://datatables.net/blog/2014-11-07) for more information on table captions.
+
+```{r}
+datatable(
+  head(iris),
+  caption = 'Table 1: This is a simple caption for the table.'
+)
+# display the caption at the bottom, and <em> the caption
+datatable(
+  head(iris),
+  caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table 2: ', htmltools::em('This is a simple caption for the table.')
+  )
+)
+```
+
 ## The `callback` argument
 
 The argument `callback` takes a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
