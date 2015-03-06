@@ -27,6 +27,8 @@
 #' @param container a sketch of the HTML table to be filled with data cells; by
 #'   default, it is generated from \code{htmltools::tags$table()} with a table
 #'   header consisting of the column names of the data
+#' @param caption the table caption; a character vector or a tag object
+#'   generated from \code{htmltools::tags$caption()}
 #' @param server whether to use server-side processing; if \code{TRUE}, you must
 #'   provide a server URL so that DataTables can send Ajax requests to retrieve
 #'   data from the server
@@ -45,8 +47,8 @@
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, options = list(), callback = 'function(table) {}',
-  rownames, colnames, container, server = FALSE, escape = TRUE, extensions = NULL
+  data, options = list(), callback = 'function(table) {}', rownames, colnames,
+  container, caption = NULL, server = FALSE, escape = TRUE, extensions = NULL
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -129,10 +131,15 @@ datatable = function(
   }
   data = unname(data)
 
+  # generate <caption></caption>
+  if (is.character(caption)) caption = tags$caption(caption)
+  caption = as.character(caption)
+
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
-    callback = paste(callback, collapse = '\n'), colnames = cn
+    callback = paste(callback, collapse = '\n'), colnames = cn, caption = caption
   )
+  if (length(params$caption) == 0) params$caption = NULL
 
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
