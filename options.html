@@ -126,30 +126,35 @@ img {
 <h1><span class="header-section-number">2</span> Initialization Options</h1>
 <p>We can pass initialization options to <code>datatable()</code> via the <code>options</code> argument. For example, we center the 5th column in the table below<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and customize the length menu:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">className =</span> <span class="st">&#39;dt-center&#39;</span>, <span class="dt">targets =</span> <span class="dv">4</span>)),
+  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">className =</span> <span class="st">&#39;dt-center&#39;</span>, <span class="dt">targets =</span> <span class="dv">5</span>)),
   <span class="dt">pageLength =</span> <span class="dv">5</span>,
   <span class="dt">lengthMenu =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)
 ))</code></pre>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5716">{ "x": {
  "data": [
- [               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
+ [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
 [               3.5,                 3,               3.2,               3.1,               3.6,               3.9,               3.4,               3.4,               2.9,               3.1,               3.7,               3.4,                 3,                 3,                 4,               4.4,               3.9,               3.5,               3.8,               3.8 ],
 [               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5 ],
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
  {
  "className": "dt-center",
-"targets":                 4 
+"targets":                 5 
+},
+{
+ "orderable": false,
+"targets":                 0 
 },
 {
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3 ] 
+"targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
 "pageLength":                 5,
@@ -157,9 +162,15 @@ img {
 "order": [] 
 },
 "callback": "function(table) {}",
-"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
-<p>The target column index is 4 but we expect to center the 5th column. This might be a little surprising to R users, and is also what we need to be very careful about. Because JavaScript indexes from 0 instead of 1, the index of the 5th element is 4.</p>
+<p>The target column index is 5 but we actually centered the 6th column: the first column is row names, and the rest of columns are the <code>iris</code> data. The JavaScript index of the 6th column is 5. See the section “<a href="./#display-row-names">Display Row Names</a>” for more details.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># when rownames = FALSE, use 4 as the index of the Species column</span>
+<span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">rownames =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(
+  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">className =</span> <span class="st">&#39;dt-center&#39;</span>, <span class="dt">targets =</span> <span class="dv">4</span>)),
+  <span class="dt">pageLength =</span> <span class="dv">5</span>,
+  <span class="dt">lengthMenu =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)
+))</code></pre>
 </div>
 <div id="examples-of-datatables-options" class="section level1">
 <h1><span class="header-section-number">3</span> Examples of DataTables Options</h1>
@@ -167,12 +178,13 @@ img {
 <h2><span class="header-section-number">3.1</span> Sorting</h2>
 <p>We can use the <code>order</code> option to specify how we want to order the rows. For example, we sort the table by columns 2 (ascending) and 4 (descending):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars, <span class="dv">30</span>), <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dv">1</span>, <span class="st">&#39;asc&#39;</span>), <span class="kw">list</span>(<span class="dv">3</span>, <span class="st">&#39;desc&#39;</span>))
+  <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dv">2</span>, <span class="st">&#39;asc&#39;</span>), <span class="kw">list</span>(<span class="dv">4</span>, <span class="st">&#39;desc&#39;</span>))
 ))</code></pre>
 <p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-4929">{ "x": {
  "data": [
- [                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7 ],
+ [ "Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout", "Valiant", "Duster 360", "Merc 240D", "Merc 230", "Merc 280", "Merc 280C", "Merc 450SE", "Merc 450SL", "Merc 450SLC", "Cadillac Fleetwood", "Lincoln Continental", "Chrysler Imperial", "Fiat 128", "Honda Civic", "Toyota Corolla", "Toyota Corona", "Dodge Challenger", "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lotus Europa", "Ford Pantera L", "Ferrari Dino" ],
+[                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7 ],
 [                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6 ],
 [               160,               160,               108,               258,               360,               225,               360,             146.7,             140.8,             167.6,             167.6,             275.8,             275.8,             275.8,               472,               460,               440,              78.7,              75.7, 71.09999999999999,             120.1,               318,               304,               350,               400,                79,             120.3, 95.09999999999999,               351,               145 ],
 [               110,               110,                93,               110,               175,               105,               245,                62,                95,               123,               123,               180,               180,               180,               205,               215,               230,                66,                52,                65,                97,               150,               150,               245,               175,                66,                91,               113,               264,               175 ],
@@ -185,29 +197,32 @@ img {
 [                 4,                 4,                 1,                 1,                 2,                 1,                 4,                 2,                 2,                 4,                 4,                 3,                 3,                 3,                 4,                 4,                 4,                 1,                 2,                 1,                 1,                 2,                 2,                 4,                 2,                 1,                 2,                 2,                 4,                 6 ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "order": [
  [
-                 1,
+                 2,
 "asc" 
 ],
 [
-                 3,
+                 4,
 "desc" 
 ] 
 ],
 "columnDefs": [
  {
+ "orderable": false,
+"targets":                 0 
+},
+{
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3,                 4,                 5,                 6,                 7,                 8,                 9,                10 ] 
+"targets": [                 1,                 2,                 3,                 4,                 5,                 6,                 7,                 8,                 9,                10,                11 ] 
 } 
 ] 
 },
 "callback": "function(table) {}",
-"colnames": [ "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
+"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
 },"evals": [  ] }</script></p>
-<p>Again, please keep in mind that JavaScript indexes from 0, and the column indices here should be 1 and 3, respectively.</p>
 </div>
 <div id="dom-elements" class="section level2">
 <h2><span class="header-section-number">3.2</span> DOM Elements</h2>
@@ -217,52 +232,62 @@ img {
 <p><div id="htmlwidget-7837" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-7837">{ "x": {
  "data": [
- [               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
+ [ "1", "2", "3", "4", "5", "6" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
 [               3.5,                 3,               3.2,               3.1,               3.6,               3.9 ],
 [               1.4,               1.4,               1.3,               1.5,               1.4,               1.7 ],
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "dom": "t",
 "columnDefs": [
  {
+ "orderable": false,
+"targets":                 0 
+},
+{
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3 ] 
+"targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
 "order": [] 
 },
 "callback": "function(table) {}",
-"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the filtering box and the table</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;ft&#39;</span>))</code></pre>
 <p><div id="htmlwidget-5403" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5403">{ "x": {
  "data": [
- [               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
+ [ "1", "2", "3", "4", "5", "6" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
 [               3.5,                 3,               3.2,               3.1,               3.6,               3.9 ],
 [               1.4,               1.4,               1.3,               1.5,               1.4,               1.7 ],
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "dom": "ft",
 "columnDefs": [
  {
+ "orderable": false,
+"targets":                 0 
+},
+{
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3 ] 
+"targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
 "order": [] 
 },
 "callback": "function(table) {}",
-"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 </div>
 <div id="callbacks-in-options" class="section level2">
@@ -277,26 +302,31 @@ img {
 <p><div id="htmlwidget-880" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-880">{ "x": {
  "data": [
- [               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
+ [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
 [               3.5,                 3,               3.2,               3.1,               3.6,               3.9,               3.4,               3.4,               2.9,               3.1,               3.7,               3.4,                 3,                 3,                 4,               4.4,               3.9,               3.5,               3.8,               3.8 ],
 [               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5 ],
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "initComplete": "function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});\n}",
 "columnDefs": [
  {
+ "orderable": false,
+"targets":                 0 
+},
+{
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3 ] 
+"targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
 "order": [] 
 },
 "callback": "function(table) {}",
-"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [ "options.initComplete" ] }</script></p>
 <p>The function <code>JS()</code> tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using <strong>RJSONIO</strong>) and decode it in the browser.</p>
 </div>
@@ -304,7 +334,7 @@ img {
 <h2><span class="header-section-number">3.4</span> Column Rendering</h2>
 <p>We can define a custom rendering function for particular columns in the option <code>columnDefs</code>. For example, we abbreviate character strings that are wider than 6 characters using the first 6 characters plus an ellipsis (…), and the full character string will be displayed as a tooltip when you mouse over the cell<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris[<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">20</span>, <span class="dv">51</span>:<span class="dv">60</span>, <span class="dv">101</span>:<span class="dv">120</span>), ], <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(
-  <span class="dt">targets =</span> <span class="dv">4</span>,
+  <span class="dt">targets =</span> <span class="dv">5</span>,
   <span class="dt">render =</span> <span class="kw">JS</span>(
     <span class="st">&quot;function(data, type, full, meta) {&quot;</span>,
     <span class="st">&quot;return type === &#39;display&#39; &amp;&amp; data.length &gt; 6 ?&quot;</span>,
@@ -314,31 +344,36 @@ img {
 <p><div id="htmlwidget-4206" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-4206">{ "x": {
  "data": [
- [               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1,                 7,               6.4,               6.9,               5.5,               6.5,               5.7,               6.3,               4.9,               6.6,               5.2,               6.3,               5.8,               7.1,               6.3,               6.5,               7.6,               4.9,               7.3,               6.7,               7.2,               6.5,               6.4,               6.8,               5.7,               5.8,               6.4,               6.5,               7.7,               7.7,                 6 ],
+ [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1,                 7,               6.4,               6.9,               5.5,               6.5,               5.7,               6.3,               4.9,               6.6,               5.2,               6.3,               5.8,               7.1,               6.3,               6.5,               7.6,               4.9,               7.3,               6.7,               7.2,               6.5,               6.4,               6.8,               5.7,               5.8,               6.4,               6.5,               7.7,               7.7,                 6 ],
 [               3.5,                 3,               3.2,               3.1,               3.6,               3.9,               3.4,               3.4,               2.9,               3.1,               3.7,               3.4,                 3,                 3,                 4,               4.4,               3.9,               3.5,               3.8,               3.8,               3.2,               3.2,               3.1,               2.3,               2.8,               2.8,               3.3,               2.4,               2.9,               2.7,               3.3,               2.7,                 3,               2.9,                 3,                 3,               2.5,               2.9,               2.5,               3.6,               3.2,               2.7,                 3,               2.5,               2.8,               3.2,                 3,               3.8,               2.6,               2.2 ],
 [               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5,               4.7,               4.5,               4.9,                 4,               4.6,               4.5,               4.7,               3.3,               4.6,               3.9,                 6,               5.1,               5.9,               5.6,               5.8,               6.6,               4.5,               6.3,               5.8,               6.1,               5.1,               5.3,               5.5,                 5,               5.1,               5.3,               5.5,               6.7,               6.9,                 5 ],
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3,               1.4,               1.5,               1.5,               1.3,               1.5,               1.3,               1.6,                 1,               1.3,               1.4,               2.5,               1.9,               2.1,               1.8,               2.2,               2.1,               1.7,               1.8,               1.8,               2.5,                 2,               1.9,               2.1,                 2,               2.4,               2.3,               1.8,               2.2,               2.3,               1.5 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
  {
- "targets":                 4,
+ "targets":                 5,
 "render": "function(data, type, full, meta) {\nreturn type === 'display' && data.length > 6 ?\n'<span title=\"' + data + '\">' + data.substr(0, 6) + '...</span>' : data;\n}" 
 },
 {
+ "orderable": false,
+"targets":                 0 
+},
+{
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3 ] 
+"targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
 "order": [] 
 },
 "callback": "function(table) {table.page(3).draw(false);}",
-"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [ "options.columnDefs.0.render" ] }</script></p>
-<p>We used the <code>callback</code> argument in <code>datatable()</code> above, to navigate to the 4th page after the table is created.</p>
+<p>We used the <code>callback</code> argument in <code>datatable()</code> above, to navigate to the 4th page after the table is created. The index <code>3</code> in <code>table.page(3)</code> means the 4th page.</p>
 </div>
 <div id="row-rendering" class="section level2">
 <h2><span class="header-section-number">3.5</span> Row Rendering</h2>
@@ -347,33 +382,38 @@ img {
 <span class="kw">datatable</span>(m, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">rowCallback =</span> <span class="kw">JS</span>(
     <span class="st">&quot;function(row, data) {&quot;</span>,
-    <span class="st">&quot;var num = &#39;$&#39; + data[2].toString().replace(/</span><span class="ch">\\</span><span class="st">B(?=(</span><span class="ch">\\</span><span class="st">d{3})+(?!</span><span class="ch">\\</span><span class="st">d))/g, &#39;,&#39;);&quot;</span>,
-    <span class="st">&quot;$(&#39;td:eq(2)&#39;, row).html(num);&quot;</span>,
+    <span class="st">&quot;var num = &#39;$&#39; + data[3].toString().replace(/</span><span class="ch">\\</span><span class="st">B(?=(</span><span class="ch">\\</span><span class="st">d{3})+(?!</span><span class="ch">\\</span><span class="st">d))/g, &#39;,&#39;);&quot;</span>,
+    <span class="st">&quot;$(&#39;td:eq(3)&#39;, row).html(num);&quot;</span>,
     <span class="st">&quot;}&quot;</span>)
-), <span class="dt">callback =</span> <span class="st">&quot;function(table) {table.order([2, &#39;asc&#39;]).draw()}&quot;</span>)</code></pre>
+), <span class="dt">callback =</span> <span class="st">&quot;function(table) {table.order([3, &#39;asc&#39;]).draw()}&quot;</span>)</code></pre>
 <p><div id="htmlwidget-2388" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-2388">{ "x": {
  "data": [
- [           -460476,           -130177,           1658708,            170508,            229288,           1815065,            560916,          -1165061,           -586853,           -345662,           1324082,            459814,            500771,            210683,           -455841,           1886913,            597850,          -1866617,            801356,           -372791 ],
+ [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" ],
+[           -460476,           -130177,           1658708,            170508,            229288,           1815065,            560916,          -1165061,           -586853,           -345662,           1324082,            459814,            500771,            210683,           -455841,           1886913,            597850,          -1866617,            801356,           -372791 ],
 [           -967824,           -117975,           -926004,           -628891,           -525039,          -1586693,            937787,            253373,          -1038137,           1353815,            526464,           -195071,            995126,            978133,            921581,            788640,            653918,             38088,           -205963,           -280471 ],
 [           -594707,           -107917,          -1165396,           2268956,           1307962,          -1023109,           -302885,           -366655,            879965,             16631,            353319,             71453,             57130,           1468602,           -125771,           1616471,          -1448753,            684614,            223854,            315942 ],
 [            479639,           -402323,           -233207,           -918575,           -971791,            403529,            548210,            153004,           1022267,           2150085,           -391031,          -2209169,           1105739,           -609201,           -588009,           1125571,           -184773,          -1120718,            281303,            -38891 ],
 [            105764,            485280,           -270660,            744377,           -120487,            431782,           1196839,            535181,           -225932,           1248808,           1093504,            648397,            338732,           -527906,           1460652,           -500260,           2287333,           1632611,           -135700,           -926421 ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
- "rowCallback": "function(row, data) {\nvar num = '$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');\n$('td:eq(2)', row).html(num);\n}",
+ "rowCallback": "function(row, data) {\nvar num = '$' + data[3].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');\n$('td:eq(3)', row).html(num);\n}",
 "columnDefs": [
  {
+ "orderable": false,
+"targets":                 0 
+},
+{
  "className": "dt-right",
-"targets": [                 0,                 1,                 2,                 3,                 4 ] 
+"targets": [                 1,                 2,                 3,                 4,                 5 ] 
 } 
 ],
 "order": [] 
 },
-"callback": "function(table) {table.order([2, 'asc']).draw()}",
-"colnames": [ "V1", "V2", "V3", "V4", "V5" ] 
+"callback": "function(table) {table.order([3, 'asc']).draw()}",
+"colnames": [ " ", "V1", "V2", "V3", "V4", "V5" ] 
 },"evals": [ "options.rowCallback" ] }</script></p>
 <p>You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix <code>$</code> to the number. You should know <code>data[2]</code> means the 3rd element in the row now.</p>
 <p>Since it is common for users to format numbers in the data columns, we have provided a few simple helper <a href="functions.html">functions</a> (e.g. <code>formatCurrency()</code>) in this package to do these tasks in a much easier way, so you do not have to write the JavaScript code by yourself.</p>

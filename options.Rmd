@@ -19,13 +19,22 @@ We can pass initialization options to `datatable()` via the `options` argument. 
 
 ```{r}
 datatable(head(iris, 20), options = list(
-  columnDefs = list(list(className = 'dt-center', targets = 4)),
+  columnDefs = list(list(className = 'dt-center', targets = 5)),
   pageLength = 5,
   lengthMenu = c(5, 10, 15, 20)
 ))
 ```
 
-The target column index is 4 but we expect to center the 5th column. This might be a little surprising to R users, and is also what we need to be very careful about. Because JavaScript indexes from 0 instead of 1, the index of the 5th element is 4.
+The target column index is 5 but we actually centered the 6th column: the first column is row names, and the rest of columns are the `iris` data. The JavaScript index of the 6th column is 5. See the section "[Display Row Names](./#display-row-names)" for more details.
+
+```{r eval=FALSE}
+# when rownames = FALSE, use 4 as the index of the Species column
+datatable(head(iris, 20), rownames = FALSE, options = list(
+  columnDefs = list(list(className = 'dt-center', targets = 4)),
+  pageLength = 5,
+  lengthMenu = c(5, 10, 15, 20)
+))
+```
 
 # Examples of DataTables Options
 
@@ -35,11 +44,9 @@ We can use the `order` option to specify how we want to order the rows. For exam
 
 ```{r}
 datatable(head(mtcars, 30), options = list(
-  order = list(list(1, 'asc'), list(3, 'desc'))
+  order = list(list(2, 'asc'), list(4, 'desc'))
 ))
 ```
-
-Again, please keep in mind that JavaScript indexes from 0, and the column indices here should be 1 and 3, respectively.
 
 ## DOM Elements
 
@@ -74,7 +81,7 @@ We can define a custom rendering function for particular columns in the option `
 
 ```{r}
 datatable(iris[c(1:20, 51:60, 101:120), ], options = list(columnDefs = list(list(
-  targets = 4,
+  targets = 5,
   render = JS(
     "function(data, type, full, meta) {",
     "return type === 'display' && data.length > 6 ?",
@@ -83,7 +90,7 @@ datatable(iris[c(1:20, 51:60, 101:120), ], options = list(columnDefs = list(list
 ))), callback = 'function(table) {table.page(3).draw(false);}')
 ```
 
-We used the `callback` argument in `datatable()` above, to navigate to the 4th page after the table is created.
+We used the `callback` argument in `datatable()` above, to navigate to the 4th page after the table is created. The index `3` in `table.page(3)` means the 4th page.
 
 ## Row Rendering
 
@@ -94,10 +101,10 @@ m = as.data.frame(matrix(round(rnorm(100, 1e5, 1e6)), 20))
 datatable(m, options = list(
   rowCallback = JS(
     "function(row, data) {",
-    "var num = '$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');",
-    "$('td:eq(2)', row).html(num);",
+    "var num = '$' + data[3].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');",
+    "$('td:eq(3)', row).html(num);",
     "}")
-), callback = "function(table) {table.order([2, 'asc']).draw()}")
+), callback = "function(table) {table.order([3, 'asc']).draw()}")
 ```
 
 You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix `$` to the number. You should know `data[2]` means the 3rd element in the row now.

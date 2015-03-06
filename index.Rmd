@@ -84,7 +84,9 @@ sketch = htmltools::withTags(table(
 ))
 print(sketch)
 
-datatable(iris[1:20, c(5, 1:4)], container = sketch)
+# use rownames = FALSE here because we did not generate a cell for row names in
+# the header, and the header only contains five columns
+datatable(iris[1:20, c(5, 1:4)], container = sketch, rownames = FALSE)
 ```
 
 You can also add a footer to the table container, and here is an example:
@@ -97,7 +99,10 @@ sketch = htmltools::withTags(table(
 ))
 print(sketch)
 
-datatable(head(iris, 10), container = sketch, options = list(pageLength = 5, dom = 'tip'))
+datatable(
+  head(iris, 10),
+  container = sketch, options = list(pageLength = 5, dom = 'tip'), rownames = FALSE
+)
 ```
 
 ## The `callback` argument
