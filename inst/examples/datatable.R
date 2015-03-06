@@ -1,7 +1,7 @@
 # !formatR
 library(DT)
 
-# see the package vignette for examples
+# see the package vignette for examples and the link to website
 vignette('DT', package = 'DT')
 
 # some boring edge cases for testing purposes

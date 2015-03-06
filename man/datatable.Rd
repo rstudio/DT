@@ -60,7 +60,7 @@ You are recommended to escape the table content for security reasons
 \examples{
 library(DT)
 
-# see the package vignette for examples
+# see the package vignette for examples and the link to website
 vignette('DT', package = 'DT')
 
 # some boring edge cases for testing purposes
