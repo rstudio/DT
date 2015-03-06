@@ -4,7 +4,7 @@
 \title{Create an HTML table widget using the DataTables library}
 \usage{
 datatable(data, options = list(), callback = "function(table) {}", rownames, colnames, 
-    container, server = FALSE, escape = TRUE, extensions = NULL)
+    container, caption = NULL, server = FALSE, escape = TRUE, extensions = NULL)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -37,6 +37,9 @@ column name}
 \item{container}{a sketch of the HTML table to be filled with data cells; by
 default, it is generated from \code{htmltools::tags$table()} with a table
 header consisting of the column names of the data}
+
+\item{caption}{the table caption; a character vector or a tag object
+generated from \code{htmltools::tags$caption()}}
 
 \item{server}{whether to use server-side processing; if \code{TRUE}, you must
 provide a server URL so that DataTables can send Ajax requests to retrieve
