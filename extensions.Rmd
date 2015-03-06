@@ -5,9 +5,7 @@
 With the `AutoFill` extension, you will see a plus sign in the bottom-right corner of a cell when you mouse over the cell. You can drag the sign to automatically fill the column.
 
 ```{r}
-datatable(
-  cbind(ID = seq_len(nrow(iris)), iris), extensions = 'AutoFill'
-)
+datatable(iris, extensions = 'AutoFill')
 ```
 
 # ColReorder
@@ -32,7 +30,6 @@ When a table is too wide, you can fix certain columns (e.g. the left and/or the 
 
 ```{r}
 m = as.data.frame(round(matrix(rnorm(100), 5), 5))
-m = cbind(ID = seq_len(nrow(m)), m)
 datatable(
   m, extensions = 'FixedColumns',
   options = list(
