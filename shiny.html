@@ -18,6 +18,10 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="libs/datatables/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -105,8 +109,8 @@ img {
 
 
 
-<div id="render-a-table" class="section level1">
-<h1><span class="header-section-number">1</span> Render A Table</h1>
+<div id="a-minimal-example" class="section level1">
+<h1><span class="header-section-number">1</span> A Minimal Example</h1>
 <p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>dataTableOutput()</code> and <code>renderDataTable()</code> in <strong>DT</strong> (instead of <strong>shiny</strong>):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 <span class="kw">shinyApp</span>(
@@ -117,10 +121,87 @@ img {
     })
   }
 )</code></pre>
+<p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note that the function with the same name in <strong>DT</strong> should take a widget as the input instead of a data object, i.e. you should <code>renderDataTable(datatable(iris))</code> instead of <code>renderDataTable(iris)</code> in <strong>DT</strong>.</p>
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
-<p>TODO…</p>
+<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny.</p>
+<div id="row-selection" class="section level2">
+<h2><span class="header-section-number">2.1</span> Row Selection</h2>
+<p>One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function <code>appendCheckboxes()</code> to do this. Remember, you need to tell <code>datatable()</code> not to escape this column, otherwise you will see raw HTML code like <code>&lt;input type=&quot;checkbox&quot; ... /&gt;</code> in the table.</p>
+<pre class="sourceCode r"><code class="sourceCode r">d =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
+<span class="kw">datatable</span>(
+  <span class="kw">appendCheckboxes</span>(d), <span class="dt">escape =</span> -<span class="dv">7</span>,
+  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)
+)</code></pre>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5716">{ "x": {
+ "data": [
+ [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9,               3.4,               3.4,               2.9,               3.1,               3.7,               3.4,                 3,                 3,                 4,               4.4,               3.9,               3.5,               3.8,               3.8 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ],
+[ "<input data-row=\"1\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"2\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"3\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"4\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"5\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"6\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"7\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"8\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"9\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"10\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"11\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"12\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"13\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"14\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"15\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"16\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"17\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"18\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"19\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"20\" type=\"checkbox\" class=\"DT checkboxRows\" />" ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n      <th> </th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "pageLength":                 5,
+"dom": "tip",
+"columnDefs": [
+ {
+ "orderable": false,
+"targets":                 0 
+},
+{
+ "className": "dt-right",
+"targets": [                 1,                 2,                 3,                 4 ] 
+} 
+],
+"order": [] 
+},
+"callback": "function(table) {}",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", " " ] 
+},"evals": [  ] }</script></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just use checkboxes as the &quot;row names&quot;</span>
+<span class="kw">datatable</span>(
+  d, <span class="dt">rownames =</span> <span class="kw">checkboxRows</span>(d), <span class="dt">escape =</span> -<span class="dv">1</span>,
+  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)
+)</code></pre>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-4929">{ "x": {
+ "data": [
+ [ "<input data-row=\"1\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"2\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"3\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"4\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"5\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"6\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"7\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"8\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"9\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"10\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"11\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"12\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"13\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"14\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"15\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"16\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"17\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"18\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"19\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"20\" type=\"checkbox\" class=\"DT checkboxRows\" />" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4,               4.6,                 5,               4.4,               4.9,               5.4,               4.8,               4.8,               4.3,               5.8,               5.7,               5.4,               5.1,               5.7,               5.1 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9,               3.4,               3.4,               2.9,               3.1,               3.7,               3.4,                 3,                 3,                 4,               4.4,               3.9,               3.5,               3.8,               3.8 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "pageLength":                 5,
+"dom": "tip",
+"columnDefs": [
+ {
+ "orderable": false,
+"targets":                 0 
+},
+{
+ "className": "dt-right",
+"targets": [                 1,                 2,                 3,                 4 ] 
+} 
+],
+"order": [] 
+},
+"callback": "function(table) {}",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+},"evals": [  ] }</script></p>
+<p>The examples above only show you how a table looks like when you add a column of checkboxes. See <a href="https://yihui.shinyapps.io/DT-checkbox/">this example</a> for how Shiny react to changes from the checkboxes.</p>
+</div>
 </div>
 
 <script>

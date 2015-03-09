@@ -1,4 +1,4 @@
-# Render A Table
+# A Minimal Example
 
 Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions `dataTableOutput()` and `renderDataTable()` in **DT** (instead of **shiny**):
 
@@ -14,6 +14,27 @@ shinyApp(
 )
 ```
 
+If you have used the `renderDataTable()` function in **shiny** before, please note that the function with the same name in **DT** should take a widget as the input instead of a data object, i.e. you should `renderDataTable(datatable(iris))` instead of `renderDataTable(iris)` in **DT**.
+
 # Interaction with Shiny
 
-TODO...
+There are some information exposed to Shiny from the table widget as you interact with the table in Shiny.
+
+## Row Selection
+
+One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function `appendCheckboxes()` to do this. Remember, you need to tell `datatable()` not to escape this column, otherwise you will see raw HTML code like `<input type="checkbox" ... />` in the table.
+
+```{r}
+d = head(iris, 20)
+datatable(
+  appendCheckboxes(d), escape = -7,
+  options = list(pageLength = 5, dom = 'tip')
+)
+# just use checkboxes as the "row names"
+datatable(
+  d, rownames = checkboxRows(d), escape = -1,
+  options = list(pageLength = 5, dom = 'tip')
+)
+```
+
+The examples above only show you how a table looks like when you add a column of checkboxes. See [this example](https://yihui.shinyapps.io/DT-checkbox/) for how Shiny react to changes from the checkboxes.
