@@ -25,7 +25,8 @@ HTMLWidgets.widget({
       } else {
         selectedRows.splice($.inArray(selectedRows, value), 1);
       }
-      Shiny.onInputChange($this.data('id'), selectedRows);
+      Shiny.onInputChange(el.id + '_selected', selectedRows);
     });
+    Shiny.onInputChange(el.id + '_selected', selectedRows);
   }
 })

@@ -39,24 +39,15 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
 }
 
 #' @export
-appendCheckboxes = function(data, id, after = TRUE) {
-  check = checkboxRows(data, id)
+appendCheckboxes = function(data, after = TRUE) {
+  check = checkboxRows(data)
   if (after) cbind(data, ' ' = check) else cbind(' ' = check, data)
 }
 
 #' @export
-checkboxRows = function(data, id) {
-  if (id != htmltools::htmlEscape(id))
-    stop("'id' must not contain special HTML entities")
+checkboxRows = function(data) {
   sprintf(
-    '<input data-id="%s" data-row="%s" type="checkbox" class="DT checkboxRows" />',
-    id, seq_len(nrow(data))
+    '<input data-row="%s" type="checkbox" class="DT checkboxRows" />',
+    seq_len(nrow(data))
   )
-}
-
-#' @export
-selectedRows = function(input, data, id) {
-  sapply(seq_len(nrow(data)), function(i) {
-    isTRUE(input[[sprintf('%s%s', id, i)]])
-  })
 }
