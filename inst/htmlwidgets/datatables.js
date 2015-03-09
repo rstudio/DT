@@ -23,7 +23,7 @@ HTMLWidgets.widget({
       if (this.checked) {
         selectedRows.push(value);
       } else {
-        selectedRows.splice(selectedRows.indexOf(value), 1);
+        selectedRows.splice($.inArray(selectedRows, value), 1);
       }
       Shiny.onInputChange($this.data('id'), selectedRows);
     });
