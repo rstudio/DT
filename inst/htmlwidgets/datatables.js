@@ -16,5 +16,16 @@ HTMLWidgets.widget({
       var callback = eval('(' + data.callback + ')');
       if (typeof callback === 'function') callback(table);
     }
+    if (!window.Shiny) return;
+    var selectedRows = [];
+    table.$('input[type="checkbox"].DT.checkboxRows').on('change', function() {
+      var $this = $(this), value = $this.data('row');
+      if (this.checked) {
+        selectedRows.push(value);
+      } else {
+        selectedRows.splice(selectedRows.indexOf(value), 1);
+      }
+      Shiny.onInputChange($this.data('id'), selectedRows);
+    });
   }
 })

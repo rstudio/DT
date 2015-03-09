@@ -46,7 +46,12 @@ appendCheckboxes = function(data, id, after = TRUE) {
 
 #' @export
 checkboxRows = function(data, id) {
-  sprintf('<input id="%s%s" type="checkbox"/>', id, seq_len(nrow(data)))
+  if (id != htmltools::htmlEscape(id))
+    stop("'id' must not contain special HTML entities")
+  sprintf(
+    '<input data-id="%s" data-row="%s" type="checkbox" class="DT checkboxRows" />',
+    id, seq_len(nrow(data))
+  )
 }
 
 #' @export
