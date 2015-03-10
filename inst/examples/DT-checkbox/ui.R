@@ -5,7 +5,7 @@ fluidPage(
   h1('Append a column of checkboxes'),
   fluidRow(
     column(6, DT::dataTableOutput('x1')),
-    column(6, plotOutput('x2', height = 580))
+    column(6, plotOutput('x2', height = 500))
   ),
   hr(),
   h1('Use checkboxes in place of row names'),
