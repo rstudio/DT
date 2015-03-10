@@ -67,6 +67,9 @@ appendCheckboxes = function(data, after = TRUE, checked = FALSE) {
 checkboxRows = function(data, checked = FALSE) {
   n = nrow(data)
   s = character(n)
+  # we could have generated the checkboxes from tags$input() but it is much
+  # slower than the simple sprintf() here; on the other hand, there is no need
+  # to escape numbers seq_len(n) since they do not contain special HTML chars
   s[checked] = 'checked '
   sprintf(
     '<input data-row="%s" type="checkbox" class="DT checkboxRows" %s/>',
