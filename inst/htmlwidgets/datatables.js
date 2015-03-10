@@ -23,6 +23,10 @@ HTMLWidgets.widget({
     }
     // interaction with shiny
     if (!window.Shiny) return;
+    var changeInput = function(id, data) {
+      Shiny.onInputChange(el.id + '_' + id, data);
+    };
+    // selected rows (checkboxes added via DT::checkboxRows())
     var selected = [];
     table.$('input[type="checkbox"].DT.checkboxRows')
       .each(function(i) {
@@ -35,8 +39,8 @@ HTMLWidgets.widget({
         } else {
           selected.splice($.inArray(value, selected), 1);
         }
-        Shiny.onInputChange(el.id + '_selected', selected);
+        changeInput('selected', selected);
       });
-    Shiny.onInputChange(el.id + '_selected', selected);
+    changeInput('selected', selected);
   }
 })
