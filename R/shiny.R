@@ -51,20 +51,25 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
 #' @param data the data to be displayed as the table
 #' @param after add the checkboxes after the last column (\code{TRUE}) or before
 #'   the first column (\code{FALSE}) of the table
+#' @param checked which checkboxes are checked initially (a logical or numeric
+#'   vector)
 #' @references See \url{http://rstudio.github.io/DT/shiny.html} for examples.
 #' @examples library(DT)
 #' datatable(appendCheckboxes(iris), escape = -7)
 #' @export
-appendCheckboxes = function(data, after = TRUE) {
-  check = checkboxRows(data)
+appendCheckboxes = function(data, after = TRUE, checked = FALSE) {
+  check = checkboxRows(data, checked)
   if (after) cbind(data, ' ' = check) else cbind(' ' = check, data)
 }
 
 #' @rdname appendCheckboxes
 #' @export
-checkboxRows = function(data) {
+checkboxRows = function(data, checked = FALSE) {
+  n = nrow(data)
+  s = character(n)
+  s[checked] = 'checked '
   sprintf(
-    '<input data-row="%s" type="checkbox" class="DT checkboxRows" />',
-    seq_len(nrow(data))
+    '<input data-row="%s" type="checkbox" class="DT checkboxRows" %s/>',
+    seq_len(n), s
   )
 }

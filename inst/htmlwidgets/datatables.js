@@ -16,17 +16,22 @@ HTMLWidgets.widget({
       var callback = eval('(' + data.callback + ')');
       if (typeof callback === 'function') callback(table);
     }
+    // interaction with shiny
     if (!window.Shiny) return;
-    var selectedRows = [];
-    table.$('input[type="checkbox"].DT.checkboxRows').on('change', function() {
-      var $this = $(this), value = $this.data('row');
-      if (this.checked) {
-        selectedRows.push(value);
-      } else {
-        selectedRows.splice($.inArray(value, selectedRows), 1);
-      }
-      Shiny.onInputChange(el.id + '_selected', selectedRows);
-    });
-    Shiny.onInputChange(el.id + '_selected', selectedRows);
+    var selected = [];
+    table.$('input[type="checkbox"].DT.checkboxRows')
+      .each(function(i) {
+        if (this.checked) selected.push($(this).data('row'));
+      })
+      .on('change', function() {
+        var $this = $(this), value = $this.data('row');
+        if (this.checked) {
+          selected.push(value);
+        } else {
+          selected.splice($.inArray(value, selected), 1);
+        }
+        Shiny.onInputChange(el.id + '_selected', selected);
+      });
+    Shiny.onInputChange(el.id + '_selected', selected);
   }
 })
