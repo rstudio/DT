@@ -4,7 +4,7 @@
 \title{Create an HTML table widget using the DataTables library}
 \usage{
 datatable(data, options = list(), callback = "function(table) {}", rownames, colnames, 
-    container, caption = NULL, server = FALSE, escape = TRUE, extensions = NULL)
+    container, caption = NULL, server = FALSE, escape = TRUE, extensions = list())
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -53,7 +53,9 @@ indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 third), or \code{c('Species', 'Sepal.Length')}}
 
 \item{extensions}{a character vector of the names of the DataTables
-extensions (\url{http://datatables.net/extensions/index})}
+extensions (\url{http://datatables.net/extensions/index}), or a named list
+of initialization options for the extensions (the names of the list are the
+names of extensions)}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
@@ -89,4 +91,7 @@ datatable(data.frame(
 ))
 datatable(data.frame(x = Sys.Date()))
 datatable(data.frame(x = Sys.time()))
+}
+\references{
+See \url{http://rstudio.github.io/DT} for the full documentation.
 }
