@@ -42,5 +42,22 @@ HTMLWidgets.widget({
         changeInput('selected', selected);
       });
     changeInput('selected', selected);
+    // expose some table info to Shiny
+    var updateTableInfo = function(e, settings) {
+      // TODO: is anyone interested in the page info?
+      // changeInput('page_info', table.page.info());
+      var updateRowInfo = function(id, modifier) {
+        changeInput('rows' + '_' + id, table.rows($.extend({
+          search: 'applied',
+          page: 'all'
+        }, modifier)).indexes().map(function(i) {
+          return 1 + i;
+        }).toArray());
+      };
+      updateRowInfo('current', {page: 'current'});
+      updateRowInfo('all', {});
+    };
+    table.on('draw.dt', updateTableInfo);
+    updateTableInfo();
   }
 })
