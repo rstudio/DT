@@ -25,14 +25,14 @@ There are some information exposed to Shiny from the table widget as you interac
 One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function `appendCheckboxes()` to do this. Remember, you need to tell `datatable()` not to escape this column, otherwise you will see raw HTML code like `<input type="checkbox" ... />` in the table.
 
 ```{r}
-d = head(iris, 20)
+iris2 = head(iris, 20)
 datatable(
-  appendCheckboxes(d), escape = -7,
+  appendCheckboxes(iris2), escape = -7,
   options = list(pageLength = 5, dom = 'tip')
 )
 # just use checkboxes as the "row names"
 datatable(
-  d, rownames = checkboxRows(d), escape = -1,
+  iris2, rownames = checkboxRows(iris2), escape = -1,
   options = list(pageLength = 5, dom = 'tip')
 )
 ```

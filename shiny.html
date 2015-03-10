@@ -129,9 +129,9 @@ img {
 <div id="row-selection" class="section level2">
 <h2><span class="header-section-number">2.1</span> Row Selection</h2>
 <p>One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function <code>appendCheckboxes()</code> to do this. Remember, you need to tell <code>datatable()</code> not to escape this column, otherwise you will see raw HTML code like <code>&lt;input type=&quot;checkbox&quot; ... /&gt;</code> in the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">d =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
+<pre class="sourceCode r"><code class="sourceCode r">iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
 <span class="kw">datatable</span>(
-  <span class="kw">appendCheckboxes</span>(d), <span class="dt">escape =</span> -<span class="dv">7</span>,
+  <span class="kw">appendCheckboxes</span>(iris2), <span class="dt">escape =</span> -<span class="dv">7</span>,
   <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)
 )</code></pre>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
@@ -163,11 +163,12 @@ img {
 "order": [] 
 },
 "callback": "function(table) {}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", " " ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", " " ],
+"extensions": [] 
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just use checkboxes as the &quot;row names&quot;</span>
 <span class="kw">datatable</span>(
-  d, <span class="dt">rownames =</span> <span class="kw">checkboxRows</span>(d), <span class="dt">escape =</span> -<span class="dv">1</span>,
+  iris2, <span class="dt">rownames =</span> <span class="kw">checkboxRows</span>(iris2), <span class="dt">escape =</span> -<span class="dv">1</span>,
   <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)
 )</code></pre>
 <p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
@@ -198,7 +199,8 @@ img {
 "order": [] 
 },
 "callback": "function(table) {}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"extensions": [] 
 },"evals": [  ] }</script></p>
 <p>The examples above only show you how a table looks like when you add a column of checkboxes. See <a href="https://yihui.shinyapps.io/DT-checkbox/">this example</a> for how Shiny react to changes from the checkboxes.</p>
 </div>
