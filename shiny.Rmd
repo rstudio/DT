@@ -38,3 +38,25 @@ datatable(
 ```
 
 The examples above only show you how a table looks like when you add a column of checkboxes. See [this example](https://yihui.shinyapps.io/DT-checkbox/) for how Shiny react to changes from the checkboxes.
+
+```{r eval=FALSE}
+# you can find the example locally in the DT package
+app = system.file('examples', 'DT-checkbox', package = 'DT')
+shiny::runApp(app)
+```
+
+## DataTables Information
+
+As you interact with the table (e.g. sort columns, search the table, or navigate through pages), **DT** will expose some information about the current state of the table to Shiny. At the moment, these information are available in the `input` object of the Shiny server function (suppose the table output id is `foo`):
+
+- `input$foo_rows_current`: the indices of rows on the current page
+- `input$foo_rows_all`: the indices of rows on all pages (after the table is filtered by the search strings)
+
+[This example](https://yihui.shinyapps.io/DT-info/) shows how you can make use of these information to highlight points on a scatterplot.
+
+```{r eval=FALSE}
+app = system.file('examples', 'DT-info', package = 'DT')
+shiny::runApp(app)
+```
+
+[![DataTables information in shiny](http://i.imgur.com/gZzwKEQ.png)](https://yihui.shinyapps.io/DT-info/)
