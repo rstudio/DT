@@ -4,15 +4,18 @@
 \alias{checkboxRows}
 \title{Append a column of checkboxes to the data for selecting rows}
 \usage{
-appendCheckboxes(data, after = TRUE)
+appendCheckboxes(data, after = TRUE, checked = FALSE)
 
-checkboxRows(data)
+checkboxRows(data, checked = FALSE)
 }
 \arguments{
 \item{data}{the data to be displayed as the table}
 
 \item{after}{add the checkboxes after the last column (\code{TRUE}) or before
 the first column (\code{FALSE}) of the table}
+
+\item{checked}{which checkboxes are checked initially (a logical or numeric
+vector)}
 }
 \description{
 Append a column of checkboxes with the CSS class \samp{DT checkboxRows} to
