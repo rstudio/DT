@@ -1,11 +1,27 @@
 **DataTables** has a number of extensions, and all of them have been integrated into **DT**. You can use the `extensions` argument of `datatable()` to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. `extensions = c('AutoFill', 'ColReorder')`.
 
+For the time being, because the **DataTables** library does not have a consistent way to specify initialization options for its extensions, some extensions can be initialized via the `options` argument of `datatable()`, and some have to be initialized differently (including `r paste(DT:::extNew, sep = ', ')`). In the latter case, you can use a named list for the `extensions` argument: the name of each element is the extension name, and the list element is the initialization options, e.g. `extensions = list(AutoFill = list(mode = 'both'), ColReorder = NULL)`.
+
+```{r}
+# this is the example data we use on this page
+iris2 = head(iris, 30)
+```
+
 # AutoFill
 
 With the `AutoFill` extension, you will see a plus sign in the bottom-right corner of a cell when you mouse over the cell. You can drag the sign to automatically fill the column.
 
 ```{r}
-datatable(iris, extensions = 'AutoFill')
+datatable(iris2, extensions = 'AutoFill')
+# pass some initialization options to AutoFill: disable auto filling on the
+# first (0) column and last (-1) column; disable incremental filling on the
+# columns from 2 to 3 (i.e. 1:2 using JavaScript indexing)
+datatable(iris2, extensions = list(AutoFill = list(
+  columnDefs = list(
+    list(enable = FALSE, targets = c(0, -1)),
+    list(increment = FALSE, targets = 1:2)
+  )
+)))
 ```
 
 # ColReorder
@@ -13,7 +29,11 @@ datatable(iris, extensions = 'AutoFill')
 You can click and drag the table header to move a certain column to a different place using the `ColReorder` extension.
 
 ```{r}
-datatable(iris, extensions = 'ColReorder', options = list(dom = 'Rlfrtip'))
+datatable(iris2, extensions = 'ColReorder', options = list(dom = 'Rlfrtip'))
+# realtime updating
+datatable(iris2, extensions = 'ColReorder', options = list(
+  dom = 'Rlfrtip', colReorder = list(realtime = TRUE)
+))
 ```
 
 # ColVis
@@ -21,7 +41,18 @@ datatable(iris, extensions = 'ColReorder', options = list(dom = 'Rlfrtip'))
 The `ColVis` extension adds a button to the table to show/hide certain columns.
 
 ```{r}
-datatable(iris, extensions = 'ColVis', options = list(dom = 'C<"clear">lfrtip'))
+datatable(
+  iris2, rownames = FALSE,
+  extensions = 'ColVis', options = list(dom = 'C<"clear">lfrtip')
+)
+# exclude the first two columns (i.e. they are always visible)
+datatable(
+  iris2, rownames = FALSE,
+  extensions = 'ColVis', options = list(
+    dom = 'C<"clear">lfrtip',
+    colVis = list(exclude = c(0, 1), activate = 'mouseover')
+  )
+)
 ```
 
 # FixedColumns
@@ -32,6 +63,15 @@ When a table is too wide, you can fix certain columns (e.g. the left and/or the 
 m = as.data.frame(round(matrix(rnorm(100), 5), 5))
 datatable(
   m, extensions = 'FixedColumns',
+  options = list(
+    dom = 't',
+    scrollX = TRUE,
+    scrollCollapse = TRUE
+  )
+)
+# fix some left and right columns
+datatable(
+  m, extensions = list(FixedColumns = list(leftColumns = 2, rightColumns = 1)),
   options = list(
     dom = 't',
     scrollX = TRUE,
