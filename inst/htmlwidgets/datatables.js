@@ -12,6 +12,11 @@ HTMLWidgets.widget({
       data: cells
     };
     var table = $el.find('table').DataTable($.extend(options, data.options || {}));
+    // initialize extensions
+    for (var ext in data.extOptions) {
+      new $.fn.dataTable[ext](table, data.extOptions[ext] || {});
+    }
+    // run the callback function on the table instance
     if (typeof data.callback === 'string') {
       var callback = eval('(' + data.callback + ')');
       if (typeof callback === 'function') callback(table);

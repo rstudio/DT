@@ -39,7 +39,9 @@
 #'   \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param extensions a character vector of the names of the DataTables
-#'   extensions (\url{http://datatables.net/extensions/index})
+#'   extensions (\url{http://datatables.net/extensions/index}), or a named list
+#'   of initialization options for the extensions (the names of the list are the
+#'   names of extensions)
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
@@ -49,7 +51,7 @@
 #' @example inst/examples/datatable.R
 datatable = function(
   data, options = list(), callback = 'function(table) {}', rownames, colnames,
-  container, caption = NULL, server = FALSE, escape = TRUE, extensions = NULL
+  container, caption = NULL, server = FALSE, escape = TRUE, extensions = list()
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -104,13 +106,17 @@ datatable = function(
     options$serverSide = TRUE
   }
 
+  if (is.list(extensions)) {
+    extOptions = extensions
+    extensions = names(extensions)
+  } else if (is.character(extensions)) {
+    extOptions = setNames(vector('list', length(extensions)), extensions)
+  } else stop("'extensions' must be either a character vector or a named list")
+
   # automatically configure options and callback for extensions
   if ('Responsive' %in% extensions) options$responsive = TRUE
   # these extensions need to be initialized via new $.fn.dataTable...
-  extNew = intersect(extensions, c('AutoFill', 'FixedColumns', 'FixedHeader', 'KeyTable'))
-  if (missing(callback) && length(extNew)) {
-    callback = c('function(table) {', sprintf('new $.fn.dataTable.%s(table);', extNew), '}')
-  }
+  extOptions = extOptions[intersect(extensions, extNew)]
 
   # rstudio/DT#13: convert date/time to character
   if (isDF) for (j in seq_len(ncol(data))) {
@@ -141,6 +147,8 @@ datatable = function(
     callback = paste(callback, collapse = '\n'), colnames = cn, caption = caption
   )
   if (length(params$caption) == 0) params$caption = NULL
+  if (length(extensions)) params$extensions = as.list(extensions)
+  if (length(extOptions)) params$extOptions = extOptions
 
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
@@ -239,6 +247,8 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE) {
   f = tags[[sprintf('t%s', type)]]
   f(tags$tr(lapply(escapeColNames(names, escape), tags$th)))
 }
+
+extNew = c('AutoFill', 'FixedColumns', 'FixedHeader', 'KeyTable')
 
 extPath = function(...) {
   system.file('htmlwidgets', 'lib', 'datatables-extensions', ..., package = 'DT')
