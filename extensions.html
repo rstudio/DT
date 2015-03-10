@@ -169,11 +169,11 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pass some initialization options to AutoFill: disable auto filling on the</span>
 <span class="co"># first (0) column and last (-1) column; disable incremental filling on the</span>
-<span class="co"># columns from 2 to 3 (i.e. 1:2 using JavaScript indexing)</span>
+<span class="co"># columns 2 and 3 (i.e. 1 and 2 using JavaScript indexing)</span>
 <span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="kw">list</span>(<span class="dt">AutoFill =</span> <span class="kw">list</span>(
   <span class="dt">columnDefs =</span> <span class="kw">list</span>(
     <span class="kw">list</span>(<span class="dt">enable =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">0</span>, -<span class="dv">1</span>)),
-    <span class="kw">list</span>(<span class="dt">increment =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="dv">1</span>:<span class="dv">2</span>)
+    <span class="kw">list</span>(<span class="dt">increment =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
   )
 )))</code></pre>
 <p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
@@ -215,7 +215,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 },
 {
  "increment": false,
-"targets": [ 1, 2 ] 
+"targets": [                 1,                 2 ] 
 } 
 ] 
 } 

@@ -15,11 +15,11 @@ With the `AutoFill` extension, you will see a plus sign in the bottom-right corn
 datatable(iris2, extensions = 'AutoFill')
 # pass some initialization options to AutoFill: disable auto filling on the
 # first (0) column and last (-1) column; disable incremental filling on the
-# columns from 2 to 3 (i.e. 1:2 using JavaScript indexing)
+# columns 2 and 3 (i.e. 1 and 2 using JavaScript indexing)
 datatable(iris2, extensions = list(AutoFill = list(
   columnDefs = list(
     list(enable = FALSE, targets = c(0, -1)),
-    list(increment = FALSE, targets = 1:2)
+    list(increment = FALSE, targets = c(1, 2))
   )
 )))
 ```
