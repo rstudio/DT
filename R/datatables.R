@@ -43,6 +43,7 @@
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
+#' @references See \url{http://rstudio.github.io/DT} for the full documentation.
 #' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R
