@@ -38,4 +38,10 @@ shinyServer(function(input, output) {
 
   })
 
+  # download the filtered data
+  output$x3 = downloadHandler('mtcars-filtered.csv', content = function(file) {
+    s = input$x1_rows_all
+    write.csv(mtcars2[s, , drop = FALSE], file)
+  })
+
 })
