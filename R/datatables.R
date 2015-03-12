@@ -7,12 +7,8 @@
 #'   \url{http://datatables.net/reference/option/}); the character options
 #'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 #'   JavaScript code instead of normal character strings
-#' @param callback a JavaScript callback function to be applied to the
-#'   DataTables instance; if extensions are used, a default callback will be
-#'   automatically set up to initialize the extensions, and you have to provide
-#'   a different different callback function if you want further customization
-#'   of the extensions, which will require you to learn more about DataTables
-#'   extensions and JavaScript
+#' @param callback the body of a JavaScript callback function with the argument
+#'   \code{table} to be applied to the DataTables instance (i.e. \code{table})
 #' @param rownames \code{TRUE} (show row names) or \code{FALSE} (hide row names)
 #'   or a character vector of row names; by default, the row names are displayed
 #'   in the first column of the table if exist (not \code{NULL})
@@ -50,7 +46,7 @@
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, options = list(), callback = 'function(table) {}', rownames, colnames,
+  data, options = list(), callback = 'return table;', rownames, colnames,
   container, caption = NULL, server = FALSE, escape = TRUE, extensions = list()
 ) {
   isDF = is.data.frame(data)
