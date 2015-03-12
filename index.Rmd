@@ -126,11 +126,21 @@ datatable(
 
 ## The `callback` argument
 
-The argument `callback` takes a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
+The argument `callback` takes the body of a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
 
 ```{r}
-datatable(head(iris, 30), callback = 'function(table) {table.page("next").draw(false);}')
+datatable(head(iris, 30), callback = 'table.page("next").draw(false);')
 ```
+
+In the above example, the actual callback function on the JavaScript side is this (`callback` is only the body of the function):
+
+```javascript
+function(table) {
+  table.page("next").draw(false);
+}
+```
+
+After we initialize the table via the `.DataTable()` method in DataTables, the DataTables instance is passed to this callback function. Below are a few more examples:
 
 Please note this `callback` argument is only an argument of the `datatable()` function, and do not confuse it with the callbacks in the **DataTables** [options](options.html). The purpose of this argument is to allow users to manipulate the **DataTables** object after its creation.
 
