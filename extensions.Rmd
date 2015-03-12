@@ -90,7 +90,7 @@ datatable(
 )
 ```
 
-Since we have a navigation bar on the top of this page, this extension does not work well on this particular page (the table header will be hidden behind the navigation bar). Please see [this separate page](fixedheader.html) for a real example.
+Since we have a navigation bar on the top of this page, this extension does not work well on this particular page (the table header will be hidden behind the navigation bar). Please see [this separate page](001-fixedheader.html) for a real example.
 
 # KeyTable
 
