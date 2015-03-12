@@ -83,7 +83,8 @@ img {
 
 
 <p>Here is an example of the <code>FixedHeader</code> extension. Scroll down the page, and you will always see the table header.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+<span class="kw">datatable</span>(
   iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>), <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>
 )</code></pre>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
