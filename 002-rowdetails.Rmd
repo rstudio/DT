@@ -1,0 +1,37 @@
+---
+title: "Child Rows"
+output:
+  html_document:
+    includes: null
+---
+
+You can show extra information in the child of a row. The example below was adapted [an example](http://datatables.net/examples/api/row_details.html) on the DataTables website. Unfortunately, you have to write a fair amount of JavaScript in this case.
+
+```{r}
+library(DT)
+datatable(
+  cbind(' ' = '&oplus;', mtcars), escape = -2,
+  options = list(
+    columnDefs = list(
+      list(visible = FALSE, targets = c(0, 2, 3)),
+      list(orderable = FALSE, className = 'details-control', targets = 1)
+    )
+  ),
+  callback = "
+  table.column(1).nodes().to$().css({cursor: 'pointer'});
+  var format = function(d) {
+    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +
+            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';
+  };
+  table.on('click', 'td.details-control', function() {
+    var td = $(this), row = table.row(td.closest('tr'));
+    if (row.child.isShown()) {
+      row.child.hide();
+      td.html('&oplus;');
+    } else {
+      row.child(format(row.data())).show();
+      td.html('&CircleMinus;');
+    }
+  });"
+)
+```

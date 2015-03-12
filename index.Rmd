@@ -142,6 +142,8 @@ function(table) {
 
 After we initialize the table via the `.DataTable()` method in DataTables, the DataTables instance is passed to this callback function. Below are a few more examples:
 
+- [Show extra information in child rows](002-rowdetails.html)
+
 Please note this `callback` argument is only an argument of the `datatable()` function, and do not confuse it with the callbacks in the **DataTables** [options](options.html). The purpose of this argument is to allow users to manipulate the **DataTables** object after its creation.
 
 ## Escaping Table Content

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Child Rows</title>
+
+<script src="libs/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="libs/datatables/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">Child Rows</h1>
+</div>
+
+
+<p>You can show extra information in the child of a row. The example below was adapted <a href="http://datatables.net/examples/api/row_details.html">an example</a> on the DataTables website. Unfortunately, you have to write a fair amount of JavaScript in this case.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+<span class="kw">datatable</span>(
+  <span class="kw">cbind</span>(<span class="st">&#39; &#39;</span> =<span class="st"> &#39;&amp;oplus;&#39;</span>, mtcars), <span class="dt">escape =</span> -<span class="dv">2</span>,
+  <span class="dt">options =</span> <span class="kw">list</span>(
+    <span class="dt">columnDefs =</span> <span class="kw">list</span>(
+      <span class="kw">list</span>(<span class="dt">visible =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>)),
+      <span class="kw">list</span>(<span class="dt">orderable =</span> <span class="ot">FALSE</span>, <span class="dt">className =</span> <span class="st">&#39;details-control&#39;</span>, <span class="dt">targets =</span> <span class="dv">1</span>)
+    )
+  ),
+  <span class="dt">callback =</span> <span class="st">&quot;</span>
+<span class="st">  table.column(1).nodes().to$().css({cursor: &#39;pointer&#39;});</span>
+<span class="st">  var format = function(d) {</span>
+<span class="st">    return &#39;&lt;div style=</span><span class="ch">\&quot;</span><span class="st">background-color:#eee; padding: .5em;</span><span class="ch">\&quot;</span><span class="st">&gt; Model: &#39; +</span>
+<span class="st">            d[0] + &#39;, mpg: &#39; + d[2] + &#39;, cyl: &#39; + d[3] + &#39;&lt;/div&gt;&#39;;</span>
+<span class="st">  };</span>
+<span class="st">  table.on(&#39;click&#39;, &#39;td.details-control&#39;, function() {</span>
+<span class="st">    var td = $(this), row = table.row(td.closest(&#39;tr&#39;));</span>
+<span class="st">    if (row.child.isShown()) {</span>
+<span class="st">      row.child.hide();</span>
+<span class="st">      td.html(&#39;&amp;oplus;&#39;);</span>
+<span class="st">    } else {</span>
+<span class="st">      row.child(format(row.data())).show();</span>
+<span class="st">      td.html(&#39;&amp;CircleMinus;&#39;);</span>
+<span class="st">    }</span>
+<span class="st">  });&quot;</span>
+)</code></pre>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5716">{ "x": {
+ "data": [
+ [ "Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout", "Valiant", "Duster 360", "Merc 240D", "Merc 230", "Merc 280", "Merc 280C", "Merc 450SE", "Merc 450SL", "Merc 450SLC", "Cadillac Fleetwood", "Lincoln Continental", "Chrysler Imperial", "Fiat 128", "Honda Civic", "Toyota Corolla", "Toyota Corona", "Dodge Challenger", "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lotus Europa", "Ford Pantera L", "Ferrari Dino", "Maserati Bora", "Volvo 142E" ],
+[ "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;" ],
+[                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7,                15,              21.4 ],
+[                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6,                 8,                 4 ],
+[               160,               160,               108,               258,               360,               225,               360,             146.7,             140.8,             167.6,             167.6,             275.8,             275.8,             275.8,               472,               460,               440,              78.7,              75.7, 71.09999999999999,             120.1,               318,               304,               350,               400,                79,             120.3, 95.09999999999999,               351,               145,               301,               121 ],
+[               110,               110,                93,               110,               175,               105,               245,                62,                95,               123,               123,               180,               180,               180,               205,               215,               230,                66,                52,                65,                97,               150,               150,               245,               175,                66,                91,               113,               264,               175,               335,               109 ],
+[               3.9,               3.9,              3.85,              3.08,              3.15,              2.76,              3.21,              3.69,              3.92,              3.92,              3.92,              3.07,              3.07,              3.07,              2.93,                 3,              3.23,              4.08,              4.93,              4.22,               3.7,              2.76,              3.15,              3.73,              3.08,              4.08,              4.43,              3.77,              4.22,              3.62,              3.54,              4.11 ],
+[              2.62,             2.875,              2.32,             3.215,              3.44,              3.46,              3.57,              3.19,              3.15,              3.44,              3.44,              4.07,              3.73,              3.78,              5.25,             5.424,             5.345,               2.2,             1.615,             1.835,             2.465,              3.52,             3.435,              3.84,             3.845,             1.935,              2.14,             1.513,              3.17,              2.77,              3.57,              2.78 ],
+[             16.46,             17.02,             18.61,             19.44,             17.02,             20.22,             15.84,                20,              22.9,              18.3,              18.9,              17.4,              17.6,                18,             17.98,             17.82,             17.42,             19.47,             18.52,              19.9,             20.01,             16.87,              17.3,             15.41,             17.05,              18.9,              16.7,              16.9,              14.5,              15.5,              14.6,              18.6 ],
+[                 0,                 0,                 1,                 1,                 0,                 1,                 0,                 1,                 1,                 1,                 1,                 0,                 0,                 0,                 0,                 0,                 0,                 1,                 1,                 1,                 1,                 0,                 0,                 0,                 0,                 1,                 0,                 1,                 0,                 0,                 0,                 1 ],
+[                 1,                 1,                 1,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 0,                 1,                 1,                 1,                 0,                 0,                 0,                 0,                 0,                 1,                 1,                 1,                 1,                 1,                 1,                 1 ],
+[                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 4,                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 3,                 3,                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 3,                 4,                 5,                 5,                 5,                 5,                 5,                 4 ],
+[                 4,                 4,                 1,                 1,                 2,                 1,                 4,                 2,                 2,                 4,                 4,                 3,                 3,                 3,                 4,                 4,                 4,                 1,                 2,                 1,                 1,                 2,                 2,                 4,                 2,                 1,                 2,                 2,                 4,                 6,                 8,                 2 ] 
+],
+"isDF": true,
+"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "columnDefs": [
+ {
+ "visible": false,
+"targets": [                 0,                 2,                 3 ] 
+},
+{
+ "orderable": false,
+"className": "details-control",
+"targets":                 1 
+},
+{
+ "orderable": false,
+"targets":                 0 
+},
+{
+ "className": "dt-right",
+"targets": [                 2,                 3,                 4,                 5,                 6,                 7,                 8,                 9,                10,                11,                12 ] 
+} 
+],
+"order": [] 
+},
+"callback": "\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });",
+"colnames": [ " ", " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
+},"evals": [  ] }</script></p>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
