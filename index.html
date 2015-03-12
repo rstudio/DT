@@ -133,7 +133,7 @@ img {
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.19
+## [1] DT_0.0.20
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.8       evaluate_0.5.5     formatR_1.0.3     
@@ -144,8 +144,8 @@ img {
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">callback =</span> <span class="st">&quot;function(table) {}&quot;</span>, rownames, 
-    colnames, container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">callback =</span> <span class="st">&quot;return table;&quot;</span>, rownames, colnames, 
+    container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
 <p>Here is a “hello world” example with zero configuration:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 <span class="kw">datatable</span>(iris)</code></pre>
@@ -174,7 +174,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 </div>
@@ -216,7 +216,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="ot">FALSE</span>)  <span class="co"># no row names</span></code></pre>
@@ -246,7 +246,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="kw">head</span>(LETTERS))  <span class="co"># new row names</span></code></pre>
@@ -281,7 +281,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
 },"evals": [  ] }</script></p>
 <p>Row names are essentialy a new column added to the original data (via <code>cbind(rownames(data), data)</code>). This has an important consequence in terms of the column indices. JavaScript indexes from 0 instead of 1, so the index of the <em>n</em>-th element is actually <em>n - 1</em>.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> When thinking of the column indices (which you will often have to do if you customize <a href="options.html">options</a>), use</p>
@@ -321,7 +321,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 <p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
@@ -351,7 +351,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "A Better Name", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Another Better Name&#39;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> =<span class="st"> </span><span class="dv">4</span>))</code></pre>
@@ -380,7 +380,7 @@ img {
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "Another Better Name", "Sepal.Width", "Yet Another Name", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 </div>
@@ -439,7 +439,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ "Species", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width" ] 
 },"evals": [  ] }</script></p>
 <p>You can also add a footer to the table container, and here is an example:</p>
@@ -495,7 +495,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
 </div>
@@ -531,7 +531,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "caption": "<caption>Table 1: This is a simple caption for the table.</caption>" 
 },"evals": [  ] }</script></p>
@@ -568,15 +568,15 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 ],
 "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "caption": "<caption style=\"caption-side: bottom; text-align: center;\">\n  Table 2: \n  <em>This is a simple caption for the table.</em>\n</caption>" 
 },"evals": [  ] }</script></p>
 </div>
 <div id="the-callback-argument" class="section level2">
 <h2><span class="header-section-number">2.5</span> The <code>callback</code> argument</h2>
-<p>The argument <code>callback</code> takes a JavaScript function that will be applied to the <strong>DataTables</strong> object after initialization. Below is an example to show the next page after the table is initialized<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">30</span>), <span class="dt">callback =</span> <span class="st">&#39;function(table) {table.page(&quot;next&quot;).draw(false);}&#39;</span>)</code></pre>
+<p>The argument <code>callback</code> takes the body of a JavaScript function that will be applied to the <strong>DataTables</strong> object after initialization. Below is an example to show the next page after the table is initialized<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">30</span>), <span class="dt">callback =</span> <span class="st">&#39;table.page(&quot;next&quot;).draw(false);&#39;</span>)</code></pre>
 <p><div id="htmlwidget-6667" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-6667">{ "x": {
  "data": [
@@ -602,9 +602,17 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 ],
 "order": [] 
 },
-"callback": "function(table) {table.page(\"next\").draw(false);}",
+"callback": "table.page(\"next\").draw(false);",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 },"evals": [  ] }</script></p>
+<p>In the above example, the actual callback function on the JavaScript side is this (<code>callback</code> is only the body of the function):</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(table) {
+  <span class="ot">table</span>.<span class="fu">page</span>(<span class="st">&quot;next&quot;</span>).<span class="fu">draw</span>(<span class="kw">false</span>);
+}</code></pre>
+<p>After we initialize the table via the <code>.DataTable()</code> method in DataTables, the DataTables instance is passed to this callback function. Below are a few more examples:</p>
+<ul>
+<li><a href="002-rowdetails.html">Show extra information in child rows</a></li>
+</ul>
 <p>Please note this <code>callback</code> argument is only an argument of the <code>datatable()</code> function, and do not confuse it with the callbacks in the <strong>DataTables</strong> <a href="options.html">options</a>. The purpose of this argument is to allow users to manipulate the <strong>DataTables</strong> object after its creation.</p>
 </div>
 <div id="escaping-table-content" class="section level2">
@@ -625,7 +633,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 "options": {
  "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ "<span style=\"color:red\">Column 1</span>", "<em>Column 2</em>" ] 
 },"evals": [  ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>)</code></pre>
@@ -638,7 +646,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 "options": {
  "order": [] 
 },
-"callback": "function(table) {}",
+"callback": "return table;",
 "colnames": [ "<span style=\"color:red\">Column 1</span>", "<em>Column 2</em>" ] 
 },"evals": [  ] }</script></p>
 <p>Besides <code>TRUE</code> and <code>FALSE</code>, you can also specify which columns you want to escape, e.g.</p>
