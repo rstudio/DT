@@ -18,5 +18,6 @@ Imports:
     htmlwidgets,
     magrittr
 Suggests:
-    knitr (>= 1.8)
+    knitr (>= 1.8),
+    shiny
 VignetteBuilder: knitr
