@@ -31,12 +31,13 @@ container for table, and the latter is used in the server logic to render the
 table.
 }
 \examples{
-\donttest{library(shiny)
-shinyApp(
-  ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
-  server = function(input, output) {
-    output$tbl = DT::renderDataTable(DT::datatable(iris))
-  }
-)
+if (interactive()) {
+  library(shiny)
+  shinyApp(
+    ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
+    server = function(input, output) {
+      output$tbl = DT::renderDataTable(DT::datatable(iris))
+    }
+  )
 }
 }

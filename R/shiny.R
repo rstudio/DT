@@ -9,13 +9,14 @@
 #' @param height the height of the table container
 #' @export
 #' @examples # !formatR
-#' \donttest{library(shiny)
-#' shinyApp(
-#'   ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
-#'   server = function(input, output) {
-#'     output$tbl = DT::renderDataTable(DT::datatable(iris))
-#'   }
-#' )
+#' if (interactive()) {
+#'   library(shiny)
+#'   shinyApp(
+#'     ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
+#'     server = function(input, output) {
+#'       output$tbl = DT::renderDataTable(DT::datatable(iris))
+#'     }
+#'   )
 #' }
 dataTableOutput = function(outputId, width = '100%', height = 'auto') {
   htmlwidgets::shinyWidgetOutput(
