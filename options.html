@@ -120,6 +120,7 @@ img {
 <ul>
 <li>the table is not ordered by default (<strong>DataTables</strong> orders a table by its first column by default);</li>
 <li>numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;</li>
+<li>the option <code>autoWidth</code> is set to <code>FALSE</code> by default, so that <strong>DataTables</strong> does not calculate and put hard-coded width values on the table columns;</li>
 </ul>
 </div>
 <div id="initialization-options" class="section level1">
@@ -141,7 +142,7 @@ img {
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
  {
@@ -159,7 +160,8 @@ img {
 ],
 "pageLength":                 5,
 "lengthMenu": [                 5,                10,                15,                20 ],
-"order": [] 
+"order": [],
+"autoWidth": false 
 },
 "callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
@@ -197,7 +199,7 @@ img {
 [                 4,                 4,                 1,                 1,                 2,                 1,                 4,                 2,                 2,                 4,                 4,                 3,                 3,                 3,                 4,                 4,                 4,                 1,                 2,                 1,                 1,                 2,                 2,                 4,                 2,                 1,                 2,                 2,                 4,                 6 ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "order": [
  [
@@ -218,7 +220,8 @@ img {
  "className": "dt-right",
 "targets": [                 1,                 2,                 3,                 4,                 5,                 6,                 7,                 8,                 9,                10,                11 ] 
 } 
-] 
+],
+"autoWidth": false 
 },
 "callback": "return table;",
 "colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
@@ -240,7 +243,7 @@ img {
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "dom": "t",
 "columnDefs": [
@@ -253,7 +256,8 @@ img {
 "targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
-"order": [] 
+"order": [],
+"autoWidth": false 
 },
 "callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
@@ -271,7 +275,7 @@ img {
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "dom": "ft",
 "columnDefs": [
@@ -284,7 +288,8 @@ img {
 "targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
-"order": [] 
+"order": [],
+"autoWidth": false 
 },
 "callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
@@ -310,7 +315,7 @@ img {
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "initComplete": "function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});\n}",
 "columnDefs": [
@@ -323,7 +328,8 @@ img {
 "targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
-"order": [] 
+"order": [],
+"autoWidth": false 
 },
 "callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
@@ -352,7 +358,7 @@ img {
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica" ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
  {
@@ -368,7 +374,8 @@ img {
 "targets": [                 1,                 2,                 3,                 4 ] 
 } 
 ],
-"order": [] 
+"order": [],
+"autoWidth": false 
 },
 "callback": "table.page(3).draw(false);",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
@@ -397,7 +404,7 @@ img {
 [            105764,            485280,           -270660,            744377,           -120487,            431782,           1196839,            535181,           -225932,           1248808,           1093504,            648397,            338732,           -527906,           1460652,           -500260,           2287333,           1632611,           -135700,           -926421 ] 
 ],
 "isDF": true,
-"container": "<table>\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "rowCallback": "function(row, data) {\nvar num = '$' + data[3].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');\n$('td:eq(3)', row).html(num);\n}",
 "columnDefs": [
@@ -410,7 +417,8 @@ img {
 "targets": [                 1,                 2,                 3,                 4,                 5 ] 
 } 
 ],
-"order": [] 
+"order": [],
+"autoWidth": false 
 },
 "callback": "table.order([3, 'asc']).draw();",
 "colnames": [ " ", "V1", "V2", "V3", "V4", "V5" ] 

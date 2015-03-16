@@ -71,6 +71,7 @@ The `container` argument allows you to provide a different table container to ho
 ```{r comment=''}
 # a custom table container
 sketch = htmltools::withTags(table(
+  class = 'display',
   thead(
     tr(
       th(rowspan = 2, 'Species'),

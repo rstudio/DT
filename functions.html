@@ -149,7 +149,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 [            801356,           -205963,            223854,         0.9798219,        99.6740684 ],
 [           -372791,           -280471,            315942,         0.4394315,       101.1488076 ] ],
 "isDF": false,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>A</th>\n      <th>B</th>\n      <th>C</th>\n      <th>D</th>\n      <th>E</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>A</th>\n      <th>B</th>\n      <th>C</th>\n      <th>D</th>\n      <th>E</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
  {
@@ -158,6 +158,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 } 
 ],
 "order": [],
+"autoWidth": false,
 "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $('td:eq(3)', row).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\n$('td:eq(0)', row).html('$' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(2)', row).html('$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}" 
 },
 "callback": "return table;",
@@ -188,7 +189,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 [            801356,           -205963,            223854,         0.9798219,        99.6740684 ],
 [           -372791,           -280471,            315942,         0.4394315,       101.1488076 ] ],
 "isDF": false,
-"container": "<table>\n  <thead>\n    <tr>\n      <th>A</th>\n      <th>B</th>\n      <th>C</th>\n      <th>D</th>\n      <th>E</th>\n    </tr>\n  </thead>\n</table>",
+"container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>A</th>\n      <th>B</th>\n      <th>C</th>\n      <th>D</th>\n      <th>E</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
  {
@@ -197,6 +198,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 } 
 ],
 "order": [],
+"autoWidth": false,
 "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $('td:eq(4)', row).html(isNaN(d) ? '' : d.toFixed(3));\n$('td:eq(0)', row).html('€' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(1)', row).html('€' + data[1].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}" 
 },
 "callback": "return table;",

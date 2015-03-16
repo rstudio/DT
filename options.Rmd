@@ -12,6 +12,7 @@ The **DT** package modified the default behavior of **DataTables** in these aspe
 
 - the table is not ordered by default (**DataTables** orders a table by its first column by default);
 - numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;
+- the option `autoWidth` is set to `FALSE` by default, so that **DataTables** does not calculate and put hard-coded width values on the table columns;
 
 # Initialization Options
 
