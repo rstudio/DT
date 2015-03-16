@@ -3,8 +3,9 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, options = list(), callback = "return table;", rownames, colnames, 
-    container, caption = NULL, server = FALSE, escape = TRUE, extensions = list())
+datatable(data, options = list(), class = "display", callback = "return table;", 
+    rownames, colnames, container, caption = NULL, server = FALSE, escape = TRUE, 
+    extensions = list())
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -13,6 +14,9 @@ datatable(data, options = list(), callback = "return table;", rownames, colnames
 \url{http://datatables.net/reference/option/}); the character options
 wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 JavaScript code instead of normal character strings}
+
+\item{class}{the CSS class(es) of the table; see
+\url{http://datatables.net/manual/styling/classes}}
 
 \item{callback}{the body of a JavaScript callback function with the argument
 \code{table} to be applied to the DataTables instance (i.e. \code{table})}
