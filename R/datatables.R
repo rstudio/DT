@@ -81,6 +81,8 @@ datatable = function(
 
   # make sure the table is _not_ ordered by default (change the DataTables default)
   if (is.null(options[['order']])) options$order = list()
+  # I do not see the point of "autoWidth: true" as the default in DataTables
+  if (is.null(options[['autoWidth']])) options$autoWidth = FALSE
 
   cn = base::colnames(data)
   if (missing(colnames)) {
