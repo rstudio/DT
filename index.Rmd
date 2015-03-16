@@ -31,6 +31,14 @@ datatable(iris)
 
 If you are familiar with **DataTables** already, you may use the `options` argument to customize the table. See the page [Options](options.html) for details. Here we explain the rest of the arguments of the `datatable()` function.
 
+## Table CSS Classes
+
+The `class` argument specifies the CSS classes of the table. The possible values can be found on the page of [default styling options](http://datatables.net/manual/styling/classes). The default value `display` basically enables row striping, row highlighting on mouse over, row borders, and highlighting ordered columns. You can choose a different combination of CSS classes, such as `cell-border` and `stripe`:
+
+```{r}
+datatable(head(iris), class = 'cell-border stripe')
+```
+
 ## Display Row Names
 
 If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument `rownames = FALSE`, and you can also change row names by providing a different character vector to `rownames`.

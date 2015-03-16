@@ -183,6 +183,40 @@ img {
 <div id="arguments" class="section level1">
 <h1><span class="header-section-number">2</span> Arguments</h1>
 <p>If you are familiar with <strong>DataTables</strong> already, you may use the <code>options</code> argument to customize the table. See the page <a href="options.html">Options</a> for details. Here we explain the rest of the arguments of the <code>datatable()</code> function.</p>
+<div id="table-css-classes" class="section level2">
+<h2><span class="header-section-number">2.1</span> Table CSS Classes</h2>
+<p>The <code>class</code> argument specifies the CSS classes of the table. The possible values can be found on the page of <a href="http://datatables.net/manual/styling/classes">default styling options</a>. The default value <code>display</code> basically enables row striping, row highlighting on mouse over, row borders, and highlighting ordered columns. You can choose a different combination of CSS classes, such as <code>cell-border</code> and <code>stripe</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">class =</span> <span class="st">&#39;cell-border stripe&#39;</span>)</code></pre>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-4929">{ "x": {
+ "data": [
+ [ "1", "2", "3", "4", "5", "6" ],
+[               5.1,               4.9,               4.7,               4.6,                 5,               5.4 ],
+[               3.5,                 3,               3.2,               3.1,               3.6,               3.9 ],
+[               1.4,               1.4,               1.3,               1.5,               1.4,               1.7 ],
+[               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
+[ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
+],
+"isDF": true,
+"container": "<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+"options": {
+ "columnDefs": [
+ {
+ "orderable": false,
+"targets":                 0 
+},
+{
+ "className": "dt-right",
+"targets": [                 1,                 2,                 3,                 4 ] 
+} 
+],
+"order": [],
+"autoWidth": false 
+},
+"callback": "return table;",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+},"evals": [  ] }</script></p>
+</div>
 <div id="display-row-names" class="section level2">
 <h2><span class="header-section-number">2.1</span> Display Row Names</h2>
 <p>If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument <code>rownames = FALSE</code>, and you can also change row names by providing a different character vector to <code>rownames</code>.</p>
