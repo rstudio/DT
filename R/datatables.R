@@ -7,6 +7,8 @@
 #'   \url{http://datatables.net/reference/option/}); the character options
 #'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 #'   JavaScript code instead of normal character strings
+#' @param class the CSS class(es) of the table; see
+#'   \url{http://datatables.net/manual/styling/classes}
 #' @param callback the body of a JavaScript callback function with the argument
 #'   \code{table} to be applied to the DataTables instance (i.e. \code{table})
 #' @param rownames \code{TRUE} (show row names) or \code{FALSE} (hide row names)
@@ -46,8 +48,9 @@
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, options = list(), callback = 'return table;', rownames, colnames,
-  container, caption = NULL, server = FALSE, escape = TRUE, extensions = list()
+  data, options = list(), class = 'display', callback = 'return table;',
+  rownames, colnames, container, caption = NULL,
+  server = FALSE, escape = TRUE, extensions = list()
 ) {
   isDF = is.data.frame(data)
   if (isDF) {
@@ -94,7 +97,7 @@ datatable = function(
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
 
   if (missing(container))
-    container = tags$table(tableHeader(colnames, escape))
+    container = tags$table(tableHeader(colnames, escape), class = class)
 
   # in the server mode, we should not store the full data in JSON
   if (server) {
