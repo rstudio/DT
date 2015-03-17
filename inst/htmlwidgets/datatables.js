@@ -4,28 +4,37 @@ HTMLWidgets.widget({
   renderValue: function(el, data) {
     var $el = $(el), cells = data.data;
     $el.empty();
+
     if (data.isDF === true) cells = HTMLWidgets.transposeArray2D(cells);
+
     $el.append(data.container);
     if (data.caption) $el.find('table').prepend(data.caption);
+
     var options = {};
     if (cells !== null) options = {
       data: cells
     };
+
     var table = $el.find('table').DataTable($.extend(options, data.options || {}));
+
     // initialize extensions
     for (var ext in data.extOptions) {
       new $.fn.dataTable[ext](table, data.extOptions[ext] || {});
     }
+
     // run the callback function on the table instance
     if (typeof data.callback === 'string') {
       var callback = eval('(function(table) {' + data.callback + '})');
       if (typeof callback === 'function') callback(table);
     }
+
     // interaction with shiny
     if (!window.Shiny) return;
+
     var changeInput = function(id, data) {
       Shiny.onInputChange(el.id + '_' + id, data);
     };
+
     // selected rows (checkboxes added via DT::checkboxRows())
     var selected = [];
     table.$('input[type="checkbox"].DT.checkboxRows')
@@ -42,6 +51,7 @@ HTMLWidgets.widget({
         changeInput('selected', selected);
       });
     changeInput('selected', selected);
+
     // expose some table info to Shiny
     var updateTableInfo = function(e, settings) {
       // TODO: is anyone interested in the page info?
