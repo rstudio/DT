@@ -3,9 +3,9 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, options = list(), class = "display", callback = "return table;", 
-    rownames, colnames, container, caption = NULL, server = FALSE, escape = TRUE, 
-    extensions = list())
+datatable(data, options = list(), class = "display", callback = JS("return table;"), 
+    rownames, colnames, container, caption = NULL, filter = c("none", "bottom", "top"), 
+    server = FALSE, escape = TRUE, extensions = list())
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}

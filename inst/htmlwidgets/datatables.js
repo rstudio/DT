@@ -17,6 +17,101 @@ HTMLWidgets.widget({
 
     var table = $el.find('table').DataTable($.extend(options, data.options || {}));
 
+    // server-side processing?
+    var server = data.options.serverSide === true;
+    var throttle = $.fn.dataTable.util.throttle;
+
+    // throttle searching in the server mode (perhaps debounce is better, but it
+    // is not available in DataTables)
+    if (server) {
+      $el.find('label input').first().unbind('keyup')
+         .keyup(throttle(function() {
+           table.search(this.value).draw();
+         }, 1000));
+    }
+
+    if (data.filter !== 'none') {
+      $(table.columns().footer()).each(function(i, td) {
+
+        var $td = $(td), type = $td.data('type'), filter;
+        if (type === 'category') {
+          filter = $td.children('select').selectize({
+            plugins: ['remove_button'],
+            onChange: function(value) {
+              if (server) {
+                table.column(i).search(value || '').draw();
+                return;
+              }
+              // turn off filter if nothing selected
+              $td.data('filter', value !== null && value.length > 0);
+              table.draw();  // redraw table, and filters will be applied
+            }
+          });
+        } else if (type === 'number' || type === 'date') {
+          var $x = $td.children('div');
+          var r1 = $x.data('min'), r2 = $x.data('max');
+          if (type === 'number') {
+            r1 = parseFloat(r1); r2 = parseFloat(r2);
+          } else {
+            r1 = new Date(r1).getTime(); r2 = new Date(r2).getTime();
+          }
+          filter = $x.noUiSlider({
+            start: [r1, r2],
+            range: {min: r1, max: r2},
+            connect: true
+          }).on({
+            change: function() {
+              var val = $(this).val();
+              if (server) {
+                table.column(i).search(val.join(',')).draw();
+                return;
+              }
+              // turn off filter if in full range
+              $td.data('filter', val[0] != r1 || val[1] != r2);
+              table.draw();
+            }
+          });
+        }
+
+        // server-side processing will be handled by R (or whatever server
+        // language you use); the following code is only needed for client-side
+        // processing
+        if (server) return;
+
+        var customFilter = function(settings, data, dataIndex) {
+          // there is no way to attach a search function to a specific table,
+          // and we need to make sure a global search function is not applied to
+          // all tables (i.e. a range filter in a previous table should not be
+          // applied to the current table); we use the settings object to
+          // determine if we want to perform searching on the current table,
+          // since settings.sTableId will be different to different tables
+          if (table.settings()[0] !== settings) return true;
+          // no filter on this column or no need to filter this column
+          if (typeof filter === 'undefined' || !$td.data('filter')) return true;
+
+          var r = filter.val(), v, r0, r1;
+          if (type === 'number') {
+            v = parseFloat(data[i]);
+            // how to handle NaN? currently exclude these rows
+            if (isNaN(v)) return(false);
+            r0 = parseFloat(r[0]); r1 = parseFloat(r[1]);
+            if (v >= r0 && v <= r1) return true;
+          } else if (type === 'date') {
+            v = new Date(data[i]);
+            r0 = new Date(+r[0]); r1 = new Date(+r[1]);
+            if (v >= r0 && v <= r1) return true;
+          } else if (type === 'category') {
+            // TODO: enable partial matching?
+            if (r.length === 0 || $.inArray(data[i], r) > -1) return true;
+          }
+          return false;
+        };
+
+        $.fn.dataTable.ext.search.push(customFilter);
+
+      });
+    }
+
     // initialize extensions
     for (var ext in data.extOptions) {
       new $.fn.dataTable[ext](table, data.extOptions[ext] || {});

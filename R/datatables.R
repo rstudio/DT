@@ -49,7 +49,7 @@
 #' @example inst/examples/datatable.R
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
-  rownames, colnames, container, caption = NULL,
+  rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
   server = FALSE, escape = TRUE, extensions = list()
 ) {
   isDF = is.data.frame(data)
@@ -98,14 +98,33 @@ datatable = function(
   # data, and we need to add a name for the first column, i.e. row names
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
 
-  if (missing(container))
-    container = tags$table(tableHeader(colnames, escape), class = class)
+  filter = match.arg(filter)
+  if (missing(container)) container = tags$table(
+    tableHeader(colnames, escape),
+    filterRow(data, length(rn) > 0, colnames, filter),
+    class = class
+  )
 
   # in the server mode, we should not store the full data in JSON
   if (server) {
     data = NULL; isDF = FALSE
     options$serverSide = TRUE
     if (is.null(options$processing)) options$processing = TRUE
+    # if you generated the Ajax URL from dataTableAjax(), I'll configure type:
+    # 'POST' and a few other options automatically
+    if ('shiny' %in% loadedNamespaces() &&
+        length(grep('^session/[a-z0-9]+/dataobj/', options$ajax$url))) {
+      if (is.null(options$ajax$type)) options$ajax$type = 'POST'
+      if (is.null(options$ajax$data)) options$ajax$data = JS(
+        'function(d) {',
+        sprintf(
+          'd.search.caseInsensitive = %s;',
+          tolower(!isFALSE(options$search$caseInsensitive))
+        ),
+        sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
+        '}'
+      )
+    }
   }
 
   if (is.list(extensions)) {
@@ -149,15 +168,17 @@ datatable = function(
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
     callback = JS('function(table) {', callback, '}'),
-    colnames = cn, caption = caption
+    colnames = cn, caption = caption, filter = filter
   )
   if (length(params$caption) == 0) params$caption = NULL
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
 
+  deps = lapply(extensions, extDependency)
+  if (filter != 'none') deps = c(deps, filterDependencies())
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
-    dependencies = lapply(extensions, extDependency)
+    dependencies = deps
   )
 }
 
@@ -219,6 +240,14 @@ escapeColNames = function(colnames, i) {
   colnames
 }
 
+escapeToConfig = function(escape, colnames) {
+  if (isTRUE(escape)) return('true')
+  if (isFALSE(escape)) return('false')
+  if (!is.numeric(escape)) escape = convertIdx(escape, colnames)
+  if (is.logical(escape)) escape = which(escape)
+  sprintf('"%s"', paste(escape, collapse = ','))
+}
+
 #' Generate a table header or footer from column names
 #'
 #' Convenience functions to generate a table header (\samp{<thead></thead>}) or
@@ -251,6 +280,45 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE) {
   type = match.arg(type)
   f = tags[[sprintf('t%s', type)]]
   f(tags$tr(lapply(escapeColNames(names, escape), tags$th)))
+}
+
+filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
+  if (filter == 'none') return()
+  tds = list()
+  for (j in seq_len(ncol(data))) {
+    if (j == 1 && rownames) {
+      tds[[j]] = tags$td('')  # no filter for row names (may change in future)
+      next
+    }
+    t = NULL
+    d = data[, j]
+    x = if (is.numeric(d) || inherits(d, 'Date')) {
+      t = if (is.numeric(d)) 'number' else 'date'
+      tags$div(`data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE))
+    } else if (is.character(d) || is.factor(d)) {
+      t = 'category'
+      tags$select(
+        multiple = 'multiple', placeholder = paste('Search', colnames[j]),
+        style = 'width: 100%;',
+        lapply(unique(d), function(x) tags$option(value = x, x))
+      )
+    }
+    tds[[j]] = tags$td(x, `data-type` = t)
+  }
+  tags$tfoot(tags$tr(tds), style = if (filter == 'top') 'display: table-header-group;')
+}
+
+filterDependencies = function() {
+  list(
+    htmlDependency(
+      'nouislider', '7.0.10', depPath('nouislider'),
+      script = 'jquery.nouislider.min.js', stylesheet = 'jquery.nouislider.min.css'
+    ),
+    htmlDependency(
+      'selectize', '0.12.0', depPath('selectize'),
+      script = 'selectize.min.js', stylesheet = 'selectize.bootstrap3.css'
+    )
+  )
 }
 
 depPath = function(...) {
