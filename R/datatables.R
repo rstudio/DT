@@ -297,3 +297,5 @@ copySWF = function(dest = '.', pdf = FALSE) {
   if (sub('/$', '', dest) == 'www') dest = sub('www/?', '', dest)
   file.path(dest, swf, fsep = '/')
 }
+
+isFALSE = function(x) identical(x, FALSE)
