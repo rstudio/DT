@@ -23,10 +23,7 @@ HTMLWidgets.widget({
     }
 
     // run the callback function on the table instance
-    if (typeof data.callback === 'string') {
-      var callback = eval('(function(table) {' + data.callback + '})');
-      if (typeof callback === 'function') callback(table);
-    }
+    if (typeof data.callback === 'function') data.callback(table);
 
     // interaction with shiny
     if (!window.Shiny) return;

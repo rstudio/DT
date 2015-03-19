@@ -48,7 +48,7 @@
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
-  data, options = list(), class = 'display', callback = 'return table;',
+  data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL,
   server = FALSE, escape = TRUE, extensions = list()
 ) {
@@ -143,9 +143,12 @@ datatable = function(
   if (is.character(caption)) caption = tags$caption(caption)
   caption = as.character(caption)
 
+  if (!identical(class(callback), class(JS(''))))
+    stop("The 'callback' argument only accept a value returned from JS()")
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
-    callback = paste(callback, collapse = '\n'), colnames = cn, caption = caption
+    callback = JS(paste(c('function(table) {', callback, '}'), collapse = '\n')),
+    colnames = cn, caption = caption
   )
   if (length(params$caption) == 0) params$caption = NULL
   if (length(extensions)) params$extensions = as.list(extensions)
