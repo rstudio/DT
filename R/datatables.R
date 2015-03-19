@@ -105,6 +105,7 @@ datatable = function(
   if (server) {
     data = NULL; isDF = FALSE
     options$serverSide = TRUE
+    if (is.null(options$processing)) options$processing = TRUE
   }
 
   if (is.list(extensions)) {
