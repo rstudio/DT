@@ -124,8 +124,13 @@ dataTablesJSON = function(data, req) {
     if ((k <- col[['search']][['value']]) == '') next
     j = as.integer(j)
     dj = data[, j + 1]
-    r  = commaToRange(k)
-    ij = if (length(r) == 2 && is.numeric(dj)) {
+    r = commaToRange(k)
+    ij = if (length(r) == 2 && (is.numeric(dj) || is.Date(dj))) {
+      if (is.Date(dj)) {
+        # r is milliseconds
+        r = as.POSIXct(r / 1000, origin = '1970-01-01')
+        if (inherits(dj, 'Date')) r = as.Date(r)
+      }
       which(dj >= r[1] & dj <= r[2])
     } else {
       grep2(k, as.character(dj), fixed = col[['search']][['regex']] == 'false',

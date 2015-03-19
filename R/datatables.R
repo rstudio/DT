@@ -292,8 +292,13 @@ filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
     }
     t = NULL
     d = data[, j]
-    x = if (is.numeric(d) || inherits(d, 'Date')) {
+    x = if (is.numeric(d) || is.Date(d)) {
       t = if (is.numeric(d)) 'number' else 'date'
+      if (t == 'date') {
+        # JavaScript does have the Date type like R (YYYY-mm-dd without time)
+        if (inherits(d, 'Date')) d = as.POSIXct(d)
+        d = as.numeric(d) * 1000  # use milliseconds for JavaScript
+      }
       tags$div(`data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE))
     } else if (is.character(d) || is.factor(d)) {
       t = 'category'
@@ -368,3 +373,5 @@ copySWF = function(dest = '.', pdf = FALSE) {
 }
 
 isFALSE = function(x) identical(x, FALSE)
+
+is.Date = function(x) inherits(x, c('Date', 'POSIXlt', 'POSIXct'))
