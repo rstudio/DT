@@ -49,12 +49,7 @@ HTMLWidgets.widget({
           });
         } else if (type === 'number' || type === 'date') {
           var $x = $td.children('div');
-          var r1 = $x.data('min'), r2 = $x.data('max');
-          if (type === 'number') {
-            r1 = parseFloat(r1); r2 = parseFloat(r2);
-          } else {
-            r1 = new Date(r1).getTime(); r2 = new Date(r2).getTime();
-          }
+          var r1 = +$x.data('min'), r2 = +$x.data('max');
           filter = $x.noUiSlider({
             start: [r1, r2],
             range: {min: r1, max: r2},
