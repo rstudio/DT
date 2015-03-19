@@ -252,10 +252,14 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE) {
   f(tags$tr(lapply(escapeColNames(names, escape), tags$th)))
 }
 
+depPath = function(...) {
+  system.file('htmlwidgets', 'lib', ..., package = 'DT')
+}
+
 extNew = c('AutoFill', 'FixedColumns', 'FixedHeader', 'KeyTable')
 
 extPath = function(...) {
-  system.file('htmlwidgets', 'lib', 'datatables-extensions', ..., package = 'DT')
+  depPath('datatables-extensions', ...)
 }
 
 extAll = function() {
