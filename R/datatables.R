@@ -147,7 +147,7 @@ datatable = function(
     stop("The 'callback' argument only accept a value returned from JS()")
   params = list(
     data = data, isDF = isDF, container = as.character(container), options = options,
-    callback = JS(paste(c('function(table) {', callback, '}'), collapse = '\n')),
+    callback = JS('function(table) {', callback, '}'),
     colnames = cn, caption = caption
   )
   if (length(params$caption) == 0) params$caption = NULL
