@@ -67,4 +67,4 @@ HTMLWidgets.widget({
     table.on('draw.dt', updateTableInfo);
     updateTableInfo();
   }
-})
+});
