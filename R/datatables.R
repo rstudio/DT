@@ -44,7 +44,7 @@
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
 #' @references See \url{http://rstudio.github.io/DT} for the full documentation.
-#' @importFrom htmltools tags
+#' @importFrom htmltools tags htmlDependency
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
@@ -268,7 +268,7 @@ extDependency = function(extension) {
   if (!(extension %in% extAll())) stop('The extension ', extension, 'does not exist')
   js = sprintf('dataTables.%s.min.js', extension)
   css = sprintf('dataTables.%s.min.css', extension)
-  htmltools::htmlDependency(
+  htmlDependency(
     paste('datatables', extension, sep = '-'), DataTablesVersion, extPath(extension),
     script = js, stylesheet = css
   )
