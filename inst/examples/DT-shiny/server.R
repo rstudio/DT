@@ -2,16 +2,9 @@ library(shiny)
 library(DT)
 
 shinyServer(function(input, output, session) {
-  action = session$registerDataObj('iris', iris, shiny:::dataTablesJSON)
+  action = dataTableAjax(session, iris)
   widget = datatable(iris, server = TRUE, options = list(
-    processing = TRUE, ajax = list(
-      url = action, type = 'POST', data = JS(
-        'function(d) {',
-        'd.search.caseInsensitive = false;',
-        'd.escape = true;',
-        '}'
-      )
-    )
+    ajax = list(url = action)
   ))
   output$tbl = DT::renderDataTable(widget)
 })
