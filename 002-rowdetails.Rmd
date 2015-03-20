@@ -17,7 +17,7 @@ datatable(
       list(orderable = FALSE, className = 'details-control', targets = 1)
     )
   ),
-  callback = "
+  callback = JS("
   table.column(1).nodes().to$().css({cursor: 'pointer'});
   var format = function(d) {
     return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +
@@ -33,5 +33,5 @@ datatable(
       td.html('&CircleMinus;');
     }
   });"
-)
+))
 ```

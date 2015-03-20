@@ -17,10 +17,7 @@ HTMLWidgets.widget({
       new $.fn.dataTable[ext](table, data.extOptions[ext] || {});
     }
     // run the callback function on the table instance
-    if (typeof data.callback === 'string') {
-      var callback = eval('(function(table) {' + data.callback + '})');
-      if (typeof callback === 'function') callback(table);
-    }
+    if (typeof data.callback === 'function') data.callback(table);
     // interaction with shiny
     if (!window.Shiny) return;
     var changeInput = function(id, data) {
@@ -60,4 +57,4 @@ HTMLWidgets.widget({
     table.on('draw.dt', updateTableInfo);
     updateTableInfo();
   }
-})
+});

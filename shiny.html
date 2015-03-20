@@ -163,9 +163,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", " " ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just use checkboxes as the &quot;row names&quot;</span>
 <span class="kw">datatable</span>(
   iris2, <span class="dt">rownames =</span> <span class="kw">checkboxRows</span>(iris2), <span class="dt">escape =</span> -<span class="dv">1</span>,
@@ -199,9 +199,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
-},"evals": [  ] }</script></p>
+"callback": "function(table) {\nreturn table;\n}",
+},"evals": [ "callback" ] }</script></p>
 <p>The examples above only show you how a table looks like when you add a column of checkboxes. See <a href="https://yihui.shinyapps.io/DT-checkbox/">this example</a> for how Shiny react to changes from the checkboxes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-checkbox&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)

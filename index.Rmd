@@ -138,7 +138,7 @@ datatable(
 The argument `callback` takes the body of a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
 
 ```{r}
-datatable(head(iris, 30), callback = 'table.page("next").draw(false);')
+datatable(head(iris, 30), callback = JS('table.page("next").draw(false);'))
 ```
 
 In the above example, the actual callback function on the JavaScript side is this (`callback` is only the body of the function):

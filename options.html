@@ -163,9 +163,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <p>The target column index is 5 but we actually centered the 6th column: the first column is row names, and the rest of columns are the <code>iris</code> data. The JavaScript index of the 6th column is 5. See the section “<a href="./#display-row-names">Display Row Names</a>” for more details.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># when rownames = FALSE, use 4 as the index of the Species column</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">rownames =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(
@@ -223,9 +223,9 @@ img {
 ],
 "autoWidth": false 
 },
-"callback": "return table;",
 "colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
-},"evals": [  ] }</script></p>
+"callback": "function(table) {\nreturn table;\n}",
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="dom-elements" class="section level2">
 <h2><span class="header-section-number">3.2</span> DOM Elements</h2>
@@ -259,9 +259,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
-},"evals": [  ] }</script></p>
+"callback": "function(table) {\nreturn table;\n}",
+},"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the filtering box and the table</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;ft&#39;</span>))</code></pre>
 <p><div id="htmlwidget-5403" style="width:100%;height:auto;" class="datatables"></div>
@@ -291,9 +291,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
-},"evals": [  ] }</script></p>
+"callback": "function(table) {\nreturn table;\n}",
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="callbacks-in-options" class="section level2">
 <h2><span class="header-section-number">3.3</span> Callbacks in Options</h2>
@@ -331,9 +331,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
-},"evals": [ "options.initComplete" ] }</script></p>
+"callback": "function(table) {\nreturn table;\n}",
+},"evals": [ "options.initComplete", "callback" ] }</script></p>
 <p>The function <code>JS()</code> tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using <strong>RJSONIO</strong>) and decode it in the browser.</p>
 </div>
 <div id="column-rendering" class="section level2">
@@ -346,7 +346,7 @@ img {
     <span class="st">&quot;return type === &#39;display&#39; &amp;&amp; data.length &gt; 6 ?&quot;</span>,
     <span class="st">&quot;&#39;&lt;span title=</span><span class="ch">\&quot;</span><span class="st">&#39; + data + &#39;</span><span class="ch">\&quot;</span><span class="st">&gt;&#39; + data.substr(0, 6) + &#39;...&lt;/span&gt;&#39; : data;&quot;</span>,
     <span class="st">&quot;}&quot;</span>)
-))), <span class="dt">callback =</span> <span class="st">&#39;table.page(3).draw(false);&#39;</span>)</code></pre>
+))), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(3).draw(false);&#39;</span>))</code></pre>
 <p><div id="htmlwidget-4206" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-4206">{ "x": {
  "data": [
@@ -377,9 +377,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "table.page(3).draw(false);",
+"callback": "function(table) {\ntable.page(3).draw(false);\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
-},"evals": [ "options.columnDefs.0.render" ] }</script></p>
+},"evals": [ "options.columnDefs.0.render", "callback" ] }</script></p>
 <p>We used the <code>callback</code> argument in <code>datatable()</code> above, to navigate to the 4th page after the table is created. The index <code>3</code> in <code>table.page(3)</code> means the 4th page.</p>
 </div>
 <div id="row-rendering" class="section level2">
@@ -392,7 +392,7 @@ img {
     <span class="st">&quot;var num = &#39;$&#39; + data[3].toString().replace(/</span><span class="ch">\\</span><span class="st">B(?=(</span><span class="ch">\\</span><span class="st">d{3})+(?!</span><span class="ch">\\</span><span class="st">d))/g, &#39;,&#39;);&quot;</span>,
     <span class="st">&quot;$(&#39;td:eq(3)&#39;, row).html(num);&quot;</span>,
     <span class="st">&quot;}&quot;</span>)
-), <span class="dt">callback =</span> <span class="st">&quot;table.order([3, &#39;asc&#39;]).draw();&quot;</span>)</code></pre>
+), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;table.order([3, &#39;asc&#39;]).draw();&quot;</span>))</code></pre>
 <p><div id="htmlwidget-2388" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-2388">{ "x": {
  "data": [
@@ -420,9 +420,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "table.order([3, 'asc']).draw();",
+"callback": "function(table) {\ntable.order([3, 'asc']).draw();\n}",
 "colnames": [ " ", "V1", "V2", "V3", "V4", "V5" ] 
-},"evals": [ "options.rowCallback" ] }</script></p>
+},"evals": [ "options.rowCallback", "callback" ] }</script></p>
 <p>You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix <code>$</code> to the number. You should know <code>data[2]</code> means the 3rd element in the row now.</p>
 <p>Since it is common for users to format numbers in the data columns, we have provided a few simple helper <a href="functions.html">functions</a> (e.g. <code>formatCurrency()</code>) in this package to do these tasks in a much easier way, so you do not have to write the JavaScript code by yourself.</p>
 </div>

@@ -88,7 +88,7 @@ datatable(iris[c(1:20, 51:60, 101:120), ], options = list(columnDefs = list(list
     "return type === 'display' && data.length > 6 ?",
     "'<span title=\"' + data + '\">' + data.substr(0, 6) + '...</span>' : data;",
     "}")
-))), callback = 'table.page(3).draw(false);')
+))), callback = JS('table.page(3).draw(false);'))
 ```
 
 We used the `callback` argument in `datatable()` above, to navigate to the 4th page after the table is created. The index `3` in `table.page(3)` means the 4th page.
@@ -105,7 +105,7 @@ datatable(m, options = list(
     "var num = '$' + data[3].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');",
     "$('td:eq(3)', row).html(num);",
     "}")
-), callback = "table.order([3, 'asc']).draw();")
+), callback = JS("table.order([3, 'asc']).draw();"))
 ```
 
 You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix `$` to the number. You should know `data[2]` means the 3rd element in the row now.

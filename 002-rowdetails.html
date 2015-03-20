@@ -90,7 +90,7 @@ img {
       <span class="kw">list</span>(<span class="dt">orderable =</span> <span class="ot">FALSE</span>, <span class="dt">className =</span> <span class="st">&#39;details-control&#39;</span>, <span class="dt">targets =</span> <span class="dv">1</span>)
     )
   ),
-  <span class="dt">callback =</span> <span class="st">&quot;</span>
+  <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;</span>
 <span class="st">  table.column(1).nodes().to$().css({cursor: &#39;pointer&#39;});</span>
 <span class="st">  var format = function(d) {</span>
 <span class="st">    return &#39;&lt;div style=</span><span class="ch">\&quot;</span><span class="st">background-color:#eee; padding: .5em;</span><span class="ch">\&quot;</span><span class="st">&gt; Model: &#39; +</span>
@@ -106,7 +106,7 @@ img {
 <span class="st">      td.html(&#39;&amp;CircleMinus;&#39;);</span>
 <span class="st">    }</span>
 <span class="st">  });&quot;</span>
-)</code></pre>
+))</code></pre>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5716">{ "x": {
  "data": [
@@ -149,9 +149,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"callback": "\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });",
+"callback": "function(table) {\n\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });\n}",
 "colnames": [ " ", " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 
 
 </div>

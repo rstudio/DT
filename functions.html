@@ -161,9 +161,9 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 "autoWidth": false,
 "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $('td:eq(3)', row).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\n$('td:eq(0)', row).html('$' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(2)', row).html('$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}" 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ "A", "B", "C", "D", "E" ] 
-},"evals": [ "options.rowCallback" ] }</script></p>
+},"evals": [ "options.rowCallback", "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span>
 <span class="kw">datatable</span>(m) %&gt;%<span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>) %&gt;%<span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre>
 <p><div id="htmlwidget-3125" style="width:100%;height:auto;" class="datatables"></div>
@@ -201,9 +201,9 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 "autoWidth": false,
 "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $('td:eq(4)', row).html(isNaN(d) ? '' : d.toFixed(3));\n$('td:eq(0)', row).html('€' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(1)', row).html('€' + data[1].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}" 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ "A", "B", "C", "D", "E" ] 
-},"evals": [ "options.rowCallback" ] }</script></p>
+},"evals": [ "options.rowCallback", "callback" ] }</script></p>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 </div>
 <div id="table-utilities" class="section level1">

@@ -159,7 +159,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "AutoFill" 
@@ -167,7 +167,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "extOptions": {
  "AutoFill": null 
 } 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pass some initialization options to AutoFill: disable auto filling on the</span>
 <span class="co"># first (0) column and last (-1) column; disable incremental filling on the</span>
 <span class="co"># columns 2 and 3 (i.e. 1 and 2 using JavaScript indexing)</span>
@@ -203,7 +203,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "AutoFill" 
@@ -222,7 +222,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 ] 
 } 
 } 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="colreorder" class="section level1">
 <h1><span class="header-section-number">2</span> ColReorder</h1>
@@ -255,12 +255,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "ColReorder" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># realtime updating</span>
 <span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">dom =</span> <span class="st">&#39;Rlfrtip&#39;</span>, <span class="dt">colReorder =</span> <span class="kw">list</span>(<span class="dt">realtime =</span> <span class="ot">TRUE</span>)
@@ -295,12 +295,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "ColReorder" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="colvis" class="section level1">
 <h1><span class="header-section-number">3</span> ColVis</h1>
@@ -331,12 +331,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "ColVis" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># exclude the first two columns (i.e. they are always visible)</span>
 <span class="kw">datatable</span>(
   iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,
@@ -371,12 +371,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "ColVis" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="fixedcolumns" class="section level1">
 <h1><span class="header-section-number">4</span> FixedColumns</h1>
@@ -434,7 +434,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12", "V13", "V14", "V15", "V16", "V17", "V18", "V19", "V20" ],
 "extensions": [
  "FixedColumns" 
@@ -442,7 +442,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "extOptions": {
  "FixedColumns": null 
 } 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fix some left and right columns</span>
 <span class="kw">datatable</span>(
   m, <span class="dt">extensions =</span> <span class="kw">list</span>(<span class="dt">FixedColumns =</span> <span class="kw">list</span>(<span class="dt">leftColumns =</span> <span class="dv">2</span>, <span class="dt">rightColumns =</span> <span class="dv">1</span>)),
@@ -496,7 +496,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12", "V13", "V14", "V15", "V16", "V17", "V18", "V19", "V20" ],
 "extensions": [
  "FixedColumns" 
@@ -507,7 +507,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "rightColumns":                 1 
 } 
 } 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="fixedheader" class="section level1">
 <h1><span class="header-section-number">5</span> FixedHeader</h1>
@@ -547,7 +547,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "KeyTable" 
@@ -555,7 +555,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "extOptions": {
  "KeyTable": null 
 } 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="responsive" class="section level1">
 <h1><span class="header-section-number">7</span> Responsive</h1>
@@ -588,12 +588,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 "autoWidth": false,
 "responsive": true 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "Responsive" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 </div>
 <div id="scroller" class="section level1">
 <h1><span class="header-section-number">8</span> Scroller</h1>
@@ -1624,12 +1624,12 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ "id", "a", "b", "c", "d" ],
 "extensions": [
  "Scroller" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <p>You can also save the data as JSON in a file and load it via the <code>ajax</code> option. See a live example in Shiny <a href="https://yihui.shinyapps.io/DT-scroller/">here</a>.</p>
 </div>
 <div id="tabletools" class="section level1">
@@ -1680,12 +1680,12 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
 "order": [],
 "autoWidth": false 
 },
-"callback": "return table;",
+"callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
 "extensions": [
  "TableTools" 
 ] 
-},"evals": [  ] }</script></p>
+},"evals": [ "callback" ] }</script></p>
 <p>If you want to view this page locally, you cannot just click and open the file <code>extensions.html</code>. Instead, you may run <code>servr::httd()</code> in R to host the website locally.</p>
 <p>As mentioned before, you can use this extension in a Shiny app, and here is a minimal example. You may save the R code below to a file named <code>app.R</code>, and create a directory named <code>www</code> under the directory of <code>app.R</code>. Then <code>shiny::runApp()</code> should launch the app of the table rendered with <code>TableTools</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
