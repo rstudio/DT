@@ -83,6 +83,8 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #' @export
 dataTableAjax = function(session, data, rownames) {
 
+  oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
+
   # abuse tempfile() to obtain a random id unique to this R session
   id = basename(tempfile(''))
 
@@ -90,7 +92,7 @@ dataTableAjax = function(session, data, rownames) {
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
     if (is.character(rownames)) rownames  # use custom row names
   }
-  if (is.data.frame(data)) data = as.data.frame(data)  # think dplyr
+  data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
 
   session$registerDataObj(id, data, dataTablesJSON)

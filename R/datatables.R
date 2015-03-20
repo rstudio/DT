@@ -52,28 +52,29 @@ datatable = function(
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
   server = FALSE, escape = TRUE, extensions = list()
 ) {
-  isDF = is.data.frame(data)
-  if (isDF) {
+
+  # yes, we all hate it
+  oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
+
+  # deal with row names: rownames = TRUE or missing, use rownames(data)
+  rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
+    if (is.character(rownames)) rownames  # use custom row names
+  }
+
+  if (is.data.frame(data)) {
     data = as.data.frame(data)
     numc = unname(which(sapply(data, is.numeric)))
   } else {
     if (!is.matrix(data))
       stop("'data' must be either a matrix or a data frame")
-    if (length(base::colnames(data)) != ncol(data) && missing(container))
-      stop("The 'data' matrix must have column names")
     numc = if (is.numeric(data)) seq_len(ncol(data))
-  }
-  # deal with row names: rownames = TRUE or missing, use rownames(data)
-  rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
-    if (is.character(rownames)) rownames  # use custom row names
+    data = as.data.frame(data)
   }
   if (length(rn)) {
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
   }
-
-  base::rownames(data) = NULL
 
   # align numeric columns to the right
   if (length(numc))
@@ -107,7 +108,7 @@ datatable = function(
 
   # in the server mode, we should not store the full data in JSON
   if (server) {
-    data = NULL; isDF = FALSE
+    data = NULL
     options$serverSide = TRUE
     if (is.null(options$processing)) options$processing = TRUE
     # if you generated the Ajax URL from dataTableAjax(), I'll configure type:
@@ -140,23 +141,17 @@ datatable = function(
   extOptions = extOptions[intersect(extensions, extNew)]
 
   # rstudio/DT#13: convert date/time to character
-  if (isDF) for (j in seq_len(ncol(data))) {
+  if (length(data)) for (j in seq_len(ncol(data))) {
     if (inherits(data[, j], 'Date')) {
       data[, j] = as.character(data[, j])
     } else if (inherits(data[, j], c('POSIXlt', 'POSIXct'))) {
       data[, j] = sub('(\\d{2})(\\d{2})$', '\\1:\\2', format(
-        data[, j], '%Y-%m-%dT%H:%M:%OS6%z'
+        data[, j], '%Y-%m-%dT%H:%M:%OS6Z', tz = 'UTC'
       ))
     }
   }
   data = escapeData(data, escape, colnames)
   data = fixWAT(data)
-  # do not use is.list() because is.list(data frame) is TRUE
-  if (inherits(data, 'list')) isDF = FALSE else if (isDF) {
-    # see rstudio/DT#5 (list(1, 2) => [1, 2] but we really need [[1], [2]]; this
-    # is fine: list(3:4, 5:6) => [[3, 4], [5, 6]])
-    data = if (nrow(data) == 1) lapply(as.list(data), list) else as.list(data)
-  }
   data = unname(data)
 
   # generate <caption></caption>
@@ -166,7 +161,7 @@ datatable = function(
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
   params = list(
-    data = data, isDF = isDF, container = as.character(container), options = options,
+    data = data, container = as.character(container), options = options,
     callback = JS('function(table) {', callback, '}'),
     colnames = cn, caption = caption, filter = filter
   )
@@ -187,8 +182,6 @@ fixWAT = function(data) {
   # toJSON(list(x = matrix(1:2))) => {x: [ [1], [2] ]}, however,
   # toJSON(list(x = matrix(1))) => {x: [ 1 ]} (loss of dimension, shiny#429)
   if (length(data) && all(dim(data) == 1)) return(list(list(unname(data[1, 1]))))
-  # toJSON(list(x = matrix(nrow = 0, ncol = 1))) => {"x": } (shiny#299)
-  if (is.matrix(data) && nrow(data) == 0) return(list())
   data
 }
 
@@ -222,13 +215,9 @@ escapeData = function(data, i, colnames) {
   if (is.null(data) || prod(dim(data)) == 0 || identical(i, FALSE)) return(data)
   i = convertIdx(i, colnames, ncol(data))
   # only escape character columns (no need to escape numeric or logical columns)
-  if (is.list(data)) {
-    data[i] = lapply(data[i], function(x) {
-      if (is.character(x) || is.factor(x)) htmlEscape(x) else x
-    })
-  } else if (is.matrix(data)) {
-    if (is.character(data)) data[, i] = htmlEscape(data[, i])
-  } else stop('Wrong data for datatable()')
+  data[i] = lapply(data[i], function(x) {
+    if (is.character(x) || is.factor(x)) htmlEscape(x) else x
+  })
   data
 }
 
