@@ -1,0 +1,35 @@
+---
+title: "TableTools Buttons"
+output:
+  html_document:
+    includes: null
+---
+
+You can choose to use a subset of the buttons in the TableTools extension, or arrange some buttons in a collection. There are [such examples](http://datatables.net/extensions/tabletools/examples) on the **DataTables** website. We rewrite two simple examples in R below:
+
+```{r}
+library(DT)
+iris2 = head(iris, 20)
+# only show the Copy and Print buttons
+datatable(
+  iris2,
+  extensions = 'TableTools', options = list(
+    dom = 'T<"clear">lfrtip',
+    tableTools = list(sSwfPath = copySWF(), aButtons = c('copy', 'print'))
+  )
+)
+# put CSV, XLS, and PDF in a collection
+datatable(
+  iris2,
+  extensions = 'TableTools', options = list(
+    dom = 'T<"clear">lfrtip',
+    tableTools = list(
+      sSwfPath = copySWF(),
+      aButtons = list('copy', 'print', list(
+        sExtends = 'collection',
+        sButtonText = 'Save',
+        aButtons = c('csv', 'xls')
+      )))
+  )
+)
+```

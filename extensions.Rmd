@@ -167,6 +167,10 @@ shinyApp(
 )
 ```
 
+Below are more examples of TableTools:
+
+- [Customize TableTools Buttons](003-tabletools-buttons.html)
+
 <script type="text/javascript">
 // a certain extension scrolls the page to Section 6 for some reason, so scroll
 // to top first on load
