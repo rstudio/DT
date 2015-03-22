@@ -97,8 +97,10 @@ Since we have a navigation bar on the top of this page, this extension does not 
 The `KeyTable` extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
 
 ```{r}
-datatable(iris, extensions = 'KeyTable')
+datatable(iris, extensions = list(KeyTable = list(initScroll = FALSE)))
 ```
+
+We turned off the [`initScroll` option](http://datatables.net/extensions/keytable/options) above because we do not want this extension to scroll the page automatically to this section when this page is loaded.
 
 # Responsive
 
@@ -170,13 +172,3 @@ shinyApp(
 Below are more examples of TableTools:
 
 - [Customize TableTools Buttons](003-tabletools-buttons.html)
-
-<script type="text/javascript">
-// a certain extension scrolls the page to Section 6 for some reason, so scroll
-// to top first on load
-$(function() {
-  setTimeout(function() {
-    window.scrollTo(0, 0);
-  }, 1);
-});
-</script>

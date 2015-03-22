@@ -520,7 +520,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="keytable" class="section level1">
 <h1><span class="header-section-number">6</span> KeyTable</h1>
 <p>The <code>KeyTable</code> extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">extensions =</span> <span class="kw">list</span>(<span class="dt">KeyTable =</span> <span class="kw">list</span>(<span class="dt">initScroll =</span> <span class="ot">FALSE</span>)))</code></pre>
 <p><div id="htmlwidget-4322" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-4322">{ "x": {
  "data": [
@@ -553,9 +553,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
  "KeyTable" 
 ],
 "extOptions": {
- "KeyTable": null 
+ "KeyTable": {
+ "initScroll": false 
+} 
 } 
 },"evals": [ "callback" ] }</script></p>
+<p>We turned off the <a href="http://datatables.net/extensions/keytable/options"><code>initScroll</code> option</a> above because we do not want this extension to scroll the page automatically to this section when this page is loaded.</p>
 </div>
 <div id="responsive" class="section level1">
 <h1><span class="header-section-number">7</span> Responsive</h1>
@@ -1707,15 +1710,6 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
 <ul>
 <li><a href="003-tabletools-buttons.html">Customize TableTools Buttons</a></li>
 </ul>
-<script type="text/javascript">
-// a certain extension scrolls the page to Section 6 for some reason, so scroll
-// to top first on load
-$(function() {
-  setTimeout(function() {
-    window.scrollTo(0, 0);
-  }, 1);
-});
-</script>
 </div>
 
 <script>
