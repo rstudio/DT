@@ -4,7 +4,9 @@ HTMLWidgets.widget({
   renderValue: function(el, data) {
     var $el = $(el), cells = data.data;
     $el.empty();
-    if (data.isDF === true) cells = HTMLWidgets.transposeArray2D(cells);
+
+    if (cells instanceof Array) cells = HTMLWidgets.transposeArray2D(cells);
+
     $el.append(data.container);
     if (data.caption) $el.find('table').prepend(data.caption);
     var options = {};
