@@ -126,8 +126,10 @@ dataTablesJSON = function(data, req) {
     if ((k <- col[['search']][['value']]) == '') next
     j = as.integer(j)
     dj = data[, j + 1]
-    r = commaToRange(k)
-    ij = if (length(r) == 2 && (is.numeric(dj) || is.Date(dj))) {
+    ij = if (is.numeric(dj) || is.Date(dj)) {
+      r = commaToRange(k)
+      if (length(r) != 2)
+        stop('The range of a numeric / date / time column must be of length 2')
       if (is.Date(dj)) {
         # r is milliseconds
         r = as.POSIXct(r / 1000, origin = '1970-01-01')
