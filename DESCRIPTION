@@ -18,6 +18,7 @@ Imports:
     htmlwidgets,
     magrittr
 Suggests:
+    jsonlite,
     knitr (>= 1.8),
     shiny
 VignetteBuilder: knitr

@@ -137,7 +137,7 @@ dataTablesJSON = function(data, req) {
       }
       which(dj >= r[1] & dj <= r[2])
     } else if (is.factor(dj)) {
-      which(dj %in% RJSONIO::fromJSON(k, asText = TRUE))
+      which(dj %in% jsonlite::fromJSON(k))
     } else {
       grep2(k, as.character(dj), fixed = col[['search']][['regex']] == 'false',
             ignore.case = ci)
