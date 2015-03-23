@@ -31,7 +31,13 @@ HTMLWidgets.widget({
     }
 
     if (data.filter !== 'none') {
-      $(table.columns().footer()).each(function(i, td) {
+      var filterRow;
+      if (data.filter === 'top') {
+        filterRow = $(table.table().node()).find('thead tr:last td');
+      } else {
+        filterRow = $(table.columns().footer());
+      }
+      filterRow.each(function(i, td) {
 
         var $td = $(td), type = $td.data('type'), filter;
         if (type === 'category') {
