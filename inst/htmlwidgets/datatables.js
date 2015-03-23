@@ -91,7 +91,7 @@ HTMLWidgets.widget({
             if (isNaN(v)) return(false);
             r0 = parseFloat(r[0]); r1 = parseFloat(r[1]);
             if (v >= r0 && v <= r1) return true;
-          } else if (type === 'date') {
+          } else if (type === 'date' || type === 'time') {
             v = new Date(data[i]);
             r0 = new Date(+r[0]); r1 = new Date(+r[1]);
             if (v >= r0 && v <= r1) return true;

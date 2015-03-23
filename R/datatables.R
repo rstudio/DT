@@ -282,10 +282,12 @@ filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
     t = NULL
     d = data[, j]
     x = if (is.numeric(d) || is.Date(d)) {
-      t = if (is.numeric(d)) 'number' else 'date'
-      if (t == 'date') {
+      t = if (is.numeric(d)) 'number' else 'time'
+      if (t == 'time') {
         # JavaScript does have the Date type like R (YYYY-mm-dd without time)
-        if (inherits(d, 'Date')) d = as.POSIXct(d)
+        if (inherits(d, 'Date')) {
+          d = as.POSIXct(d); t = 'date'
+        }
         d = as.numeric(d) * 1000  # use milliseconds for JavaScript
       }
       tags$div(`data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE))
