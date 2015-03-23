@@ -136,6 +136,8 @@ dataTablesJSON = function(data, req) {
         if (inherits(dj, 'Date')) r = as.Date(r)
       }
       which(dj >= r[1] & dj <= r[2])
+    } else if (is.factor(dj)) {
+      which(dj %in% RJSONIO::fromJSON(k, asText = TRUE))
     } else {
       grep2(k, as.character(dj), fixed = col[['search']][['regex']] == 'false',
             ignore.case = ci)
