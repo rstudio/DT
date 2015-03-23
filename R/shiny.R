@@ -105,7 +105,7 @@ dataTablesJSON = function(data, req) {
   # DataTables requests were sent via POST
   URLdecode = shinyFun('URLdecode')
   params = URLdecode(rawToChar(req$rook.input$read()))
-  q = parseQueryString(params, nested = TRUE)
+  q = shiny::parseQueryString(params, nested = TRUE)
   ci = q$search[['caseInsensitive']] == 'true'
 
   # global searching
