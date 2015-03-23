@@ -4,7 +4,7 @@ if (!file_test('-d', 'www')) dir.create('www')
 
 # prepare the Ajax data source
 writeLines(
-  RJSONIO::toJSON(list(aaData = matrix(1:4000, ncol = 4))),
+  jsonlite::toJSON(list(aaData = matrix(1:4000, ncol = 4))),
   'www/large.txt'
 )
 
