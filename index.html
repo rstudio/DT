@@ -133,7 +133,7 @@ img {
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.22
+## [1] DT_0.0.23
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.8       evaluate_0.5.5     formatR_1.0.3     
@@ -144,9 +144,9 @@ img {
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>, <span class="dt">callback =</span> <span class="st">&quot;return table;&quot;</span>, 
-    rownames, colnames, container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>, 
-    <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>, <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), 
+    rownames, colnames, container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, 
+        <span class="st">&quot;top&quot;</span>), <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
 <p>Here is a “hello world” example with zero configuration:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 <span class="kw">datatable</span>(iris)</code></pre>
@@ -160,7 +160,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3,               0.2,               0.4,               0.2,               0.5,               0.2,               0.2,               0.4,               0.2,               0.2,               0.2,               0.2,               0.4,               0.1,               0.2,               0.2,               0.2,               0.2,               0.1,               0.2,               0.2,               0.3,               0.3,               0.2,               0.6,               0.4,               0.3,               0.2,               0.2,               0.2,               0.2,               1.4,               1.5,               1.5,               1.3,               1.5,               1.3,               1.6,                 1,               1.3,               1.4,                 1,               1.5,                 1,               1.4,               1.3,               1.4,               1.5,                 1,               1.5,               1.1,               1.8,               1.3,               1.5,               1.2,               1.3,               1.4,               1.4,               1.7,               1.5,                 1,               1.1,                 1,               1.2,               1.6,               1.5,               1.6,               1.5,               1.3,               1.3,               1.3,               1.2,               1.4,               1.2,                 1,               1.3,               1.2,               1.3,               1.3,               1.1,               1.3,               2.5,               1.9,               2.1,               1.8,               2.2,               2.1,               1.7,               1.8,               1.8,               2.5,                 2,               1.9,               2.1,                 2,               2.4,               2.3,               1.8,               2.2,               2.3,               1.5,               2.3,                 2,                 2,               1.8,               2.1,               1.8,               1.8,               1.8,               2.1,               1.6,               1.9,                 2,               2.2,               1.5,               1.4,               2.3,               2.4,               1.8,               1.8,               2.1,               2.4,               2.3,               1.9,               2.3,               2.5,               2.3,               1.9,                 2,               2.3,               1.8 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -177,7 +176,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="arguments" class="section level1">
@@ -197,7 +197,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -214,7 +213,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="display-row-names" class="section level2">
@@ -237,7 +237,6 @@ img {
 [                 4,                 4,                 4,                 3,                 3,                 3 ],
 [                 4,                 4,                 1,                 1,                 2,                 1 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -254,7 +253,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
+"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="ot">FALSE</span>)  <span class="co"># no row names</span></code></pre>
 <p><div id="htmlwidget-5403" style="width:100%;height:auto;" class="datatables"></div>
@@ -272,7 +272,6 @@ img {
 [                 4,                 4,                 4,                 3,                 3,                 3 ],
 [                 4,                 4,                 1,                 1,                 2,                 1 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -285,7 +284,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
+"colnames": [ "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="kw">head</span>(LETTERS))  <span class="co"># new row names</span></code></pre>
 <p><div id="htmlwidget-880" style="width:100%;height:auto;" class="datatables"></div>
@@ -304,7 +304,6 @@ img {
 [                 4,                 4,                 4,                 3,                 3,                 3 ],
 [                 4,                 4,                 1,                 1,                 2,                 1 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -321,7 +320,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
+"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>Row names are essentialy a new column added to the original data (via <code>cbind(rownames(data), data)</code>). This has an important consequence in terms of the column indices. JavaScript indexes from 0 instead of 1, so the index of the <em>n</em>-th element is actually <em>n - 1</em>.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> When thinking of the column indices (which you will often have to do if you customize <a href="options.html">options</a>), use</p>
 <ul>
@@ -345,7 +345,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Here</th>\n      <th>Are</th>\n      <th>Some</th>\n      <th>New</th>\n      <th>Names</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -362,7 +361,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;A Better Name&#39;</span> =<span class="st"> &#39;Sepal.Width&#39;</span>))</code></pre>
@@ -376,7 +376,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>A Better Name</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -393,7 +392,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Sepal.Length", "A Better Name", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "A Better Name", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Another Better Name&#39;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> =<span class="st"> </span><span class="dv">4</span>))</code></pre>
 <p><div id="htmlwidget-3303" style="width:100%;height:auto;" class="datatables"></div>
@@ -406,7 +406,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Another Better Name</th>\n      <th>Sepal.Width</th>\n      <th>Yet Another Name</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -423,7 +422,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Another Better Name", "Sepal.Width", "Yet Another Name", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Another Better Name", "Sepal.Width", "Yet Another Name", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="custom-table-container" class="section level2">
@@ -471,7 +471,6 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 [               1.4,               1.4,               1.3,               1.5,               1.4,               1.7,               1.4,               1.5,               1.4,               1.5,               1.5,               1.6,               1.4,               1.1,               1.2,               1.5,               1.3,               1.4,               1.7,               1.5 ],
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th rowspan=\"2\">Species</th>\n      <th colspan=\"2\">Sepal</th>\n      <th colspan=\"2\">Petal</th>\n    </tr>\n    <tr>\n      <th>Length</th>\n      <th>Width</th>\n      <th>Length</th>\n      <th>Width</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -484,7 +483,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ "Species", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width" ] 
+"colnames": [ "Species", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>You can also add a footer to the table container, and here is an example:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table with both header and footer</span>
@@ -526,7 +526,6 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table>\n  <thead>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n  <tfoot>\n    <tr>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </tfoot>\n</table>",
 "options": {
  "pageLength":                 5,
@@ -541,7 +540,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="table-caption" class="section level2">
@@ -561,7 +561,6 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -579,7 +578,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 },
 "callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
-"caption": "<caption>Table 1: This is a simple caption for the table.</caption>" 
+"caption": "<caption>Table 1: This is a simple caption for the table.</caption>",
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># display the caption at the bottom, and &lt;em&gt; the caption</span>
 <span class="kw">datatable</span>(
@@ -599,7 +599,6 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -617,7 +616,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 },
 "callback": "function(table) {\nreturn table;\n}",
 "colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
-"caption": "<caption style=\"caption-side: bottom; text-align: center;\">\n  Table 2: \n  <em>This is a simple caption for the table.</em>\n</caption>" 
+"caption": "<caption style=\"caption-side: bottom; text-align: center;\">\n  Table 2: \n  <em>This is a simple caption for the table.</em>\n</caption>",
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="the-callback-argument" class="section level2">
@@ -634,7 +634,6 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3,               0.2,               0.4,               0.2,               0.5,               0.2,               0.2,               0.4,               0.2,               0.2,               0.2 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -651,7 +650,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 "autoWidth": false 
 },
 "callback": "function(table) {\ntable.page(\"next\").draw(false);\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>In the above example, the actual callback function on the JavaScript side is this (<code>callback</code> is only the body of the function):</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(table) {
@@ -674,30 +674,34 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <span class="kw">datatable</span>(m)  <span class="co"># escape = TRUE by default</span></code></pre>
 <p><div id="htmlwidget-4366" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-4366">{ "x": {
- "data": [ [ "&lt;b&gt;Bold&lt;/b&gt;", "&lt;a href=\"http://rstudio.com\"&gt;RStudio&lt;/a&gt;" ],
-[ "&lt;em&gt;Emphasize&lt;/em&gt;", "&lt;a href=\"#\" onclick=\"alert('Hello World');\"&gt;Hello&lt;/a&gt;" ] ],
-"isDF": false,
+ "data": [
+ [ "&lt;b&gt;Bold&lt;/b&gt;", "&lt;em&gt;Emphasize&lt;/em&gt;" ],
+[ "&lt;a href=\"http://rstudio.com\"&gt;RStudio&lt;/a&gt;", "&lt;a href=\"#\" onclick=\"alert('Hello World');\"&gt;Hello&lt;/a&gt;" ] 
+],
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>&lt;span style=\"color:red\"&gt;Column 1&lt;/span&gt;</th>\n      <th>&lt;em&gt;Column 2&lt;/em&gt;</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "order": [],
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ "<span style=\"color:red\">Column 1</span>", "<em>Column 2</em>" ] 
+"colnames": [ "<span style=\"color:red\">Column 1</span>", "<em>Column 2</em>" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>)</code></pre>
 <p><div id="htmlwidget-6001" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-6001">{ "x": {
- "data": [ [ "<b>Bold</b>", "<a href=\"http://rstudio.com\">RStudio</a>" ],
-[ "<em>Emphasize</em>", "<a href=\"#\" onclick=\"alert('Hello World');\">Hello</a>" ] ],
-"isDF": false,
+ "data": [
+ [ "<b>Bold</b>", "<em>Emphasize</em>" ],
+[ "<a href=\"http://rstudio.com\">RStudio</a>", "<a href=\"#\" onclick=\"alert('Hello World');\">Hello</a>" ] 
+],
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th><span style=\"color:red\">Column 1</span></th>\n      <th><em>Column 2</em></th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "order": [],
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ "<span style=\"color:red\">Column 1</span>", "<em>Column 2</em>" ] 
+"colnames": [ "<span style=\"color:red\">Column 1</span>", "<em>Column 2</em>" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>Besides <code>TRUE</code> and <code>FALSE</code>, you can also specify which columns you want to escape, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">1</span>)  <span class="co"># escape the first column</span>

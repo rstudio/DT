@@ -141,7 +141,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -164,7 +163,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>The target column index is 5 but we actually centered the 6th column: the first column is row names, and the rest of columns are the <code>iris</code> data. The JavaScript index of the 6th column is 5. See the section “<a href="./#display-row-names">Display Row Names</a>” for more details.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># when rownames = FALSE, use 4 as the index of the Species column</span>
@@ -198,7 +198,6 @@ img {
 [                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 4,                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 3,                 3,                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 3,                 4,                 5,                 5,                 5,                 5 ],
 [                 4,                 4,                 1,                 1,                 2,                 1,                 4,                 2,                 2,                 4,                 4,                 3,                 3,                 3,                 4,                 4,                 4,                 1,                 2,                 1,                 1,                 2,                 2,                 4,                 2,                 1,                 2,                 2,                 4,                 6 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "order": [
@@ -223,8 +222,9 @@ img {
 ],
 "autoWidth": false 
 },
-"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
 "callback": "function(table) {\nreturn table;\n}",
+"colnames": [ " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="dom-elements" class="section level2">
@@ -242,7 +242,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "dom": "t",
@@ -259,8 +258,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 "callback": "function(table) {\nreturn table;\n}",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the filtering box and the table</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;ft&#39;</span>))</code></pre>
@@ -274,7 +274,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "dom": "ft",
@@ -291,8 +290,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 "callback": "function(table) {\nreturn table;\n}",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 </div>
 <div id="callbacks-in-options" class="section level2">
@@ -314,7 +314,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "initComplete": "function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});\n}",
@@ -331,8 +330,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 "callback": "function(table) {\nreturn table;\n}",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "options.initComplete", "callback" ] }</script></p>
 <p>The function <code>JS()</code> tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using <strong>RJSONIO</strong>) and decode it in the browser.</p>
 </div>
@@ -357,7 +357,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3,               1.4,               1.5,               1.5,               1.3,               1.5,               1.3,               1.6,                 1,               1.3,               1.4,               2.5,               1.9,               2.1,               1.8,               2.2,               2.1,               1.7,               1.8,               1.8,               2.5,                 2,               1.9,               2.1,                 2,               2.4,               2.3,               1.8,               2.2,               2.3,               1.5 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -378,7 +377,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\ntable.page(3).draw(false);\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "options.columnDefs.0.render", "callback" ] }</script></p>
 <p>We used the <code>callback</code> argument in <code>datatable()</code> above, to navigate to the 4th page after the table is created. The index <code>3</code> in <code>table.page(3)</code> means the 4th page.</p>
 </div>
@@ -403,7 +403,6 @@ img {
 [            479639,           -402323,           -233207,           -918575,           -971791,            403529,            548210,            153004,           1022267,           2150085,           -391031,          -2209169,           1105739,           -609201,           -588009,           1125571,           -184773,          -1120718,            281303,            -38891 ],
 [            105764,            485280,           -270660,            744377,           -120487,            431782,           1196839,            535181,           -225932,           1248808,           1093504,            648397,            338732,           -527906,           1460652,           -500260,           2287333,           1632611,           -135700,           -926421 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "rowCallback": "function(row, data) {\nvar num = '$' + data[3].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');\n$('td:eq(3)', row).html(num);\n}",
@@ -421,7 +420,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\ntable.order([3, 'asc']).draw();\n}",
-"colnames": [ " ", "V1", "V2", "V3", "V4", "V5" ] 
+"colnames": [ " ", "V1", "V2", "V3", "V4", "V5" ],
+"filter": "none" 
 },"evals": [ "options.rowCallback", "callback" ] }</script></p>
 <p>You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix <code>$</code> to the number. You should know <code>data[2]</code> means the 3rd element in the row now.</p>
 <p>Since it is common for users to format numbers in the data columns, we have provided a few simple helper <a href="functions.html">functions</a> (e.g. <code>formatCurrency()</code>) in this package to do these tasks in a much easier way, so you do not have to write the JavaScript code by yourself.</p>

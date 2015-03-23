@@ -145,7 +145,6 @@ img {
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ],
 [ "<input data-row=\"1\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"2\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"3\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"4\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"5\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"6\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"7\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"8\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"9\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"10\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"11\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"12\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"13\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"14\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"15\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"16\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"17\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"18\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"19\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"20\" type=\"checkbox\" class=\"DT checkboxRows\" />" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n      <th> </th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "pageLength":                 5,
@@ -164,7 +163,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\nreturn table;\n}",
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", " " ] 
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", " " ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just use checkboxes as the &quot;row names&quot;</span>
 <span class="kw">datatable</span>(
@@ -181,7 +181,6 @@ img {
 [               0.2,               0.2,               0.2,               0.2,               0.2,               0.4,               0.3,               0.2,               0.2,               0.1,               0.2,               0.2,               0.1,               0.1,               0.2,               0.4,               0.4,               0.3,               0.3,               0.3 ],
 [ "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa" ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "pageLength":                 5,
@@ -199,8 +198,9 @@ img {
 "order": [],
 "autoWidth": false 
 },
-"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ] 
 "callback": "function(table) {\nreturn table;\n}",
+"colnames": [ " ", "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 <p>The examples above only show you how a table looks like when you add a column of checkboxes. See <a href="https://yihui.shinyapps.io/DT-checkbox/">this example</a> for how Shiny react to changes from the checkboxes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>

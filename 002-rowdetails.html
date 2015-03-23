@@ -124,7 +124,6 @@ img {
 [                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 4,                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 3,                 3,                 4,                 4,                 4,                 3,                 3,                 3,                 3,                 3,                 4,                 5,                 5,                 5,                 5,                 5,                 4 ],
 [                 4,                 4,                 1,                 1,                 2,                 1,                 4,                 2,                 2,                 4,                 4,                 3,                 3,                 3,                 4,                 4,                 4,                 1,                 2,                 1,                 1,                 2,                 2,                 4,                 2,                 1,                 2,                 2,                 4,                 6,                 8,                 2 ] 
 ],
-"isDF": true,
 "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
 "options": {
  "columnDefs": [
@@ -150,7 +149,8 @@ img {
 "autoWidth": false 
 },
 "callback": "function(table) {\n\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });\n}",
-"colnames": [ " ", " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ] 
+"colnames": [ " ", " ", "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb" ],
+"filter": "none" 
 },"evals": [ "callback" ] }</script></p>
 
 
