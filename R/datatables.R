@@ -100,11 +100,14 @@ datatable = function(
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
 
   filter = match.arg(filter)
-  if (missing(container)) container = tags$table(
-    tableHeader(colnames, escape),
-    filterRow(data, length(rn) > 0, colnames, filter),
-    class = class
-  )
+  if (missing(container)) {
+    fRow = filterRow(data, length(rn) > 0, colnames, filter)
+    container = tags$table(
+      tableHead(colnames, 'head', escape, if (filter == 'top') fRow),
+      if (filter == 'bottom') fRow,
+      class = class
+    )
+  }
 
   # in the server mode, we should not store the full data in JSON
   if (server) {
@@ -263,12 +266,12 @@ tableFooter = function(names, escape = TRUE) {
   tableHead(names, 'foot', escape)
 }
 
-tableHead = function(names, type = c('head', 'foot'), escape = TRUE) {
+tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
   names2 = colnames(names)
   if (!is.null(names2)) names = names2
   type = match.arg(type)
   f = tags[[sprintf('t%s', type)]]
-  f(tags$tr(lapply(escapeColNames(names, escape), tags$th)))
+  f(tags$tr(lapply(escapeColNames(names, escape), tags$th)), ...)
 }
 
 filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
@@ -301,7 +304,8 @@ filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
     }
     tds[[j]] = tags$td(x, `data-type` = t)
   }
-  tags$tfoot(tags$tr(tds), style = if (filter == 'top') 'display: table-header-group;')
+  tr = tags$tr(tds)
+  if (filter == 'top') tr else tags$tfoot(tr)
 }
 
 filterDependencies = function() {
