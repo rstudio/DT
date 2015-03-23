@@ -1,3 +1,9 @@
+---
+title: DataTables Extensions
+---
+
+---
+
 **DataTables** has a number of extensions, and all of them have been integrated into **DT**. You can use the `extensions` argument of `datatable()` to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. `extensions = c('AutoFill', 'ColReorder')`.
 
 For the time being, because the **DataTables** library does not have a consistent way to specify initialization options for its extensions, some extensions can be initialized via the `options` argument of `datatable()`, and some have to be initialized differently (including `r paste(DT:::extNew, sep = ', ')`). In the latter case, you can use a named list for the `extensions` argument: the name of each element is the extension name, and the list element is the initialization options, e.g. `extensions = list(AutoFill = list(mode = 'both'), ColReorder = NULL)`.

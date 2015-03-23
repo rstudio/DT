@@ -1,3 +1,11 @@
+---
+title: Helper Functions
+---
+
+**DT** has provided a few helper functions to make it convenient to tweak the table without writing a lot of HTML or JavaScript code.
+
+---
+
 # Format Columns
 
 You can use the functions `format*()` to format the table columns as currency, percentages, or round numbers. Here are some examples:
