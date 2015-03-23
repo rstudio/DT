@@ -19,7 +19,6 @@ employee = data.frame(
   check.names = FALSE
 )
 datatable(employee, server = TRUE, options = list(
-  processing = TRUE,
   ajax = list(
     url = 'http://datatables.net/examples/server_side/scripts/jsonp.php',
     dataType = 'jsonp'
@@ -27,9 +26,9 @@ datatable(employee, server = TRUE, options = list(
 ))
 ```
 
-# A Shiny Example (Experimental)
+# A Shiny Example
 
-If you have used **DataTables** in **shiny** before, you might know that **shiny** uses the server-side processing model for **DataTables**, which basically means the data is processed through R, and R will return the JSON data to the client. The key pieces that makes this work are two functions: `session$registerDataObj()`, and `shiny:::dataTablesJSON()`. The former registers a data object in the shiny session and returns a URL, which can be used as the server URL for `datatable()`; the latter was designed to process the data according to the Ajax request sent from **DataTables** and return JSON data. We can put these two pieces together and use them in a shiny app. There is an example in the **DT** package, which you can run by
+If you have used **DataTables** in **shiny** before, you might know that **shiny** uses the server-side processing model for **DataTables**, which basically means the data is processed through R, and R will return the JSON data to the client. The key pieces that makes this work are two functions: `session$registerDataObj()`, and `shiny:::dataTablesJSON()` (now moved to **DT** as `DT:::dataTablesJSON()`). The former registers a data object in the shiny session and returns a URL, which can be used as the server URL for `datatable()`; the latter was designed to process the data according to the Ajax request sent from **DataTables** and return JSON data. We can put these two pieces together and use them in a shiny app. There is an example in the **DT** package, which you can run by
 
 ```{r eval=FALSE}
 shiny::runApp(system.file('examples', 'DT-shiny', package = 'DT'))
@@ -53,6 +52,17 @@ DTShinyEx = function(file) {
 ```{r server, code=DTShinyEx('server.R'), eval=FALSE}
 ```
 
-That is more or less how **DataTables** has been working internally in **shiny**.
+That is more or less how **DataTables** used to work internally in **shiny**. Now we have moved the server-side processing function `dataTablesJSON()` from shiny to **DT**, and provided a wrapper function `DT::dataTableAjax()` to make it easier for you register a data object in the shiny session that will return JSON when **DataTables** sends Ajax requests.
 
-Please note this example is _experimental_, and may have many rough edges. You may not really need server-side processing at all: client-side DataTables may just suffice.
+Alternatively, you can write a shiny app using a single script `app.R` that returns a `shinyApp()` object. For example, below is a function that returns a shiny app:
+
+```{r code=DTShinyEx('../ajax-shiny.R')[2:18], eval=FALSE}
+```
+
+Then you can call the function to create the app at the end of `app.R`, e.g.
+
+```{r eval=FALSE}
+DTApp(iris, filter = 'top')
+```
+
+You will be able to either call `shiny::runApp()` to run `app.R`, or simply paste the code in R to run the app.
