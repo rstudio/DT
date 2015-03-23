@@ -118,9 +118,17 @@ img {
 <h1><span class="header-section-number">1</span> Default Configurations</h1>
 <p>The <strong>DT</strong> package modified the default behavior of <strong>DataTables</strong> in these aspects:</p>
 <ul>
-<li>the table is not ordered by default (<strong>DataTables</strong> orders a table by its first column by default);</li>
-<li>numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;</li>
-<li>the option <code>autoWidth</code> is set to <code>FALSE</code> by default, so that <strong>DataTables</strong> does not calculate and put hard-coded width values on the table columns;</li>
+<li>The table is not ordered by default (<strong>DataTables</strong> orders a table by its first column by default);</li>
+<li>Numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;</li>
+<li>The option <code>autoWidth</code> is set to <code>FALSE</code> by default, so that <strong>DataTables</strong> does not calculate and put hard-coded width values on the table columns;
+<ul>
+<li><p>One <a href="https://github.com/rstudio/DT/issues/29">known issue</a> with <code>autoWidth = FALSE</code> is that the <code>width</code> option for columns will not work, so if you want to configure widths for columns, you have to use <code>autoWidth = TRUE</code>, e.g.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(..., <span class="dt">options =</span> <span class="kw">list</span>(
+  <span class="dt">autoWidth =</span> <span class="ot">TRUE</span>,
+  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">width =</span> <span class="st">&#39;200px&#39;</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)))
+))</code></pre></li>
+</ul></li>
+<li>When using the <a href="server.html">server-side processing</a> mode, the option <code>processing = TRUE</code> is set as the default to show the processing indicator (<strong>DataTables</strong>’ default is always <code>FALSE</code>);</li>
 </ul>
 </div>
 <div id="initialization-options" class="section level1">

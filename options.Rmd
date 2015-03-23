@@ -10,9 +10,17 @@ title: DataTables Options
 
 The **DT** package modified the default behavior of **DataTables** in these aspects:
 
-- the table is not ordered by default (**DataTables** orders a table by its first column by default);
-- numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;
-- the option `autoWidth` is set to `FALSE` by default, so that **DataTables** does not calculate and put hard-coded width values on the table columns;
+- The table is not ordered by default (**DataTables** orders a table by its first column by default);
+- Numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;
+- The option `autoWidth` is set to `FALSE` by default, so that **DataTables** does not calculate and put hard-coded width values on the table columns;
+    - One [known issue](https://github.com/rstudio/DT/issues/29) with `autoWidth = FALSE` is that the `width` option for columns will not work, so if you want to configure widths for columns, you have to use `autoWidth = TRUE`, e.g.
+        ```{r eval=FALSE}
+        datatable(..., options = list(
+          autoWidth = TRUE,
+          columnDefs = list(list(width = '200px', targets = c(1, 3)))
+        ))
+        ```
+- When using the [server-side processing](server.html) mode, the option `processing = TRUE` is set as the default to show the processing indicator (**DataTables**' default is always `FALSE`);
 
 # Initialization Options
 
