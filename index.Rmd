@@ -133,6 +133,45 @@ datatable(
 )
 ```
 
+## Column Filters
+
+**DataTables** does not provide column filters by default. There is only a global filter (the search box on the top-right). We added a `filter` argument in `datatable()` to automatically generate column filters. By default, the filters are not shown since `filter = 'none'`. You can enable these filters by `filter = 'top'` or `'bottom'`, depending on whether you want to put the filters on the top or bottom of the table.
+
+```{r}
+iris2 = iris[c(1:10, 51:60, 101:110), ]
+datatable(iris2, filter = 'top', options = list(
+  pageLength = 5, autoWidth = TRUE
+))
+```
+
+Depending on the type of a column, the filter control can be different. Initially, you see search boxes for all columns. When you click the search boxes, you may see different controls:
+
+- For numeric/date/time columns, [range sliders](http://refreshless.com/nouislider/) are used to filter rows within ranges;
+- For factor columns, [selectize inputs](http://brianreavis.github.io/selectize.js/) are used to display all possible categories, and you can select multiple categories there (note you can also type in the box to search in all categories);
+- For character columns, ordinary search boxes are used to match the values you typed in the boxes;
+
+When you leave the initial search boxes, the controls will be hidden and the filtering values (if there are any) are stored in the boxes:
+
+- For numeric/date/time columns, the values displayed in the boxes are of the form `low ... high`;
+- For factor columns, the values are serialized as a JSON array of the form `["value1", "value2", "value3"]`;
+
+When a column is filtered, there will be a clear button <span class="glyphicon glyphicon-remove-circle"></span> in its search box, and you can click the button to clear the filter. If you do not want to use the controls, you can actually type in the search boxes directly, e.g. you may type `2 ... 5` to filter a numeric column, and the range of its slider will automatically adjusted to `[2, 5]`. In case you find a search box too narrow and it is difficult to read the values in it, you may mouse over the box and its values will be displayed as a tooltip.
+
+Below is a simple example to demonstrate filters for character, date, and time columns:
+
+```{r collapse=TRUE}
+d = data.frame(
+  names = rownames(mtcars),
+  date = as.Date('2015-03-23') + 1:32,
+  time = as.POSIXct('2015-03-23 12:00:00', tz = 'UTC') + (1:32) * 5000,
+  stringsAsFactors = FALSE
+)
+str(d)
+datatable(d, filter = 'bottom', options = list(pageLength = 5))
+```
+
+Filtering in the above examples was done on the client side (using JavaScript in your web browser). Column filters also work in the [server-side processing](server.html) mode, in which case filtering will be processed on the server, and there may be some subtle differences (e.g. JavaScript regular expressions are different with R). See [here for an example](https://yihui.shinyapps.io/DT-filter/) of column filters working on the server side.
+
 ## The `callback` argument
 
 The argument `callback` takes the body of a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
