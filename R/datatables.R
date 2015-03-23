@@ -107,6 +107,9 @@ datatable = function(
       if (filter == 'bottom') fRow,
       class = class
     )
+    # use the first row in the header as the sorting cells when I put the
+    # filters in the second row
+    if (filter == 'top') options$orderCellsTop = TRUE
   }
 
   # in the server mode, we should not store the full data in JSON
