@@ -41,6 +41,11 @@ header consisting of the column names of the data}
 \item{caption}{the table caption; a character vector or a tag object
 generated from \code{htmltools::tags$caption()}}
 
+\item{filter}{whether/where to use column filters; \code{none}: no filters;
+\code{bottom/top}: put column filters at the bottom/top of the table; range
+sliders are used to filter numeric/date/time columns, select lists are used
+for factor columns, and text input boxes are used for character columns}
+
 \item{server}{whether to use server-side processing; if \code{TRUE}, you must
 provide a server URL so that DataTables can send Ajax requests to retrieve
 data from the server}
