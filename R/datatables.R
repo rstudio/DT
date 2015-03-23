@@ -277,6 +277,7 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
   f(tags$tr(lapply(escapeColNames(names, escape), tags$th)), ...)
 }
 
+#' @importFrom htmltools tagList
 filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
   if (filter == 'none') return()
   tds = list()
@@ -296,16 +297,35 @@ filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
         }
         d = as.numeric(d) * 1000  # use milliseconds for JavaScript
       }
-      tags$div(`data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE))
-    } else if (is.character(d) || is.factor(d)) {
-      t = 'category'
-      tags$select(
-        multiple = 'multiple', placeholder = paste('Search', colnames[j]),
-        style = 'width: 100%;',
-        lapply(unique(d), function(x) tags$option(value = x, x))
+      tags$div(
+        `data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE),
+        style = 'margin-top: 10px; display: none;'
       )
+    } else if (is.factor(d)) {
+      t = 'factor'
+      tags$div(
+        tags$select(
+          multiple = 'multiple', style = 'width: 100%;',
+          lapply(unique(d), function(x) tags$option(value = x, x))
+        ),
+        style = 'width: 100%; display: none;'
+      )
+    } else if (is.character(d)) {
+      t = 'character'
+      NULL
     }
-    tds[[j]] = tags$td(x, `data-type` = t)
+    x = tagList(
+      tags$div(
+        class = 'form-group has-feedback', style = 'margin-bottom: auto;',
+        tags$input(
+          type = 'search', placeholder = 'All', class = 'form-control',
+          style = 'width: 100%; cursor: pointer;'
+        ),
+        tags$span(class = 'glyphicon glyphicon-remove-circle form-control-feedback')
+      ),
+      x
+    )
+    tds[[j]] = tags$td(x, `data-type` = t, style = 'vertical-align: top;')
   }
   tr = tags$tr(tds)
   if (filter == 'top') tr else tags$tfoot(tr)
