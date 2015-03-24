@@ -105,7 +105,9 @@ HTMLWidgets.widget({
           $input.on({
             focus: function() {
               $x0.show();
-              $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
+              $x0.outerWidth(Math.max(
+                160, $span1.outerWidth() + $span2.outerWidth() + 20, $input.outerWidth()
+              ));
             },
             blur: function() {
               $x0.hide();
