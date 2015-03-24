@@ -81,6 +81,7 @@ HTMLWidgets.widget({
               $x.hide(); $input.parent().show();
             }
           });
+          filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
           var fun = function() {
             table.column(i).search($input.val()).draw();
