@@ -81,6 +81,7 @@ HTMLWidgets.widget({
               $x.hide(); $input.parent().show();
             }
           });
+          filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
           var fun = function() {
             table.column(i).search($input.val()).draw();
@@ -90,60 +91,96 @@ HTMLWidgets.widget({
           }
           $input.on('input', fun);
         } else if (type === 'number' || type === 'date' || type === 'time') {
+          var $x0 = $x;
+          $x = $x0.children('div').first();
+          $x0.css({
+            'background-color': '#fff',
+            'border': '1px #ddd solid',
+            'border-radius': '4px',
+            'padding': '20px 20px 10px 20px'
+          });
+          var $spans = $x0.children('span').css('margin-top', '10px');
+          var $span1 = $spans.first(), $span2 = $spans.last();
           var r1 = +$x.data('min'), r2 = +$x.data('max');
           $input.on({
             focus: function() {
-              $x.show();
+              $x0.show();
+              $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
             },
             blur: function() {
-              $x.hide();
+              $x0.hide();
             },
             input: function() {
               if ($input.val() === '') filter.val([r1, r2]);
             },
             change: function() {
-              var v = $input.val().split('...');
-              if (v.length !== 2) return;
+              var v = $input.val();
+              if (v === '') return;
+              v = v.split('...');
+              if (v.length !== 2) {
+                $input.parent().addClass('has-error');
+                return;
+              }
+              $input.parent().removeClass('has-error');
+              // treat date as UTC time at midnight
+              var strTime = function(x) {
+                var s = type === 'date' ? 'T00:00:00Z' : '';
+                var t = new Date(x.replace(/\s/g, '') + s).getTime();
+                // add 10 minutes to date since it does not hurt the date, and
+                // it helps avoid the tricky floating point arithmetic problems,
+                // e.g. sometimes the date may be a few milliseconds earlier
+                // than the midnight due to precision problems in noUiSlider
+                return type === 'date' ? t + 3600000 : t;
+              };
+              if (type !== 'number') {
+                v[0] = strTime(v[0]);
+                v[1] = strTime(v[1]);
+              }
               filter.val([+v[0], +v[1]]);
             }
           });
           var formatDate = function(d) {
+            if (type === 'number') return d;
             var x = new Date(+d);
             if (type === 'date') {
-              return x.getFullYear() + '-' + ('0' + (1 + x.getMonth())).substr(-2, 2)
-                      + '-' + x.getDate();
+              var pad0 = function(x) {
+                return ('0' + x).substr(-2, 2);
+              };
+              return x.getUTCFullYear() + '-' + pad0(1 + x.getUTCMonth())
+                      + '-' + pad0(x.getUTCDate());
             } else {
               return x.toISOString();
             }
           };
-          var opts = type === 'date' ? { step: 24 * 60 * 60 * 1000 } : {};
+          var opts = type === 'date' ? { step: 60 * 60 * 1000 } : {};
           filter = $x.noUiSlider($.extend({
             start: [r1, r2],
             range: {min: r1, max: r2},
             connect: true
-          }, opts)).on({
-            set: function() {
-              var val = $(this).val();
-              // turn off filter if in full range
-              $td.data('filter', val[0] != r1 || val[1] != r2);
-              if ($td.data('filter')) {
-                var ival;
-                if (type == 'number') {
-                  ival = val.join(' ... ');
-                } else {
-                  var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
-                  ival = v1 + ' ... ' + v2;
-                }
-                $input.attr('title', ival).val(ival).trigger('input');
-              } else {
-                $input.attr('title', '').val('');
-              }
-              if (server) {
-                table.column(i).search($td.data('filter') ? val.join(',') : '').draw();
-                return;
-              }
-              table.draw();
+          }, opts));
+          $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
+          var updateSlider = function(e) {
+            var val = filter.val();
+            // turn off filter if in full range
+            $td.data('filter', val[0] != r1 || val[1] != r2);
+            var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
+            if ($td.data('filter')) {
+              var ival = v1 + ' ... ' + v2;
+              $input.attr('title', ival).val(ival).trigger('input');
+            } else {
+              $input.attr('title', '').val('');
             }
+            $span1.text(v1); $span2.text(v2);
+            if (e.type === 'slide') return;  // no searching when sliding only
+            if (server) {
+              table.column(i).search($td.data('filter') ? val.join(',') : '').draw();
+              return;
+            }
+            table.draw();
+          };
+          filter.on({
+            set: updateSlider,
+            slide: updateSlider
           });
         }
 
