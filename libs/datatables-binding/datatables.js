@@ -105,9 +105,19 @@ HTMLWidgets.widget({
           $input.on({
             focus: function() {
               $x0.show();
-              $x0.outerWidth(Math.max(
-                160, $span1.outerWidth() + $span2.outerWidth() + 20, $input.outerWidth()
-              ));
+              // first, make sure the slider div leaves at least 20px between
+              // the two (slider value) span's
+              $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
+              // then, if the input is really wide, make the slider the same
+              // width as the input
+              if ($x0.outerWidth() < $input.outerWidth()) {
+                $x0.outerWidth($input.outerWidth());
+              }
+              $x0.css('right', '');
+              // make sure the slider div does not reach beyond the right margin
+              if ($(window).width() < $x0.offset().left + $x0.width()) {
+                $x0.css('right', 0);
+              }
             },
             blur: function() {
               $x0.hide();
