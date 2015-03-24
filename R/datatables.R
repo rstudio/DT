@@ -323,7 +323,7 @@ filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
         class = 'form-group has-feedback', style = 'margin-bottom: auto;',
         tags$input(
           type = 'search', placeholder = 'All', class = 'form-control',
-          style = 'width: 100%; cursor: pointer;'
+          style = 'width: 100%;'
         ),
         tags$span(class = 'glyphicon glyphicon-remove-circle form-control-feedback')
       ),
