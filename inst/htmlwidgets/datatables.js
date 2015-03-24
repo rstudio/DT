@@ -99,7 +99,10 @@ HTMLWidgets.widget({
             'border-radius': '4px',
             'padding': '20px 20px 10px 20px'
           });
-          var $spans = $x0.children('span').css('margin-top', '10px');
+          var $spans = $x0.children('span').css({
+            'margin-top': '10px',
+            'white-space': 'nowrap'
+          });
           var $span1 = $spans.first(), $span2 = $spans.last();
           var r1 = +$x.data('min'), r2 = +$x.data('max');
           $input.on({
