@@ -302,8 +302,11 @@ filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
         d = as.numeric(d) * 1000  # use milliseconds for JavaScript
       }
       tags$div(
-        `data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE),
-        style = 'margin-top: 10px; display: none;'
+        style = 'display: none; position: absolute; width: 200px;',
+        tags$div(
+          `data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE)
+        ),
+        tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
       )
     } else if (is.factor(d)) {
       t = 'factor'

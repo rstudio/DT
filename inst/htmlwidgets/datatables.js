@@ -91,13 +91,24 @@ HTMLWidgets.widget({
           }
           $input.on('input', fun);
         } else if (type === 'number' || type === 'date' || type === 'time') {
+          var $x0 = $x;
+          $x = $x0.children('div').first();
+          $x0.css({
+            'background-color': '#fff',
+            'border': '1px #ddd solid',
+            'border-radius': '4px',
+            'padding': '20px 20px 10px 20px'
+          });
+          var $spans = $x0.children('span').css('margin-top', '10px');
+          var $span1 = $spans.first(), $span2 = $spans.last();
           var r1 = +$x.data('min'), r2 = +$x.data('max');
           $input.on({
             focus: function() {
-              $x.show();
+              $x0.show();
+              $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
             },
             blur: function() {
-              $x.hide();
+              $x0.hide();
             },
             input: function() {
               if ($input.val() === '') filter.val([r1, r2]);
@@ -129,6 +140,7 @@ HTMLWidgets.widget({
             }
           });
           var formatDate = function(d) {
+            if (type === 'number') return d;
             var x = new Date(+d);
             if (type === 'date') {
               var pad0 = function(x) {
@@ -145,29 +157,30 @@ HTMLWidgets.widget({
             start: [r1, r2],
             range: {min: r1, max: r2},
             connect: true
-          }, opts)).on({
-            set: function() {
-              var val = $(this).val();
-              // turn off filter if in full range
-              $td.data('filter', val[0] != r1 || val[1] != r2);
-              if ($td.data('filter')) {
-                var ival;
-                if (type == 'number') {
-                  ival = val.join(' ... ');
-                } else {
-                  var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
-                  ival = v1 + ' ... ' + v2;
-                }
-                $input.attr('title', ival).val(ival).trigger('input');
-              } else {
-                $input.attr('title', '').val('');
-              }
-              if (server) {
-                table.column(i).search($td.data('filter') ? val.join(',') : '').draw();
-                return;
-              }
-              table.draw();
+          }, opts));
+          $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
+          var updateSlider = function(e) {
+            var val = filter.val();
+            // turn off filter if in full range
+            $td.data('filter', val[0] != r1 || val[1] != r2);
+            var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
+            if ($td.data('filter')) {
+              var ival = v1 + ' ... ' + v2;
+              $input.attr('title', ival).val(ival).trigger('input');
+            } else {
+              $input.attr('title', '').val('');
             }
+            $span1.text(v1); $span2.text(v2);
+            if (e.type === 'slide') return;  // no searching when sliding only
+            if (server) {
+              table.column(i).search($td.data('filter') ? val.join(',') : '').draw();
+              return;
+            }
+            table.draw();
+          };
+          filter.on({
+            set: updateSlider,
+            slide: updateSlider
           });
         }
 
