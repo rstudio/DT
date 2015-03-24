@@ -104,19 +104,36 @@ HTMLWidgets.widget({
             change: function() {
               var v = $input.val().split('...');
               if (v.length !== 2) return;
+              // treat date as UTC time at midnight
+              var strTime = function(x) {
+                var s = type === 'date' ? 'T00:00:00Z' : '';
+                var t = new Date(x.replace(/\s/g, '') + s).getTime();
+                // add 10 minutes to date since it does not hurt the date, and
+                // it helps avoid the tricky floating point arithmetic problems,
+                // e.g. sometimes the date may be a few milliseconds earlier
+                // than the midnight due to precision problems in noUiSlider
+                return type === 'date' ? t + 3600000 : t;
+              };
+              if (type !== 'number') {
+                v[0] = strTime(v[0]);
+                v[1] = strTime(v[1]);
+              }
               filter.val([+v[0], +v[1]]);
             }
           });
           var formatDate = function(d) {
             var x = new Date(+d);
             if (type === 'date') {
-              return x.getFullYear() + '-' + ('0' + (1 + x.getMonth())).substr(-2, 2)
-                      + '-' + x.getDate();
+              var pad0 = function(x) {
+                return ('0' + x).substr(-2, 2);
+              };
+              return x.getUTCFullYear() + '-' + pad0(1 + x.getUTCMonth())
+                      + '-' + pad0(x.getUTCDate());
             } else {
               return x.toISOString();
             }
           };
-          var opts = type === 'date' ? { step: 24 * 60 * 60 * 1000 } : {};
+          var opts = type === 'date' ? { step: 60 * 60 * 1000 } : {};
           filter = $x.noUiSlider($.extend({
             start: [r1, r2],
             range: {min: r1, max: r2},
