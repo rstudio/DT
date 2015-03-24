@@ -103,8 +103,14 @@ HTMLWidgets.widget({
               if ($input.val() === '') filter.val([r1, r2]);
             },
             change: function() {
-              var v = $input.val().split('...');
-              if (v.length !== 2) return;
+              var v = $input.val();
+              if (v === '') return;
+              v = v.split('...');
+              if (v.length !== 2) {
+                $input.parent().addClass('has-error');
+                return;
+              }
+              $input.parent().removeClass('has-error');
               // treat date as UTC time at midnight
               var strTime = function(x) {
                 var s = type === 'date' ? 'T00:00:00Z' : '';
