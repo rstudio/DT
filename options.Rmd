@@ -92,7 +92,7 @@ We can define a custom rendering function for particular columns in the option `
 datatable(iris[c(1:20, 51:60, 101:120), ], options = list(columnDefs = list(list(
   targets = 5,
   render = JS(
-    "function(data, type, full, meta) {",
+    "function(data, type, row, meta) {",
     "return type === 'display' && data.length > 6 ?",
     "'<span title=\"' + data + '\">' + data.substr(0, 6) + '...</span>' : data;",
     "}")
