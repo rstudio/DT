@@ -17,6 +17,10 @@ formatColumns = function(table, columns, template, ...) {
 #' @param currency the currency symbol
 #' @param interval put a marker after how many digits of the numbers
 #' @param mark the marker after every \code{interval} decimals in the numbers
+#' @param method the method(s) to convert a date to string in JavaScript; see
+#'   \code{DT:::DateMethods} for a list of possible methods,
+#'   \url{http://mzl.la/1xGe99W} for a full reference, and
+#'   \url{http://rstudio.github.io/DT/functions.html} for examples
 #' @export
 #' @examples library(DT)
 #' m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
@@ -43,6 +47,12 @@ formatPercentage = function(table, columns, digits = 0) {
 #' @rdname formatCurrency
 formatRound = function(table, columns, digits = 2) {
   formatColumns(table, columns, tplRound, digits)
+}
+
+#' @export
+#' @rdname formatCurrency
+formatDate = function(table, columns, method = 'toDateString') {
+  formatColumns(table, columns, tplDate, method)
 }
 
 # turn character/logical indices to numeric indices
@@ -89,3 +99,15 @@ tplRound = function(cols, digits) {
     cols, cols, digits
   )
 }
+
+tplDate = function(cols, method) {
+  sprintf(
+    "var d = new Date(data[%d]); $('td:eq(%d)', row).html(d['%s']());",
+    cols, cols, method
+  )
+}
+
+DateMethods = c(
+  'toDateString', 'toISOString', 'toLocaleDateString', 'toLocaleString',
+  'toLocaleTimeString', 'toString', 'toTimeString', 'toUTCString'
+)
