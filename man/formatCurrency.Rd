@@ -1,6 +1,7 @@
 % Please edit documentation in R/format.R
 \name{formatCurrency}
 \alias{formatCurrency}
+\alias{formatDate}
 \alias{formatPercentage}
 \alias{formatRound}
 \title{Format table columns}
@@ -10,6 +11,8 @@ formatCurrency(table, columns, currency = "$", interval = 3, mark = ",")
 formatPercentage(table, columns, digits = 0)
 
 formatRound(table, columns, digits = 2)
+
+formatDate(table, columns, method = "toDateString")
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -24,6 +27,11 @@ numeric, or logical)}
 \item{mark}{the marker after every \code{interval} decimals in the numbers}
 
 \item{digits}{the number of decimal places to round to}
+
+\item{method}{the method(s) to convert a date to string in JavaScript; see
+\code{DT:::DateMethods} for a list of possible methods,
+\url{http://mzl.la/1xGe99W} for a full reference, and
+\url{http://rstudio.github.io/DT/functions.html} for examples}
 }
 \description{
 Format numeric columns in a table as currency or percentages, or round
