@@ -68,7 +68,8 @@ appendFormatter = function(js, name, names, template, ...) {
   js = if (length(js) == 0) c('function(row, data) {', '}') else {
     unlist(strsplit(as.character(js), '\n'))
   }
-  i = name2int(name, names) - 1
+  i = name2int(name, names)
+  if (is.character(name)) i = i - 1
   if (any(is.na(i))) stop(
     'You specified the columns: ', paste(name, collapse = ', '), ', ',
     'but the column names of the data are ', paste(names, collapse = ', ')
