@@ -173,7 +173,7 @@ datatable = function(
   params = list(
     data = data, container = as.character(container), options = options,
     callback = JS('function(table) {', callback, '}'),
-    colnames = cn, caption = caption, filter = filter
+    colnames = cn, rownames = length(rn) > 0, caption = caption, filter = filter
   )
   if (length(params$caption) == 0) params$caption = NULL
   if (length(extensions)) params$extensions = as.list(extensions)
