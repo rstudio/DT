@@ -187,6 +187,61 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 "filter": "none" 
 },"evals": [ "options.rowCallback", "callback" ] }</script></p>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
+<p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-03-27 14:12:30&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;CDT&#39;</span>)
+(<span class="dt">x =</span> x +<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
+##  [1] &quot;2015-03-27 14:12:31 CDT&quot; &quot;2015-03-28 21:04:22 CDT&quot;
+##  [3] &quot;2015-03-30 03:56:13 CDT&quot; &quot;2015-03-31 10:48:04 CDT&quot;
+##  [5] &quot;2015-04-01 17:39:55 CDT&quot; &quot;2015-04-03 00:31:46 CDT&quot;
+##  [7] &quot;2015-04-04 07:23:37 CDT&quot; &quot;2015-04-05 14:15:28 CDT&quot;
+##  [9] &quot;2015-04-06 21:07:19 CDT&quot; &quot;2015-04-08 03:59:10 CDT&quot;
+DT:::DateMethods
+## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;
+## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          
+## [7] &quot;toTimeString&quot;       &quot;toUTCString&quot;
+<span class="co"># use m = DT:::DateMethods below to see the output of all methods</span>
+m =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;toDateString&#39;</span>, <span class="st">&#39;toLocaleDateString&#39;</span>, <span class="st">&#39;toLocaleString&#39;</span>, <span class="st">&#39;toUTCString&#39;</span>)
+d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, function(.) x), m))
+<span class="kw">str</span>(d)
+## &#39;data.frame&#39;:    10 obs. of  4 variables:
+##  $ toDateString      : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
+##  $ toLocaleDateString: POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
+##  $ toLocaleString    : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
+##  $ toUTCString       : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
+<span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) %&gt;%
+<span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span>:<span class="kw">ncol</span>(d), m)</code></pre>
+<p><div id="htmlwidget-7083" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-7083">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      ["2015-03-27T14:12:31.000000Z", "2015-03-28T21:04:22.000000Z", "2015-03-30T03:56:13.000000Z", "2015-03-31T10:48:04.000000Z", "2015-04-01T17:39:55.000000Z", "2015-04-03T00:31:46.000000Z", "2015-04-04T07:23:37.000000Z", "2015-04-05T14:15:28.000000Z", "2015-04-06T21:07:19.000000Z", "2015-04-08T03:59:10.000000Z"],
+      ["2015-03-27T14:12:31.000000Z", "2015-03-28T21:04:22.000000Z", "2015-03-30T03:56:13.000000Z", "2015-03-31T10:48:04.000000Z", "2015-04-01T17:39:55.000000Z", "2015-04-03T00:31:46.000000Z", "2015-04-04T07:23:37.000000Z", "2015-04-05T14:15:28.000000Z", "2015-04-06T21:07:19.000000Z", "2015-04-08T03:59:10.000000Z"],
+      ["2015-03-27T14:12:31.000000Z", "2015-03-28T21:04:22.000000Z", "2015-03-30T03:56:13.000000Z", "2015-03-31T10:48:04.000000Z", "2015-04-01T17:39:55.000000Z", "2015-04-03T00:31:46.000000Z", "2015-04-04T07:23:37.000000Z", "2015-04-05T14:15:28.000000Z", "2015-04-06T21:07:19.000000Z", "2015-04-08T03:59:10.000000Z"],
+      ["2015-03-27T14:12:31.000000Z", "2015-03-28T21:04:22.000000Z", "2015-03-30T03:56:13.000000Z", "2015-03-31T10:48:04.000000Z", "2015-04-01T17:39:55.000000Z", "2015-04-03T00:31:46.000000Z", "2015-04-04T07:23:37.000000Z", "2015-04-05T14:15:28.000000Z", "2015-04-06T21:07:19.000000Z", "2015-04-08T03:59:10.000000Z"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>toDateString</th>\n      <th>toLocaleDateString</th>\n      <th>toLocaleString</th>\n      <th>toUTCString</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "pageLength": 5,
+      "dom": "tip",
+      "columnDefs": [
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $('td:eq(1)', row).html(d['toDateString']());\nvar d = new Date(data[2]); $('td:eq(2)', row).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $('td:eq(3)', row).html(d['toLocaleString']());\nvar d = new Date(data[4]); $('td:eq(4)', row).html(d['toUTCString']());\n}"
+    },
+    "callback": "function(table) {\nreturn table;\n}",
+    "colnames": [" ", "toDateString", "toLocaleDateString", "toLocaleString", "toUTCString"],
+    "rownames": true,
+    "filter": "none"
+  },
+  "evals": ["options.rowCallback", "callback"]
+}</script></p>
+<p>Please note that these conversion methods may be dependent on your system locale and web browser. The same method may lead to different output in different web browsers and system languages.</p>
 </div>
 <div id="table-utilities" class="section level1">
 <h1><span class="header-section-number">2</span> Table Utilities</h1>
