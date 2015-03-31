@@ -125,7 +125,7 @@ img {
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
   <span class="dt">server =</span> function(input, output) {
     output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>({
-      DT::<span class="kw">datatable</span>(iris)
+      DT::<span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">lengthChange =</span> <span class="ot">FALSE</span>))
     })
   }
 )</code></pre>
@@ -137,7 +137,8 @@ img {
 <div id="row-selection" class="section level2">
 <h2><span class="header-section-number">2.1</span> Row Selection</h2>
 <p>One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function <code>appendCheckboxes()</code> to do this. Remember, you need to tell <code>datatable()</code> not to escape this column, otherwise you will see raw HTML code like <code>&lt;input type=&quot;checkbox&quot; ... /&gt;</code> in the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
 <span class="kw">datatable</span>(
   <span class="kw">appendCheckboxes</span>(iris2), <span class="dt">escape =</span> -<span class="dv">7</span>,
   <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)

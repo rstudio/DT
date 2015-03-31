@@ -16,7 +16,7 @@ shinyApp(
   ui = fluidPage(DT::dataTableOutput('tbl')),
   server = function(input, output) {
     output$tbl = DT::renderDataTable({
-      DT::datatable(iris)
+      DT::datatable(iris, options = list(lengthChange = FALSE))
     })
   }
 )
@@ -33,6 +33,7 @@ There are some information exposed to Shiny from the table widget as you interac
 One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function `appendCheckboxes()` to do this. Remember, you need to tell `datatable()` not to escape this column, otherwise you will see raw HTML code like `<input type="checkbox" ... />` in the table.
 
 ```{r}
+library(DT)
 iris2 = head(iris, 20)
 datatable(
   appendCheckboxes(iris2), escape = -7,
