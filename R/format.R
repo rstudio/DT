@@ -1,10 +1,12 @@
 formatColumns = function(table, columns, template, ...) {
   if (inherits(columns, 'formula')) columns = all.vars(columns)
-  attr = table$x
-  attr$options$rowCallback = appendFormatter(
-    attr$options$rowCallback, columns, attr$colnames, attr$rownames, template, ...
+  x = table$x
+  colnames = base::attr(x, 'colnames', exact = TRUE)
+  rownames = base::attr(x, 'rownames', exact = TRUE)
+  x$options$rowCallback = appendFormatter(
+    x$options$rowCallback, columns, colnames, rownames, template, ...
   )
-  table$x = attr
+  table$x = x
   table
 }
 

@@ -170,11 +170,11 @@ datatable = function(
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
-  params = list(
+  params = structure(list(
     data = data, container = as.character(container), options = options,
     callback = JS('function(table) {', callback, '}'),
-    colnames = cn, rownames = length(rn) > 0, caption = caption, filter = filter
-  )
+    caption = caption, filter = filter
+  ), colnames = cn, rownames = length(rn) > 0)
   if (length(params$caption) == 0) params$caption = NULL
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
