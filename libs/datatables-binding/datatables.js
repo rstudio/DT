@@ -8,14 +8,28 @@ HTMLWidgets.widget({
     if (cells instanceof Array) cells = HTMLWidgets.transposeArray2D(cells);
 
     $el.append(data.container);
-    if (data.caption) $el.find('table').prepend(data.caption);
+    var $table = $el.find('table');
+    if (data.caption) $table.prepend(data.caption);
+
+    // column filters
+    switch (data.filter) {
+      case 'top':
+        $table.children('thead').append(data.filterHTML);
+        break;
+      case 'bottom':
+        if ($table.children('tfoot').length === 0) {
+          $table.append($('<tfoot>'));
+        }
+        $table.children('tfoot').prepend(data.filterHTML);
+        break;
+    }
 
     var options = {};
     if (cells !== null) options = {
       data: cells
     };
 
-    var table = $el.find('table').DataTable($.extend(options, data.options || {}));
+    var table = $table.DataTable($.extend(options, data.options || {}));
 
     // server-side processing?
     var server = data.options.serverSide === true;
@@ -34,9 +48,9 @@ HTMLWidgets.widget({
 
       var filterRow;
       if (data.filter === 'top') {
-        filterRow = $(table.table().node()).find('thead tr:last td');
+        filterRow = $table.find('thead tr:last td');
       } else {
-        filterRow = $(table.columns().footer());
+        filterRow = $table.find('tfoot tr:first td');
       }
 
       filterRow.each(function(i, td) {
