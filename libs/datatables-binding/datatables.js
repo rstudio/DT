@@ -12,15 +12,18 @@ HTMLWidgets.widget({
     if (data.caption) $table.prepend(data.caption);
 
     // column filters
+    var filterRow;
     switch (data.filter) {
       case 'top':
         $table.children('thead').append(data.filterHTML);
+        filterRow = $table.find('thead tr:last td');
         break;
       case 'bottom':
         if ($table.children('tfoot').length === 0) {
           $table.append($('<tfoot>'));
         }
         $table.children('tfoot').prepend(data.filterHTML);
+        filterRow = $table.find('tfoot tr:first td');
         break;
     }
 
@@ -45,13 +48,6 @@ HTMLWidgets.widget({
     }
 
     if (data.filter !== 'none') {
-
-      var filterRow;
-      if (data.filter === 'top') {
-        filterRow = $table.find('thead tr:last td');
-      } else {
-        filterRow = $table.find('tfoot tr:first td');
-      }
 
       filterRow.each(function(i, td) {
 
