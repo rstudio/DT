@@ -14,7 +14,9 @@
 #'   shinyApp(
 #'     ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
 #'     server = function(input, output) {
-#'       output$tbl = DT::renderDataTable(DT::datatable(iris))
+#'       output$tbl = DT::renderDataTable({
+#'         DT::datatable(iris, options = list(lengthChange = FALSE))
+#'       })
 #'     }
 #'   )
 #' }
@@ -27,7 +29,8 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #' @export
 #' @rdname dataTableOutput
 #' @inheritParams shiny::renderDataTable
-#' @param expr an expression to create a table widget
+#' @param expr an expression to create a table widget (normally via
+#'   \code{\link{datatable}()})
 #' @param ... currently ignored, with a warning message
 renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   if (length(list(...))) warning(

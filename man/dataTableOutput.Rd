@@ -15,7 +15,8 @@ renderDataTable(expr, env = parent.frame(), quoted = FALSE, ...)
 
 \item{height}{the height of the table container}
 
-\item{expr}{an expression to create a table widget}
+\item{expr}{an expression to create a table widget (normally via
+\code{\link{datatable}()})}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 
@@ -36,7 +37,9 @@ if (interactive()) {
   shinyApp(
     ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
     server = function(input, output) {
-      output$tbl = DT::renderDataTable(DT::datatable(iris))
+      output$tbl = DT::renderDataTable({
+        DT::datatable(iris, options = list(lengthChange = FALSE))
+      })
     }
   )
 }
