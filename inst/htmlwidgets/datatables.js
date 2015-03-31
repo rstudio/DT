@@ -48,9 +48,9 @@ HTMLWidgets.widget({
 
       var filterRow;
       if (data.filter === 'top') {
-        filterRow = $(table.table().node()).find('thead tr:last td');
+        filterRow = $table.find('thead tr:last td');
       } else {
-        filterRow = $(table.columns().footer());
+        filterRow = $table.find('tfoot tr:first td');
       }
 
       filterRow.each(function(i, td) {
