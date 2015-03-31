@@ -104,16 +104,13 @@ datatable = function(
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
 
   filter = match.arg(filter)
+  # HTML code for column filters
+  filterHTML = as.character(filterRow(data, length(rn) > 0, filter))
+  # use the first row in the header as the sorting cells when I put the filters
+  # in the second row
+  if (filter == 'top') options$orderCellsTop = TRUE
   if (missing(container)) {
-    fRow = filterRow(data, length(rn) > 0, colnames, filter)
-    container = tags$table(
-      tableHead(colnames, 'head', escape, if (filter == 'top') fRow),
-      if (filter == 'bottom') fRow,
-      class = class
-    )
-    # use the first row in the header as the sorting cells when I put the
-    # filters in the second row
-    if (filter == 'top') options$orderCellsTop = TRUE
+    container = tags$table(tableHeader(colnames, escape), class = class)
   }
 
   # in the server mode, we should not store the full data in JSON
@@ -176,6 +173,7 @@ datatable = function(
     caption = caption, filter = filter
   ), colnames = cn, rownames = length(rn) > 0)
   if (length(params$caption) == 0) params$caption = NULL
+  if (filter != 'none') params$filterHTML = filterHTML
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
 
@@ -334,8 +332,7 @@ filterRow = function(data, rownames = TRUE, filter = 'none') {
     )
     tds[[j]] = tags$td(x, `data-type` = t, style = 'vertical-align: top;')
   }
-  tr = tags$tr(tds)
-  if (filter == 'top') tr else tags$tfoot(tr)
+  tags$tr(tds)
 }
 
 filterDependencies = function() {
