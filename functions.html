@@ -157,8 +157,6 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $('td:eq(3)', row).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\n$('td:eq(0)', row).html('$' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(2)', row).html('$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
-    "colnames": ["A", "B", "C", "D", "E"],
-    "rownames": false,
     "filter": "none"
   },
   "evals": ["options.rowCallback", "callback"]
@@ -188,8 +186,6 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $('td:eq(4)', row).html(isNaN(d) ? '' : d.toFixed(3));\n$('td:eq(0)', row).html('€' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(1)', row).html('€' + data[1].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
-    "colnames": ["A", "B", "C", "D", "E"],
-    "rownames": false,
     "filter": "none"
   },
   "evals": ["options.rowCallback", "callback"]
@@ -243,8 +239,6 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $('td:eq(1)', row).html(d['toDateString']());\nvar d = new Date(data[2]); $('td:eq(2)', row).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $('td:eq(3)', row).html(d['toLocaleString']());\nvar d = new Date(data[4]); $('td:eq(4)', row).html(d['toUTCString']());\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
-    "colnames": [" ", "toDateString", "toLocaleDateString", "toLocaleString", "toUTCString"],
-    "rownames": true,
     "filter": "none"
   },
   "evals": ["options.rowCallback", "callback"]
