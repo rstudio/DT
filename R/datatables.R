@@ -282,7 +282,7 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
 }
 
 #' @importFrom htmltools tagList
-filterRow = function(data, rownames = TRUE, colnames, filter = 'none') {
+filterRow = function(data, rownames = TRUE, filter = 'none') {
   if (filter == 'none') return()
   tds = list()
   for (j in seq_len(ncol(data))) {
