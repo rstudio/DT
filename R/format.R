@@ -1,4 +1,5 @@
 formatColumns = function(table, columns, template, ...) {
+  if (inherits(columns, 'formula')) columns = all.vars(columns)
   attr = table$x
   attr$options$rowCallback = appendFormatter(
     attr$options$rowCallback, columns, attr$colnames, attr$rownames, template, ...
