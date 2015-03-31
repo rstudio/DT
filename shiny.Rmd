@@ -22,7 +22,31 @@ shinyApp(
 )
 ```
 
-If you have used the `renderDataTable()` function in **shiny** before, please note that the function with the same name in **DT** should take a widget as the input instead of a data object, i.e. you should `renderDataTable(datatable(iris))` instead of `renderDataTable(iris)` in **DT**.
+If you have used the `renderDataTable()` function in **shiny** before, please note that the function with the same name in **DT** should take a widget as the input instead of a data object. Please compare the usage of **shiny** with **DT** carefully below:
+
+```{r eval=FALSE}
+library(shiny)
+renderDataTable(iris, options = list(
+  pageLength = 5,
+  initComplete = I('function(setting, json) { alert("done"); }')
+))
+```
+
+```{r eval=FALSE}
+library(DT)
+renderDataTable({
+  datatable(iris, options = list(
+    pageLength = 5,
+    initComplete = JS('function(setting, json) { alert("done"); }')
+  ))
+})
+```
+
+The main differences are:
+
+1. The first argument of `shiny::renderDataTable()` is a data object, whereas `DT::renderDataTable()` expects a table _widget_ returned by `datatable()`;
+1. The `options` argument is passed to `renderDataTable()` in **shiny**, and to `datatable()` in **DT**;
+1. When you want to write literal JavaScript code, you use `I()` in **shiny**, but you have to use `JS()` in **DT**;
 
 # Interaction with Shiny
 

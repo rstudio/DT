@@ -129,7 +129,25 @@ img {
     })
   }
 )</code></pre>
-<p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note that the function with the same name in <strong>DT</strong> should take a widget as the input instead of a data object, i.e. you should <code>renderDataTable(datatable(iris))</code> instead of <code>renderDataTable(iris)</code> in <strong>DT</strong>.</p>
+<p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note that the function with the same name in <strong>DT</strong> should take a widget as the input instead of a data object. Please compare the usage of <strong>shiny</strong> with <strong>DT</strong> carefully below:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
+  <span class="dt">pageLength =</span> <span class="dv">5</span>,
+  <span class="dt">initComplete =</span> <span class="kw">I</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
+))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+<span class="kw">renderDataTable</span>({
+  <span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
+    <span class="dt">pageLength =</span> <span class="dv">5</span>,
+    <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
+  ))
+})</code></pre>
+<p>The main differences are:</p>
+<ol style="list-style-type: decimal">
+<li>The first argument of <code>shiny::renderDataTable()</code> is a data object, whereas <code>DT::renderDataTable()</code> expects a table <em>widget</em> returned by <code>datatable()</code>;</li>
+<li>The <code>options</code> argument is passed to <code>renderDataTable()</code> in <strong>shiny</strong>, and to <code>datatable()</code> in <strong>DT</strong>;</li>
+<li>When you want to write literal JavaScript code, you use <code>I()</code> in <strong>shiny</strong>, but you have to use <code>JS()</code> in <strong>DT</strong>;</li>
+</ol>
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
