@@ -397,6 +397,7 @@ copySWF = function(dest = '.', pdf = FALSE) {
   swf = if (pdf) 'copy_csv_xls_pdf.swf' else 'copy_csv_xls.swf'
   file.copy(extPath(swf), dest, overwrite = TRUE)
   if (sub('/$', '', dest) == 'www') dest = sub('www/?', '', dest)
+  if (dest == '') dest = '.'
   file.path(dest, swf, fsep = '/')
 }
 
