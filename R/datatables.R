@@ -167,6 +167,12 @@ datatable = function(
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
+  if (length(options$pageLength) && length(options$lengthMenu) == 0) {
+    if (!isFALSE(options$lengthChange))
+      options$lengthMenu = sort(unique(c(options$pageLength, 10, 25, 50, 100)))
+    if (identical(options$lengthMenu, c(10, 25, 50, 100)))
+      options$lengthMenu = NULL  # that is just the default
+  }
   params = structure(list(
     data = data, container = as.character(container), options = options,
     callback = JS('function(table) {', callback, '}'),
