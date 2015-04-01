@@ -154,7 +154,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       ],
       "order": [],
       "autoWidth": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $('td:eq(3)', row).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\n$('td:eq(0)', row).html('$' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(2)', row).html('$' + data[2].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
+      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $('td:eq(3)', row).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $('td:eq(0)', row).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[2]); $('td:eq(2)', row).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -183,7 +183,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       ],
       "order": [],
       "autoWidth": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $('td:eq(4)', row).html(isNaN(d) ? '' : d.toFixed(3));\n$('td:eq(0)', row).html('€' + data[0].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n$('td:eq(1)', row).html('€' + data[1].toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
+      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $('td:eq(4)', row).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $('td:eq(0)', row).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[1]); $('td:eq(1)', row).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
