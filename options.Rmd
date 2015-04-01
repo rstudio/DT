@@ -119,3 +119,9 @@ datatable(m, options = list(
 You need to learn JavaScript regular expressions to understand the above callback function. Basically, it means to add a comma after every 3 decimals, and add a prefix `$` to the number. You should know `data[2]` means the 3rd element in the row now.
 
 Since it is common for users to format numbers in the data columns, we have provided a few simple helper [functions](functions.html) (e.g. `formatCurrency()`) in this package to do these tasks in a much easier way, so you do not have to write the JavaScript code by yourself.
+
+## More Examples
+
+We prepare more examples in this section as users ask questions:
+
+1. [UI language and internationalization](004-i18n.html)

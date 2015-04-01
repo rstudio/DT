@@ -1,0 +1,35 @@
+---
+title: "Internationalization"
+output:
+  html_document:
+    includes: null
+---
+
+You can use the `language` option to change the language of the user interface of **DataTables**. In the following example, we change `info` (the text at the bottom of the table) and the two pagination buttons:
+
+```{r}
+library(DT)
+iris2 = head(iris, 20)
+datatable(iris2, options = list(
+  language = list(
+    info = 'Yeah, _TOTAL_ awesome records from _START_ to _END_',
+    paginate = list(previous = 'Back', `next` = 'Forward')
+  ),
+  pageLength = 5
+))
+```
+
+You can replace the whole `language` list if you prove a URL that returns a JSON object for the `language` list. The examples below shows how we can translate the UI language to other languages:
+
+```{r}
+datatable(iris2, options = list(
+  language = list(url = '//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json'),
+  pageLength = 5
+))
+datatable(iris2, options = list(
+  language = list(url = '//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Chinese.json'),
+  pageLength = 5
+))
+```
+
+Please note we used [Protocol Relative URLs](http://billpatrianakos.me/blog/2013/04/18/protocol-relative-urls/) of the form `//foo.bar...` without the `http:` or `https:` prefix. Such URLs work well when you view the page from a web server, but will not work if you view the page locally, in which case you may want to add the prefix. They should work "locally" in the RStudio IDE, though.
