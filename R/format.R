@@ -85,8 +85,8 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
 
 tplCurrency = function(cols, currency, interval, mark) {
   sprintf(
-    "$('td:eq(%d)', row).html('%s' + data[%d].toString().replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
-    cols, currency, cols, interval, mark
+    "var d = parseFloat(data[%d]); $('td:eq(%d)', row).html(isNaN(d) ? '' : '%s' + d.toString().replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
+    cols, cols, currency, interval, mark
   )
 }
 
