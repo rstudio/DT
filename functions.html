@@ -120,7 +120,8 @@ img {
 <div id="format-columns" class="section level1">
 <h1><span class="header-section-number">1</span> Format Columns</h1>
 <p>You can use the functions <code>format*()</code> to format the table columns as currency, percentages, or round numbers. Here are some examples:</p>
-<pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="kw">runif</span>(<span class="dv">20</span>), <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+m =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="kw">runif</span>(<span class="dv">20</span>), <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))
 m[, <span class="dv">1</span>:<span class="dv">3</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">1</span>:<span class="dv">3</span>])
 m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">4</span>:<span class="dv">5</span>], <span class="dv">7</span>)
 <span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">head</span>(LETTERS, <span class="kw">ncol</span>(m))
