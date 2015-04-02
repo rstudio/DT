@@ -55,3 +55,27 @@ tableFooter(iris)  # footer
 library(htmltools)
 tags$table(tableHeader(iris), tableFooter(iris))
 ```
+
+# Functions Imported from htmlwidgets
+
+We imported and re-exported a few functions from the **htmlwidgets** package. The function `JS()` can be used to wrap literal JavaScript code. You can pass either a single character string, or a character vector to `JS()`. In the latter case, the vector will be concatenated into a single string using the separator `\n`.
+
+```{r eval=FALSE}
+JS('alter("OK");')
+JS(c(
+  'function(x) {',
+  '  return x + 1;',
+  '}'
+))
+# same as
+JS('function(x) {
+  return x + 1;
+}')
+```
+
+The function `saveWidget()` can be used to save a widget to an HTML file, e.g.
+
+```{r eval=FALSE}
+x = datatable(iris)
+saveWidget(x, 'iris-table.html')
+```

@@ -303,6 +303,23 @@ tags$<span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <s
   &lt;/tfoot&gt;
 &lt;/table&gt; </code></pre>
 </div>
+<div id="functions-imported-from-htmlwidgets" class="section level1">
+<h1><span class="header-section-number">3</span> Functions Imported from htmlwidgets</h1>
+<p>We imported and re-exported a few functions from the <strong>htmlwidgets</strong> package. The function <code>JS()</code> can be used to wrap literal JavaScript code. You can pass either a single character string, or a character vector to <code>JS()</code>. In the latter case, the vector will be concatenated into a single string using the separator <code>\n</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">JS</span>(<span class="st">&#39;alter(&quot;OK&quot;);&#39;</span>)
+<span class="kw">JS</span>(<span class="kw">c</span>(
+  <span class="st">&#39;function(x) {&#39;</span>,
+  <span class="st">&#39;  return x + 1;&#39;</span>,
+  <span class="st">&#39;}&#39;</span>
+))
+<span class="co"># same as</span>
+<span class="kw">JS</span>(<span class="st">&#39;function(x) {</span>
+<span class="st">  return x + 1;</span>
+<span class="st">}&#39;</span>)</code></pre>
+<p>The function <code>saveWidget()</code> can be used to save a widget to an HTML file, e.g.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">datatable</span>(iris)
+<span class="kw">saveWidget</span>(x, <span class="st">&#39;iris-table.html&#39;</span>)</code></pre>
+</div>
 
 <script>
 // manage active state of menu based on current page
