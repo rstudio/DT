@@ -44,3 +44,6 @@ if (interactive()) {
   )
 }
 }
+\references{
+\url{http://rstudio.github.io/DT/shiny.html}
+}

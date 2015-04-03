@@ -7,6 +7,7 @@
 #' @inheritParams shiny::dataTableOutput
 #' @param width the width of the table container
 #' @param height the height of the table container
+#' @references \url{http://rstudio.github.io/DT/shiny.html}
 #' @export
 #' @examples # !formatR
 #' if (interactive()) {
@@ -36,7 +37,8 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   if (length(list(...))) warning(
     "Arguments in addition to 'expr', 'env', and 'quoted' are ignored. ",
     "If you came from shiny::renderDataTable(), you may want to pass ",
-    "these arguments to DT::datatable() instead."
+    "these arguments to DT::datatable() instead. See ",
+    "http://rstudio.github.io/DT/shiny.html for more info."
   )
   if (!quoted) expr = substitute(expr)
   htmlwidgets::shinyRenderWidget(expr, dataTableOutput, env, quoted = TRUE)
