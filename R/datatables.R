@@ -182,8 +182,8 @@ datatable = function(
   if (filter != 'none') params$filterHTML = filterHTML
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
-  # TODO: bump version of jsonlite once the pretty branch is merged
-  if (packageVersion('jsonlite') > '0.9.15')
+  # TODO: remove `if` once the jsonlite pretty branch is merged
+  if ('jsonlite' %in% .packages(TRUE) && jsonlite::toJSON(1, pretty = TRUE) == '[1]')
     attr(params, 'TOJSON_ARGS') = list(pretty = TRUE)
 
   deps = lapply(extensions, extDependency)
