@@ -118,6 +118,10 @@ datatable = function(
     data = NULL
     options$serverSide = TRUE
     if (is.null(options$processing)) options$processing = TRUE
+    if (is.null(options$ajax)) warning(
+      "You are using the server-side processing mode, but did not specify ",
+      "the 'ajax' option. See http://rstudio.github.io/DT/server.html"
+    )
     # if you generated the Ajax URL from dataTableAjax(), I'll configure type:
     # 'POST' and a few other options automatically
     if ('shiny' %in% loadedNamespaces() &&
