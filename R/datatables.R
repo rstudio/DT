@@ -151,18 +151,7 @@ datatable = function(
   # these extensions need to be initialized via new $.fn.dataTable...
   extOptions = extOptions[intersect(extensions, extNew)]
 
-  # rstudio/DT#13: convert date/time to character
-  if (length(data)) for (j in seq_len(ncol(data))) {
-    if (inherits(data[, j], 'Date')) {
-      data[, j] = as.character(data[, j])
-    } else if (inherits(data[, j], c('POSIXlt', 'POSIXct'))) {
-      data[, j] = sub('(\\d{2})(\\d{2})$', '\\1:\\2', format(
-        data[, j], '%Y-%m-%dT%H:%M:%OS6Z', tz = 'UTC'
-      ))
-    }
-  }
   data = escapeData(data, escape, colnames)
-  data = fixWAT(data)
   data = unname(data)
 
   # generate <caption></caption>
@@ -195,14 +184,6 @@ datatable = function(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
     dependencies = deps
   )
-}
-
-# fix some WAT's in RJSONIO that I discovered in shiny:::dataTablesJSON()
-fixWAT = function(data) {
-  # toJSON(list(x = matrix(1:2))) => {x: [ [1], [2] ]}, however,
-  # toJSON(list(x = matrix(1))) => {x: [ 1 ]} (loss of dimension, shiny#429)
-  if (length(data) && all(dim(data) == 1)) return(list(list(unname(data[1, 1]))))
-  data
 }
 
 appendColumnDefs = function(options, def) {
