@@ -86,10 +86,12 @@ HTMLWidgets.widget({
               // turn off filter if nothing selected
               $td.data('filter', value !== null && value.length > 0);
               table.draw();  // redraw table, and filters will be applied
-            },
-            onBlur: function() {
-              $x.hide(); $input.parent().show();
             }
+          });
+          // an ugly hack to deal with shiny: for some reason, the onBlur event
+          // of selectize does not work in shiny
+          $x.find('div > div.selectize-input > input').on('blur', function() {
+            $x.hide(); $input.parent().show();
           });
           filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
