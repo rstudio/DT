@@ -1,3 +1,13 @@
+# TODO: after the next version of shiny is released, change the error message
+# and ask users to install from CRAN instead
+checkShinyVersion = function() {
+  if (packageVersion('shiny') <= '0.11.1') stop(
+    'DT requires shiny > 0.11.1. ',
+    'Please install the latest development version of shiny from Github: ',
+    'devtools::install_github("rstudio/shiny")'
+  )
+}
+
 #' Helper functions for using DT in Shiny
 #'
 #' These two functions are like most \code{fooOutput()} and \code{renderFoo()}
@@ -22,6 +32,7 @@
 #'   )
 #' }
 dataTableOutput = function(outputId, width = '100%', height = 'auto') {
+  checkShinyVersion()
   htmlwidgets::shinyWidgetOutput(
     outputId, 'datatables', width, height, package = 'DT'
   )
@@ -40,6 +51,7 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
     "these arguments to DT::datatable() instead. See ",
     "http://rstudio.github.io/DT/shiny.html for more info."
   )
+  checkShinyVersion()
   if (!quoted) expr = substitute(expr)
   htmlwidgets::shinyRenderWidget(expr, dataTableOutput, env, quoted = TRUE)
 }
