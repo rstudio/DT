@@ -6,13 +6,13 @@ title: Server-side Processing in R
 
 We have been using client-side processing in all the above examples, i.e., searching, pagination, and ordering are done using JavaScript in the web browser. When the size of the data is huge, it may be more efficient to process the data on the server. DataTables supports retrieving data from a server by sending Ajax requests, a.k.a the ["server-side processing"](http://datatables.net/examples/data_sources/server_side.html).
 
-To enable server-side processing, we need to use the option `serverSide`, e.g.,
+To enable server-side processing, we can use the argument `server = TRUE`, e.g.,
 
 ```r
-datatable(..., options = list(serverSide = TRUE))
+datatable(..., server = TRUE)
 ```
 
-In fact, `datatable()` has an argument `server` that can be set to `TRUE`, which will automatically set `serverSide = TRUE` in `options`.
+When this argument `server` is set to `TRUE`, `datatable()` will automatically set `serverSide = TRUE` in `options` to enable the server-side processing mode in DataTables.
 
 # A JSONP Example
 
