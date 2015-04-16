@@ -9,6 +9,10 @@ The R package **DT** provides an R interface to the JavaScript library [**DataTa
 You can install the development version of the package from Github:
 
 ```{r message=FALSE}
+# need htmlwidgets >= 0.3.3 since it is not on CRAN yet
+if (!requireNamespace('htmlwidgets') || packageVersion('htmlwidgets') <= '0.3.2')
+  devtools::install_github('ramnathv/htmlwidgets')
+# install DT
 if (!require("DT")) devtools::install_github("rstudio/DT")
 sessionInfo()
 ```
