@@ -29,7 +29,10 @@ dt_path = local({
   function(...) file.path(path, ...)
 })
 # copy required files to the R package
-file.copy('css/jquery.dataTables.min.css', dt_path('css'), overwrite = TRUE)
+file.copy(
+  'css/jquery.dataTables.min.css', dt_path('css/default/'),
+  overwrite = TRUE
+)
 file.copy('js/jquery.dataTables.min.js', dt_path('js'), overwrite = TRUE)
 file.copy('../license.txt', dt_path(), overwrite = TRUE)
 
@@ -63,6 +66,15 @@ in_dir(dt_path('extensions'), local({
 in_dir(dt_path(), {
   unlink('../datatables-extensions', recursive = TRUE)
   file.rename('extensions', '../datatables-extensions')
+})
+
+setwd('../../Plugins/')
+in_dir('integration/bootstrap/3/', {
+  encode_img('dataTables.bootstrap.css')
+  file.copy(
+    c('dataTables.bootstrap.css', 'dataTables.bootstrap.min.js'),
+    dt_path('css', 'bootstrap'), overwrite = TRUE
+  )
 })
 
 setwd(owd)
