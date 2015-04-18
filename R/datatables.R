@@ -40,6 +40,8 @@
 #'   indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 #'   \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 #'   third), or \code{c('Species', 'Sepal.Length')}
+#' @param style the style name (\url{http://datatables.net/manual/styling/});
+#'   currently only \code{'default'} and \code{'bootstrap'} are supported
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the
@@ -54,7 +56,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  server = FALSE, escape = TRUE, extensions = list()
+  server = FALSE, escape = TRUE, style = 'default', extensions = list()
 ) {
 
   # yes, we all hate it
@@ -102,6 +104,9 @@ datatable = function(
   # when rownames = TRUE, user may have only provided colnames for original
   # data, and we need to add a name for the first column, i.e. row names
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
+
+  style = match.arg(style, list.files(depPath('datatables', 'css')))
+  if (style == 'bootstrap') class = DT2BSClass(class)
 
   filter = match.arg(filter)
   # HTML code for column filters
@@ -178,8 +183,14 @@ datatable = function(
   # use pretty JSON
   attr(params, 'TOJSON_ARGS') = list(pretty = TRUE)
 
-  deps = lapply(extensions, extDependency)
+  deps = list(htmlDependency(
+    'datatables', DataTablesVersion, src = depPath('datatables', 'js'),
+    script = 'jquery.dataTables.min.js'
+  ))
+  deps = c(deps, list(styleDependency(style)))
+  deps = c(deps, lapply(extensions, extDependency))
   if (filter != 'none') deps = c(deps, filterDependencies())
+
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
     dependencies = deps
@@ -391,3 +402,28 @@ copySWF = function(dest = '.', pdf = FALSE) {
 isFALSE = function(x) identical(x, FALSE)
 
 is.Date = function(x) inherits(x, c('Date', 'POSIXlt', 'POSIXct'))
+
+styleDependency = function(style) {
+  d = depPath('datatables', 'css', style)
+  htmlDependency(
+    paste('datatables', style, sep = '-'), DataTablesVersion, src = d,
+    script = list.files(d, '[.]min[.]js$'), stylesheet = list.files(d, '[.]css$')
+  )
+}
+
+# translate DataTables classes to Bootstrap table classes
+DT2BSClass = function(class) {
+  class = unlist(strsplit(class, '\\s+'))
+  if ('display' %in% class)
+    class = unique(c('stripe', 'hover', 'row-border', 'order-column', class))
+  BSclass = c(
+    'cell-border' = 'table-bordered', 'compact' = 'table-condensed',
+    'hover' = 'table-hover', 'stripe' = 'table-striped'
+  )
+  class = c(
+    BSclass[intersect(class, names(BSclass))],
+    grep('^table-', class, value = TRUE)
+  )
+  class = unique(c('table', class))
+  paste(class, collapse = ' ')
+}

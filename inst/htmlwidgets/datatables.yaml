@@ -3,8 +3,3 @@ dependencies:
     version: 1.11.1
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
-  - name: datatables
-    version: 1.10.5
-    src: "htmlwidgets/lib/datatables"
-    script: js/jquery.dataTables.min.js
-    stylesheet: css/jquery.dataTables.min.css
