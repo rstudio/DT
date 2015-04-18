@@ -19,9 +19,10 @@
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
-<link href="libs/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="libs/datatables/js/jquery.dataTables.min.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
+<script src="libs/datatables/jquery.dataTables.min.js"></script>
+<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
+<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider/jquery.nouislider.min.js"></script>
 <link href="libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
@@ -129,7 +130,7 @@ if (!<span class="kw">requireNamespace</span>(<span class="st">&#39;htmlwidgets&
 <span class="co"># install DT</span>
 if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/DT&quot;</span>)
 <span class="kw">sessionInfo</span>()</code></pre>
-<pre><code>## R version 3.1.3 (2015-03-09)
+<pre><code>## R version 3.2.0 (2015-04-16)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.2 LTS
 ## 
@@ -145,13 +146,13 @@ if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) de
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.37
+## [1] DT_0.0.38
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.8      evaluate_0.6.1    formatR_1.1.1    
-##  [4] htmltools_0.2.8   htmlwidgets_0.3.3 knitr_1.9.17     
-##  [7] magrittr_1.5      rmarkdown_0.5.3.1 stringr_0.6.2    
-## [10] tools_3.1.3       yaml_2.1.13</code></pre>
+##  [1] htmlwidgets_0.3.3 magrittr_1.5      formatR_1.1.1    
+##  [4] tools_3.2.0       htmltools_0.2.8   yaml_2.1.13      
+##  [7] rmarkdown_0.5.3.1 knitr_1.9.17      stringr_0.6.2    
+## [10] digest_0.6.8      evaluate_0.6.2</code></pre>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
@@ -242,7 +243,7 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
 <p>Note you can only use one style for all tables on one page. Please see <a href="005-bootstrap.html">this separate page</a> for examples using the Bootstrap style.</p>
 </div>
 <div id="display-row-names" class="section level2">
-<h2><span class="header-section-number">2.2</span> Display Row Names</h2>
+<h2><span class="header-section-number">2.3</span> Display Row Names</h2>
 <p>If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument <code>rownames = FALSE</code>, and you can also change row names by providing a different character vector to <code>rownames</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars))</code></pre>
 <p><div id="htmlwidget-7837" style="width:100%;height:auto;" class="datatables"></div>
@@ -361,7 +362,7 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
 <p>It is very important to remember this when using DataTables <a href="options.html">options</a>.</p>
 </div>
 <div id="custom-column-names" class="section level2">
-<h2><span class="header-section-number">2.3</span> Custom Column Names</h2>
+<h2><span class="header-section-number">2.4</span> Custom Column Names</h2>
 <p>By default, <code>datatable()</code> shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># colnames(iris) is a character vector of length 5, and we replace it</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Here&#39;</span>, <span class="st">&#39;Are&#39;</span>, <span class="st">&#39;Some&#39;</span>, <span class="st">&#39;New&#39;</span>, <span class="st">&#39;Names&#39;</span>))</code></pre>
@@ -463,7 +464,7 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
 }</script></p>
 </div>
 <div id="custom-table-container" class="section level2">
-<h2><span class="header-section-number">2.4</span> Custom Table Container</h2>
+<h2><span class="header-section-number">2.5</span> Custom Table Container</h2>
 <p>The <code>container</code> argument allows you to provide a different table container to hold the table cells. By default, the container is generated from the column names. Below is an example of a custom table header:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table container</span>
 sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<span class="kw">table</span>(
@@ -586,7 +587,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 }</script></p>
 </div>
 <div id="table-caption" class="section level2">
-<h2><span class="header-section-number">2.5</span> Table Caption</h2>
+<h2><span class="header-section-number">2.6</span> Table Caption</h2>
 <p>You can add a table caption via the <code>caption</code> argument. It can be either a character vector, or a tag object created from <code>htmltools::tags$caption()</code>. See this <a href="http://datatables.net/blog/2014-11-07">blog post</a> for more information on table captions.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
   <span class="kw">head</span>(iris),
@@ -666,7 +667,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 }</script></p>
 </div>
 <div id="column-filters" class="section level2">
-<h2><span class="header-section-number">2.6</span> Column Filters</h2>
+<h2><span class="header-section-number">2.7</span> Column Filters</h2>
 <p><strong>DataTables</strong> does not provide column filters by default. There is only a global filter (the search box on the top-right). We added a <code>filter</code> argument in <code>datatable()</code> to automatically generate column filters. By default, the filters are not shown since <code>filter = 'none'</code>. You can enable these filters by <code>filter = 'top'</code> or <code>'bottom'</code>, depending on whether you want to put the filters on the top or bottom of the table.</p>
 <pre class="sourceCode r"><code class="sourceCode r">iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">51</span>:<span class="dv">60</span>, <span class="dv">101</span>:<span class="dv">110</span>), ]
 <span class="kw">datatable</span>(iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
@@ -763,7 +764,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <p>Filtering in the above examples was done on the client side (using JavaScript in your web browser). Column filters also work in the <a href="server.html">server-side processing</a> mode, in which case filtering will be processed on the server, and there may be some subtle differences (e.g. JavaScript regular expressions are different with R). See <a href="https://yihui.shinyapps.io/DT-filter/">here for an example</a> of column filters working on the server side.</p>
 </div>
 <div id="the-callback-argument" class="section level2">
-<h2><span class="header-section-number">2.7</span> The <code>callback</code> argument</h2>
+<h2><span class="header-section-number">2.8</span> The <code>callback</code> argument</h2>
 <p>The argument <code>callback</code> takes the body of a JavaScript function that will be applied to the <strong>DataTables</strong> object after initialization. Below is an example to show the next page after the table is initialized<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">30</span>), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(&quot;next&quot;).draw(false);&#39;</span>))</code></pre>
 <p><div id="htmlwidget-6001" style="width:100%;height:auto;" class="datatables"></div>
@@ -808,7 +809,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <p>Please note this <code>callback</code> argument is only an argument of the <code>datatable()</code> function, and do not confuse it with the callbacks in the <strong>DataTables</strong> <a href="options.html">options</a>. The purpose of this argument is to allow users to manipulate the <strong>DataTables</strong> object after its creation.</p>
 </div>
 <div id="escaping-table-content" class="section level2">
-<h2><span class="header-section-number">2.8</span> Escaping Table Content</h2>
+<h2><span class="header-section-number">2.9</span> Escaping Table Content</h2>
 <p>The argument <code>escape</code> determines whether the HTML entities in the table are escaped or not. There can be potential security problems when the table is rendered in dynamic web applications such as Shiny if you do not escape them. Here is a quick example:</p>
 <pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(
   <span class="st">&#39;&lt;b&gt;Bold&lt;/b&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Emphasize&lt;/em&gt;&#39;</span>, <span class="st">&#39;&lt;a href=&quot;http://rstudio.com&quot;&gt;RStudio&lt;/a&gt;&#39;</span>,
