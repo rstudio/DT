@@ -5,7 +5,7 @@
 \usage{
 datatable(data, options = list(), class = "display", callback = JS("return table;"), 
     rownames, colnames, container, caption = NULL, filter = c("none", "bottom", "top"), 
-    server = FALSE, escape = TRUE, extensions = list())
+    server = FALSE, escape = TRUE, style = "default", extensions = list())
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -56,6 +56,9 @@ alternatively, you can specify numeric column indices or column names to
 indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 third), or \code{c('Species', 'Sepal.Length')}}
+
+\item{style}{the style name (\url{http://datatables.net/manual/styling/});
+currently only \code{'default'} and \code{'bootstrap'} are supported}
 
 \item{extensions}{a character vector of the names of the DataTables
 extensions (\url{http://datatables.net/extensions/index}), or a named list
