@@ -1,0 +1,21 @@
+---
+title: "Bootstrap Styles"
+output:
+  html_document:
+    includes: null
+---
+
+When you use `style = 'bootstrap'` in `datatable()`, you can specify the CSS classes for Bootstrap tables. You can find the possible classes [on this page](http://getbootstrap.com/css/#tables). We show the appearance of a few classes here:
+
+```{r}
+library(DT)
+iris2 = head(iris, 20)
+# default Bootstrap style in DT
+datatable(iris2, style = 'bootstrap')
+# with cell borders
+datatable(iris2, style = 'bootstrap', class = 'table-bordered')
+# with cell borders, and make the table compact
+datatable(iris2, style = 'bootstrap', class = 'table-bordered table-condensed')
+```
+
+Note the appearance depends on which Bootstrap theme you use. We are using the [Flatly theme](http://bootswatch.com/flatly/) on this website, and the tables may look different when you use a different theme.

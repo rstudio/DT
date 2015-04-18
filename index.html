@@ -157,7 +157,7 @@ if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) de
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>, <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), 
     rownames, colnames, container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, 
-        <span class="st">&quot;top&quot;</span>), <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
+        <span class="st">&quot;top&quot;</span>), <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
 <p>Here is a “hello world” example with zero configuration:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 <span class="kw">datatable</span>(iris)</code></pre>
@@ -231,6 +231,15 @@ if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) de
   },
   "evals": ["callback"]
 }</script></p>
+</div>
+<div id="styling" class="section level2">
+<h2><span class="header-section-number">2.2</span> Styling</h2>
+<p>Currently, <strong>DT</strong> only supports the Bootstrap style besides the default style. You can use the argument <code>style = 'bootstrap'</code> to enable the Bootstrap style, and adjust the table classes accordingly using <a href="http://getbootstrap.com/css/#tables">Bootstrap table class names</a>, such as <code>table-stripe</code> and <code>table-hover</code>. Actually, <strong>DT</strong> will automatically adjust the class names even if you provided the DataTables class names such as <code>stripe</code> and <code>hover</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">DT:::<span class="kw">DT2BSClass</span>(<span class="st">&#39;display&#39;</span>)
+## [1] &quot;table table-striped table-hover&quot;
+DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="st">&#39;compact&#39;</span>, <span class="st">&#39;cell-border&#39;</span>))
+## [1] &quot;table table-condensed table-bordered&quot;</code></pre>
+<p>Note you can only use one style for all tables on one page. Please see <a href="005-bootstrap.html">this separate page</a> for examples using the Bootstrap style.</p>
 </div>
 <div id="display-row-names" class="section level2">
 <h2><span class="header-section-number">2.2</span> Display Row Names</h2>

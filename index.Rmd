@@ -43,6 +43,17 @@ The `class` argument specifies the CSS classes of the table. The possible values
 datatable(head(iris), class = 'cell-border stripe')
 ```
 
+## Styling
+
+Currently, **DT** only supports the Bootstrap style besides the default style. You can use the argument `style = 'bootstrap'` to enable the Bootstrap style, and adjust the table classes accordingly using [Bootstrap table class names](http://getbootstrap.com/css/#tables), such as `table-stripe` and `table-hover`. Actually, **DT** will automatically adjust the class names even if you provided the DataTables class names such as `stripe` and `hover`.
+
+```{r collapse = TRUE}
+DT:::DT2BSClass('display')
+DT:::DT2BSClass(c('compact', 'cell-border'))
+```
+
+Note you can only use one style for all tables on one page. Please see [this separate page](005-bootstrap.html) for examples using the Bootstrap style.
+
 ## Display Row Names
 
 If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument `rownames = FALSE`, and you can also change row names by providing a different character vector to `rownames`.
