@@ -10,7 +10,7 @@ You can render a table widget in shiny, and obtain some information about its cu
 At the moment, **DT** requires **shiny** > 0.11.1, which has not been released to CRAN yet, so please install the development version:
 
 ```r
-devtools::install_github('rstudio/shiny')`
+devtools::install_github('rstudio/shiny')
 ```
 
 </blockquote>
