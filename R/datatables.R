@@ -180,8 +180,6 @@ datatable = function(
   if (filter != 'none') params$filterHTML = filterHTML
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
-  # use pretty JSON
-  attr(params, 'TOJSON_ARGS') = list(pretty = TRUE)
 
   deps = list(htmlDependency(
     'datatables', DataTablesVersion, src = depPath('datatables', 'js'),
