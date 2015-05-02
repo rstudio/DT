@@ -171,6 +171,13 @@ datatable = function(
     if (identical(options$lengthMenu, c(10, 25, 50, 100)))
       options$lengthMenu = NULL  # that is just the default
   }
+  # if you use copy_csv_xls.swf, we should disable the pdf button in TableTools
+  swf = options$tableTools$sSwfPath
+  if (length(swf) == 1 && length(options$tableTools$aButtons) == 0) {
+    if (basename(swf) == 'copy_csv_xls.swf')
+      options$tableTools$aButtons = c('copy', 'csv', 'xls', 'print')
+  }
+
   params = structure(list(
     data = data, container = as.character(container), options = options,
     callback = JS('function(table) {', callback, '}'),
