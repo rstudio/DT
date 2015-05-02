@@ -672,7 +672,8 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
 </div>
 <div id="tabletools" class="section level1">
 <h1><span class="header-section-number">9</span> TableTools</h1>
-<p>The <code>TableTools</code> extension adds a button toolbar to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Unlike other extensions, it has a special dependency on a Flash SWF file, which you have to copy to your application. The function <code>DT::copySWF()</code> was designed to do this job, and it returns a character string that can be used as the <code>sSwfPath</code> option of <code>TableTools</code>. Please also note that you must view the table via an HTTP server when you enable this extension, because the SWF file does not work on a static HTML page when opened locally without an HTTP server. There are several possible solutions, e.g.</p>
+<p>The <code>TableTools</code> extension adds a button toolbar to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Unlike other extensions, it has a special dependency on a Flash SWF file, which you have to copy to your application. The function <code>DT::copySWF()</code> was designed to do this job, and it returns a character string that can be used as the <code>sSwfPath</code> option of <code>TableTools</code>. This function has an argument <code>pdf = FALSE</code>, which determines if you want to enable the feature of saving the table as PDF (disabled by default).</p>
+<p>Please note that you must view the table via an HTTP server when you enable this extension, because the SWF file does not work on a static HTML page when opened locally without an HTTP server. There are several possible solutions, e.g.</p>
 <ul>
 <li>render the table in a <a href="shiny.html">Shiny</a> app (since <strong>shiny</strong> will start a server to serve the app)</li>
 <li>if you rendered the table to a static HTML page (e.g. in an R Markdown document), you can
@@ -703,7 +704,8 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
     "options": {
       "dom": "T<\"clear\">lfrtip",
       "tableTools": {
-        "sSwfPath": "./copy_csv_xls.swf"
+        "sSwfPath": "./copy_csv_xls.swf",
+        "aButtons": ["copy", "csv", "xls", "print"]
       },
       "columnDefs": [
         {
