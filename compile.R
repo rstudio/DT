@@ -1,4 +1,5 @@
 set.seed(0102)
+options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE))
 library(DT)
 f = rmarkdown::render(commandArgs(TRUE))
 # remove version numbers in HTML
