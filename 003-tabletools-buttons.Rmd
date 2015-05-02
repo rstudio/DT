@@ -33,3 +33,12 @@ datatable(
   )
 )
 ```
+
+We [mentioned](extensions.html) that the PDF button is disabled by default if you use `DT::copySWF()`. You can enable it using `copySWF(pdf = TRUE)`:
+
+```{r}
+datatable(iris2, extensions = 'TableTools', options = list(
+    dom = 'T<"clear">lfrtip',
+    tableTools = list(sSwfPath = copySWF(pdf = TRUE))
+))
+```
