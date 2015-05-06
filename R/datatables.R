@@ -6,7 +6,9 @@
 #' @param options a list of initialization options (see
 #'   \url{http://datatables.net/reference/option/}); the character options
 #'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
-#'   JavaScript code instead of normal character strings
+#'   JavaScript code instead of normal character strings; you can also set
+#'   options globally via \code{\link{options}(DT.options = list(...))}, and
+#'   global options will be merged into this \code{options} argument if set
 #' @param class the CSS class(es) of the table; see
 #'   \url{http://datatables.net/manual/styling/classes}
 #' @param callback the body of a JavaScript callback function with the argument
@@ -61,6 +63,8 @@ datatable = function(
 
   # yes, we all hate it
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
+
+  options = modifyList(getOption('DT.options', list()), options)
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
