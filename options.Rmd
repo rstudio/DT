@@ -45,6 +45,14 @@ datatable(head(iris, 20), rownames = FALSE, options = list(
 ))
 ```
 
+# Global Options
+
+When there are some options that you want to set for multiple tables produced from the same R session, you can use the global option named `DT.options`. For example:
+
+```{r eval=FALSE}
+options(DT.options = list(pageLength = 5, language = list(search = 'Filter:')))
+```
+
 # Examples of DataTables Options
 
 ## Sorting
