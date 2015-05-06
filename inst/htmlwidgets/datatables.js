@@ -141,18 +141,21 @@ HTMLWidgets.widget({
               if ($input.val() === '') filter.val([r1, r2]);
             },
             change: function() {
-              var v = $input.val();
+              var v = $input.val().replace(/\s/g, '');
               if (v === '') return;
               v = v.split('...');
               if (v.length !== 2) {
                 $input.parent().addClass('has-error');
                 return;
               }
+              if (v[0] === '') v[0] = null;
+              if (v[1] === '') v[1] = null;
               $input.parent().removeClass('has-error');
               // treat date as UTC time at midnight
               var strTime = function(x) {
+                if (x === null) return null;
                 var s = type === 'date' ? 'T00:00:00Z' : '';
-                var t = new Date(x.replace(/\s/g, '') + s).getTime();
+                var t = new Date(x + s).getTime();
                 // add 10 minutes to date since it does not hurt the date, and
                 // it helps avoid the tricky floating point arithmetic problems,
                 // e.g. sometimes the date may be a few milliseconds earlier
@@ -163,7 +166,7 @@ HTMLWidgets.widget({
                 v[0] = strTime(v[0]);
                 v[1] = strTime(v[1]);
               }
-              filter.val([+v[0], +v[1]]);
+              filter.val(v);
             }
           });
           var formatDate = function(d) {
