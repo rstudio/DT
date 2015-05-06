@@ -148,12 +148,11 @@ HTMLWidgets.widget({
                 $input.parent().addClass('has-error');
                 return;
               }
-              if (v[0] === '') v[0] = null;
-              if (v[1] === '') v[1] = null;
+              if (v[0] === '') v[0] = r1;
+              if (v[1] === '') v[1] = r2;
               $input.parent().removeClass('has-error');
               // treat date as UTC time at midnight
               var strTime = function(x) {
-                if (x === null) return null;
                 var s = type === 'date' ? 'T00:00:00Z' : '';
                 var t = new Date(x + s).getTime();
                 // add 10 minutes to date since it does not hurt the date, and
