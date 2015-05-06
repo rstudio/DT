@@ -10,6 +10,7 @@ When you use `style = 'bootstrap'` in `datatable()`, you can specify the CSS cla
 ```{r}
 library(DT)
 iris2 = head(iris, 20)
+options(DT.options = list(pageLength = 5))
 # default Bootstrap style in DT
 datatable(iris2, style = 'bootstrap')
 # with cell borders
