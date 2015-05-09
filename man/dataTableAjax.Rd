@@ -3,7 +3,7 @@
 \alias{dataTableAjax}
 \title{Register a data object in a shiny session for DataTables}
 \usage{
-dataTableAjax(session, data, rownames)
+dataTableAjax(session, data, rownames, toJSONfun = dataTablesJSON)
 }
 \arguments{
 \item{session}{the \code{session} object in the shiny server function

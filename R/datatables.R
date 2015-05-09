@@ -336,10 +336,12 @@ filterRow = function(data, rownames = TRUE, filter = 'none') {
       tags$div(
         class = 'form-group has-feedback', style = 'margin-bottom: auto;',
         tags$input(
-          type = 'search', placeholder = 'All', class = 'form-control',
+          # type = 'search', placeholder = 'All', class = 'form-control',
+          type = 'search', placeholder = 'All',
           style = 'width: 100%;'
         ),
-        tags$span(class = 'glyphicon glyphicon-remove-circle form-control-feedback')
+        # tags$span(class = 'glyphicon glyphicon-remove-circle form-control-feedback')
+        tags$span(class = 'glyphicon glyphicon-remove-circle')
       ),
       x
     )

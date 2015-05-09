@@ -116,7 +116,7 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
 #' @export
-dataTableAjax = function(session, data, rownames) {
+dataTableAjax = function(session, data, rownames, toJSONfun = dataTablesJSON) {
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
@@ -130,7 +130,7 @@ dataTableAjax = function(session, data, rownames) {
   data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
 
-  session$registerDataObj(id, data, dataTablesJSON)
+  session$registerDataObj(id, data, toJSONfun)
 
 }
 
