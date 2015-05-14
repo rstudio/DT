@@ -4,4 +4,4 @@
 #' @export %>%
 NULL
 
-DataTablesVersion = '1.10.6'
+DataTablesVersion = '1.10.7'
