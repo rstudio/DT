@@ -1,0 +1,22 @@
+---
+title: "Search result highlighting"
+output:
+  html_document:
+    includes: null
+---
+
+You can use the option `searchHighlight = TRUE` to enable search result highlighting. This feature was introduced in this DataTables [blog post](http://datatables.net/blog/2014-10-22). The implementation there did not consider the possibility of searching individual columns, and we have enhanced this feature in **DT**. Here are some examples:
+
+```{r}
+library(DT)
+mtcars2 = head(mtcars[, 1:5], 20)
+mtcars2$model = rownames(mtcars2)
+rownames(mtcars2) = NULL
+options(DT.options = list(pageLength = 5))
+# global search
+datatable(mtcars2, options = list(searchHighlight = TRUE, search = list(search = 'da')))
+# individual column filters
+datatable(mtcars2, options = list(searchHighlight = TRUE), filter = 'top')
+```
+
+Note highlighting is only applied to character columns when you use individual column filters. For example, in the above table, highlighting only works when you type in the search box of the `model` column; for other columns, highlighting does not make much sense since searching is performed via sliders. However, highlighting for global searching is applied to the whole table (e.g. type `21` in the global search box).

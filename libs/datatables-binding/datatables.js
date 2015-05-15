@@ -249,6 +249,41 @@ HTMLWidgets.widget({
         $.fn.dataTable.ext.search.push(customFilter);
 
       });
+
+    }
+
+    // highlight search keywords
+    var highlight = function() {
+      var body = $(table.table().body());
+      // removing the old highlighting first
+      body.unhighlight();
+
+      // don't highlight the "not found" row, so we get the rows using the api
+      if (table.rows({ filter: 'applied' }).data().length === 0) return;
+      // highlight gloal search keywords
+      body.highlight($.trim(table.search()).split(/\s+/));
+      // then highlight keywords from individual column filters
+      if (filterRow) filterRow.each(function(i, td) {
+        var $td = $(td), type = $td.data('type');
+        if (type !== 'character') return;
+        var $input = $td.children('div').first().children('input');
+        var column = table.column(i).nodes().to$(),
+            val = $.trim($input.val());
+        if (type !== 'character' || val === '') return;
+        column.highlight(val.split(/\s+/));
+      });
+    };
+
+    if (options.searchHighlight) {
+      table
+      .on('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth', highlight)
+      .on('destroy', function() {
+        // remove event handler
+        table.off( 'draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth' );
+      });
+
+      // initial highlight for state saved conditions and initial states
+      highlight();
     }
 
     // initialize extensions

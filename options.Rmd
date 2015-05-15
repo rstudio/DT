@@ -133,3 +133,4 @@ Since it is common for users to format numbers in the data columns, we have prov
 We prepare more examples in this section as users ask questions:
 
 1. [UI language and internationalization](004-i18n.html)
+1. [Search result highlighting](006-highlight.html)
