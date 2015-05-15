@@ -69,6 +69,7 @@ in_dir(dt_path(), {
 })
 
 setwd('../../Plugins/')
+system2('git', 'pull origin master')
 in_dir('integration/bootstrap/3/', {
   encode_img('dataTables.bootstrap.css')
   file.copy(
