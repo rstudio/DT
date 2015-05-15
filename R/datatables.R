@@ -140,7 +140,7 @@ datatable = function(
         'function(d) {',
         sprintf(
           'd.search.caseInsensitive = %s;',
-          tolower(!isFALSE(options$search$caseInsensitive))
+          tolower(!isFALSE(options[['search']]$caseInsensitive))
         ),
         sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
         '}'
