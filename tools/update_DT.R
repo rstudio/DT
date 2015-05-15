@@ -77,4 +77,12 @@ in_dir('integration/bootstrap/3/', {
   )
 })
 
+in_dir('features/searchHighlight', {
+  download.file('http://bartaz.github.io/sandbox.js/jquery.highlight.js', 'jquery.highlight.js')
+  file.copy(
+    c('dataTables.searchHighlight.css', 'jquery.highlight.js'),
+    dt_path('..', 'datatables-plugins', 'searchHighlight'), overwrite = TRUE
+  )
+})
+
 setwd(owd)

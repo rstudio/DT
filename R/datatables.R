@@ -199,6 +199,8 @@ datatable = function(
   deps = c(deps, list(styleDependency(style)))
   deps = c(deps, lapply(extensions, extDependency))
   if (filter != 'none') deps = c(deps, filterDependencies())
+  if (isTRUE(options$searchHighlight))
+    deps = c(deps, list(pluginDependency('searchHighlight')))
 
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
@@ -435,4 +437,12 @@ DT2BSClass = function(class) {
   )
   class = unique(c('table', class))
   paste(class, collapse = ' ')
+}
+
+pluginDependency = function(plugin) {
+  d = depPath('datatables-plugins', plugin)
+  htmlDependency(
+    paste('datatables', plugin, sep = '-'), DataTablesVersion, src = d,
+    script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
+  )
 }
