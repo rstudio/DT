@@ -83,7 +83,6 @@ datatable = function(
   if (length(rn)) {
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
-    options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
   }
 
   # align numeric columns to the right
@@ -108,6 +107,9 @@ datatable = function(
   # when rownames = TRUE, user may have only provided colnames for original
   # data, and we need to add a name for the first column, i.e. row names
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
+  # do not order the first column if the name is empty (a column for row names)
+  if (colnames[1] == ' ')
+    options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
   style = match.arg(style, list.files(depPath('datatables', 'css')))
   if (style == 'bootstrap') class = DT2BSClass(class)
