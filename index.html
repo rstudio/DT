@@ -177,12 +177,12 @@ if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) de
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -216,12 +216,12 @@ if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) de
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -267,12 +267,12 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -338,12 +338,12 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -381,12 +381,12 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -414,12 +414,12 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -446,9 +446,39 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
     "options": {
       "columnDefs": [
         {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
           "orderable": false,
           "targets": 0
-        },
+        }
+      ],
+      "order": [],
+      "autoWidth": false
+    },
+    "callback": "function(table) {\nreturn table;\n}",
+    "filter": "none"
+  },
+  "evals": ["callback"]
+}</script></p>
+<p>When you display row names of the data, its column name will be a white space by default. That is why you cannot see its column name. You can certainly choose to use a column name for rownames as well, e.g.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the first column name to &#39;ID&#39;</span>
+<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;ID&#39;</span> =<span class="st"> </span><span class="dv">1</span>))</code></pre>
+<p><div id="htmlwidget-8922" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-8922">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>ID</th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "columnDefs": [
         {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
@@ -608,12 +638,12 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -648,12 +678,12 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -690,12 +720,12 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "autoWidth": true,
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],
@@ -745,14 +775,14 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>names</th>\n      <th>date</th>\n      <th>time</th>\n    </tr>\n  </thead>\n</table>",
     "options": {
       "pageLength": 5,
+      "order": [],
+      "autoWidth": false,
       "columnDefs": [
         {
           "orderable": false,
           "targets": 0
         }
       ],
-      "order": [],
-      "autoWidth": false,
       "lengthMenu": [5, 10, 25, 50, 100]
     },
     "callback": "function(table) {\nreturn table;\n}",
@@ -782,12 +812,12 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
     "options": {
       "columnDefs": [
         {
-          "orderable": false,
-          "targets": 0
-        },
-        {
           "className": "dt-right",
           "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
         }
       ],
       "order": [],

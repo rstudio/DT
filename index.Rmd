@@ -87,6 +87,13 @@ datatable(head(iris), colnames = c('A Better Name' = 'Sepal.Width'))
 datatable(head(iris), colnames = c('Another Better Name' = 2, 'Yet Another Name' = 4))
 ```
 
+When you display row names of the data, its column name will be a white space by default. That is why you cannot see its column name. You can certainly choose to use a column name for rownames as well, e.g.
+
+```{r}
+# change the first column name to 'ID'
+datatable(head(iris), colnames = c('ID' = 1))
+```
+
 ## Custom Table Container
 
 The `container` argument allows you to provide a different table container to hold the table cells. By default, the container is generated from the column names. Below is an example of a custom table header:

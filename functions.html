@@ -231,14 +231,14 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
     "options": {
       "pageLength": 5,
       "dom": "tip",
+      "order": [],
+      "autoWidth": false,
       "columnDefs": [
         {
           "orderable": false,
           "targets": 0
         }
       ],
-      "order": [],
-      "autoWidth": false,
       "lengthMenu": [5, 10, 25, 50, 100],
       "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $('td:eq(1)', row).html(d['toDateString']());\nvar d = new Date(data[2]); $('td:eq(2)', row).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $('td:eq(3)', row).html(d['toLocaleString']());\nvar d = new Date(data[4]); $('td:eq(4)', row).html(d['toUTCString']());\n}"
     },
