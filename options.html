@@ -124,6 +124,7 @@ img {
 <p>The <strong>DT</strong> package modified the default behavior of <strong>DataTables</strong> in these aspects:</p>
 <ul>
 <li>The table is not ordered by default (<strong>DataTables</strong> orders a table by its first column by default);</li>
+<li>Ordered columns are not highlighted by default (the <strong>DataTables</strong> option <code>orderClasses</code> is changed from <code>TRUE</code> to <code>FALSE</code>);</li>
 <li>Numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;</li>
 <li>The option <code>autoWidth</code> is set to <code>FALSE</code> by default, so that <strong>DataTables</strong> does not calculate and put hard-coded width values on the table columns;
 <ul>
@@ -174,7 +175,8 @@ img {
       "pageLength": 5,
       "lengthMenu": [5, 10, 15, 20],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -241,7 +243,8 @@ img {
           "targets": 0
         }
       ],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -279,7 +282,8 @@ img {
         }
       ],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -313,7 +317,8 @@ img {
         }
       ],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -355,7 +360,8 @@ img {
         }
       ],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -403,7 +409,8 @@ img {
         }
       ],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\ntable.page(3).draw(false);\n}",
     "filter": "none"
@@ -448,7 +455,8 @@ img {
         }
       ],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\ntable.order([3, 'asc']).draw();\n}",
     "filter": "none"

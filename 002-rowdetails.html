@@ -148,7 +148,8 @@ img {
         }
       ],
       "order": [],
-      "autoWidth": false
+      "autoWidth": false,
+      "orderClasses": false
     },
     "callback": "function(table) {\n\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });\n}",
     "filter": "none"

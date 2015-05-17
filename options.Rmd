@@ -11,6 +11,7 @@ title: DataTables Options
 The **DT** package modified the default behavior of **DataTables** in these aspects:
 
 - The table is not ordered by default (**DataTables** orders a table by its first column by default);
+- Ordered columns are not highlighted by default (the **DataTables** option `orderClasses` is changed from `TRUE` to `FALSE`);
 - Numeric columns are always aligned to the right, since it rarely makes sense for numbers to be aligned to the left;
 - The option `autoWidth` is set to `FALSE` by default, so that **DataTables** does not calculate and put hard-coded width values on the table columns;
     - One [known issue](https://github.com/rstudio/DT/issues/29) with `autoWidth = FALSE` is that the `width` option for columns will not work, so if you want to configure widths for columns, you have to use `autoWidth = TRUE`, e.g.
