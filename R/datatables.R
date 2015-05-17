@@ -116,7 +116,7 @@ datatable = function(
 
   filter = match.arg(filter)
   # HTML code for column filters
-  filterHTML = as.character(filterRow(data, length(rn) > 0, filter))
+  filterHTML = as.character(filterRow(data, length(rn) > 0 && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter == 'top') options$orderCellsTop = TRUE
