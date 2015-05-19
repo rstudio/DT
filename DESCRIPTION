@@ -18,10 +18,10 @@ BugReports: https://github.com/rstudio/DT/issues
 License: GPL-3
 Imports:
     htmltools,
-    htmlwidgets (> 0.3.2),
+    htmlwidgets (>= 0.4),
     magrittr
 Suggests:
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
-    shiny (> 0.11.1)
+    shiny (>= 0.12.0)
 VignetteBuilder: knitr
