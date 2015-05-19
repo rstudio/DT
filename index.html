@@ -124,11 +124,7 @@ img {
 <hr />
 <p>The R package <strong>DT</strong> provides an R interface to the JavaScript library <a href="http://datatables.net"><strong>DataTables</strong></a>. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and <strong>DataTables</strong> provides filtering, pagination, sorting, and many other features in the tables.</p>
 <p>You can install the development version of the package from Github:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need htmlwidgets &gt;= 0.3.3 since it is not on CRAN yet</span>
-if (!<span class="kw">requireNamespace</span>(<span class="st">&#39;htmlwidgets&#39;</span>) ||<span class="st"> </span><span class="kw">packageVersion</span>(<span class="st">&#39;htmlwidgets&#39;</span>) &lt;=<span class="st"> &#39;0.3.2&#39;</span>)
-  devtools::<span class="kw">install_github</span>(<span class="st">&#39;ramnathv/htmlwidgets&#39;</span>)
-<span class="co"># install DT</span>
-if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/DT&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/DT&quot;</span>)
 <span class="kw">sessionInfo</span>()</code></pre>
 <pre><code>## R version 3.2.0 (2015-04-16)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
@@ -146,12 +142,12 @@ if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) de
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.42
+## [1] DT_0.0.44
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] htmlwidgets_0.4 magrittr_1.5    formatR_1.2     tools_3.2.0    
-##  [5] htmltools_0.2.8 yaml_2.1.13     stringi_0.4-1   rmarkdown_0.6.1
-##  [9] knitr_1.10.8    stringr_1.0.0   digest_0.6.8    evaluate_0.7</code></pre>
+##  [5] htmltools_0.2.9 yaml_2.1.13     stringi_0.4-1   rmarkdown_0.6.1
+##  [9] knitr_1.10.9    stringr_1.0.0   digest_0.6.8    evaluate_0.7</code></pre>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>

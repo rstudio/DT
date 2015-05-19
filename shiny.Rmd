@@ -6,15 +6,6 @@ title: Using DT in Shiny
 
 You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page. Note these information are currently not available if you are using the [server-side processing](server.html) mode (i.e. when `datatable(server = TRUE)`).
 
-<blockquote class="text-info">
-At the moment, **DT** requires **shiny** > 0.11.1, which has not been released to CRAN yet, so please install the development version:
-
-```r
-devtools::install_github('rstudio/shiny')
-```
-
-</blockquote>
-
 # A Minimal Example
 
 Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions `dataTableOutput()` and `renderDataTable()` in **DT** (instead of **shiny**):
