@@ -145,7 +145,8 @@ dataTablesJSON = function(data, req) {
 
   # global searching
   i = seq_len(n)
-  if (q$search[['value']] != '') {
+  # for some reason, q$search might be NULL, leading to error `if (logical(0))`
+  if (isTRUE(q$search[['value']] != '')) {
     i0 = apply(data, 2, function(x) {
       grep2(q$search[['value']], as.character(x),
             fixed = q$search[['regex']] == 'false', ignore.case = ci)
