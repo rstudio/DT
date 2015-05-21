@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
-Title: R Interface to the jQuery Plug-in DataTables
-Version: 0.0.41
+Title: R Interface to the 'jQuery' Plug-in 'DataTables'
+Version: 0.0.44
 Date: 2014-11-11
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
@@ -11,17 +11,17 @@ Authors@R: c(
     person("RStudio Inc", role = "cph")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
-Description: Ports the JavaScript library DataTables into R. It can be used
+Description: Ports the JavaScript library 'DataTables' into R. It can be used
     in HTML pages rendered from R (e.g. via R Markdown or Shiny).
 URL: http://rstudio.github.io/DT
 BugReports: https://github.com/rstudio/DT/issues
 License: GPL-3
 Imports:
     htmltools,
-    htmlwidgets (> 0.3.2),
+    htmlwidgets (>= 0.4),
     magrittr
 Suggests:
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
-    shiny (> 0.11.1)
+    shiny (>= 0.12.0)
 VignetteBuilder: knitr

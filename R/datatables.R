@@ -83,7 +83,6 @@ datatable = function(
   if (length(rn)) {
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
-    options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
   }
 
   # align numeric columns to the right
@@ -94,6 +93,8 @@ datatable = function(
   if (is.null(options[['order']])) options$order = list()
   # I do not see the point of "autoWidth: true" as the default in DataTables
   if (is.null(options[['autoWidth']])) options$autoWidth = FALSE
+  # disable CSS classes for ordered columns
+  if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
   cn = base::colnames(data)
   if (missing(colnames)) {
@@ -108,13 +109,16 @@ datatable = function(
   # when rownames = TRUE, user may have only provided colnames for original
   # data, and we need to add a name for the first column, i.e. row names
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
+  # do not order the first column if the name is empty (a column for row names)
+  if (colnames[1] == ' ')
+    options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
   style = match.arg(style, list.files(depPath('datatables', 'css')))
   if (style == 'bootstrap') class = DT2BSClass(class)
 
   filter = match.arg(filter)
   # HTML code for column filters
-  filterHTML = as.character(filterRow(data, length(rn) > 0, filter))
+  filterHTML = as.character(filterRow(data, length(rn) > 0 && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter == 'top') options$orderCellsTop = TRUE
@@ -140,7 +144,7 @@ datatable = function(
         'function(d) {',
         sprintf(
           'd.search.caseInsensitive = %s;',
-          tolower(!isFALSE(options$search$caseInsensitive))
+          tolower(!isFALSE(options[['search']]$caseInsensitive))
         ),
         sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
         '}'
@@ -199,6 +203,8 @@ datatable = function(
   deps = c(deps, list(styleDependency(style)))
   deps = c(deps, lapply(extensions, extDependency))
   if (filter != 'none') deps = c(deps, filterDependencies())
+  if (isTRUE(options$searchHighlight))
+    deps = c(deps, list(pluginDependency('searchHighlight')))
 
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
@@ -437,4 +443,12 @@ DT2BSClass = function(class) {
   )
   class = unique(c('table', class))
   paste(class, collapse = ' ')
+}
+
+pluginDependency = function(plugin) {
+  d = depPath('datatables-plugins', plugin)
+  htmlDependency(
+    paste('datatables', plugin, sep = '-'), DataTablesVersion, src = d,
+    script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
+  )
 }

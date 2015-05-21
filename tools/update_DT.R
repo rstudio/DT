@@ -69,11 +69,20 @@ in_dir(dt_path(), {
 })
 
 setwd('../../Plugins/')
+system2('git', 'pull origin master')
 in_dir('integration/bootstrap/3/', {
   encode_img('dataTables.bootstrap.css')
   file.copy(
     c('dataTables.bootstrap.css', 'dataTables.bootstrap.min.js'),
     dt_path('css', 'bootstrap'), overwrite = TRUE
+  )
+})
+
+in_dir('features/searchHighlight', {
+  download.file('http://bartaz.github.io/sandbox.js/jquery.highlight.js', 'jquery.highlight.js')
+  file.copy(
+    c('dataTables.searchHighlight.css', 'jquery.highlight.js'),
+    dt_path('..', 'datatables-plugins', 'searchHighlight'), overwrite = TRUE
   )
 })
 
