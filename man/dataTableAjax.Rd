@@ -28,6 +28,7 @@ Filtering, sorting, and pagination are processed through R instead of
 JavaScript (client-side processing).
 }
 \examples{
+library(DT)
 DTApp = function(data, ..., options = list()) {
   library(shiny)
   shinyApp(
