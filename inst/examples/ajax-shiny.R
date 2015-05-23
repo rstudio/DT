@@ -1,4 +1,5 @@
 # !formatR
+library(DT)
 DTApp = function(data, ..., options = list()) {
   library(shiny)
   shinyApp(
