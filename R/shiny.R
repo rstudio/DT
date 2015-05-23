@@ -139,7 +139,17 @@ dataTablesJSON = function(data, req) {
   n = nrow(data)
   # DataTables requests were sent via POST
   URLdecode = shinyFun('URLdecode')
+
   params = URLdecode(rawToChar(req$rook.input$read()))
+  Encoding(params) = 'UTF-8'
+  # use system native encoding if possible (again, this grep(fixed = TRUE) bug
+  # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16264)
+  params2 = iconv(params, 'UTF-8', '')
+  if (!is.na(params2)) params = params2 else warning(
+    'Some DataTables parameters contain multibyte characters ',
+    'that do not work in current locale.'
+  )
+
   q = shiny::parseQueryString(params, nested = TRUE)
   ci = q$search[['caseInsensitive']] == 'true'
 
