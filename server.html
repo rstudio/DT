@@ -196,7 +196,8 @@ img {
 })</code></pre>
 <p>That is more or less how <strong>DataTables</strong> used to work internally in <strong>shiny</strong>. Now we have moved the server-side processing function <code>dataTablesJSON()</code> from shiny to <strong>DT</strong>, and provided a wrapper function <code>DT::dataTableAjax()</code> to make it easier for you register a data object in the shiny session that will return JSON when <strong>DataTables</strong> sends Ajax requests.</p>
 <p>Alternatively, you can write a shiny app using a single script <code>app.R</code> that returns a <code>shinyApp()</code> object. For example, below is a function that returns a shiny app:</p>
-<pre class="sourceCode r"><code class="sourceCode r">DTApp =<span class="st"> </span>function(data, ..., <span class="dt">options =</span> <span class="kw">list</span>()) {
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+DTApp =<span class="st"> </span>function(data, ..., <span class="dt">options =</span> <span class="kw">list</span>()) {
   <span class="kw">library</span>(shiny)
   <span class="kw">shinyApp</span>(
     <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
@@ -211,8 +212,7 @@ img {
       widget =<span class="st"> </span><span class="kw">datatable</span>(data, <span class="dt">server =</span> <span class="ot">TRUE</span>, ..., <span class="dt">options =</span> options)
       output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(widget)
     }
-  )
-}</code></pre>
+  )</code></pre>
 <p>Then you can call the function to create the app at the end of <code>app.R</code>, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">DTApp</span>(iris, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>)</code></pre>
 <p>You will be able to either call <code>shiny::runApp()</code> to run <code>app.R</code>, or simply paste the code in R to run the app.</p>
