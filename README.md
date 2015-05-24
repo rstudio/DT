@@ -14,3 +14,15 @@ devtools::install_github('rstudio/DT')
 ```
 
 See the full documentation at <http://rstudio.github.io/DT>.
+
+## Updating rstudio/DT fork
+
+See <https://help.github.com/articles/syncing-a-fork/> and <https://help.github.com/articles/configuring-a-remote-for-a-fork/>
+
+```
+cd ~/gh/DT_fork
+git remote add upstream git@github.com:rstudio/DT.git
+git fetch upstream
+git merge upstream/master
+```
+

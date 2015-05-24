@@ -96,7 +96,12 @@ HTMLWidgets.widget({
           filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
           var fun = function() {
-            table.column(i).search($input.val()).draw();
+            var regex = false, ci = true;
+            if (options.search) {
+              regex = options.search.regex,
+              ci = options.search.caseInsensitive !== false;
+            }
+            table.column(i).search($input.val(), regex, !regex, ci).draw();
           };
           if (server) {
             fun = throttle(fun, 1000);
@@ -295,7 +300,7 @@ HTMLWidgets.widget({
     if (typeof data.callback === 'function') data.callback(table);
 
     // interaction with shiny
-    if (!window.Shiny) return;
+    if (!HTMLWidgets.shinyMode) return;
 
     var changeInput = function(id, data) {
       Shiny.onInputChange(el.id + '_' + id, data);
@@ -335,5 +340,11 @@ HTMLWidgets.widget({
     };
     table.on('draw.dt', updateTableInfo);
     updateTableInfo();
+
+    // state info
+    table.on('draw.dt', function() {
+      changeInput('state', table.state());
+    });
+    changeInput('state', table.state());
   }
 });
