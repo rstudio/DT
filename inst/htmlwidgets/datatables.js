@@ -340,5 +340,11 @@ HTMLWidgets.widget({
     };
     table.on('draw.dt', updateTableInfo);
     updateTableInfo();
+
+    // state info
+    table.on('draw.dt', function() {
+      changeInput('state', table.state());
+    });
+    changeInput('state', table.state());
   }
 });
