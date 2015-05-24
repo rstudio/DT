@@ -300,7 +300,7 @@ HTMLWidgets.widget({
     if (typeof data.callback === 'function') data.callback(table);
 
     // interaction with shiny
-    if (!window.Shiny) return;
+    if (!HTMLWidgets.shinyMode) return;
 
     var changeInput = function(id, data) {
       Shiny.onInputChange(el.id + '_' + id, data);
