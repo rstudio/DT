@@ -1,0 +1,21 @@
+---
+title: "Search Options"
+output:
+  html_document:
+    includes: null
+---
+
+By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option `search = list(regex = TRUE)`, and perform case-sensitive searching by `list(search = caseInsensitive = FALSE)` (the two options are orthogonal).
+
+```{r}
+library(DT)
+mtcars2 = mtcars[, c(1:5, 9)]
+mtcars2$am = factor(mtcars$am, c(0, 1), c('automatic', 'manual'))
+# search for Ma or Me
+datatable(mtcars2, colnames = c('model' = 1), filter = 'top', options = list(
+  search = list(regex = TRUE, caseInsensitive = FALSE, search = 'M[ae]'),
+  pageLength = 5
+))
+```
+
+Please note the interpretation of regular expressions depends on whether you use client-side or server-side processing. For client-side processing, the search string is treated as JavaScript regular expressions. For server-side processing, it is up to the server-side script. In **DT**, the server-side processing function is implemented in R, so the search string is treated as R regular expressions.
