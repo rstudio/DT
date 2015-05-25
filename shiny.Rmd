@@ -50,33 +50,21 @@ The main differences are:
 
 # Interaction with Shiny
 
-There are some information exposed to Shiny from the table widget as you interact with the table in Shiny.
+There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `foo` to denote the output id of the table (i.e. the `outputId` in `renderDataTable()`). You need to replace `foo` with the actual id of the table in your own app.
 
 ## Row Selection
 
-One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function `appendCheckboxes()` to do this. Remember, you need to tell `datatable()` not to escape this column, otherwise you will see raw HTML code like `<input type="checkbox" ... />` in the table.
-
-```{r}
-library(DT)
-iris2 = head(iris, 20)
-datatable(
-  appendCheckboxes(iris2), escape = -7,
-  options = list(pageLength = 5, dom = 'tip')
-)
-# just use checkboxes as the "row names"
-datatable(
-  iris2, rownames = checkboxRows(iris2), escape = -1,
-  options = list(pageLength = 5, dom = 'tip')
-)
-```
-
-The examples above only show you how a table looks like when you add a column of checkboxes. See [this example](https://yihui.shinyapps.io/DT-checkbox/) for how Shiny react to changes from the checkboxes.
+The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through `input$foo_rows_selected`. See [a live example here](https://yihui.shinyapps.io/DT-rows/).
 
 ```{r eval=FALSE}
 # you can find the example locally in the DT package
-app = system.file('examples', 'DT-checkbox', package = 'DT')
+app = system.file('examples', 'DT-rows', package = 'DT')
 shiny::runApp(app)
 ```
+
+[![Row selection in DataTables](http://i.imgur.com/fcuCOTD.png)](https://yihui.shinyapps.io/DT-rows/)
+
+Note `input$foo_rows_selected` is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because **DT** does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by `datatable(data, rownames = TRUE)` (in most cases, this is just the default behavior) if you want to get the names of selected rows from `input$foo_rows_selected`.
 
 ## DataTables Information
 

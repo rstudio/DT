@@ -300,28 +300,56 @@ HTMLWidgets.widget({
     if (typeof data.callback === 'function') data.callback(table);
 
     // interaction with shiny
-    if (!window.Shiny) return;
+    if (!HTMLWidgets.shinyMode) return;
 
     var changeInput = function(id, data) {
       Shiny.onInputChange(el.id + '_' + id, data);
     };
 
-    // selected rows (checkboxes added via DT::checkboxRows())
-    var selected = [];
-    table.$('input[type="checkbox"].DT.checkboxRows')
-      .each(function(i) {
-        if (this.checked) selected.push($(this).data('row'));
-      })
-      .on('change', function() {
-        var $this = $(this), value = $this.data('row');
-        if (this.checked) {
-          selected.push(value);
-        } else {
-          selected.splice($.inArray(value, selected), 1);
-        }
-        changeInput('selected', selected);
+    var addOne = function(x) {
+      return x.map(function(i) { return 1 + i; });
+    };
+
+    var unique = function(x) {
+      var ux = [];
+      $.each(x, function(i, el){
+        if ($.inArray(el, ux) === -1) ux.push(el);
       });
-    changeInput('selected', selected);
+      return ux;
+    }
+
+    // selected rows
+    var selected = [], selectedRows = function() {
+      var rows = table.rows('.selected', {search: 'applied'});
+      // return the first column in server mode, and row indices in client mode
+      if (!server) return addOne(rows.indexes().toArray());
+      var ids = rows.data().toArray().map(function(d) {
+        return d[0];  // assume the first column is row names
+      });
+      selected = unique(selected.concat(ids));
+      return selected;
+    };
+    table.on('click.dt', 'tr', function() {
+      var $this = $(this);
+      $this.toggleClass('selected');
+      if (server && !$this.is('.selected')) {
+        var id = table.row($this).data()[0];
+        // remove id from selected since its class .selected has been removed
+        selected.splice($.inArray(id, selected), 1);
+      }
+      changeInput('rows_selected', selectedRows());
+    });
+    changeInput('rows_selected', selectedRows());
+    // restore selected rows after the table is redrawn (e.g. sort/search/page);
+    // client-side tables will preserve the selections automatically; for
+    // server-side tables, we have to check if the row name is in `selected`
+    if (server) table.on('draw.dt', function() {
+      table.rows({page: 'current'}).every(function() {
+        if ($.inArray(this.data()[0], selected) > -1) {
+          $(this.node()).addClass('selected');
+        }
+      });
+    });
 
     // expose some table info to Shiny
     var updateTableInfo = function(e, settings) {
@@ -340,5 +368,11 @@ HTMLWidgets.widget({
     };
     table.on('draw.dt', updateTableInfo);
     updateTableInfo();
+
+    // state info
+    table.on('draw.dt', function() {
+      changeInput('state', table.state());
+    });
+    changeInput('state', table.state());
   }
 });

@@ -18,11 +18,6 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
-<script src="libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -153,96 +148,15 @@ img {
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
-<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny.</p>
+<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>foo</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>renderDataTable()</code>). You need to replace <code>foo</code> with the actual id of the table in your own app.</p>
 <div id="row-selection" class="section level2">
 <h2><span class="header-section-number">2.1</span> Row Selection</h2>
-<p>One way to enable row selection in the table is to add a column of checkboxes to the table. You can use the function <code>appendCheckboxes()</code> to do this. Remember, you need to tell <code>datatable()</code> not to escape this column, otherwise you will see raw HTML code like <code>&lt;input type=&quot;checkbox&quot; ... /&gt;</code> in the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
-<span class="kw">datatable</span>(
-  <span class="kw">appendCheckboxes</span>(iris2), <span class="dt">escape =</span> -<span class="dv">7</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)
-)</code></pre>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
-<script type="application/json" data-for="htmlwidget-5716">{
-  "x": {
-    "data": [
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
-      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1],
-      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8],
-      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.4, 1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5],
-      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3],
-      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa"],
-      ["<input data-row=\"1\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"2\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"3\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"4\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"5\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"6\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"7\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"8\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"9\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"10\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"11\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"12\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"13\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"14\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"15\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"16\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"17\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"18\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"19\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"20\" type=\"checkbox\" class=\"DT checkboxRows\" />"]
-    ],
-    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n      <th> </th>\n    </tr>\n  </thead>\n</table>",
-    "options": {
-      "pageLength": 5,
-      "dom": "tip",
-      "columnDefs": [
-        {
-          "className": "dt-right",
-          "targets": [1, 2, 3, 4]
-        },
-        {
-          "orderable": false,
-          "targets": 0
-        }
-      ],
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false,
-      "lengthMenu": [5, 10, 25, 50, 100]
-    },
-    "callback": "function(table) {\nreturn table;\n}",
-    "filter": "none"
-  },
-  "evals": ["callback"]
-}</script></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just use checkboxes as the &quot;row names&quot;</span>
-<span class="kw">datatable</span>(
-  iris2, <span class="dt">rownames =</span> <span class="kw">checkboxRows</span>(iris2), <span class="dt">escape =</span> -<span class="dv">1</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)
-)</code></pre>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
-<script type="application/json" data-for="htmlwidget-4929">{
-  "x": {
-    "data": [
-      ["<input data-row=\"1\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"2\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"3\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"4\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"5\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"6\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"7\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"8\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"9\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"10\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"11\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"12\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"13\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"14\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"15\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"16\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"17\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"18\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"19\" type=\"checkbox\" class=\"DT checkboxRows\" />", "<input data-row=\"20\" type=\"checkbox\" class=\"DT checkboxRows\" />"],
-      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1],
-      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8],
-      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.4, 1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5],
-      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3],
-      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa"]
-    ],
-    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
-    "options": {
-      "pageLength": 5,
-      "dom": "tip",
-      "columnDefs": [
-        {
-          "className": "dt-right",
-          "targets": [1, 2, 3, 4]
-        },
-        {
-          "orderable": false,
-          "targets": 0
-        }
-      ],
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false,
-      "lengthMenu": [5, 10, 25, 50, 100]
-    },
-    "callback": "function(table) {\nreturn table;\n}",
-    "filter": "none"
-  },
-  "evals": ["callback"]
-}</script></p>
-<p>The examples above only show you how a table looks like when you add a column of checkboxes. See <a href="https://yihui.shinyapps.io/DT-checkbox/">this example</a> for how Shiny react to changes from the checkboxes.</p>
+<p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$foo_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
-app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-checkbox&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
+app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
+<p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="http://i.imgur.com/fcuCOTD.png" alt="Row selection in DataTables" /></a></p>
+<p>Note <code>input$foo_rows_selected</code> is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because <strong>DT</strong> does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by <code>datatable(data, rownames = TRUE)</code> (in most cases, this is just the default behavior) if you want to get the names of selected rows from <code>input$foo_rows_selected</code>.</p>
 </div>
 <div id="datatables-information" class="section level2">
 <h2><span class="header-section-number">2.2</span> DataTables Information</h2>
