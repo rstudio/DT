@@ -1,18 +1,10 @@
 library(shiny)
 library(DT)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
 
-  # append checkboxes after the last column of cars; do not order this column
-  # (orderable = FALSE) or escape it
   output$x1 = DT::renderDataTable({
-    datatable(
-      appendCheckboxes(cars),
-      options = list(
-        columnDefs = list(list(orderable = FALSE, targets = 3))
-      ),
-      escape = -4
-    )
+    datatable(cars)
   })
 
   # highlight selected rows in the scatterplot
@@ -23,13 +15,14 @@ shinyServer(function(input, output) {
     if (length(s)) points(cars[s, , drop = FALSE], pch = 19, cex = 2)
   })
 
-  # or render checkboxes as the "row names" of the data
+  # you must include row names for server-side tables to be able to get the row
+  # indices of the selected rows
+  mtcars2 = mtcars[, 1:8]
+  action = dataTableAjax(session, mtcars2, rownames = TRUE)
   output$x3 = DT::renderDataTable({
-    datatable(
-      iris,
-      rownames = checkboxRows(iris),
-      escape = -1
-    )
+    datatable(mtcars2, rownames = TRUE, server = TRUE, options = list(
+      ajax = list(url = action)
+    ))
   })
 
   # print the selected indices
@@ -37,7 +30,7 @@ shinyServer(function(input, output) {
     s = input$x3_selected
     if (length(s)) {
       cat('These rows were selected:\n\n')
-      cat(s, sep = ' ')
+      cat(s, sep = '\n')
     }
   })
 

@@ -1,3 +1,7 @@
-The top example shows how you can insert a column of checkboxes into a table, and obtain their values in Shiny. The selected rows are plotted as solid points on the scatterplot. First, we appended the `cars` data with a column of checkboxes via `appendCheckboxes()`. The `options` argument of `datatable()` disabled the ordering of this column (since it does not make much sense to order these checkboxes), and `escape = -4` means the 4th column should not be escaped since it is supposed to be raw HTML.
+The top example shows a client-side table, and the indices of the selected rows 
+(`input$x1_selected`) are integers.
 
-The bottom example shows you can also use checkboxes as the "row names" of the data, and the indices of the selected rows are printed on the right.
+The bottom example shows a server-side table. Make sure you have included row 
+names in the table (as the first column of the table). In the case of
+server-side processing, the row names of the selected rows are available in
+`input$x3_selected` as a character vector.

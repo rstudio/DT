@@ -2,9 +2,9 @@ library(shiny)
 
 fluidPage(
 
-  title = 'Using Checkboxes to Select Table Rows',
+  title = 'Select Table Rows',
 
-  h1('Append a column of checkboxes'),
+  h1('A Client-side Table'),
 
   fluidRow(
     column(6, DT::dataTableOutput('x1')),
@@ -13,7 +13,7 @@ fluidPage(
 
   hr(),
 
-  h1('Use checkboxes in place of row names'),
+  h1('A Server-side Table'),
 
   fluidRow(
     column(9, DT::dataTableOutput('x3')),
