@@ -9,7 +9,7 @@ shinyServer(function(input, output, session) {
 
   # highlight selected rows in the scatterplot
   output$x2 = renderPlot({
-    s = input$x1_selected
+    s = input$x1_rows_selected
     par(mar = c(4, 4, 1, .1))
     plot(cars)
     if (length(s)) points(cars[s, , drop = FALSE], pch = 19, cex = 2)
@@ -27,7 +27,7 @@ shinyServer(function(input, output, session) {
 
   # print the selected indices
   output$x4 = renderPrint({
-    s = input$x3_selected
+    s = input$x3_rows_selected
     if (length(s)) {
       cat('These rows were selected:\n\n')
       cat(s, sep = '\n')
