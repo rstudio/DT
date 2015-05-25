@@ -306,23 +306,6 @@ HTMLWidgets.widget({
       Shiny.onInputChange(el.id + '_' + id, data);
     };
 
-    // selected rows (checkboxes added via DT::checkboxRows())
-    var selected = [];
-    table.$('input[type="checkbox"].DT.checkboxRows')
-      .each(function(i) {
-        if (this.checked) selected.push($(this).data('row'));
-      })
-      .on('change', function() {
-        var $this = $(this), value = $this.data('row');
-        if (this.checked) {
-          selected.push(value);
-        } else {
-          selected.splice($.inArray(value, selected), 1);
-        }
-        changeInput('selected', selected);
-      });
-    changeInput('selected', selected);
-
     // expose some table info to Shiny
     var updateTableInfo = function(e, settings) {
       // TODO: is anyone interested in the page info?

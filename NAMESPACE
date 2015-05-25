@@ -1,7 +1,5 @@
 export("%>%")
 export(JS)
-export(appendCheckboxes)
-export(checkboxRows)
 export(copySWF)
 export(dataTableAjax)
 export(dataTableOutput)
