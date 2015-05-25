@@ -62,7 +62,7 @@ app = system.file('examples', 'DT-rows', package = 'DT')
 shiny::runApp(app)
 ```
 
-[![Row selection in DataTables](http://i.imgur.com/fcuCOTD.png)](https://yihui.shinyapps.io/DT-rows/)
+[![Row selection in DataTables](http://i.imgur.com/ZQCiu7L.png)](https://yihui.shinyapps.io/DT-rows/)
 
 Note `input$foo_rows_selected` is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because **DT** does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by `datatable(data, rownames = TRUE)` (in most cases, this is just the default behavior) if you want to get the names of selected rows from `input$foo_rows_selected`.
 
