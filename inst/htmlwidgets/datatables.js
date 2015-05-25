@@ -337,9 +337,9 @@ HTMLWidgets.widget({
         // remove id from selected since its class .selected has been removed
         selected.splice($.inArray(id, selected), 1);
       }
-      changeInput('rows', selectedRows());
+      changeInput('selected', selectedRows());
     });
-    changeInput('rows', selectedRows());
+    changeInput('selected', selectedRows());
     // restore selected rows after the table is redrawn (e.g. sort/search/page);
     // client-side tables will preserve the selections automatically; for
     // server-side tables, we have to check if the row name is in `selected`
