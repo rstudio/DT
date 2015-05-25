@@ -164,11 +164,12 @@ shiny::<span class="kw">runApp</span>(app)</code></pre>
 <ul>
 <li><code>input$foo_rows_current</code>: the indices of rows on the current page</li>
 <li><code>input$foo_rows_all</code>: the indices of rows on all pages (after the table is filtered by the search strings)</li>
+<li><code>input$foo_state</code>: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option <code>stateSave = TRUE</code> is applied to the table)</li>
 </ul>
 <p><a href="https://yihui.shinyapps.io/DT-info/">This example</a> shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.</p>
 <pre class="sourceCode r"><code class="sourceCode r">app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-info&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
-<p><a href="https://yihui.shinyapps.io/DT-info/"><img src="http://i.imgur.com/gZzwKEQ.png" alt="DataTables information in shiny" /></a></p>
+<p><a href="https://yihui.shinyapps.io/DT-info/"><img src="http://i.imgur.com/wKW8mib.png" alt="DataTables information in shiny" /></a></p>
 </div>
 </div>
 

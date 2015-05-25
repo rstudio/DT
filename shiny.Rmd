@@ -72,6 +72,7 @@ As you interact with the table (e.g. sort columns, search the table, or navigate
 
 - `input$foo_rows_current`: the indices of rows on the current page
 - `input$foo_rows_all`: the indices of rows on all pages (after the table is filtered by the search strings)
+- `input$foo_state`: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option `stateSave = TRUE` is applied to the table)
 
 [This example](https://yihui.shinyapps.io/DT-info/) shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.
 
@@ -80,4 +81,4 @@ app = system.file('examples', 'DT-info', package = 'DT')
 shiny::runApp(app)
 ```
 
-[![DataTables information in shiny](http://i.imgur.com/gZzwKEQ.png)](https://yihui.shinyapps.io/DT-info/)
+[![DataTables information in shiny](http://i.imgur.com/wKW8mib.png)](https://yihui.shinyapps.io/DT-info/)
