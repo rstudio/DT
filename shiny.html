@@ -155,7 +155,7 @@ img {
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
-<p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="http://i.imgur.com/ZQCiu7L.png" alt="Row selection in DataTables" /></a></p>
+<p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="http://i.imgur.com/jBxAm4F.png" alt="Row selection in DataTables" /></a></p>
 <p>Note <code>input$foo_rows_selected</code> is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because <strong>DT</strong> does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by <code>datatable(data, rownames = TRUE)</code> (in most cases, this is just the default behavior) if you want to get the names of selected rows from <code>input$foo_rows_selected</code>.</p>
 </div>
 <div id="datatables-information" class="section level2">
@@ -169,7 +169,7 @@ shiny::<span class="kw">runApp</span>(app)</code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-info/">This example</a> shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.</p>
 <pre class="sourceCode r"><code class="sourceCode r">app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-info&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
-<p><a href="https://yihui.shinyapps.io/DT-info/"><img src="http://i.imgur.com/wKW8mib.png" alt="DataTables information in shiny" /></a></p>
+<p><a href="https://yihui.shinyapps.io/DT-info/"><img src="http://i.imgur.com/iLJNC60.png" alt="DataTables information in shiny" /></a></p>
 </div>
 </div>
 
