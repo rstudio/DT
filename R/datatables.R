@@ -90,6 +90,13 @@ datatable = function(
     options, list(className = 'dt-right', targets = numc - 1)
   )
 
+  # 1.5Mb is just an arbitrary size from my experiments
+  if (object.size(data) > 1.5e6 && !server && getOption('DT.warn.size', TRUE))
+    warning(
+      'It seems your data is too big for client-side DataTables. You may ',
+      'consider server-side processing: http://rstudio.github.io/DT/server.html'
+    )
+
   # make sure the table is _not_ ordered by default (change the DataTables default)
   if (is.null(options[['order']])) options$order = list()
   # I do not see the point of "autoWidth: true" as the default in DataTables
