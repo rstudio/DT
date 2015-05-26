@@ -4,7 +4,7 @@ title: Using DT in Shiny
 
 ---
 
-You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page. Note these information are currently not available if you are using the [server-side processing](server.html) mode (i.e. when `datatable(server = TRUE)`).
+You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page.
 
 # A Minimal Example
 
