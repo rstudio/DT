@@ -139,12 +139,20 @@ img {
     <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
   ))
 })</code></pre>
-<p>The main differences are:</p>
+<p>The differences in syntax are:</p>
 <ol style="list-style-type: decimal">
 <li>The first argument of <code>shiny::renderDataTable()</code> is a data object, whereas <code>DT::renderDataTable()</code> expects a table <em>widget</em> returned by <code>datatable()</code>;</li>
 <li>The <code>options</code> argument is passed to <code>renderDataTable()</code> in <strong>shiny</strong>, and to <code>datatable()</code> in <strong>DT</strong>;</li>
 <li>When you want to write literal JavaScript code, you use <code>I()</code> in <strong>shiny</strong>, but you have to use <code>JS()</code> in <strong>DT</strong>;</li>
 </ol>
+<div class="panel panel-warning">
+<div class="panel-heading">
+Server-side vs Client-side Processing
+</div>
+<div class="panel-body">
+Another major difference is that the <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways. However, when the data object is relatively large, you should consider using server-side processing, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
+</div>
+</div>
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
@@ -156,7 +164,14 @@ img {
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="http://i.imgur.com/jBxAm4F.png" alt="Row selection in DataTables" /></a></p>
-<p>Note <code>input$foo_rows_selected</code> is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because <strong>DT</strong> does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by <code>datatable(data, rownames = TRUE)</code> (in most cases, this is just the default behavior) if you want to get the names of selected rows from <code>input$foo_rows_selected</code>.</p>
+<div class="panel panel-primary">
+<div class="panel-heading">
+Row Indices in the Case of Server-side Processing
+</div>
+<div class="panel-body">
+Note <code>input$foo_rows_selected</code> is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because <strong>DT</strong> does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by <code>datatable(data, rownames = TRUE)</code> (in most cases, this is just the default behavior) if you want to get the names of selected rows from <code>input$foo_rows_selected</code>.
+</div>
+</div>
 </div>
 <div id="datatables-information" class="section level2">
 <h2><span class="header-section-number">2.2</span> DataTables Information</h2>

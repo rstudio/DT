@@ -42,11 +42,18 @@ renderDataTable({
 })
 ```
 
-The main differences are:
+The differences in syntax are:
 
 1. The first argument of `shiny::renderDataTable()` is a data object, whereas `DT::renderDataTable()` expects a table _widget_ returned by `datatable()`;
 1. The `options` argument is passed to `renderDataTable()` in **shiny**, and to `datatable()` in **DT**;
 1. When you want to write literal JavaScript code, you use `I()` in **shiny**, but you have to use `JS()` in **DT**;
+
+<div class="panel panel-warning">
+<div class="panel-heading">Server-side vs Client-side Processing</div>
+<div class="panel-body">
+Another major difference is that the `renderDataTable()` function in **shiny** uses [server-side processing](server.html) and it has no client-side support. **DT** supports both ways. However, when the data object is relatively large, you should consider using server-side processing, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
+</div>
+</div>
 
 # Interaction with Shiny
 
@@ -64,7 +71,12 @@ shiny::runApp(app)
 
 [![Row selection in DataTables](http://i.imgur.com/jBxAm4F.png)](https://yihui.shinyapps.io/DT-rows/)
 
+<div class="panel panel-primary">
+<div class="panel-heading">Row Indices in the Case of Server-side Processing</div>
+<div class="panel-body">
 Note `input$foo_rows_selected` is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because **DT** does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by `datatable(data, rownames = TRUE)` (in most cases, this is just the default behavior) if you want to get the names of selected rows from `input$foo_rows_selected`.
+</div>
+</div>
 
 ## DataTables Information
 
