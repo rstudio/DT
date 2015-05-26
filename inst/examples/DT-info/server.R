@@ -1,7 +1,7 @@
 library(shiny)
 library(DT)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
 
   # two columns of the mtcars data
   mtcars2 = mtcars[, c('hp', 'mpg')]
@@ -50,4 +50,17 @@ shinyServer(function(input, output) {
     write.csv(mtcars2[s, , drop = FALSE], file)
   })
 
+  action = dataTableAjax(session, mtcars2)
+  output$x4 = DT::renderDataTable(
+    datatable(mtcars2, server = TRUE, options = list(ajax = list(url = action)))
+  )
+
+  output$x5 = renderPrint({
+    cat('Rows on the current page:\n\n')
+    cat(input$x4_rows_current, sep = '\n')
+    cat('\nAll rows (same as rows_current in the server mode):\n\n')
+    cat(input$x4_rows_all, sep = '\n')
+    cat('\nSelected rows:\n\n')
+    cat(input$x4_rows_selected, sep = '\n')
+  })
 })
