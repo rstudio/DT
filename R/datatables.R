@@ -86,8 +86,9 @@ datatable = function(
   }
 
   # align numeric columns to the right
-  if (length(numc))
-    options = appendColumnDefs(options, list(className = 'dt-right', targets = numc - 1))
+  if (length(numc)) options = appendColumnDefs(
+    options, list(className = 'dt-right', targets = numc - 1)
+  )
 
   # make sure the table is _not_ ordered by default (change the DataTables default)
   if (is.null(options[['order']])) options$order = list()
