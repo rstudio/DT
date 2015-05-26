@@ -163,7 +163,11 @@ shiny::<span class="kw">runApp</span>(app)</code></pre>
 <p>As you interact with the table (e.g. sort columns, search the table, or navigate through pages), <strong>DT</strong> will expose some information about the current state of the table to Shiny. At the moment, these information are available in the <code>input</code> object of the Shiny server function (suppose the table output id is <code>foo</code>):</p>
 <ul>
 <li><code>input$foo_rows_current</code>: the indices of rows on the current page</li>
-<li><code>input$foo_rows_all</code>: the indices of rows on all pages (after the table is filtered by the search strings)</li>
+<li><code>input$foo_rows_all</code>: the indices of rows on all pages (after the table is filtered by the search strings)
+<ul>
+<li>similar to the indices of selected rows, the indices are row names when you use the server-side processing, and numeric indices when using client-side processing</li>
+<li>again, there is no way to know all the available data on the server side, <code>input$foo_rows_all</code> will be the same as <code>input$foo_rows_current</code> for tables using server-side processing</li>
+</ul></li>
 <li><code>input$foo_state</code>: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option <code>stateSave = TRUE</code> is applied to the table)</li>
 </ul>
 <p><a href="https://yihui.shinyapps.io/DT-info/">This example</a> shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.</p>

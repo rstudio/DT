@@ -356,12 +356,17 @@ HTMLWidgets.widget({
       // TODO: is anyone interested in the page info?
       // changeInput('page_info', table.page.info());
       var updateRowInfo = function(id, modifier) {
-        changeInput('rows' + '_' + id, table.rows($.extend({
+        var rows = table.rows($.extend({
           search: 'applied',
           page: 'all'
-        }, modifier)).indexes().map(function(i) {
-          return 1 + i;
-        }).toArray());
+        }, modifier));
+        var idx;
+        if (server) {
+          idx = rows.data().toArray().map(function(x) { return x[0]; });
+        } else {
+          idx = addOne(rows.indexes().toArray());
+        }
+        changeInput('rows' + '_' + id, idx);
       };
       updateRowInfo('current', {page: 'current'});
       updateRowInfo('all', {});
