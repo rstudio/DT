@@ -50,7 +50,7 @@ The main differences are:
 
 # Interaction with Shiny
 
-There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `foo` to denote the output id of the table (i.e. the `outputId` in `renderDataTable()`). You need to replace `foo` with the actual id of the table in your own app.
+There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `foo` to denote the output id of the table (i.e. the `outputId` in `dataTableOutput()`). You need to replace `foo` with the actual id of the table in your own app.
 
 ## Row Selection
 

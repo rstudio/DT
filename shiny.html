@@ -148,7 +148,7 @@ img {
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
-<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>foo</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>renderDataTable()</code>). You need to replace <code>foo</code> with the actual id of the table in your own app.</p>
+<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>foo</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>dataTableOutput()</code>). You need to replace <code>foo</code> with the actual id of the table in your own app.</p>
 <div id="row-selection" class="section level2">
 <h2><span class="header-section-number">2.1</span> Row Selection</h2>
 <p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$foo_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>.</p>
