@@ -85,28 +85,28 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
 
 tplCurrency = function(cols, currency, interval, mark) {
   sprintf(
-    "var d = parseFloat(data[%d]); $('td:eq(%d)', row).html(isNaN(d) ? '' : '%s' + d.toString().replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
+    "var d = parseFloat(data[%d]); $(this.api().cell(row, %d).node()).html(isNaN(d) ? '' : '%s' + d.toString().replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
     cols, cols, currency, interval, mark
   )
 }
 
 tplPercentage = function(cols, digits) {
   sprintf(
-    "var d = parseFloat(data[%d]); $('td:eq(%d)', row).html(isNaN(d) ? '' : (d * 100).toFixed(%d) + '%%');",
+    "var d = parseFloat(data[%d]); $(this.api().cell(row, %s).node()).html(isNaN(d) ? '' : (d * 100).toFixed(%d) + '%%');",
     cols, cols, digits
   )
 }
 
 tplRound = function(cols, digits) {
   sprintf(
-    "var d = parseFloat(data[%d]); $('td:eq(%d)', row).html(isNaN(d) ? '' : d.toFixed(%d));",
+    "var d = parseFloat(data[%d]); $(this.api().cell(row, %s).node()).html(isNaN(d) ? '' : d.toFixed(%d));",
     cols, cols, digits
   )
 }
 
 tplDate = function(cols, method) {
   sprintf(
-    "var d = new Date(data[%d]); $('td:eq(%d)', row).html(d['%s']());",
+    "var d = new Date(data[%d]); $(this.api().cell(row, %s).node()).html(d['%s']());",
     cols, cols, method
   )
 }
