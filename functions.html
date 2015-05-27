@@ -161,7 +161,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $('td:eq(3)', row).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $('td:eq(0)', row).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[2]); $('td:eq(2)', row).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
+      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $(this.api().cell(row, 3).node()).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[2]); $(this.api().cell(row, 2).node()).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -191,7 +191,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $('td:eq(4)', row).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $('td:eq(0)', row).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[1]); $('td:eq(1)', row).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
+      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $(this.api().cell(row, 4).node()).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[1]); $(this.api().cell(row, 1).node()).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
@@ -246,7 +246,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
         }
       ],
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $('td:eq(1)', row).html(d['toDateString']());\nvar d = new Date(data[2]); $('td:eq(2)', row).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $('td:eq(3)', row).html(d['toLocaleString']());\nvar d = new Date(data[4]); $('td:eq(4)', row).html(d['toUTCString']());\n}"
+      "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $(this.api().cell(row, 1).node()).html(d['toDateString']());\nvar d = new Date(data[2]); $(this.api().cell(row, 2).node()).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $(this.api().cell(row, 3).node()).html(d['toLocaleString']());\nvar d = new Date(data[4]); $(this.api().cell(row, 4).node()).html(d['toUTCString']());\n}"
     },
     "callback": "function(table) {\nreturn table;\n}",
     "filter": "none"
