@@ -60,12 +60,19 @@ datatable(head(mtcars), rownames = FALSE)  # no row names
 datatable(head(mtcars), rownames = head(LETTERS))  # new row names
 ```
 
+<div class="panel panel-warning">
+<div class="panel-heading">Influence of Row Names on Column Indices in JavaScript</div>
+<div class="panel-body">
+
 Row names are essentialy a new column added to the original data (via `cbind(rownames(data), data)`). This has an important consequence in terms of the column indices. JavaScript indexes from 0 instead of 1, so the index of the _n_-th element is actually _n - 1_.^[By comparison, R indexes from 1.] When thinking of the column indices (which you will often have to do if you customize [options](options.html)), use
 
 - _n - 1_ as the index of the _n_-th column in the _original data_ if you do not display row names;
 - _n_ as the index of the _n_-th column in the _original data_ if you want to display row names, because the original index is _n - 1_ in JavaScript but we added the row names as the first column, and _(n - 1) + 1_ = _n_;
 
 It is very important to remember this when using DataTables [options](options.html).
+
+</div>
+</div>
 
 ## Custom Column Names
 

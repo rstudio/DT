@@ -358,12 +358,19 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
   },
   "evals": ["callback"]
 }</script></p>
+<div class="panel panel-warning">
+<div class="panel-heading">
+Influence of Row Names on Column Indices in JavaScript
+</div>
+<div class="panel-body">
 <p>Row names are essentialy a new column added to the original data (via <code>cbind(rownames(data), data)</code>). This has an important consequence in terms of the column indices. JavaScript indexes from 0 instead of 1, so the index of the <em>n</em>-th element is actually <em>n - 1</em>.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> When thinking of the column indices (which you will often have to do if you customize <a href="options.html">options</a>), use</p>
 <ul>
 <li><em>n - 1</em> as the index of the <em>n</em>-th column in the <em>original data</em> if you do not display row names;</li>
 <li><em>n</em> as the index of the <em>n</em>-th column in the <em>original data</em> if you want to display row names, because the original index is <em>n - 1</em> in JavaScript but we added the row names as the first column, and <em>(n - 1) + 1</em> = <em>n</em>;</li>
 </ul>
 <p>It is very important to remember this when using DataTables <a href="options.html">options</a>.</p>
+</div>
+</div>
 </div>
 <div id="custom-column-names" class="section level2">
 <h2><span class="header-section-number">2.4</span> Custom Column Names</h2>
