@@ -16,7 +16,8 @@ formatColumns = function(table, columns, template, ...) {
 #' numbers to a specified number of decimal places.
 #' @param table a table object created from \code{\link{datatable}()}
 #' @param columns the indices of the columns to be formatted (can be character,
-#'   numeric, or logical)
+#'   numeric, logical, or a formula of the form \code{~ V1 + V2}, which is
+#'   equivalent to \code{c('V1', 'V2')})
 #' @param currency the currency symbol
 #' @param interval put a marker after how many digits of the numbers
 #' @param mark the marker after every \code{interval} decimals in the numbers

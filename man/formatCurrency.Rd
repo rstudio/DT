@@ -18,7 +18,8 @@ formatDate(table, columns, method = "toDateString")
 \item{table}{a table object created from \code{\link{datatable}()}}
 
 \item{columns}{the indices of the columns to be formatted (can be character,
-numeric, or logical)}
+numeric, logical, or a formula of the form \code{~ V1 + V2}, which is
+equivalent to \code{c('V1', 'V2')})}
 
 \item{currency}{the currency symbol}
 
