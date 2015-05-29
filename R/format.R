@@ -22,9 +22,10 @@ formatColumns = function(table, columns, template, ...) {
 #' @param interval put a marker after how many digits of the numbers
 #' @param mark the marker after every \code{interval} decimals in the numbers
 #' @param method the method(s) to convert a date to string in JavaScript; see
-#'   \code{DT:::DateMethods} for a list of possible methods,
-#'   \url{http://mzl.la/1xGe99W} for a full reference, and
-#'   \url{http://rstudio.github.io/DT/functions.html} for examples
+#'   \code{DT:::DateMethods} for a list of possible methods, and
+#'   \url{http://mzl.la/1xGe99W} for a full reference
+#' @references See \url{http://rstudio.github.io/DT/functions.html} for detailed
+#'   documentation and examples.
 #' @export
 #' @examples library(DT)
 #' m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
