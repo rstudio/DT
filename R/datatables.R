@@ -422,10 +422,6 @@ copySWF = function(dest = '.', pdf = FALSE) {
   file.path(dest, swf, fsep = '/')
 }
 
-isFALSE = function(x) identical(x, FALSE)
-
-is.Date = function(x) inherits(x, c('Date', 'POSIXlt', 'POSIXct'))
-
 styleDependency = function(style) {
   d = depPath('datatables', 'css', style)
   htmlDependency(
