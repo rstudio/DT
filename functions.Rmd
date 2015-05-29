@@ -43,6 +43,51 @@ datatable(d, options = list(pageLength = 5, dom = 'tip')) %>%
 
 Please note that these conversion methods may be dependent on your system locale and web browser. The same method may lead to different output in different web browsers and system languages.
 
+# Style Table Cells
+
+You can apply CSS styles to the table cells in a column according to the values of the cells using the function `formatStyle()`. First we show the syntax of CSS styles, which is a named list of CSS values, with the names being CSS property names:
+
+```{r}
+datatable(iris, options = list(pageLength = 5)) %>%
+  formatStyle('Sepal.Length',  color = 'red', backgroundColor = 'orange', fontWeight = 'bold')
+```
+
+<div class="panel panel-primary">
+<div class="panel-heading">CSS Property Names</div>
+<div class="panel-body">
+The actual CSS property names are dash-separated, but you can use camelCase names in `formatStyle()` anyway (otherwise you will have to use backticks to quote the names, e.g. `` formatStyle(..., `font-size` = '12px')``), and this function will automatically convert camelCase names to dash-separated names, e.g. `'fontWeight'` will be converted to
+`'font-weight'` internally.
+</div>
+</div>
+
+The above example did not take the cell values into consideration. All styles are applied to all cells unconditionally: the font color is red, the background color is yellow, and the font weight is bold. That may not be useful in practice. **DT** has provided a few helper functions to apply conditional styles to cells, such as `styleInterval()`, `styleEqual()`, and `styleColorBar()`. Please read the documentation in R for the usage of these functions. We show a comprehensive example below:
+
+```{r}
+datatable(iris) %>% 
+  formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('normal', 'bold'))) %>%
+  formatStyle(
+    'Sepal.Width',
+    color = styleInterval(c(3.4, 3.8), c('white', 'blue', 'red')),
+    backgroundColor = styleInterval(3.4, c('gray', 'yellow'))
+  ) %>%
+  formatStyle(
+    'Petal.Length',
+    background = styleColorBar(iris$Petal.Length, 'steelblue'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  ) %>%
+  formatStyle(
+    'Species',
+    transform = 'rotateX(45deg) rotateY(20deg) rotateZ(30deg)',
+    backgroundColor = styleEqual(
+      unique(iris$Species), c('lightblue', 'lightgreen', 'lightpink')
+    )
+  )
+```
+
+For the column `Sepal.Length`, the font weight in cells of which the values are greater than 5 will be bold. For `Sepal.Width`, both foreground and background colors are used: white for values smaller than 3.4, blue for those between 3.4 and 3.8, and red for those greater than 3.8; gray background for values below 3.4, and yellow for those above 3.4. For `Petal.Length`, a bar graph is presented as the background. For `Species`, the cells are actually rotated in 3D^[If you use Internet Explorer, its version should be at least 10. Other modern web browsers should just work.], with different background colors (light blue for `setosa`, light green for `versicolor`, and light pink for `virginica`).
+
 # Table Utilities
 
 The functions `tableHeader()` and `tableFooter` are wrappers of `htmltools::tags` to generate a table header or footer. It may be convenient when you want to define a custom [table container](./).
