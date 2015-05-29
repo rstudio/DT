@@ -42,14 +42,12 @@ formatColumns = function(table, columns, template, ...) {
 #' datatable(m) %>% formatCurrency(1:2, '\U20AC') %>% formatRound('E', 3)
 #'
 #' # apply CSS styles to columns
-#' datatable(iris)
-#'   %>% formatStyle(~Sepal.Length, list(
-#'     `font-weight` = styleInterval(5, c('bold', 'weight'))
-#'   ))
-#'   %>% formatStyle(~Sepal.Width, list(
+#' datatable(iris) %>%
+#'   formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('bold', 'weight'))) %>%
+#'   formatStyle('Sepal.Width',
 #'     color = styleInterval(3.4, c('red', 'white')),
-#'     `background-color` = styleInterval(3.4, c('yellow', 'gray'))
-#'   ))
+#'     backgroundColor = styleInterval(3.4, c('yellow', 'gray'))
+#'   )
 formatCurrency = function(table, columns, currency = '$', interval = 3, mark = ',') {
   formatColumns(table, columns, tplCurrency, currency, interval, mark)
 }
@@ -73,13 +71,29 @@ formatDate = function(table, columns, method = 'toDateString') {
   formatColumns(table, columns, tplDate, method)
 }
 
-#' @param styles a list of CSS styles, e.g. \code{list(color = 'red',
-#'   `font-weight` = 'bold')}; if you want to condition CSS styles on the cell
-#'   values, you may use the helper functions such as
-#'   \code{\link{styleInterval}()}
+#' @param fontWeight the font weight, e.g. \code{'bold'} and \code{'normal'}
+#' @param color the font color, e.g. \code{'red'} and \code{'#ee00aa'}
+#' @param backgroundColor the background color of table cells
+#' @param background the background of table cells
+#' @param ... other CSS properties, e.g. \code{'border'}, \code{'font-size'},
+#'   \code{'text-align'}, and so on; if you want to condition CSS styles on the
+#'   cell values, you may use the helper functions such as
+#'   \code{\link{styleInterval}()}; note the actual CSS property names are
+#'   dash-separated, but you can use camelCase names in this function (otherwise
+#'   you will have to use backticks to quote the names, e.g. \code{`font-size` =
+#'   '12px'}), and this function will automatically convert camelCase names to
+#'   dash-separated names (e.g. \code{'fontWeight'} will be converted to
+#'   \code{'font-weight'} internally)
 #' @export
 #' @rdname formatCurrency
-formatStyle = function(table, columns, styles = list()) {
+formatStyle = function(
+  table, columns, fontWeight = NULL, color = NULL, backgroundColor = NULL,
+  background = NULL, ...
+) {
+  styles = dropNULL(list(
+    fontWeight = fontWeight, color = color, backgroundColor = backgroundColor,
+    background = background, ...
+  ))
   formatColumns(table, columns, tplStyle, styles)
 }
 
@@ -151,7 +165,7 @@ tplStyle = function(cols, styles) {
     s = paste(s, collapse = '\n')
     if (isJS) s else sprintf("'%s'", s)
   }, FUN.VALUE = character(1))
-  css = paste(sprintf("'%s':%s", names(styles), styles), collapse = ',')
+  css = paste(sprintf("'%s':%s", upperToDash(names(styles)), styles), collapse = ',')
   sprintf(
     "var value=data[%s]; $(this.api().cell(row, %s).node()).css({%s});",
     cols, cols, css

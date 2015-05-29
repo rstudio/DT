@@ -15,7 +15,8 @@ formatRound(table, columns, digits = 2)
 
 formatDate(table, columns, method = "toDateString")
 
-formatStyle(table, columns, styles = list())
+formatStyle(table, columns, fontWeight = NULL, color = NULL, backgroundColor = NULL, 
+    background = NULL, ...)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -36,10 +37,23 @@ equivalent to \code{c('V1', 'V2')})}
 \code{DT:::DateMethods} for a list of possible methods, and
 \url{http://mzl.la/1xGe99W} for a full reference}
 
-\item{styles}{a list of CSS styles, e.g. \code{list(color = 'red',
-`font-weight` = 'bold')}; if you want to condition CSS styles on the cell
-values, you may use the helper functions such as
-\code{\link{styleInterval}()}}
+\item{fontWeight}{the font weight, e.g. \code{'bold'} and \code{'normal'}}
+
+\item{color}{the font color, e.g. \code{'red'} and \code{'#ee00aa'}}
+
+\item{backgroundColor}{the background color of table cells}
+
+\item{background}{the background of table cells}
+
+\item{...}{other CSS properties, e.g. \code{'border'}, \code{'font-size'},
+\code{'text-align'}, and so on; if you want to condition CSS styles on the
+cell values, you may use the helper functions such as
+\code{\link{styleInterval}()}; note the actual CSS property names are
+dash-separated, but you can use camelCase names in this function (otherwise
+you will have to use backticks to quote the names, e.g. \code{`font-size` =
+'12px'}), and this function will automatically convert camelCase names to
+dash-separated names (e.g. \code{'fontWeight'} will be converted to
+\code{'font-weight'} internally)}
 }
 \description{
 Format numeric columns in a table as currency (\code{formatCurrency()}) or
@@ -60,14 +74,12 @@ datatable(m) \%>\% formatCurrency(c('A', 'C')) \%>\% formatPercentage('D', 2)
 datatable(m) \%>\% formatCurrency(1:2, '\\U20AC') \%>\% formatRound('E', 3)
 
 # apply CSS styles to columns
-datatable(iris)
-  \%>\% formatStyle(~Sepal.Length, list(
-    `font-weight` = styleInterval(5, c('bold', 'weight'))
-  ))
-  \%>\% formatStyle(~Sepal.Width, list(
+datatable(iris) \%>\%
+  formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('bold', 'weight'))) \%>\%
+  formatStyle('Sepal.Width',
     color = styleInterval(3.4, c('red', 'white')),
-    `background-color` = styleInterval(3.4, c('yellow', 'gray'))
-  ))
+    backgroundColor = styleInterval(3.4, c('yellow', 'gray'))
+  )
 }
 \references{
 See \url{http://rstudio.github.io/DT/functions.html} for detailed
