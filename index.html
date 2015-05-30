@@ -145,7 +145,7 @@ img {
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.55
+## [1] DT_0.0.56
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] htmlwidgets_0.4.2 magrittr_1.5      formatR_1.2      
@@ -770,7 +770,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <li>For numeric/date/time columns, the values displayed in the boxes are of the form <code>low ... high</code>;</li>
 <li>For factor columns, the values are serialized as a JSON array of the form <code>[&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]</code>;</li>
 </ul>
-<p>When a column is filtered, there will be a clear button <span class="glyphicon glyphicon-remove-circle"></span> in its search box, and you can click the button to clear the filter. If you do not want to use the controls, you can actually type in the search boxes directly, e.g. you may type <code>2 ... 5</code> to filter a numeric column, and the range of its slider will automatically adjusted to <code>[2, 5]</code>. In case you find a search box too narrow and it is difficult to read the values in it, you may mouse over the box and its values will be displayed as a tooltip.</p>
+<p>When a column is filtered, there will be a clear button <span class="glyphicon glyphicon-remove-circle"></span> in its search box, and you can click the button to clear the filter. If you do not want to use the controls, you can actually type in the search boxes directly, e.g. you may type <code>2 ... 5</code> to filter a numeric column, and the range of its slider will automatically adjusted to <code>[2, 5]</code>. In case you find a search box too narrow and it is difficult to read the values in it, you may mouse over the box and its values will be displayed as a tooltip. See <a href="008-filter.html">this example</a> for how to hide the clear buttons, and use plain text input styles instead of Bootstrap.</p>
 <p>Below is a simple example to demonstrate filters for character, date, and time columns:</p>
 <pre class="sourceCode r"><code class="sourceCode r">d =<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">names =</span> <span class="kw">rownames</span>(mtcars),

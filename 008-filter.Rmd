@@ -1,0 +1,21 @@
+---
+title: "Style Options for Column Filters"
+output:
+  html_document:
+    includes: null
+---
+
+When a table contains too many columns, the column filter boxes may look crowded, and you may want to get rid of the clear buttons in the boxes, or use plain text input styles instead of the Bootstrap style to save some space inside the boxes.
+
+```{r}
+library(DT)
+iris2 = iris[c(1:10, 51:60, 101:110), ]
+# no clear buttons
+datatable(iris2, options = list(autoWidth = TRUE), filter = list(
+  position = 'top', clear = FALSE
+))
+# no Bootstrap styles, either
+datatable(iris2, options = list(autoWidth = TRUE), filter = list(
+  position = 'bottom', clear = FALSE, plain = TRUE
+))
+```

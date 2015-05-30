@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Style Options for Column Filters</title>
+
+<script src="libs/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
+<script src="libs/datatables/jquery.dataTables.min.js"></script>
+<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
+<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider/jquery.nouislider.min.js"></script>
+<link href="libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize/selectize.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">Style Options for Column Filters</h1>
+</div>
+
+
+<p>When a table contains too many columns, the column filter boxes may look crowded, and you may want to get rid of the clear buttons in the boxes, or use plain text input styles instead of the Bootstrap style to save some space inside the boxes.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">51</span>:<span class="dv">60</span>, <span class="dv">101</span>:<span class="dv">110</span>), ]
+<span class="co"># no clear buttons</span>
+<span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoWidth =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="kw">list</span>(
+  <span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>
+))</code></pre>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5716">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 7, 6.4, 6.9, 5.5, 6.5, 5.7, 6.3, 4.9, 6.6, 5.2, 6.3, 5.8, 7.1, 6.3, 6.5, 7.6, 4.9, 7.3, 6.7, 7.2],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 4.7, 4.5, 4.9, 4, 4.6, 4.5, 4.7, 3.3, 4.6, 3.9, 6, 5.1, 5.9, 5.6, 5.8, 6.6, 4.5, 6.3, 5.8, 6.1],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1, 1.3, 1.4, 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "autoWidth": true,
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "orderClasses": false,
+      "orderCellsTop": true
+    },
+    "callback": null,
+    "filter": "top",
+    "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4.4\" data-max=\"7.6\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.3\" data-max=\"3.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"6.6\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.1\" data-max=\"2.5\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\">\n        <option value=\"setosa\">setosa</option>\n        <option value=\"versicolor\">versicolor</option>\n        <option value=\"virginica\">virginica</option>\n      </select>\n    </div>\n  </td>\n</tr>"
+  },
+  "evals": []
+}</script></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># no Bootstrap styles, either</span>
+<span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoWidth =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="kw">list</span>(
+  <span class="dt">position =</span> <span class="st">&#39;bottom&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>, <span class="dt">plain =</span> <span class="ot">TRUE</span>
+))</code></pre>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-4929">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 7, 6.4, 6.9, 5.5, 6.5, 5.7, 6.3, 4.9, 6.6, 5.2, 6.3, 5.8, 7.1, 6.3, 6.5, 7.6, 4.9, 7.3, 6.7, 7.2],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 4.7, 4.5, 4.9, 4, 4.6, 4.5, 4.7, 3.3, 4.6, 3.9, 6, 5.1, 5.9, 5.6, 5.8, 6.6, 4.5, 6.3, 5.8, 6.1],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1, 1.3, 1.4, 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "autoWidth": true,
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "orderClasses": false
+    },
+    "callback": null,
+    "filter": "bottom",
+    "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div style=\"margin-bottom: auto;\">\n      <input type=\"text\" placeholder=\"All\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4.4\" data-max=\"7.6\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div style=\"margin-bottom: auto;\">\n      <input type=\"text\" placeholder=\"All\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.3\" data-max=\"3.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div style=\"margin-bottom: auto;\">\n      <input type=\"text\" placeholder=\"All\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"6.6\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div style=\"margin-bottom: auto;\">\n      <input type=\"text\" placeholder=\"All\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.1\" data-max=\"2.5\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div style=\"margin-bottom: auto;\">\n      <input type=\"text\" placeholder=\"All\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\">\n        <option value=\"setosa\">setosa</option>\n        <option value=\"versicolor\">versicolor</option>\n        <option value=\"virginica\">virginica</option>\n      </select>\n    </div>\n  </td>\n</tr>"
+  },
+  "evals": []
+}</script></p>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

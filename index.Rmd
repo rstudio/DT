@@ -180,7 +180,7 @@ When you leave the initial search boxes, the controls will be hidden and the fil
 - For numeric/date/time columns, the values displayed in the boxes are of the form `low ... high`;
 - For factor columns, the values are serialized as a JSON array of the form `["value1", "value2", "value3"]`;
 
-When a column is filtered, there will be a clear button <span class="glyphicon glyphicon-remove-circle"></span> in its search box, and you can click the button to clear the filter. If you do not want to use the controls, you can actually type in the search boxes directly, e.g. you may type `2 ... 5` to filter a numeric column, and the range of its slider will automatically adjusted to `[2, 5]`. In case you find a search box too narrow and it is difficult to read the values in it, you may mouse over the box and its values will be displayed as a tooltip.
+When a column is filtered, there will be a clear button <span class="glyphicon glyphicon-remove-circle"></span> in its search box, and you can click the button to clear the filter. If you do not want to use the controls, you can actually type in the search boxes directly, e.g. you may type `2 ... 5` to filter a numeric column, and the range of its slider will automatically adjusted to `[2, 5]`. In case you find a search box too narrow and it is difficult to read the values in it, you may mouse over the box and its values will be displayed as a tooltip. See [this example](008-filter.html) for how to hide the clear buttons, and use plain text input styles instead of Bootstrap.
 
 Below is a simple example to demonstrate filters for character, date, and time columns:
 
