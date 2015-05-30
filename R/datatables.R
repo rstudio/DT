@@ -145,8 +145,7 @@ datatable = function(
     )
     # if you generated the Ajax URL from dataTableAjax(), I'll configure type:
     # 'POST' and a few other options automatically
-    if ('shiny' %in% loadedNamespaces() &&
-        length(grep('^session/[a-z0-9]+/dataobj/', options$ajax$url))) {
+    if (inShiny() && length(grep('^session/[a-z0-9]+/dataobj/', options$ajax$url))) {
       if (is.null(options$ajax$type)) options$ajax$type = 'POST'
       if (is.null(options$ajax$data)) options$ajax$data = JS(
         'function(d) {',

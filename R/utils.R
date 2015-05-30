@@ -14,3 +14,6 @@ upperToDash = function(x) {
   x = gsub('([A-Z])', '-\\L\\1', x, perl = TRUE)
   x
 }
+
+# not rigorous, but should work in most cases
+inShiny = function() 'shiny' %in% loadedNamespaces()
