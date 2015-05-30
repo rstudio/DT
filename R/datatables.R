@@ -198,7 +198,7 @@ datatable = function(
 
   params = structure(list(
     data = data, container = as.character(container), options = options,
-    callback = JS('function(table) {', callback, '}'),
+    callback = if (!missing(callback)) JS('function(table) {', callback, '}'),
     caption = caption, filter = filter
   ), colnames = cn, rownames = length(rn) > 0)
   if (length(params$caption) == 0) params$caption = NULL
