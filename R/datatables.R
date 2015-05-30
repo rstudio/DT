@@ -32,7 +32,12 @@
 #' @param filter whether/where to use column filters; \code{none}: no filters;
 #'   \code{bottom/top}: put column filters at the bottom/top of the table; range
 #'   sliders are used to filter numeric/date/time columns, select lists are used
-#'   for factor columns, and text input boxes are used for character columns
+#'   for factor columns, and text input boxes are used for character columns; if
+#'   you want more control over the styles of filters, you can provide a list to
+#'   this argument of the form \code{list(position = 'top', clear = TRUE, plain
+#'   = FALSE)}, where \code{clear} indicates whether you want the clear buttons
+#'   in the input boxes, and \code{plain} means if you want to use Bootstrap
+#'   form styles or plain text input styles for the text input boxes
 #' @param server whether to use server-side processing; if \code{TRUE}, you must
 #'   provide a server URL so that DataTables can send Ajax requests to retrieve
 #'   data from the server
@@ -127,12 +132,13 @@ datatable = function(
   style = match.arg(style, list.files(depPath('datatables', 'css')))
   if (style == 'bootstrap') class = DT2BSClass(class)
 
-  filter = match.arg(filter)
+  if (is.character(filter)) filter = list(position = match.arg(filter))
+  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
   # HTML code for column filters
   filterHTML = as.character(filterRow(data, length(rn) > 0 && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
-  if (filter == 'top') options$orderCellsTop = TRUE
+  if (filter$position == 'top') options$orderCellsTop = TRUE
   if (missing(container)) {
     container = tags$table(tableHeader(colnames, escape), class = class)
   }
@@ -199,10 +205,10 @@ datatable = function(
   params = structure(list(
     data = data, container = as.character(container), options = options,
     callback = if (!missing(callback)) JS('function(table) {', callback, '}'),
-    caption = caption, filter = filter
+    caption = caption, filter = filter$position
   ), colnames = cn, rownames = length(rn) > 0)
   if (length(params$caption) == 0) params$caption = NULL
-  if (filter != 'none') params$filterHTML = filterHTML
+  if (params$filter != 'none') params$filterHTML = filterHTML
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
   if (inShiny()) params$selection = match.arg(selection)
@@ -213,7 +219,7 @@ datatable = function(
   ))
   deps = c(deps, list(styleDependency(style)))
   deps = c(deps, lapply(extensions, extDependency))
-  if (filter != 'none') deps = c(deps, filterDependencies())
+  if (params$filter != 'none') deps = c(deps, filterDependencies())
   if (isTRUE(options$searchHighlight))
     deps = c(deps, list(pluginDependency('searchHighlight')))
 
@@ -310,8 +316,11 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
 }
 
 #' @importFrom htmltools tagList
-filterRow = function(data, rownames = TRUE, filter = 'none') {
-  if (filter == 'none') return()
+filterRow = function(
+  data, rownames = TRUE,
+  filter = list(position = 'none', clear = TRUE, plain = FALSE)
+) {
+  if (filter$position == 'none') return()
   tds = list()
   for (j in seq_len(ncol(data))) {
     if (j == 1 && rownames) {
@@ -350,17 +359,29 @@ filterRow = function(data, rownames = TRUE, filter = 'none') {
       t = 'character'
       NULL
     }
-    x = tagList(
+    clear = filter$clear
+    input = if (filter$plain) {
       tags$div(
-        class = 'form-group has-feedback', style = 'margin-bottom: auto;',
+        style = 'margin-bottom: auto;',
+        tags$input(
+          type = if (clear) 'search' else 'text', placeholder = 'All',
+          style = 'width: 100%;'
+        )
+      )
+    } else {
+      tags$div(
+        class = if (clear) 'form-group has-feedback' else 'form-group',
+        style = 'margin-bottom: auto;',
         tags$input(
           type = 'search', placeholder = 'All', class = 'form-control',
           style = 'width: 100%;'
         ),
-        tags$span(class = 'glyphicon glyphicon-remove-circle form-control-feedback')
-      ),
-      x
-    )
+        if (clear) tags$span(
+          class = 'glyphicon glyphicon-remove-circle form-control-feedback'
+        )
+      )
+    }
+    x = tagList(input, x)
     tds[[j]] = tags$td(x, `data-type` = t, style = 'vertical-align: top;')
   }
   tags$tr(tds)
