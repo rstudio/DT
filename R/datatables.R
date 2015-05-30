@@ -322,6 +322,7 @@ filterRow = function(data, rownames = TRUE, filter = 'none') {
     d = data[, j]
     x = if (is.numeric(d) || is.Date(d)) {
       t = if (is.numeric(d)) 'number' else 'time'
+      if (is.integer(d)) t = 'integer'
       if (t == 'time') {
         # JavaScript does have the Date type like R (YYYY-mm-dd without time)
         if (inherits(d, 'Date')) {
