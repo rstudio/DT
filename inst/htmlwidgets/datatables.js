@@ -152,7 +152,7 @@ HTMLWidgets.widget({
             change: function() {
               var v = $input.val().replace(/\s/g, '');
               if (v === '') return;
-              v = v.split('...');
+              v = v.split('..');
               if (v.length !== 2) {
                 $input.parent().addClass('has-error');
                 return;
@@ -205,7 +205,7 @@ HTMLWidgets.widget({
             $td.data('filter', val[0] != r1 || val[1] != r2);
             var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
             if ($td.data('filter')) {
-              var ival = v1 + ' ... ' + v2;
+              var ival = v1 + ' .. ' + v2;
               $input.attr('title', ival).val(ival).trigger('input');
             } else {
               $input.attr('title', '').val('');
