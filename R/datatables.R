@@ -44,6 +44,8 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
+#' @param selection the row selection mode (single or multiple selection or
+#'   disable selection) when a table widget is rendered in a Shiny app
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the
@@ -58,7 +60,8 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  server = FALSE, escape = TRUE, style = 'default', extensions = list()
+  server = FALSE, escape = TRUE, style = 'default',
+  selection = c('multiple', 'single', 'none'), extensions = list()
 ) {
 
   # yes, we all hate it
@@ -202,6 +205,7 @@ datatable = function(
   if (filter != 'none') params$filterHTML = filterHTML
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
+  if (inShiny()) params$selection = match.arg(selection)
 
   deps = list(htmlDependency(
     'datatables', DataTablesVersion, src = depPath('datatables', 'js'),

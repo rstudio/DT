@@ -329,9 +329,19 @@ HTMLWidgets.widget({
       selected = unique(selected.concat(ids));
       return selected;
     };
-    table.on('click.dt', 'tr', function() {
+    var selection = $.inArray(data.selection, ['single', 'multiple']) > -1;
+    if (selection) table.on('click.dt', 'tr', function() {
       var $this = $(this);
-      $this.toggleClass('selected');
+      if (data.selection === 'multiple') {
+        $this.toggleClass('selected');
+      } else {
+        if ($this.is('.selected')) {
+          $this.removeClass('selected');
+        } else {
+          table.$('tr.selected').removeClass('selected');
+          $this.addClass('selected');
+        }
+      }
       if (server && !$this.is('.selected')) {
         var id = table.row($this).data()[0];
         // remove id from selected since its class .selected has been removed
