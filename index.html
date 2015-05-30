@@ -189,10 +189,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="arguments" class="section level1">
@@ -229,10 +229,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="styling" class="section level2">
@@ -281,10 +281,10 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="ot">FALSE</span>)  <span class="co"># no row names</span></code></pre>
 <p><div id="htmlwidget-5403" style="width:100%;height:auto;" class="datatables"></div>
@@ -315,10 +315,10 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="kw">head</span>(LETTERS))  <span class="co"># new row names</span></code></pre>
 <p><div id="htmlwidget-880" style="width:100%;height:auto;" class="datatables"></div>
@@ -354,10 +354,10 @@ DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="s
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <div class="panel panel-warning">
 <div class="panel-heading">
@@ -405,10 +405,10 @@ Influence of Row Names on Column Indices in JavaScript
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;A Better Name&#39;</span> =<span class="st"> &#39;Sepal.Width&#39;</span>))</code></pre>
@@ -439,10 +439,10 @@ Influence of Row Names on Column Indices in JavaScript
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Another Better Name&#39;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> =<span class="st"> </span><span class="dv">4</span>))</code></pre>
 <p><div id="htmlwidget-3303" style="width:100%;height:auto;" class="datatables"></div>
@@ -472,10 +472,10 @@ Influence of Row Names on Column Indices in JavaScript
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>When you display row names of the data, its column name will be a white space by default. That is why you cannot see its column name. You can certainly choose to use a column name for rownames as well, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the first column name to &#39;ID&#39;</span>
@@ -503,10 +503,10 @@ Influence of Row Names on Column Indices in JavaScript
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="custom-table-container" class="section level2">
@@ -567,10 +567,10 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>You can also add a footer to the table container, and here is an example:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table with both header and footer</span>
@@ -628,10 +628,10 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100]
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="table-caption" class="section level2">
@@ -668,11 +668,11 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "caption": "<caption>Table 1: This is a simple caption for the table.</caption>",
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># display the caption at the bottom, and &lt;em&gt; the caption</span>
 <span class="kw">datatable</span>(
@@ -709,11 +709,11 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "caption": "<caption style=\"caption-side: bottom; text-align: center;\">\n  Table 2: \n  <em>This is a simple caption for the table.</em>\n</caption>",
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="column-filters" class="section level2">
@@ -753,11 +753,11 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "orderCellsTop": true,
       "lengthMenu": [5, 10, 25, 50, 100]
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "top",
     "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4.4\" data-max=\"7.6\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.3\" data-max=\"3.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"6.6\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.1\" data-max=\"2.5\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\">\n        <option value=\"setosa\">setosa</option>\n        <option value=\"versicolor\">versicolor</option>\n        <option value=\"virginica\">virginica</option>\n      </select>\n    </div>\n  </td>\n</tr>"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>Depending on the type of a column, the filter control can be different. Initially, you see search boxes for all columns. When you click the search boxes, you may see different controls:</p>
 <ul>
@@ -807,11 +807,11 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       ],
       "lengthMenu": [5, 10, 25, 50, 100]
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "bottom",
     "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n  </td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1427155200000\" data-max=\"1429833600000\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"time\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.427117e+12\" data-max=\"1.427272e+12\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n</tr>"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>Filtering in the above examples was done on the client side (using JavaScript in your web browser). Column filters also work in the <a href="server.html">server-side processing</a> mode, in which case filtering will be processed on the server, and there may be some subtle differences (e.g. JavaScript regular expressions are different with R). See <a href="https://yihui.shinyapps.io/DT-filter/">here for an example</a> of column filters working on the server side.</p>
 </div>
@@ -883,10 +883,10 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>)</code></pre>
 <p><div id="htmlwidget-3640" style="width:100%;height:auto;" class="datatables"></div>
@@ -902,10 +902,10 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>Besides <code>TRUE</code> and <code>FALSE</code>, you can also specify which columns you want to escape, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">1</span>)  <span class="co"># escape the first column</span>

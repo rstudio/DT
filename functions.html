@@ -163,10 +163,10 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "orderClasses": false,
       "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $(this.api().cell(row, 3).node()).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[2]); $(this.api().cell(row, 2).node()).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["options.rowCallback", "callback"]
+  "evals": ["options.rowCallback"]
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span>
 <span class="kw">datatable</span>(m) %&gt;%<span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>) %&gt;%<span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre>
@@ -193,10 +193,10 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "orderClasses": false,
       "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $(this.api().cell(row, 4).node()).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[1]); $(this.api().cell(row, 1).node()).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["options.rowCallback", "callback"]
+  "evals": ["options.rowCallback"]
 }</script></p>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 <p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
@@ -248,10 +248,10 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "lengthMenu": [5, 10, 25, 50, 100],
       "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $(this.api().cell(row, 1).node()).html(d['toDateString']());\nvar d = new Date(data[2]); $(this.api().cell(row, 2).node()).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $(this.api().cell(row, 3).node()).html(d['toLocaleString']());\nvar d = new Date(data[4]); $(this.api().cell(row, 4).node()).html(d['toUTCString']());\n}"
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["options.rowCallback", "callback"]
+  "evals": ["options.rowCallback"]
 }</script></p>
 <p>Please note that these conversion methods may be dependent on your system locale and web browser. The same method may lead to different output in different web browsers and system languages.</p>
 </div>
@@ -290,10 +290,10 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "lengthMenu": [5, 10, 25, 50, 100],
       "rowCallback": "function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["options.rowCallback", "callback"]
+  "evals": ["options.rowCallback"]
 }</script></p>
 <div class="panel panel-primary">
 <div class="panel-heading">
@@ -353,10 +353,10 @@ The actual CSS property names are dash-separated, but you can use camelCase name
       "orderClasses": false,
       "rowCallback": "function(row, data) {\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value == 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["options.rowCallback", "callback"]
+  "evals": ["options.rowCallback"]
 }</script></p>
 <p>For the column <code>Sepal.Length</code>, the font weight in cells of which the values are greater than 5 will be bold. For <code>Sepal.Width</code>, both foreground and background colors are used: white for values smaller than 3.4, blue for those between 3.4 and 3.8, and red for those greater than 3.8; gray background for values below 3.4, and yellow for those above 3.4. For <code>Petal.Length</code>, a bar graph is presented as the background. For <code>Species</code>, the cells are actually rotated in 3D<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, with different background colors (light blue for <code>setosa</code>, light green for <code>versicolor</code>, and light pink for <code>virginica</code>).</p>
 </div>

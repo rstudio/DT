@@ -129,10 +129,10 @@ mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100]
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># individual column filters</span>
 <span class="kw">datatable</span>(mtcars2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">searchHighlight =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>)</code></pre>
@@ -168,11 +168,11 @@ mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2
       "orderCellsTop": true,
       "lengthMenu": [5, 10, 25, 50, 100]
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "top",
     "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"10.4\" data-max=\"33.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4\" data-max=\"8\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"71.1\" data-max=\"472\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"52\" data-max=\"245\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.76\" data-max=\"4.93\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n  </td>\n</tr>"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>Note highlighting is only applied to character columns when you use individual column filters. For example, in the above table, highlighting only works when you type in the search box of the <code>model</code> column; for other columns, highlighting does not make much sense since searching is performed via sliders. However, highlighting for global searching is applied to the whole table (e.g. type <code>21</code> in the global search box).</p>
 

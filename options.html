@@ -181,10 +181,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>The target column index is 5 but we actually centered the 6th column: the first column is row names, and the rest of columns are the <code>iris</code> data. The JavaScript index of the 6th column is 5. See the section “<a href="./#display-row-names">Display Row Names</a>” for more details.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># when rownames = FALSE, use 4 as the index of the Species column</span>
@@ -249,10 +249,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="dom-elements" class="section level2">
@@ -288,10 +288,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the filtering box and the table</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;ft&#39;</span>))</code></pre>
@@ -323,10 +323,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="callbacks-in-options" class="section level2">
@@ -366,10 +366,10 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none"
   },
-  "evals": ["options.initComplete", "callback"]
+  "evals": ["options.initComplete"]
 }</script></p>
 <p>The function <code>JS()</code> tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using <strong>RJSONIO</strong>) and decode it in the browser.</p>
 </div>

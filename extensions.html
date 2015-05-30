@@ -172,7 +172,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "AutoFill"
@@ -181,7 +181,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "AutoFill": null
     }
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pass some initialization options to AutoFill: disable auto filling on the</span>
 <span class="co"># first (0) column and last (-1) column; disable incremental filling on the</span>
@@ -219,7 +219,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "AutoFill"
@@ -239,7 +239,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       }
     }
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="colreorder" class="section level1">
@@ -274,13 +274,13 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "ColReorder"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># realtime updating</span>
 <span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
@@ -317,13 +317,13 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "ColReorder"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="colvis" class="section level1">
@@ -356,13 +356,13 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "ColVis"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># exclude the first two columns (i.e. they are always visible)</span>
 <span class="kw">datatable</span>(
@@ -399,13 +399,13 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "ColVis"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="fixedcolumns" class="section level1">
@@ -465,7 +465,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "FixedColumns"
@@ -474,7 +474,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "FixedColumns": null
     }
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fix some left and right columns</span>
 <span class="kw">datatable</span>(
@@ -530,7 +530,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "FixedColumns"
@@ -542,7 +542,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       }
     }
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="fixedheader" class="section level1">
@@ -584,7 +584,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "KeyTable"
@@ -593,7 +593,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "KeyTable": null
     }
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="responsive" class="section level1">
@@ -628,13 +628,13 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "orderClasses": false,
       "responsive": true
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "Responsive"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 </div>
 <div id="scroller" class="section level1">
@@ -674,13 +674,13 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "Scroller"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>You can also save the data as JSON in a file and load it via the <code>ajax</code> option. See a live example in Shiny <a href="https://yihui.shinyapps.io/DT-scroller/">here</a>.</p>
 </div>
@@ -735,13 +735,13 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\nreturn table;\n}",
+    "callback": null,
     "filter": "none",
     "extensions": [
       "TableTools"
     ]
   },
-  "evals": ["callback"]
+  "evals": []
 }</script></p>
 <p>If you want to view this page locally, you cannot just click and open the file <code>extensions.html</code>. Instead, you may run <code>servr::httd()</code> in R to host the website locally.</p>
 <p>As mentioned before, you can use this extension in a Shiny app, and here is a minimal example. You may save the R code below to a file named <code>app.R</code>, and create a directory named <code>www</code> under the directory of <code>app.R</code>. Then <code>shiny::runApp()</code> should launch the app of the table rendered with <code>TableTools</code>.</p>
