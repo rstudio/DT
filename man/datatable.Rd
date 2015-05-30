@@ -4,8 +4,9 @@
 \title{Create an HTML table widget using the DataTables library}
 \usage{
 datatable(data, options = list(), class = "display", callback = JS("return table;"), 
-    rownames, colnames, container, caption = NULL, filter = c("none", "bottom", "top"), 
-    server = FALSE, escape = TRUE, style = "default", extensions = list())
+    rownames, colnames, container, caption = NULL, filter = c("none", 
+        "bottom", "top"), server = FALSE, escape = TRUE, style = "default", 
+    selection = c("multiple", "single", "none"), extensions = list())
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -61,6 +62,9 @@ third), or \code{c('Species', 'Sepal.Length')}}
 
 \item{style}{the style name (\url{http://datatables.net/manual/styling/});
 currently only \code{'default'} and \code{'bootstrap'} are supported}
+
+\item{selection}{the row selection mode (single or multiple selection or
+disable selection) when a table widget is rendered in a Shiny app}
 
 \item{extensions}{a character vector of the names of the DataTables
 extensions (\url{http://datatables.net/extensions/index}), or a named list
