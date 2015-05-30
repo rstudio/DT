@@ -47,6 +47,10 @@ HTMLWidgets.widget({
          }, 1000));
     }
 
+    var inArray = function(val, array) {
+      return $.inArray(val, array) > -1;
+    };
+
     if (data.filter !== 'none') {
 
       filterRow.each(function(i, td) {
@@ -107,7 +111,7 @@ HTMLWidgets.widget({
             fun = throttle(fun, 1000);
           }
           $input.on('input', fun);
-        } else if (type === 'number' || type === 'date' || type === 'time') {
+        } else if (inArray(type, ['number', 'integer', 'date', 'time'])) {
           var $x0 = $x;
           $x = $x0.children('div').first();
           $x0.css({
@@ -166,7 +170,7 @@ HTMLWidgets.widget({
                 // than the midnight due to precision problems in noUiSlider
                 return type === 'date' ? t + 3600000 : t;
               };
-              if (type !== 'number') {
+              if (inArray(type, ['date', 'time'])) {
                 v[0] = strTime(v[0]);
                 v[1] = strTime(v[1]);
               }
@@ -175,6 +179,7 @@ HTMLWidgets.widget({
           });
           var formatDate = function(d) {
             if (type === 'number') return d;
+            if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
             if (type === 'date') {
               var pad0 = function(x) {
@@ -186,7 +191,8 @@ HTMLWidgets.widget({
               return x.toISOString();
             }
           };
-          var opts = type === 'date' ? { step: 60 * 60 * 1000 } : {};
+          var opts = type === 'date' ? { step: 60 * 60 * 1000 } :
+                     type === 'integer' ? { step: 1 } : {};
           filter = $x.noUiSlider($.extend({
             start: [r1, r2],
             range: {min: r1, max: r2},
@@ -235,7 +241,7 @@ HTMLWidgets.widget({
           if (typeof filter === 'undefined' || !$td.data('filter')) return true;
 
           var r = filter.val(), v, r0, r1;
-          if (type === 'number') {
+          if (type === 'number' || type === 'integer') {
             v = parseFloat(data[i]);
             // how to handle NaN? currently exclude these rows
             if (isNaN(v)) return(false);
@@ -329,9 +335,19 @@ HTMLWidgets.widget({
       selected = unique(selected.concat(ids));
       return selected;
     };
-    table.on('click.dt', 'tr', function() {
+    var selection = $.inArray(data.selection, ['single', 'multiple']) > -1;
+    if (selection) table.on('click.dt', 'tr', function() {
       var $this = $(this);
-      $this.toggleClass('selected');
+      if (data.selection === 'multiple') {
+        $this.toggleClass('selected');
+      } else {
+        if ($this.is('.selected')) {
+          $this.removeClass('selected');
+        } else {
+          table.$('tr.selected').removeClass('selected');
+          $this.addClass('selected');
+        }
+      }
       if (server && !$this.is('.selected')) {
         var id = table.row($this).data()[0];
         // remove id from selected since its class .selected has been removed
