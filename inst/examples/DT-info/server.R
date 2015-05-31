@@ -8,7 +8,7 @@ shinyServer(function(input, output, session) {
 
   # render the table (with row names)
   output$x1 = DT::renderDataTable({
-    datatable(mtcars2, options = list(stateSave = TRUE))
+    datatable(mtcars2)
   })
 
   # a scatterplot with certain points highlighted
@@ -31,7 +31,7 @@ shinyServer(function(input, output, session) {
     }
 
     # dynamically change the legend text
-    s = input$x1_state$search$search
+    s = input$x1_search
     txt = if (is.null(s) || s == '') 'Filtered data' else {
       sprintf('Data matching "%s"', s)
     }
