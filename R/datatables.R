@@ -351,7 +351,7 @@ filterRow = function(
       tags$div(
         tags$select(
           multiple = 'multiple', style = 'width: 100%;',
-          lapply(unique(d), function(x) tags$option(value = x, x))
+          lapply(sort(unique(d)), function(x) tags$option(value = x, x))
         ),
         style = 'width: 100%; display: none;'
       )
