@@ -147,7 +147,7 @@ dataTablesFilter = function(data, params) {
     j = as.integer(j)
     dj = data[, j + 1]
     ij = if (is.numeric(dj) || is.Date(dj)) {
-      r = commaToRange(k)
+      r = dotsToRange(k)
       if (length(r) != 2)
         stop('The range of a numeric / date / time column must be of length 2')
       if (is.Date(dj)) {
@@ -221,10 +221,10 @@ grep2 = function(pattern, x, ignore.case = FALSE, fixed = FALSE, ...) {
   grep(pattern, x, ignore.case = ignore.case, fixed = fixed, ...)
 }
 
-# convert a string of the form "lower,upper" to c(lower, upper)
-commaToRange = function(string) {
-  if (!grepl(',', string)) return()
-  r = strsplit(string, ',')[[1]]
+# convert a string of the form "lower ... upper" to c(lower, upper)
+dotsToRange = function(string) {
+  if (!grepl('[.]{3}', string)) return()
+  r = strsplit(string, '[.]{3}')[[1]]
   if (length(r) > 2) return()
   if (length(r) == 1) r = c(r, '')  # lower,
   r = as.numeric(r)

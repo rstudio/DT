@@ -203,9 +203,9 @@ HTMLWidgets.widget({
             var val = filter.val();
             // turn off filter if in full range
             $td.data('filter', val[0] != r1 || val[1] != r2);
-            var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
+            var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
             if ($td.data('filter')) {
-              var ival = v1 + ' ... ' + v2;
+              ival = v1 + ' ... ' + v2;
               $input.attr('title', ival).val(ival).trigger('input');
             } else {
               $input.attr('title', '').val('');
@@ -213,7 +213,7 @@ HTMLWidgets.widget({
             $span1.text(v1); $span2.text(v2);
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
-              table.column(i).search($td.data('filter') ? val.join(',') : '').draw();
+              table.column(i).search($td.data('filter') ? ival : '').draw();
               return;
             }
             table.draw();
