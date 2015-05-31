@@ -137,10 +137,11 @@ HTMLWidgets.widget({
               if ($x0.outerWidth() < $input.outerWidth()) {
                 $x0.outerWidth($input.outerWidth());
               }
-              $x0.css('right', '');
               // make sure the slider div does not reach beyond the right margin
               if ($(window).width() < $x0.offset().left + $x0.width()) {
-                $x0.css('right', 0);
+                $x0.offset({
+                  'left': $input.offset().left + $input.outerWidth() - $x0.outerWidth()
+                });
               }
             },
             blur: function() {
@@ -203,9 +204,9 @@ HTMLWidgets.widget({
             var val = filter.val();
             // turn off filter if in full range
             $td.data('filter', val[0] != r1 || val[1] != r2);
-            var v1 = formatDate(val[0]), v2 = formatDate(val[1]);
+            var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
             if ($td.data('filter')) {
-              var ival = v1 + ' ... ' + v2;
+              ival = v1 + ' ... ' + v2;
               $input.attr('title', ival).val(ival).trigger('input');
             } else {
               $input.attr('title', '').val('');
@@ -213,7 +214,7 @@ HTMLWidgets.widget({
             $span1.text(v1); $span2.text(v2);
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
-              table.column(i).search($td.data('filter') ? val.join(',') : '').draw();
+              table.column(i).search($td.data('filter') ? ival : '').draw();
               return;
             }
             table.draw();
@@ -395,5 +396,15 @@ HTMLWidgets.widget({
       changeInput('state', table.state());
     });
     changeInput('state', table.state());
+
+    // search info
+    var updateSearchInfo = function() {
+      changeInput('search', table.search());
+      if (filterRow) changeInput('search_columns', filterRow.toArray().map(function(td) {
+        return $(td).find('input').first().val();
+      }));
+    }
+    table.on('draw.dt', updateSearchInfo);
+    updateSearchInfo();
   }
 });
