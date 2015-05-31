@@ -87,6 +87,8 @@ Note `input$foo_rows_selected` is the numeric indices of the selected rows when 
 </div>
 </div>
 
+You can also obtain the index of the last clicked row via `input$foo_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
+
 ## DataTables Information
 
 As you interact with the table (e.g. sort columns, search the table, or navigate through pages), **DT** will expose some information about the current state of the table to Shiny. At the moment, these information are available in the `input` object of the Shiny server function (suppose the table output id is `foo`):
