@@ -67,7 +67,7 @@ HTMLWidgets.widget({
         });
         var $x = $td.children('div').last();
 
-        if (type === 'factor') {
+        if (inArray(type, ['factor', 'logical'])) {
           $input.on({
             click: function() {
               $input.parent().hide(); $x.show(); filter[0].selectize.focus();
@@ -253,7 +253,10 @@ HTMLWidgets.widget({
             r0 = new Date(+r[0]); r1 = new Date(+r[1]);
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'factor') {
-            if (r.length === 0 || $.inArray(data[i], r) > -1) return true;
+            if (r.length === 0 || inArray(data[i], r)) return true;
+          } else if (type === 'logical') {
+            if (r.length === 0) return true;
+            if (inArray(data[i] === '' ? 'na' : data[i], r)) return true;
           }
           return false;
         };
@@ -336,7 +339,7 @@ HTMLWidgets.widget({
       selected = unique(selected.concat(ids));
       return selected;
     };
-    var selection = $.inArray(data.selection, ['single', 'multiple']) > -1;
+    var selection = inArray(data.selection, ['single', 'multiple']);
     if (selection) table.on('click.dt', 'tr', function() {
       var $this = $(this);
       if (data.selection === 'multiple') {
@@ -362,7 +365,7 @@ HTMLWidgets.widget({
     // server-side tables, we have to check if the row name is in `selected`
     if (server) table.on('draw.dt', function() {
       table.rows({page: 'current'}).every(function() {
-        if ($.inArray(this.data()[0], selected) > -1) {
+        if (inArray(this.data()[0], selected)) {
           $(this.node()).addClass('selected');
         }
       });
