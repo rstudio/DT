@@ -137,10 +137,11 @@ HTMLWidgets.widget({
               if ($x0.outerWidth() < $input.outerWidth()) {
                 $x0.outerWidth($input.outerWidth());
               }
-              $x0.css('right', '');
               // make sure the slider div does not reach beyond the right margin
               if ($(window).width() < $x0.offset().left + $x0.width()) {
-                $x0.css('right', 0);
+                $x0.offset({
+                  'left': $input.offset().left + $input.outerWidth() - $x0.outerWidth()
+                });
               }
             },
             blur: function() {
