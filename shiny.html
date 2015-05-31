@@ -186,6 +186,8 @@ Note <code>input$foo_rows_selected</code> is the numeric indices of the selected
 <li>similar to the indices of selected rows, the indices are row names when you use the server-side processing, and numeric indices when using client-side processing</li>
 <li>again, there is no way to know all the available data on the server side, <code>input$foo_rows_all</code> will be the same as <code>input$foo_rows_current</code> for tables using server-side processing</li>
 </ul></li>
+<li><code>input$foo_search</code>: the global search string</li>
+<li><code>input$foo_search_columns</code>: the vector of column search strings when column filters are enabled</li>
 <li><code>input$foo_state</code>: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option <code>stateSave = TRUE</code> is applied to the table)</li>
 </ul>
 <p><a href="https://yihui.shinyapps.io/DT-info/">This example</a> shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.</p>
