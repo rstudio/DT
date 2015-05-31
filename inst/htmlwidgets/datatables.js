@@ -371,7 +371,7 @@ HTMLWidgets.widget({
     };
     var selection = inArray(data.selection, ['single', 'multiple']);
     if (selection) table.on('click.dt', 'tr', function() {
-      var $this = $(this);
+      var $this = $(this), thisRow = table.row(this);
       if (data.selection === 'multiple') {
         $this.toggleClass('selected');
       } else {
@@ -383,11 +383,12 @@ HTMLWidgets.widget({
         }
       }
       if (server && !$this.is('.selected')) {
-        var id = table.row($this).data()[0];
+        var id = thisRow.data()[0];
         // remove id from selected since its class .selected has been removed
         selected.splice($.inArray(id, selected), 1);
       }
       changeInput('rows_selected', selectedRows());
+      changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
     });
     changeInput('rows_selected', selectedRows());
     // restore selected rows after the table is redrawn (e.g. sort/search/page);
