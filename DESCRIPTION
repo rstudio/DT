@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
 Title: R Interface to the 'jQuery' Plug-in 'DataTables'
-Version: 0.0.61
+Version: 0.0.62
 Date: 2014-11-11
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
