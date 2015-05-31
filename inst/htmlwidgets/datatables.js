@@ -67,7 +67,7 @@ HTMLWidgets.widget({
         });
         var $x = $td.children('div').last();
 
-        if (type === 'factor') {
+        if (inArray(type, ['factor', 'logical'])) {
           $input.on({
             click: function() {
               $input.parent().hide(); $x.show(); filter[0].selectize.focus();
@@ -254,6 +254,9 @@ HTMLWidgets.widget({
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'factor') {
             if (r.length === 0 || $.inArray(data[i], r) > -1) return true;
+          } else if (type === 'logical') {
+            if (r.length === 0) return true;
+            if (inArray(data[i] === '' ? 'na' : data[i], r)) return true;
           }
           return false;
         };

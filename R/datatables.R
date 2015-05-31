@@ -346,12 +346,18 @@ filterRow = function(
         ),
         tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
       )
-    } else if (is.factor(d)) {
-      t = 'factor'
+    } else if (is.factor(d) || is.logical(d)) {
+      if (is.logical(d)) {
+        t = 'logical'
+        d = c('true', 'false', if (any(is.na(d))) 'na')
+      } else {
+        t = 'factor'
+        d = sort(unique(d))
+      }
       tags$div(
         tags$select(
           multiple = 'multiple', style = 'width: 100%;',
-          lapply(sort(unique(d)), function(x) tags$option(value = x, x))
+          lapply(d, function(x) tags$option(value = x, x))
         ),
         style = 'width: 100%; display: none;'
       )
