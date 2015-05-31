@@ -395,5 +395,15 @@ HTMLWidgets.widget({
       changeInput('state', table.state());
     });
     changeInput('state', table.state());
+
+    // search info
+    var updateSearchInfo = function() {
+      changeInput('search', table.search());
+      if (filterRow) changeInput('search_columns', filterRow.toArray().map(function(td) {
+        return $(td).find('input').first().val();
+      }));
+    }
+    table.on('draw.dt', updateSearchInfo);
+    updateSearchInfo();
   }
 });
