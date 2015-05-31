@@ -31,8 +31,9 @@ HTMLWidgets.widget({
     if (cells !== null) options = {
       data: cells
     };
+    $.extend(options, data.options || {});
 
-    var table = $table.DataTable($.extend(options, data.options || {}));
+    var table = $table.DataTable(options);
 
     // server-side processing?
     var server = data.options.serverSide === true;
