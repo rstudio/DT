@@ -33,6 +33,15 @@ HTMLWidgets.widget({
     };
     $.extend(options, data.options || {});
 
+    var searchCols = options.searchCols;
+    if (searchCols) {
+      searchCols = searchCols.map(function(x) {
+        return x === null ? '' : x.search;
+      });
+      // FIXME: this means I don't respect the escapeRegex setting
+      delete options.searchCols;
+    }
+
     var table = $table.DataTable(options);
 
     // server-side processing?
@@ -61,6 +70,11 @@ HTMLWidgets.widget({
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
+        var searchCol;  // search string for this column
+        if (searchCols && searchCols[i]) {
+          searchCol = searchCols[i];
+          $input.val(searchCol);
+        }
         // Bootstrap sets pointer-events to none and we won't be able to click
         // the clear button
         $input.next('span').css('pointer-events', 'auto').hide().click(function() {
@@ -229,7 +243,11 @@ HTMLWidgets.widget({
         // server-side processing will be handled by R (or whatever server
         // language you use); the following code is only needed for client-side
         // processing
-        if (server) return;
+        if (server) {
+          // if a search string has been pre-set, search now
+          if (searchCol) table.column(i).search(searchCol).draw();
+          return;
+        }
 
         var customFilter = function(settings, data, dataIndex) {
           // there is no way to attach a search function to a specific table,
@@ -263,6 +281,17 @@ HTMLWidgets.widget({
         };
 
         $.fn.dataTable.ext.search.push(customFilter);
+
+        // search for the preset search strings if it is non-empty
+        if (searchCol) {
+          if (inArray(type, ['factor', 'logical'])) {
+            filter[0].selectize.setValue(JSON.parse(searchCol));
+          } else if (type === 'character') {
+            $input.trigger('input');
+          } else if (inArray(type, ['number', 'integer', 'date', 'time'])) {
+            $input.trigger('change');
+          }
+        }
 
       });
 
