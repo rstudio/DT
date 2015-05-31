@@ -45,7 +45,7 @@ Please note that these conversion methods may be dependent on your system locale
 
 # Style Table Cells
 
-You can apply CSS styles to the table cells in a column according to the values of the cells using the function `formatStyle()`. First we show the syntax of CSS styles, which is a named list of CSS values, with the names being CSS property names:
+You can apply CSS styles to the table cells in a column according to the values of the cells using the function `formatStyle()`. We have picked a few commonly used CSS properties as the arguments of `formatStyle()`, such as `color` and `fontWeight`. You can pass arbitrary CSS properties to `formatStyle()`. Here is a quick example to show the syntax: 
 
 ```{r}
 datatable(iris, options = list(pageLength = 5)) %>%
@@ -56,7 +56,7 @@ datatable(iris, options = list(pageLength = 5)) %>%
 <div class="panel-heading">CSS Property Names</div>
 <div class="panel-body">
 The actual CSS property names are dash-separated, but you can use camelCase names in `formatStyle()` anyway (otherwise you will have to use backticks to quote the names, e.g. `` formatStyle(..., `font-size` = '12px')``), and this function will automatically convert camelCase names to dash-separated names, e.g. `'fontWeight'` will be converted to
-`'font-weight'` internally.
+`'font-weight'` internally. If you are familiar with CSS, you can still use the dash-separated names -- just remember to quote them.
 </div>
 </div>
 

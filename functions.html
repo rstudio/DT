@@ -257,7 +257,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 </div>
 <div id="style-table-cells" class="section level1">
 <h1><span class="header-section-number">2</span> Style Table Cells</h1>
-<p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. First we show the syntax of CSS styles, which is a named list of CSS values, with the names being CSS property names:</p>
+<p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. We have picked a few commonly used CSS properties as the arguments of <code>formatStyle()</code>, such as <code>color</code> and <code>fontWeight</code>. You can pass arbitrary CSS properties to <code>formatStyle()</code>. Here is a quick example to show the syntax:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) %&gt;%
 <span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</code></pre>
 <p><div id="htmlwidget-2650" style="width:100%;height:auto;" class="datatables"></div>
@@ -300,7 +300,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 CSS Property Names
 </div>
 <div class="panel-body">
-The actual CSS property names are dash-separated, but you can use camelCase names in <code>formatStyle()</code> anyway (otherwise you will have to use backticks to quote the names, e.g. <code>formatStyle(..., `font-size` = '12px')</code>), and this function will automatically convert camelCase names to dash-separated names, e.g. <code>'fontWeight'</code> will be converted to <code>'font-weight'</code> internally.
+The actual CSS property names are dash-separated, but you can use camelCase names in <code>formatStyle()</code> anyway (otherwise you will have to use backticks to quote the names, e.g. <code>formatStyle(..., `font-size` = '12px')</code>), and this function will automatically convert camelCase names to dash-separated names, e.g. <code>'fontWeight'</code> will be converted to <code>'font-weight'</code> internally. If you are familiar with CSS, you can still use the dash-separated names – just remember to quote them.
 </div>
 </div>
 <p>The above example did not take the cell values into consideration. All styles are applied to all cells unconditionally: the font color is red, the background color is yellow, and the font weight is bold. That may not be useful in practice. <strong>DT</strong> has provided a few helper functions to apply conditional styles to cells, such as <code>styleInterval()</code>, <code>styleEqual()</code>, and <code>styleColorBar()</code>. Please read the documentation in R for the usage of these functions. We show a comprehensive example below:</p>
