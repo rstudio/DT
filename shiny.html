@@ -18,6 +18,11 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
+<script src="libs/datatables/jquery.dataTables.min.js"></script>
+<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
+<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -162,7 +167,40 @@ Another major difference is that the <code>renderDataTable()</code> function in 
 <p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>foo</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>dataTableOutput()</code>). You need to replace <code>foo</code> with the actual id of the table in your own app.</p>
 <div id="row-selection" class="section level2">
 <h2><span class="header-section-number">2.1</span> Row Selection</h2>
-<p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$foo_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>. You can disable row selection by <code>datatable(..., selection = 'none')</code>, or use the single selection mode by <code>selection = 'single'</code>. The default selection mode is multiple selections.</p>
+<p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$foo_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>. You can disable row selection by <code>datatable(..., selection = 'none')</code>, or use the single selection mode by <code>selection = 'single'</code>. The default selection mode is multiple selections (try the table below).</p>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5716">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "dom": "t",
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
+    },
+    "callback": "function(table) {\ntable.on('click.dt', 'tr', function() {\n$(this).toggleClass('selected');\n})\n}",
+    "filter": "none"
+  },
+  "evals": ["callback"]
+}</script></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
