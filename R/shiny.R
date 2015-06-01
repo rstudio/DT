@@ -54,17 +54,36 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   checkShinyVersion()
   if (!quoted) expr = substitute(expr)
 
+  currentSession <- NULL
+  currentOutputName <- NULL
+
   exprFunc <- shiny::exprToFunction(expr, env, quoted = TRUE)
   widgetFunc <- function() {
-    x <- exprFunc()
-    if (is.data.frame(x)) {
-      datatable(x)
+    instance <- exprFunc()
+    if (is.data.frame(instance)) {
+      datatable(instance)
     } else {
-      x
+      instance
     }
+
+    instance <- instance$preRenderHook(instance, currentSession, currentOutputName)
+    instance$preRenderHook <- NULL
+
+    instance
   }
 
-  htmlwidgets::shinyRenderWidget(widgetFunc(), dataTableOutput, environment(), FALSE)
+  renderFunc <- htmlwidgets::shinyRenderWidget(widgetFunc(), dataTableOutput, environment(), FALSE)
+
+  markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
+    currentSession <<- shinysession
+    currentOutputName <<- name
+    on.exit({
+      currentSession <<- NULL
+      currentOutputName <<- NULL
+    }, add = TRUE)
+
+    renderFunc()
+  })
 }
 
 shinyFun = function(name) getFromNamespace(name, 'shiny')
