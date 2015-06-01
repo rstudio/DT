@@ -60,7 +60,8 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
       instance = datatable(instance, ...)
     }
 
-    instance <- instance$preRenderHook(instance, currentSession, currentOutputName)
+    if (is.function(hook <- instance$preRenderHook))
+      instance <- hook(instance, currentSession, currentOutputName)
     instance$preRenderHook <- NULL
 
     instance
