@@ -145,8 +145,24 @@ datatable = function(
 
   # in the server mode, we should not store the full data in JSON
   if (server) {
+    origData = data
     data = NULL
     options = fixServerOptions(options, escape, colnames)
+
+    # register the data object in a shiny session
+    registerData = function(instance, shinysession, name) {
+
+      origData = instance$x$origData
+      instance$x$origData = NULL
+      options = instance$x$options
+      if (!inShiny() || !is.null(options$ajax[['url']])) return(instance)
+
+      url = sessionDataURL(shinysession, origData, name, dataTablesFilter)
+      options$ajax$url = url
+      instance$x$options = fixServerOptions(options, escape, colnames)
+
+      instance
+    }
   }
 
   if (is.list(extensions)) {
@@ -193,6 +209,7 @@ datatable = function(
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
   if (inShiny()) params$selection = match.arg(selection)
+  if (server) params$origData = origData
 
   deps = list(htmlDependency(
     'datatables', DataTablesVersion, src = depPath('datatables', 'js'),
@@ -206,7 +223,7 @@ datatable = function(
 
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
-    dependencies = deps
+    dependencies = deps, preRenderHook = if (server) registerData
   )
 }
 
