@@ -270,7 +270,7 @@ dotsToRange = function(string) {
   r
 }
 
-fixServerOptions = function(options, escape, colnames) {
+fixServerOptions = function(options) {
   options$serverSide = TRUE
   if (is.null(options$processing)) options$processing = TRUE
 
@@ -287,7 +287,7 @@ fixServerOptions = function(options, escape, colnames) {
       'd.search.caseInsensitive = %s;',
       tolower(!isFALSE(options[['search']]$caseInsensitive))
     ),
-    sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
+    sprintf('d.escape = %s;', attr(options, 'escapeIdx', exact = TRUE)),
     '}'
   )
   options

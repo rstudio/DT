@@ -147,7 +147,9 @@ datatable = function(
   if (server) {
     origData = data
     data = NULL
-    options = fixServerOptions(options, escape, colnames)
+    # indices of columns that need to be escaped
+    attr(options, 'escapeIdx') = escapeToConfig(escape, colnames)
+    options = fixServerOptions(options)
 
     # register the data object in a shiny session
     registerData = function(instance, shinysession, name) {
@@ -159,7 +161,7 @@ datatable = function(
 
       url = sessionDataURL(shinysession, origData, name, dataTablesFilter)
       options$ajax$url = url
-      instance$x$options = fixServerOptions(options, escape, colnames)
+      instance$x$options = fixServerOptions(options)
 
       instance
     }
