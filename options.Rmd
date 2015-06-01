@@ -22,6 +22,7 @@ The **DT** package modified the default behavior of **DataTables** in these aspe
         ))
         ```
 - When using the [server-side processing](server.html) mode, the option `processing = TRUE` is set as the default to show the processing indicator (**DataTables**' default is always `FALSE`);
+- The option `searchDelay` is set to `1000` (1 second) by default;
 
 # Initialization Options
 

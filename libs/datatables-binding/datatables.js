@@ -27,7 +27,7 @@ HTMLWidgets.widget({
         break;
     }
 
-    var options = {};
+    var options = { searchDelay: 1000 };
     if (cells !== null) options = {
       data: cells
     };
@@ -46,16 +46,6 @@ HTMLWidgets.widget({
 
     // server-side processing?
     var server = data.options.serverSide === true;
-    var throttle = $.fn.dataTable.util.throttle;
-
-    // throttle searching in the server mode (perhaps debounce is better, but it
-    // is not available in DataTables)
-    if (server) {
-      $el.find('label input').first().unbind('keyup')
-         .keyup(throttle(function() {
-           table.search(this.value).draw();
-         }, 1000));
-    }
 
     var inArray = function(val, array) {
       return $.inArray(val, array) > -1;
@@ -123,7 +113,7 @@ HTMLWidgets.widget({
             table.column(i).search($input.val(), regex, !regex, ci).draw();
           };
           if (server) {
-            fun = throttle(fun, 1000);
+            fun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
           }
           $input.on('input', fun);
         } else if (inArray(type, ['number', 'integer', 'date', 'time'])) {
