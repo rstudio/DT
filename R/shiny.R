@@ -74,7 +74,7 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
 
   renderFunc <- htmlwidgets::shinyRenderWidget(widgetFunc(), dataTableOutput, environment(), FALSE)
 
-  markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
+  shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
     currentSession <<- shinysession
     currentOutputName <<- name
     on.exit({
