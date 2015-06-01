@@ -60,10 +60,8 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   exprFunc <- shiny::exprToFunction(expr, env, quoted = TRUE)
   widgetFunc <- function() {
     instance <- exprFunc()
-    if (is.data.frame(instance)) {
-      datatable(instance)
-    } else {
-      instance
+    if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
+      instance = datatable(instance)
     }
 
     instance <- instance$preRenderHook(instance, currentSession, currentOutputName)
