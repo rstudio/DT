@@ -12,10 +12,30 @@ library(DT)
 mtcars2 = mtcars[, c(1:5, 9)]
 mtcars2$am = factor(mtcars$am, c(0, 1), c('automatic', 'manual'))
 # search for Ma or Me
-datatable(mtcars2, colnames = c('model' = 1), filter = 'top', options = list(
-  search = list(regex = TRUE, caseInsensitive = FALSE, search = 'M[ae]'),
-  pageLength = 5
-))
+datatable(
+  mtcars2, colnames = c('model' = 1),
+  filter = list(position = 'top', clear = FALSE),
+  options = list(
+    search = list(regex = TRUE, caseInsensitive = FALSE, search = 'M[ae]'),
+    pageLength = 5
+  )
+)
 ```
 
 Please note the interpretation of regular expressions depends on whether you use client-side or server-side processing. For client-side processing, the search string is treated as JavaScript regular expressions. For server-side processing, it is up to the server-side script. In **DT**, the server-side processing function is implemented in R, so the search string is treated as R regular expressions.
+
+In the above example, we specified an initial search string `M[ae]` (meaning `Ma` or `Me`) in the global search box. We can also specify initial search strings for individual columns via the `searchCols` option when column filters are enabled. The `searchCols` option is a list of the same length as the number of columns of the table. Each element in the list is either `NULL` or a list of the form `list(search = 'keyword')`. In the example below, we search for `er` in the first column, filter the second column using `[15, 25]`, and filter the last column by `"automatic"`.
+
+```{r}
+datatable(
+  mtcars2, colnames = c('model' = 1),
+  filter = list(position = 'top', clear = FALSE),
+  options = list(pageLength = 5, searchCols = list(
+    list(search = 'er'),
+    list(search = '15 ... 25'),
+    NULL, NULL, NULL, NULL,
+    list(search = '["automatic"]')
+  ))
+)
+```
+

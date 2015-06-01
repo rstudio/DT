@@ -90,10 +90,14 @@ img {
 mtcars2 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">9</span>)]
 mtcars2$am =<span class="st"> </span><span class="kw">factor</span>(mtcars$am, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;automatic&#39;</span>, <span class="st">&#39;manual&#39;</span>))
 <span class="co"># search for Ma or Me</span>
-<span class="kw">datatable</span>(mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>), <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">search =</span> <span class="kw">list</span>(<span class="dt">regex =</span> <span class="ot">TRUE</span>, <span class="dt">caseInsensitive =</span> <span class="ot">FALSE</span>, <span class="dt">search =</span> <span class="st">&#39;M[ae]&#39;</span>),
-  <span class="dt">pageLength =</span> <span class="dv">5</span>
-))</code></pre>
+<span class="kw">datatable</span>(
+  mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),
+  <span class="dt">filter =</span> <span class="kw">list</span>(<span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>),
+  <span class="dt">options =</span> <span class="kw">list</span>(
+    <span class="dt">search =</span> <span class="kw">list</span>(<span class="dt">regex =</span> <span class="ot">TRUE</span>, <span class="dt">caseInsensitive =</span> <span class="ot">FALSE</span>, <span class="dt">search =</span> <span class="st">&#39;M[ae]&#39;</span>),
+    <span class="dt">pageLength =</span> <span class="dv">5</span>
+  )
+)</code></pre>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
@@ -128,11 +132,70 @@ mtcars2$am =<span class="st"> </span><span class="kw">factor</span>(mtcars$am, <
     },
     "callback": null,
     "filter": "top",
-    "filterHTML": "<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"10.4\" data-max=\"33.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4\" data-max=\"8\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"71.1\" data-max=\"472\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"52\" data-max=\"335\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.76\" data-max=\"4.93\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\">\n        <option value=\"automatic\">automatic</option>\n        <option value=\"manual\">manual</option>\n      </select>\n    </div>\n  </td>\n</tr>"
+    "filterHTML": "<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"10.4\" data-max=\"33.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4\" data-max=\"8\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"71.1\" data-max=\"472\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"52\" data-max=\"335\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.76\" data-max=\"4.93\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\">\n        <option value=\"automatic\">automatic</option>\n        <option value=\"manual\">manual</option>\n      </select>\n    </div>\n  </td>\n</tr>"
   },
   "evals": []
 }</script></p>
 <p>Please note the interpretation of regular expressions depends on whether you use client-side or server-side processing. For client-side processing, the search string is treated as JavaScript regular expressions. For server-side processing, it is up to the server-side script. In <strong>DT</strong>, the server-side processing function is implemented in R, so the search string is treated as R regular expressions.</p>
+<p>In the above example, we specified an initial search string <code>M[ae]</code> (meaning <code>Ma</code> or <code>Me</code>) in the global search box. We can also specify initial search strings for individual columns via the <code>searchCols</code> option when column filters are enabled. The <code>searchCols</code> option is a list of the same length as the number of columns of the table. Each element in the list is either <code>NULL</code> or a list of the form <code>list(search = 'keyword')</code>. In the example below, we search for <code>er</code> in the first column, filter the second column using <code>[15, 25]</code>, and filter the last column by <code>&quot;automatic&quot;</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
+  mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),
+  <span class="dt">filter =</span> <span class="kw">list</span>(<span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>),
+  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">searchCols =</span> <span class="kw">list</span>(
+    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;er&#39;</span>),
+    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;15 ... 25&#39;</span>),
+    <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>,
+    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;[&quot;automatic&quot;]&#39;</span>)
+  ))
+)</code></pre>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-4929">{
+  "x": {
+    "data": [
+      ["Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout", "Valiant", "Duster 360", "Merc 240D", "Merc 230", "Merc 280", "Merc 280C", "Merc 450SE", "Merc 450SL", "Merc 450SLC", "Cadillac Fleetwood", "Lincoln Continental", "Chrysler Imperial", "Fiat 128", "Honda Civic", "Toyota Corolla", "Toyota Corona", "Dodge Challenger", "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lotus Europa", "Ford Pantera L", "Ferrari Dino", "Maserati Bora", "Volvo 142E"],
+      [21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26, 30.4, 15.8, 19.7, 15, 21.4],
+      [6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8, 8, 8, 8, 4, 4, 4, 8, 6, 8, 4],
+      [160, 160, 108, 258, 360, 225, 360, 146.7, 140.8, 167.6, 167.6, 275.8, 275.8, 275.8, 472, 460, 440, 78.7, 75.7, 71.1, 120.1, 318, 304, 350, 400, 79, 120.3, 95.1, 351, 145, 301, 121],
+      [110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180, 205, 215, 230, 66, 52, 65, 97, 150, 150, 245, 175, 66, 91, 113, 264, 175, 335, 109],
+      [3.9, 3.9, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92, 3.07, 3.07, 3.07, 2.93, 3, 3.23, 4.08, 4.93, 4.22, 3.7, 2.76, 3.15, 3.73, 3.08, 4.08, 4.43, 3.77, 4.22, 3.62, 3.54, 4.11],
+      ["manual", "manual", "manual", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "automatic", "manual", "manual", "manual", "automatic", "automatic", "automatic", "automatic", "automatic", "manual", "manual", "manual", "manual", "manual", "manual", "manual"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model</th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>am</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "pageLength": 5,
+      "searchCols": [
+        {
+          "search": "er"
+        },
+        {
+          "search": "15 ... 25"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "search": "[\"automatic\"]"
+        }
+      ],
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4, 5]
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
+      "orderCellsTop": true,
+      "lengthMenu": [5, 10, 25, 50, 100]
+    },
+    "callback": null,
+    "filter": "top",
+    "filterHTML": "<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"10.4\" data-max=\"33.9\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4\" data-max=\"8\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"71.1\" data-max=\"472\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"52\" data-max=\"335\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.76\" data-max=\"4.93\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\">\n        <option value=\"automatic\">automatic</option>\n        <option value=\"manual\">manual</option>\n      </select>\n    </div>\n  </td>\n</tr>"
+  },
+  "evals": []
+}</script></p>
 
 
 </div>
