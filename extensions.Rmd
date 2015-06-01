@@ -8,6 +8,18 @@ title: DataTables Extensions
 
 For the time being, because the **DataTables** library does not have a consistent way to specify initialization options for its extensions, some extensions can be initialized via the `options` argument of `datatable()`, and some have to be initialized differently (including `r paste(DT:::extNew, sep = ', ')`). In the latter case, you can use a named list for the `extensions` argument: the name of each element is the extension name, and the list element is the initialization options, e.g. `extensions = list(AutoFill = list(mode = 'both'), ColReorder = NULL)`.
 
+<div class="panel panel-danger">
+<div class="panel-heading">Known Issues of Extensions</div>
+<div class="panel-body">
+
+Most **DataTables** extensions work on their own, but some may not work well when certain non-default features are enabled or used in Shiny apps. Below is a list of known issues:
+
+- Column filters may not work well with the extensions `FixedColumns`, `FixedHeader`, and `Scroller` ([#41](https://github.com/rstudio/DT/issues/41));
+- The `Responsive` extension does not work well in Shiny apps ([#69](https://github.com/rstudio/DT/issues/69));
+
+</div>
+</div>
+
 ```{r}
 # this is the example data we use on this page
 iris2 = head(iris, 30)

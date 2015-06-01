@@ -139,6 +139,18 @@ img {
 <hr />
 <p><strong>DataTables</strong> has a number of extensions, and all of them have been integrated into <strong>DT</strong>. You can use the <code>extensions</code> argument of <code>datatable()</code> to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. <code>extensions = c('AutoFill', 'ColReorder')</code>.</p>
 <p>For the time being, because the <strong>DataTables</strong> library does not have a consistent way to specify initialization options for its extensions, some extensions can be initialized via the <code>options</code> argument of <code>datatable()</code>, and some have to be initialized differently (including AutoFill, FixedColumns, FixedHeader, KeyTable). In the latter case, you can use a named list for the <code>extensions</code> argument: the name of each element is the extension name, and the list element is the initialization options, e.g. <code>extensions = list(AutoFill = list(mode = 'both'), ColReorder = NULL)</code>.</p>
+<div class="panel panel-danger">
+<div class="panel-heading">
+Known Issues of Extensions
+</div>
+<div class="panel-body">
+<p>Most <strong>DataTables</strong> extensions work on their own, but some may not work well when certain non-default features are enabled or used in Shiny apps. Below is a list of known issues:</p>
+<ul>
+<li>Column filters may not work well with the extensions <code>FixedColumns</code>, <code>FixedHeader</code>, and <code>Scroller</code> (<a href="https://github.com/rstudio/DT/issues/41">#41</a>);</li>
+<li>The <code>Responsive</code> extension does not work well in Shiny apps (<a href="https://github.com/rstudio/DT/issues/69">#69</a>);</li>
+</ul>
+</div>
+</div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is the example data we use on this page</span>
 iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">30</span>)</code></pre>
 <div id="autofill" class="section level1">
