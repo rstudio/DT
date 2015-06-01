@@ -95,6 +95,11 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter) {
   data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
 
+  sessionDataURL(session, data, id, filter)
+}
+
+sessionDataURL = function(session, data, id, filter) {
+
   URLdecode = shinyFun('URLdecode')
   toJSON = shinyFun('toJSON')
   httpResponse = shinyFun('httpResponse')
