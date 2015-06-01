@@ -146,26 +146,7 @@ datatable = function(
   # in the server mode, we should not store the full data in JSON
   if (server) {
     data = NULL
-    options$serverSide = TRUE
-    if (is.null(options$processing)) options$processing = TRUE
-    if (is.null(options$ajax)) warning(
-      "You are using the server-side processing mode, but did not specify ",
-      "the 'ajax' option. See http://rstudio.github.io/DT/server.html"
-    )
-    # if you generated the Ajax URL from dataTableAjax(), I'll configure type:
-    # 'POST' and a few other options automatically
-    if (inShiny() && length(grep('^session/[a-z0-9]+/dataobj/', options$ajax$url))) {
-      if (is.null(options$ajax$type)) options$ajax$type = 'POST'
-      if (is.null(options$ajax$data)) options$ajax$data = JS(
-        'function(d) {',
-        sprintf(
-          'd.search.caseInsensitive = %s;',
-          tolower(!isFALSE(options[['search']]$caseInsensitive))
-        ),
-        sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
-        '}'
-      )
-    }
+    options = fixServerOptions(options, escape, colnames)
   }
 
   if (is.list(extensions)) {

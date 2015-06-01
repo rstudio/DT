@@ -234,3 +234,26 @@ dotsToRange = function(string) {
   if (is.na(r[2])) r[2] = Inf
   r
 }
+
+fixServerOptions = function(options, escape, colnames) {
+  options$serverSide = TRUE
+  if (is.null(options$processing)) options$processing = TRUE
+
+  # if you generated the Ajax URL from dataTableAjax(), I'll configure type:
+  # 'POST' and a few other options automatically
+  if (!inShiny()) return(options)
+  if (length(grep('^session/[a-z0-9]+/dataobj/', options$ajax$url)) == 0)
+    return(options)
+
+  if (is.null(options$ajax$type)) options$ajax$type = 'POST'
+  if (is.null(options$ajax$data)) options$ajax$data = JS(
+    'function(d) {',
+    sprintf(
+      'd.search.caseInsensitive = %s;',
+      tolower(!isFALSE(options[['search']]$caseInsensitive))
+    ),
+    sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
+    '}'
+  )
+  options
+}
