@@ -814,6 +814,14 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
   "evals": []
 }</script></p>
 <p>Filtering in the above examples was done on the client side (using JavaScript in your web browser). Column filters also work in the <a href="server.html">server-side processing</a> mode, in which case filtering will be processed on the server, and there may be some subtle differences (e.g. JavaScript regular expressions are different with R). See <a href="https://yihui.shinyapps.io/DT-filter/">here for an example</a> of column filters working on the server side.</p>
+<div class="panel panel-danger">
+<div class="panel-heading">
+Known Issues of Column Filters
+</div>
+<div class="panel-body">
+The position of column filters may be off when scrolling is enabled in the table, e.g. via the options <code>scrollX</code> and/or <code>scrollY</code>. The appearance may be affected by Shiny sliders, as reported in <a href="https://github.com/rstudio/DT/issues/49">#49</a>.
+</div>
+</div>
 </div>
 <div id="the-callback-argument" class="section level2">
 <h2><span class="header-section-number">2.8</span> The <code>callback</code> argument</h2>

@@ -197,6 +197,13 @@ datatable(d, filter = 'bottom', options = list(pageLength = 5))
 
 Filtering in the above examples was done on the client side (using JavaScript in your web browser). Column filters also work in the [server-side processing](server.html) mode, in which case filtering will be processed on the server, and there may be some subtle differences (e.g. JavaScript regular expressions are different with R). See [here for an example](https://yihui.shinyapps.io/DT-filter/) of column filters working on the server side.
 
+<div class="panel panel-danger">
+<div class="panel-heading">Known Issues of Column Filters</div>
+<div class="panel-body">
+The position of column filters may be off when scrolling is enabled in the table, e.g. via the options `scrollX` and/or `scrollY`. The appearance may be affected by Shiny sliders, as reported in [#49](https://github.com/rstudio/DT/issues/49).
+</div>
+</div>
+
 ## The `callback` argument
 
 The argument `callback` takes the body of a JavaScript function that will be applied to the **DataTables** object after initialization. Below is an example to show the next page after the table is initialized^[See the documentation for the [page()](http://datatables.net/reference/api/page()) API.]:
