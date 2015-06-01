@@ -42,15 +42,11 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #' @rdname dataTableOutput
 #' @inheritParams shiny::renderDataTable
 #' @param expr an expression to create a table widget (normally via
-#'   \code{\link{datatable}()})
-#' @param ... currently ignored, with a warning message
+#'   \code{\link{datatable}()}), or a data object to be passed to
+#'   \code{datatable()} to create a table widget
+#' @param ... ignored when \code{expr} returns a table widget, and passed to
+#'   \code{datatable()} when \code{expr} returns a data object
 renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
-  if (length(list(...))) warning(
-    "Arguments in addition to 'expr', 'env', and 'quoted' are ignored. ",
-    "If you came from shiny::renderDataTable(), you may want to pass ",
-    "these arguments to DT::datatable() instead. See ",
-    "http://rstudio.github.io/DT/shiny.html for more info."
-  )
   checkShinyVersion()
   if (!quoted) expr = substitute(expr)
 
@@ -61,7 +57,7 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   widgetFunc <- function() {
     instance <- exprFunc()
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
-      instance = datatable(instance)
+      instance = datatable(instance, ...)
     }
 
     instance <- instance$preRenderHook(instance, currentSession, currentOutputName)

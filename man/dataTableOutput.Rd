@@ -16,14 +16,16 @@ renderDataTable(expr, env = parent.frame(), quoted = FALSE, ...)
 \item{height}{the height of the table container}
 
 \item{expr}{an expression to create a table widget (normally via
-\code{\link{datatable}()})}
+\code{\link{datatable}()}), or a data object to be passed to
+\code{datatable()} to create a table widget}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
 
-\item{...}{currently ignored, with a warning message}
+\item{...}{ignored when \code{expr} returns a table widget, and passed to
+\code{datatable()} when \code{expr} returns a data object}
 }
 \description{
 These two functions are like most \code{fooOutput()} and \code{renderFoo()}
