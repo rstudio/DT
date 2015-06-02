@@ -129,36 +129,30 @@ img {
 <span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
   <span class="dt">server =</span> function(input, output) {
-    output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>({
-      DT::<span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">lengthChange =</span> <span class="ot">FALSE</span>))
-    })
+    output$tbl =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(
+      iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">lengthChange =</span> <span class="ot">FALSE</span>)
+    )
   }
 )</code></pre>
-<p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note that the function with the same name in <strong>DT</strong> should take a widget as the input instead of a data object. Please compare the usage of <strong>shiny</strong> with <strong>DT</strong> carefully below:</p>
+<p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note you should use <code>JS()</code> instead of <code>I()</code> to write literal JavaScript code in options.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 <span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">pageLength =</span> <span class="dv">5</span>,
   <span class="dt">initComplete =</span> <span class="kw">I</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
 ))</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">renderDataTable</span>({
-  <span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
+<span class="kw">renderDataTable</span>(
+  iris, <span class="dt">options =</span> <span class="kw">list</span>(
     <span class="dt">pageLength =</span> <span class="dv">5</span>,
     <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
-  ))
-})</code></pre>
-<p>The differences in syntax are:</p>
-<ol style="list-style-type: decimal">
-<li>The first argument of <code>shiny::renderDataTable()</code> is a data object, whereas <code>DT::renderDataTable()</code> expects a table <em>widget</em> returned by <code>datatable()</code>;</li>
-<li>The <code>options</code> argument is passed to <code>renderDataTable()</code> in <strong>shiny</strong>, and to <code>datatable()</code> in <strong>DT</strong>;</li>
-<li>When you want to write literal JavaScript code, you use <code>I()</code> in <strong>shiny</strong>, but you have to use <code>JS()</code> in <strong>DT</strong>;</li>
-</ol>
+  )
+)</code></pre>
 <div class="panel panel-warning">
 <div class="panel-heading">
 Server-side vs Client-side Processing
 </div>
 <div class="panel-body">
-Another major difference is that the <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways. However, when the data object is relatively large, you should consider using server-side processing, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
+The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways (the default is client-side processing). When the data object is relatively large, you should consider using server-side processing (specify the argument <code>server = TRUE</code>), otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
 </div>
 </div>
 </div>

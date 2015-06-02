@@ -15,14 +15,14 @@ library(shiny)
 shinyApp(
   ui = fluidPage(DT::dataTableOutput('tbl')),
   server = function(input, output) {
-    output$tbl = DT::renderDataTable({
-      DT::datatable(iris, options = list(lengthChange = FALSE))
-    })
+    output$tbl = DT::renderDataTable(
+      iris, options = list(lengthChange = FALSE)
+    )
   }
 )
 ```
 
-If you have used the `renderDataTable()` function in **shiny** before, please note that the function with the same name in **DT** should take a widget as the input instead of a data object. Please compare the usage of **shiny** with **DT** carefully below:
+If you have used the `renderDataTable()` function in **shiny** before, please note you should use `JS()` instead of `I()` to write literal JavaScript code in options.
 
 ```{r eval=FALSE}
 library(shiny)
@@ -34,24 +34,18 @@ renderDataTable(iris, options = list(
 
 ```{r eval=FALSE}
 library(DT)
-renderDataTable({
-  datatable(iris, options = list(
+renderDataTable(
+  iris, options = list(
     pageLength = 5,
     initComplete = JS('function(setting, json) { alert("done"); }')
-  ))
-})
+  )
+)
 ```
-
-The differences in syntax are:
-
-1. The first argument of `shiny::renderDataTable()` is a data object, whereas `DT::renderDataTable()` expects a table _widget_ returned by `datatable()`;
-1. The `options` argument is passed to `renderDataTable()` in **shiny**, and to `datatable()` in **DT**;
-1. When you want to write literal JavaScript code, you use `I()` in **shiny**, but you have to use `JS()` in **DT**;
 
 <div class="panel panel-warning">
 <div class="panel-heading">Server-side vs Client-side Processing</div>
 <div class="panel-body">
-Another major difference is that the `renderDataTable()` function in **shiny** uses [server-side processing](server.html) and it has no client-side support. **DT** supports both ways. However, when the data object is relatively large, you should consider using server-side processing, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
+The `renderDataTable()` function in **shiny** uses [server-side processing](server.html) and it has no client-side support. **DT** supports both ways (the default is client-side processing). When the data object is relatively large, you should consider using server-side processing (specify the argument `server = TRUE`), otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
 </div>
 </div>
 
