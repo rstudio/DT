@@ -179,15 +179,7 @@ dataTablesFilter = function(data, params) {
     j = as.integer(j)
     dj = data[, j + 1]
     ij = if (is.numeric(dj) || is.Date(dj)) {
-      r = dotsToRange(k)
-      if (length(r) != 2)
-        stop('The range of a numeric / date / time column must be of length 2')
-      if (is.Date(dj)) {
-        # r is milliseconds
-        r = as.POSIXct(r / 1000, origin = '1970-01-01')
-        if (inherits(dj, 'Date')) r = as.Date(r)
-      }
-      which(dj >= r[1] & dj <= r[2])
+      which(filterRange(dj, k))
     } else if (is.factor(dj)) {
       which(dj %in% jsonlite::fromJSON(k))
     } else if (is.logical(dj)) {
@@ -255,16 +247,25 @@ grep2 = function(pattern, x, ignore.case = FALSE, fixed = FALSE, ...) {
   grep(pattern, x, ignore.case = ignore.case, fixed = fixed, ...)
 }
 
-# convert a string of the form "lower ... upper" to c(lower, upper)
-dotsToRange = function(string) {
-  if (!grepl('[.]{3}', string)) return()
-  r = strsplit(string, '[.]{3}')[[1]]
-  if (length(r) > 2) return()
+# filter a numeric/date/time vector using the search string "lower ... upper"
+filterRange = function(d, string) {
+  if (!grepl('[.]{3}', string) || length(r <- strsplit(string, '[.]{3}')[[1]]) > 2)
+    stop('The range of a numeric / date / time column must be of length 2')
   if (length(r) == 1) r = c(r, '')  # lower,
-  r = as.numeric(r)
-  if (is.na(r[1])) r[1] = -Inf
-  if (is.na(r[2])) r[2] = Inf
-  r
+  r = gsub('^\\s+|\\s+$', '', r)
+  r1 = r[1]; r2 = r[2]
+  if (is.numeric(d)) {
+    r1 = as.numeric(r1); r2 = as.numeric(r2)
+  } else if (inherits(d, 'Date')) {
+    if (r1 != '') r1 = as.Date(r1)
+    if (r2 != '') r2 = as.Date(r2)
+  } else {
+    if (r1 != '') r1 = as.POSIXct(r1, tz = 'GMT', '%Y-%m-%dT%H:%M:%S')
+    if (r2 != '') r2 = as.POSIXct(r2, tz = 'GMT', '%Y-%m-%dT%H:%M:%S')
+  }
+  if (r[1] == '') return(d <= r2)
+  if (r[2] == '') return(d >= r1)
+  d >= r1 & d <= r2
 }
 
 fixServerOptions = function(options) {
