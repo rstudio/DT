@@ -32,6 +32,13 @@ basically an implementation of server-side processing of DataTables in R.
 Filtering, sorting, and pagination are processed through R instead of
 JavaScript (client-side processing).
 }
+\details{
+Normally you should not need to call this function directly. It is called
+internally when a table widget is rendered in a Shiny app to configure the
+table option \code{ajax} automatically. If you are familiar with
+\pkg{DataTables}' server-side processing, and want to use a custom filter
+function, you may call this function to get an Ajax URL.
+}
 \examples{
 library(DT)
 DTApp = function(data, ..., options = list()) {
