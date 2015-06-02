@@ -50,24 +50,28 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
   checkShinyVersion()
   if (!quoted) expr = substitute(expr)
 
-  currentSession <- NULL
-  currentOutputName <- NULL
+  # TODO: this can be simplified after this htmlwidgets PR is merged
+  # https://github.com/ramnathv/htmlwidgets/pull/122
+  currentSession = NULL
+  currentOutputName = NULL
 
-  exprFunc <- shiny::exprToFunction(expr, env, quoted = TRUE)
-  widgetFunc <- function() {
-    instance <- exprFunc()
+  exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
+  widgetFunc = function() {
+    instance = exprFunc()
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
       instance = datatable(instance, ...)
     }
 
     if (is.function(hook <- instance$preRenderHook))
-      instance <- hook(instance, currentSession, currentOutputName)
-    instance$preRenderHook <- NULL
+      instance = hook(instance, currentSession, currentOutputName)
+    instance$preRenderHook = NULL
 
     instance
   }
 
-  renderFunc <- htmlwidgets::shinyRenderWidget(widgetFunc(), dataTableOutput, environment(), FALSE)
+  renderFunc = htmlwidgets::shinyRenderWidget(
+    widgetFunc(), dataTableOutput, environment(), FALSE
+  )
 
   shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
     currentSession <<- shinysession
