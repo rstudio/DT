@@ -23,9 +23,9 @@ checkShinyVersion = function() {
 #'   shinyApp(
 #'     ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
 #'     server = function(input, output) {
-#'       output$tbl = DT::renderDataTable({
-#'         DT::datatable(iris, options = list(lengthChange = FALSE))
-#'       })
+#'       output$tbl = DT::renderDataTable(
+#'         iris, options = list(lengthChange = FALSE)
+#'       )
 #'     }
 #'   )
 #' }

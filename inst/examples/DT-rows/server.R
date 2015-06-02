@@ -3,9 +3,7 @@ library(DT)
 
 shinyServer(function(input, output, session) {
 
-  output$x1 = DT::renderDataTable({
-    datatable(cars)
-  })
+  output$x1 = DT::renderDataTable(cars)
 
   # highlight selected rows in the scatterplot
   output$x2 = renderPlot({
@@ -18,12 +16,7 @@ shinyServer(function(input, output, session) {
   # you must include row names for server-side tables to be able to get the row
   # indices of the selected rows
   mtcars2 = mtcars[, 1:8]
-  action = dataTableAjax(session, mtcars2, rownames = TRUE)
-  output$x3 = DT::renderDataTable({
-    datatable(mtcars2, rownames = TRUE, server = TRUE, options = list(
-      ajax = list(url = action)
-    ))
-  })
+  output$x3 = DT::renderDataTable(mtcars2, rownames = TRUE, server = TRUE)
 
   # print the selected indices
   output$x4 = renderPrint({

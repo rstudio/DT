@@ -7,9 +7,7 @@ shinyServer(function(input, output, session) {
   mtcars2 = mtcars[, c('hp', 'mpg')]
 
   # render the table (with row names)
-  output$x1 = DT::renderDataTable({
-    datatable(mtcars2)
-  })
+  output$x1 = DT::renderDataTable(mtcars2)
 
   # a scatterplot with certain points highlighted
   output$x2 = renderPlot({
@@ -50,10 +48,7 @@ shinyServer(function(input, output, session) {
     write.csv(mtcars2[s, , drop = FALSE], file)
   })
 
-  action = dataTableAjax(session, mtcars2)
-  output$x4 = DT::renderDataTable(
-    datatable(mtcars2, server = TRUE, options = list(ajax = list(url = action)))
-  )
+  output$x4 = DT::renderDataTable(mtcars2, server = TRUE)
 
   output$x5 = renderPrint({
     cat('Rows on the current page:\n\n')

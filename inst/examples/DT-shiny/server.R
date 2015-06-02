@@ -2,9 +2,6 @@ library(shiny)
 library(DT)
 
 shinyServer(function(input, output, session) {
-  action = dataTableAjax(session, iris)
-  widget = datatable(iris, server = TRUE, options = list(
-    ajax = list(url = action)
-  ))
-  output$tbl = DT::renderDataTable(widget)
+  output$tbl_a = DT::renderDataTable(iris)
+  output$tbl_b = DT::renderDataTable(iris, server = TRUE)
 })
