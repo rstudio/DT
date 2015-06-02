@@ -6,7 +6,7 @@
 \usage{
 dataTableOutput(outputId, width = "100\%", height = "auto")
 
-renderDataTable(expr, env = parent.frame(), quoted = FALSE, ...)
+renderDataTable(expr, server = TRUE, env = parent.frame(), quoted = FALSE, ...)
 }
 \arguments{
 \item{outputId}{output variable to read the table from}
@@ -19,13 +19,20 @@ renderDataTable(expr, env = parent.frame(), quoted = FALSE, ...)
 \code{\link{datatable}()}), or a data object to be passed to
 \code{datatable()} to create a table widget}
 
+\item{server}{whether to use server-side processing. If \code{TRUE}, then the
+data is kept on the server and the browser requests a page at a time; if
+\code{FALSE}, then the entire data frame is sent to the browser at once.
+Highly recommended for medium to large data frames, which can cause
+browsers to slow down or crash.}
+
 \item{env}{The environment in which to evaluate \code{expr}.}
 
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
 
-\item{...}{ignored when \code{expr} returns a table widget, and passed to
-\code{datatable()} when \code{expr} returns a data object}
+\item{...}{ignored when \code{expr} returns a table widget, and passed as
+additional arguments to \code{datatable()} when \code{expr} returns a data
+object}
 }
 \description{
 These two functions are like most \code{fooOutput()} and \code{renderFoo()}

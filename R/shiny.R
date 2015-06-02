@@ -42,9 +42,15 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #' @param expr an expression to create a table widget (normally via
 #'   \code{\link{datatable}()}), or a data object to be passed to
 #'   \code{datatable()} to create a table widget
-#' @param ... ignored when \code{expr} returns a table widget, and passed to
-#'   \code{datatable()} when \code{expr} returns a data object
-renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
+#' @param server whether to use server-side processing. If \code{TRUE}, then the
+#'   data is kept on the server and the browser requests a page at a time; if
+#'   \code{FALSE}, then the entire data frame is sent to the browser at once.
+#'   Highly recommended for medium to large data frames, which can cause
+#'   browsers to slow down or crash.
+#' @param ... ignored when \code{expr} returns a table widget, and passed as
+#'   additional arguments to \code{datatable()} when \code{expr} returns a data
+#'   object
+renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = FALSE, ...) {
   checkShinyVersion()
   if (!quoted) expr = substitute(expr)
 
@@ -58,11 +64,25 @@ renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
     instance = exprFunc()
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
       instance = datatable(instance, ...)
+    } else {
+      if (length(list(...)) != 0) {
+        warning("renderDataTable ignores ... arguments when expr yields a datatable object; see ?renderDataTable")
+      }
     }
 
-    if (is.function(hook <- instance$preRenderHook))
-      instance = hook(instance, currentSession, currentOutputName)
-    instance$preRenderHook = NULL
+    # in the server mode, we should not store the full data in JSON
+    if (server) {
+      origData = instance[['x']][['data']]
+      instance$x$data = NULL
+
+      # register the data object in a shiny session
+      options = instance[['x']][['options']]
+      if (is.null(options[['ajax']][['url']])) {
+        url = sessionDataURL(currentSession, origData, currentOutputName, dataTablesFilter)
+        options$ajax$url = url
+      }
+      instance$x$options = fixServerOptions(options)
+    }
 
     instance
   }

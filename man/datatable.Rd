@@ -4,9 +4,9 @@
 \title{Create an HTML table widget using the DataTables library}
 \usage{
 datatable(data, options = list(), class = "display", callback = JS("return table;"), 
-    rownames, colnames, container, caption = NULL, filter = c("none", 
-        "bottom", "top"), server = FALSE, escape = TRUE, style = "default", 
-    selection = c("multiple", "single", "none"), extensions = list())
+    rownames, colnames, container, caption = NULL, filter = c("none", "bottom", "top"), 
+    escape = TRUE, style = "default", selection = c("multiple", "single", "none"), 
+    extensions = list())
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -53,10 +53,6 @@ this argument of the form \code{list(position = 'top', clear = TRUE, plain
 = FALSE)}, where \code{clear} indicates whether you want the clear buttons
 in the input boxes, and \code{plain} means if you want to use Bootstrap
 form styles or plain text input styles for the text input boxes}
-
-\item{server}{whether to use server-side processing; if \code{TRUE}, you must
-provide a server URL so that DataTables can send Ajax requests to retrieve
-data from the server}
 
 \item{escape}{whether to escape HTML entities in the table: \code{TRUE} means
 to escape the whole table, and \code{FALSE} means not to escape it;
