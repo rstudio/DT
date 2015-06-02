@@ -42,29 +42,43 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #' @rdname dataTableOutput
 #' @inheritParams shiny::renderDataTable
 #' @param expr an expression to create a table widget (normally via
-#'   \code{\link{datatable}()})
-#' @param ... currently ignored, with a warning message
+#'   \code{\link{datatable}()}), or a data object to be passed to
+#'   \code{datatable()} to create a table widget
+#' @param ... ignored when \code{expr} returns a table widget, and passed to
+#'   \code{datatable()} when \code{expr} returns a data object
 renderDataTable = function(expr, env = parent.frame(), quoted = FALSE, ...) {
-  if (length(list(...))) warning(
-    "Arguments in addition to 'expr', 'env', and 'quoted' are ignored. ",
-    "If you came from shiny::renderDataTable(), you may want to pass ",
-    "these arguments to DT::datatable() instead. See ",
-    "http://rstudio.github.io/DT/shiny.html for more info."
-  )
   checkShinyVersion()
   if (!quoted) expr = substitute(expr)
 
+  currentSession <- NULL
+  currentOutputName <- NULL
+
   exprFunc <- shiny::exprToFunction(expr, env, quoted = TRUE)
   widgetFunc <- function() {
-    x <- exprFunc()
-    if (is.data.frame(x)) {
-      datatable(x)
-    } else {
-      x
+    instance <- exprFunc()
+    if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
+      instance = datatable(instance, ...)
     }
+
+    if (is.function(hook <- instance$preRenderHook))
+      instance <- hook(instance, currentSession, currentOutputName)
+    instance$preRenderHook <- NULL
+
+    instance
   }
 
-  htmlwidgets::shinyRenderWidget(widgetFunc(), dataTableOutput, environment(), FALSE)
+  renderFunc <- htmlwidgets::shinyRenderWidget(widgetFunc(), dataTableOutput, environment(), FALSE)
+
+  shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
+    currentSession <<- shinysession
+    currentOutputName <<- name
+    on.exit({
+      currentSession <<- NULL
+      currentOutputName <<- NULL
+    }, add = TRUE)
+
+    renderFunc()
+  })
 }
 
 shinyFun = function(name) getFromNamespace(name, 'shiny')
@@ -105,6 +119,11 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter) {
   }
   data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
+
+  sessionDataURL(session, data, id, filter)
+}
+
+sessionDataURL = function(session, data, id, filter) {
 
   URLdecode = shinyFun('URLdecode')
   toJSON = shinyFun('toJSON')
@@ -246,7 +265,7 @@ dotsToRange = function(string) {
   r
 }
 
-fixServerOptions = function(options, escape, colnames) {
+fixServerOptions = function(options) {
   options$serverSide = TRUE
   if (is.null(options$processing)) options$processing = TRUE
 
@@ -263,7 +282,7 @@ fixServerOptions = function(options, escape, colnames) {
       'd.search.caseInsensitive = %s;',
       tolower(!isFALSE(options[['search']]$caseInsensitive))
     ),
-    sprintf('d.escape = %s;', escapeToConfig(escape, colnames)),
+    sprintf('d.escape = %s;', attr(options, 'escapeIdx', exact = TRUE)),
     '}'
   )
   options
