@@ -124,7 +124,7 @@ img {
 <p>You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page.</p>
 <div id="a-minimal-example" class="section level1">
 <h1><span class="header-section-number">1</span> A Minimal Example</h1>
-<p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>dataTableOutput()</code> and <code>renderDataTable()</code> in <strong>DT</strong> (instead of <strong>shiny</strong>):</p>
+<p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>dataTableOutput()</code> and <code>renderDataTable()</code> in the <strong>DT</strong> namespace (instead of <strong>shiny</strong>):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 <span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
@@ -134,27 +134,21 @@ img {
     )
   }
 )</code></pre>
+<p><strong>Important:</strong> Be sure to use the <code>DT::</code> prefix when calling <code>dataTableOutput</code> and <code>renderDataTable</code> so that the <strong>DT</strong> versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions.</p>
 <p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note you should use <code>JS()</code> instead of <code>I()</code> to write literal JavaScript code in options.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-<span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
+shiny::<span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">pageLength =</span> <span class="dv">5</span>,
   <span class="dt">initComplete =</span> <span class="kw">I</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
 ))</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">renderDataTable</span>(
+DT::<span class="kw">renderDataTable</span>(
   iris, <span class="dt">options =</span> <span class="kw">list</span>(
     <span class="dt">pageLength =</span> <span class="dv">5</span>,
     <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
   )
 )</code></pre>
-<div class="panel panel-warning">
-<div class="panel-heading">
-Server-side vs Client-side Processing
-</div>
-<div class="panel-body">
-The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways (the default is client-side processing). When the data object is relatively large, you should consider using server-side processing (specify the argument <code>server = TRUE</code>), otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
-</div>
-</div>
+<p>The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways; the default is server-side processing, but you can switch to client-side by calling <code>DT::renderDataTable</code> with a <code>server = FALSE</code> argument. When the data object is relatively large, do not use <code>server = FALSE</code>, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.</p>
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
