@@ -38,9 +38,6 @@
 #'   = FALSE)}, where \code{clear} indicates whether you want the clear buttons
 #'   in the input boxes, and \code{plain} means if you want to use Bootstrap
 #'   form styles or plain text input styles for the text input boxes
-#' @param server whether to use server-side processing; if \code{TRUE}, you must
-#'   provide a server URL so that DataTables can send Ajax requests to retrieve
-#'   data from the server
 #' @param escape whether to escape HTML entities in the table: \code{TRUE} means
 #'   to escape the whole table, and \code{FALSE} means not to escape it;
 #'   alternatively, you can specify numeric column indices or column names to
@@ -65,7 +62,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  server = FALSE, escape = TRUE, style = 'default',
+  escape = TRUE, style = 'default',
   selection = c('multiple', 'single', 'none'), extensions = list()
 ) {
 
@@ -97,13 +94,6 @@ datatable = function(
   if (length(numc)) options = appendColumnDefs(
     options, list(className = 'dt-right', targets = numc - 1)
   )
-
-  # 1.5Mb is just an arbitrary size from my experiments
-  if (object.size(data) > 1.5e6 && !server && getOption('DT.warn.size', TRUE))
-    warning(
-      'It seems your data is too big for client-side DataTables. You may ',
-      'consider server-side processing: http://rstudio.github.io/DT/server.html'
-    )
 
   # make sure the table is _not_ ordered by default (change the DataTables default)
   if (is.null(options[['order']])) options$order = list()
@@ -143,29 +133,8 @@ datatable = function(
     container = tags$table(tableHeader(colnames, escape), class = class)
   }
 
-  # in the server mode, we should not store the full data in JSON
-  if (server) {
-    origData = data
-    data = NULL
-    # indices of columns that need to be escaped
-    attr(options, 'escapeIdx') = escapeToConfig(escape, colnames)
-    options = fixServerOptions(options)
-
-    # register the data object in a shiny session
-    registerData = function(instance, shinysession, name) {
-
-      origData = instance$x$origData
-      instance$x$origData = NULL
-      options = instance$x$options
-      if (!inShiny() || !is.null(options$ajax[['url']])) return(instance)
-
-      url = sessionDataURL(shinysession, origData, name, dataTablesFilter)
-      options$ajax$url = url
-      instance$x$options = fixServerOptions(options)
-
-      instance
-    }
-  }
+  # indices of columns that need to be escaped
+  attr(options, 'escapeIdx') = escapeToConfig(escape, colnames)
 
   if (is.list(extensions)) {
     extOptions = extensions
@@ -178,9 +147,6 @@ datatable = function(
   if ('Responsive' %in% extensions) options$responsive = TRUE
   # these extensions need to be initialized via new $.fn.dataTable...
   extOptions = extOptions[intersect(extensions, extNew)]
-
-  data = escapeData(data, escape, colnames)
-  data = unname(data)
 
   # generate <caption></caption>
   if (is.character(caption)) caption = tags$caption(caption)
@@ -211,7 +177,6 @@ datatable = function(
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
   if (inShiny()) params$selection = match.arg(selection)
-  if (server) params$origData = origData
 
   deps = list(htmlDependency(
     'datatables', DataTablesVersion, src = depPath('datatables', 'js'),
@@ -225,7 +190,24 @@ datatable = function(
 
   htmlwidgets::createWidget(
     'datatables', params, package = 'DT', width = '100%', height = 'auto',
-    dependencies = deps, preRenderHook = if (server) registerData
+    dependencies = deps, preRenderHook = function(instance) {
+
+      data = instance[['x']][['data']]
+
+      # 1.5Mb is just an arbitrary size from my experiments
+      # TODO: Move this to widget_data override, or preRenderHook
+      if (object.size(data) > 1.5e6 && getOption('DT.warn.size', TRUE))
+        warning(
+          'It seems your data is too big for client-side DataTables. You may ',
+          'consider server-side processing: http://rstudio.github.io/DT/server.html'
+        )
+
+      data = escapeData(data, escape, colnames)
+      data = unname(data)
+      instance$x$data = data
+
+      instance
+    }
   )
 }
 
