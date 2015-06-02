@@ -1,5 +1,3 @@
-# TODO: after the next version of shiny is released, change the error message
-# and ask users to install from CRAN instead
 checkShinyVersion = function() {
   if (packageVersion('shiny') < '0.12.0') stop(
     'DT requires shiny >= 0.12.0. ',
