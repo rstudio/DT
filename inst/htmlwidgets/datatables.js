@@ -2,8 +2,14 @@ HTMLWidgets.widget({
   name: "datatables",
   type: "output",
   renderValue: function(el, data) {
-    var $el = $(el), cells = data.data;
+    var $el = $(el);
     $el.empty();
+
+    if (data === null) {
+      return;
+    }
+
+    var cells = data.data;
 
     if (cells instanceof Array) cells = HTMLWidgets.transposeArray2D(cells);
 

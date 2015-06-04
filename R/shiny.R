@@ -71,7 +71,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
     }
 
     # in the server mode, we should not store the full data in JSON
-    if (server) {
+    if (server && !is.null(instance[['x']])) {
       origData = instance[['x']][['data']]
       instance$x$data = NULL
 

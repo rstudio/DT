@@ -76,6 +76,13 @@ datatable = function(
     if (is.character(rownames)) rownames  # use custom row names
   }
 
+  hideDataTable = FALSE
+  if (is.null(data)) {
+    data = data.frame(numeric(0))
+    names(data) = " "
+    hideDataTable = TRUE
+  }
+
   if (is.data.frame(data)) {
     data = as.data.frame(data)
     numc = unname(which(sapply(data, is.numeric)))
@@ -189,7 +196,8 @@ datatable = function(
     deps = c(deps, list(pluginDependency('searchHighlight')))
 
   htmlwidgets::createWidget(
-    'datatables', params, package = 'DT', width = '100%', height = 'auto',
+    'datatables', if (hideDataTable) NULL else params,
+    package = 'DT', width = '100%', height = 'auto',
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]
