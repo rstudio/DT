@@ -9,6 +9,8 @@ Authors@R: c(
     person("jQuery contributors", role = c("ctb", "cph"), comment = "jQuery in htmlwidgets/lib"),
     person("SpryMedia Limited", role = c("ctb", "cph"), comment = "DataTables in htmlwidgets/lib"),
     person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
+    person("Leon", "Gersen", role = c("ctb", "cph"), comment = "noUiSlider in htmlwidgets/lib"),
+    person("Bartek", "Szopka", role = c("ctb", "cph"), comment = "jquery.highlight.js in htmlwidgets/lib"),
     person("RStudio Inc", role = "cph")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
