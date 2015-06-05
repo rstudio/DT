@@ -18,7 +18,7 @@ Description: Ports the JavaScript library 'DataTables' into R. It can be used
     in HTML pages rendered from R (e.g. via R Markdown or Shiny).
 URL: http://rstudio.github.io/DT
 BugReports: https://github.com/rstudio/DT/issues
-License: GPL-3 | LICENSE
+License: GPL-3 | file LICENSE
 Imports:
     htmltools,
     htmlwidgets (>= 0.4),
