@@ -1,10 +1,11 @@
 Package: DT
 Type: Package
 Title: R Interface to the 'jQuery' Plug-in 'DataTables'
-Version: 0.0.65
-Date: 2014-11-11
+Version: 0.0.66
+Date: 2015-06-05
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
+    person("Joe", "Cheng", email = "joe@rstudio.com", role = c("ctb")),
     person("jQuery contributors", role = c("ctb", "cph"), comment = "jQuery in htmlwidgets/lib"),
     person("SpryMedia Limited", role = c("ctb", "cph"), comment = "DataTables in htmlwidgets/lib"),
     person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
