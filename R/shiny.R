@@ -77,6 +77,13 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
       # register the data object in a shiny session
       options = instance[['x']][['options']]
+
+      # Normalize "ajax" argument; if we leave it a string then we have several
+      # code paths that need to account for both string and list representations
+      if (is.character(options[['ajax']])) {
+        options$ajax = list(url = options$ajax)
+      }
+
       if (is.null(options[['ajax']][['url']])) {
         url = sessionDataURL(currentSession, origData, currentOutputName, dataTablesFilter)
         options$ajax$url = url
