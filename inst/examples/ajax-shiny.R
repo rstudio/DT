@@ -1,7 +1,7 @@
 # !formatR
-library(DT)
 DTApp = function(data, ..., options = list()) {
   library(shiny)
+  library(DT)
   shinyApp(
     ui = fluidPage(
       title = 'Server-side processing of DataTables',
@@ -10,9 +10,11 @@ DTApp = function(data, ..., options = list()) {
       )
     ),
     server = function(input, output, session) {
-      output$tbl = DT::renderDataTable({
-        datatable(data, ..., options = options)
-      }, server = TRUE)
+      options$serverSide = TRUE
+      options$ajax = list(url = dataTableAjax(session, data))
+      # create a widget using an Ajax URL created above
+      widget = datatable(data, ..., options = options)
+      output$tbl = DT::renderDataTable(widget)
     }
   )
 }
