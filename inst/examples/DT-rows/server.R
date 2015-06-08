@@ -3,7 +3,7 @@ library(DT)
 
 shinyServer(function(input, output, session) {
 
-  output$x1 = DT::renderDataTable(cars)
+  output$x1 = DT::renderDataTable(cars, server = FALSE)
 
   # highlight selected rows in the scatterplot
   output$x2 = renderPlot({

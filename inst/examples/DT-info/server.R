@@ -7,7 +7,7 @@ shinyServer(function(input, output, session) {
   mtcars2 = mtcars[, c('hp', 'mpg')]
 
   # render the table (with row names)
-  output$x1 = DT::renderDataTable(mtcars2)
+  output$x1 = DT::renderDataTable(mtcars2, server = FALSE)
 
   # a scatterplot with certain points highlighted
   output$x2 = renderPlot({

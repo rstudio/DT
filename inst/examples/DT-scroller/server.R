@@ -13,7 +13,7 @@ shinyServer(function(input, output) {
   sketch = matrix(ncol = 4, dimnames = list(NULL, head(letters, 4)))
   # render the widget
   output$tbl = DT::renderDataTable(
-    sketch, extensions = 'Scroller',
+    sketch, extensions = 'Scroller', server = FALSE,
     options = list(
       ajax = 'large.txt',
       deferRender = TRUE,
