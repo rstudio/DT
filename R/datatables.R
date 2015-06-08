@@ -77,7 +77,7 @@ datatable = function(
   }
 
   hideDataTable = FALSE
-  if (is.null(data)) {
+  if (is.null(data) || ncol(data) == 0) {
     data = data.frame(numeric(0))
     names(data) = " "
     hideDataTable = TRUE
@@ -85,7 +85,7 @@ datatable = function(
 
   if (is.data.frame(data)) {
     data = as.data.frame(data)
-    numc = unname(which(sapply(data, is.numeric)))
+    numc = unname(which(vapply(data, is.numeric, logical(1))))
   } else {
     if (!is.matrix(data))
       stop("'data' must be either a matrix or a data frame")
@@ -123,7 +123,7 @@ datatable = function(
   # data, and we need to add a name for the first column, i.e. row names
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
   # do not order the first column if the name is empty (a column for row names)
-  if (colnames[1] == ' ')
+  if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
   style = match.arg(style, list.files(depPath('datatables', 'css')))
