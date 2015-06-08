@@ -29,3 +29,4 @@ Suggests:
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
     shiny (>= 0.12.0)
+VignetteBuilder: knitr
