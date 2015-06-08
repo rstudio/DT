@@ -2,8 +2,14 @@ HTMLWidgets.widget({
   name: "datatables",
   type: "output",
   renderValue: function(el, data) {
-    var $el = $(el), cells = data.data;
+    var $el = $(el);
     $el.empty();
+
+    if (data === null) {
+      return;
+    }
+
+    var cells = data.data;
 
     if (cells instanceof Array) cells = HTMLWidgets.transposeArray2D(cells);
 
@@ -360,19 +366,20 @@ HTMLWidgets.widget({
       return selected;
     };
     var selection = inArray(data.selection, ['single', 'multiple']);
+    var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
     if (selection) table.on('click.dt', 'tr', function() {
       var $this = $(this), thisRow = table.row(this);
       if (data.selection === 'multiple') {
-        $this.toggleClass('selected');
+        $this.toggleClass(selClass);
       } else {
-        if ($this.is('.selected')) {
-          $this.removeClass('selected');
+        if ($this.hasClass(selClass)) {
+          $this.removeClass(selClass);
         } else {
-          table.$('tr.selected').removeClass('selected');
-          $this.addClass('selected');
+          table.$('tr.' + selClass).removeClass(selClass);
+          $this.addClass(selClass);
         }
       }
-      if (server && !$this.is('.selected')) {
+      if (server && !$this.hasClass(selClass)) {
         var id = thisRow.data()[0];
         // remove id from selected since its class .selected has been removed
         selected.splice($.inArray(id, selected), 1);
@@ -387,7 +394,7 @@ HTMLWidgets.widget({
     if (server) table.on('draw.dt', function() {
       table.rows({page: 'current'}).every(function() {
         if (inArray(this.data()[0], selected)) {
-          $(this.node()).addClass('selected');
+          $(this.node()).addClass(selClass);
         }
       });
     });
