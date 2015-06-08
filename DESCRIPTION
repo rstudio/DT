@@ -1,6 +1,6 @@
 Package: DT
 Type: Package
-Title: A Wrapper of the JavaScript library 'DataTables'
+Title: A Wrapper of the JavaScript Library 'DataTables'
 Version: 0.0.66
 Date: 2015-06-05
 Authors@R: c(
