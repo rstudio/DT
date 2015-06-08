@@ -181,6 +181,7 @@ datatable = function(
   ), colnames = cn, rownames = length(rn) > 0)
   if (length(params$caption) == 0) params$caption = NULL
   if (params$filter != 'none') params$filterHTML = filterHTML
+  if (style != 'default') params$style = style
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
   if (inShiny()) params$selection = match.arg(selection)
