@@ -126,8 +126,8 @@ img {
 
 <hr />
 <p>The R package <strong>DT</strong> provides an R interface to the JavaScript library <a href="http://datatables.net"><strong>DataTables</strong></a>. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and <strong>DataTables</strong> provides filtering, pagination, sorting, and many other features in the tables.</p>
-<p>You can install the development version of the package from Github:</p>
-<pre class="sourceCode r"><code class="sourceCode r">if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/DT&quot;</span>)
+<p>You may install the stable version from CRAN, or the development version using <code>devtools::install_github('rstudio/DT')</code> if necessary:</p>
+<pre class="sourceCode r"><code class="sourceCode r">if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&#39;DT&#39;</span>, <span class="dt">repos =</span> <span class="st">&#39;http://cran.rstudio.com&#39;</span>)
 <span class="kw">sessionInfo</span>()</code></pre>
 <pre><code>## R version 3.2.0 (2015-04-16)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
@@ -145,7 +145,7 @@ img {
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.0.67
+## [1] DT_0.1
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] htmlwidgets_0.4.2 magrittr_1.5      formatR_1.2      
