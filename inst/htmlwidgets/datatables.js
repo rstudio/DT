@@ -355,8 +355,10 @@ HTMLWidgets.widget({
     }
 
     // selected rows
+    var selection = inArray(data.selection, ['single', 'multiple']);
+    var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
     var selected = [], selectedRows = function() {
-      var rows = table.rows('.selected', {search: 'applied'});
+      var rows = table.rows('.' + selClass, {search: 'applied'});
       // return the first column in server mode, and row indices in client mode
       if (!server) return addOne(rows.indexes().toArray());
       var ids = rows.data().toArray().map(function(d) {
@@ -365,8 +367,6 @@ HTMLWidgets.widget({
       selected = unique(selected.concat(ids));
       return selected;
     };
-    var selection = inArray(data.selection, ['single', 'multiple']);
-    var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
     if (selection) table.on('click.dt', 'tr', function() {
       var $this = $(this), thisRow = table.row(this);
       if (data.selection === 'multiple') {
