@@ -358,13 +358,14 @@ HTMLWidgets.widget({
     var selection = inArray(data.selection, ['single', 'multiple']);
     var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
     var selected = [], selectedRows = function() {
+      if (!selection) return [];
       var rows = table.rows('.' + selClass, {search: 'applied'});
       // return the first column in server mode, and row indices in client mode
       if (!server) return addOne(rows.indexes().toArray());
       var ids = rows.data().toArray().map(function(d) {
         return d[0];  // assume the first column is row names
       });
-      selected = unique(selected.concat(ids));
+      selected = data.selection === 'multiple' ? unique(selected.concat(ids)) : ids;
       return selected;
     };
     if (selection) table.on('click.dt', 'tr', function() {
