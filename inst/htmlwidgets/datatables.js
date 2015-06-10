@@ -368,7 +368,7 @@ HTMLWidgets.widget({
       selected = data.selection === 'multiple' ? unique(selected.concat(ids)) : ids;
       return selected;
     };
-    if (selection) table.on('click.dt', 'tr', function() {
+    if (selection) table.on('click.dt', 'tbody tr', function() {
       var $this = $(this), thisRow = table.row(this);
       if (data.selection === 'multiple') {
         $this.toggleClass(selClass);
