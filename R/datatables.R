@@ -47,7 +47,12 @@
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
 #' @param selection the row selection mode (single or multiple selection or
-#'   disable selection) when a table widget is rendered in a Shiny app
+#'   disable selection) when a table widget is rendered in a Shiny app;
+#'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
+#'   selected = c(1, 3, 8))} to pre-select rows, and please note the
+#'   \code{selected} parameter should be the numeric row indices for client-side
+#'   tables, and row names for server-side tables (e.g.
+#'   \code{rownames(data)[c(1, 3, 8)]})
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the
@@ -184,7 +189,14 @@ datatable = function(
   if (style != 'default') params$style = style
   if (length(extensions)) params$extensions = as.list(extensions)
   if (length(extOptions)) params$extOptions = extOptions
-  if (inShiny()) params$selection = match.arg(selection)
+  # selection parameters in shiny
+  if (inShiny()) {
+    selection = if (is.character(selection)) {
+      list(mode = match.arg(selection), selected = NULL)
+    } else modifyList(list(mode = 'multiple', selected = NULL), selection)
+
+    params$selection = selection
+  }
 
   deps = list(htmlDependency(
     'datatables', DataTablesVersion, src = depPath('datatables', 'js'),

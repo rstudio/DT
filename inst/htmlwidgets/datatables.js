@@ -355,9 +355,11 @@ HTMLWidgets.widget({
     }
 
     // selected rows
-    var selection = inArray(data.selection, ['single', 'multiple']);
+    var selection = inArray(data.selection.mode, ['single', 'multiple']);
     var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
-    var selected = [], selectedRows = function() {
+    var selected = data.selection.selected;
+    if (selected === null) selected = [];
+    var selectedRows = function() {
       if (!selection) return [];
       var rows = table.rows('.' + selClass, {search: 'applied'});
       // return the first column in server mode, and row indices in client mode
@@ -365,12 +367,12 @@ HTMLWidgets.widget({
       var ids = rows.data().toArray().map(function(d) {
         return d[0];  // assume the first column is row names
       });
-      selected = data.selection === 'multiple' ? unique(selected.concat(ids)) : ids;
+      selected = data.selection.mode === 'multiple' ? unique(selected.concat(ids)) : ids;
       return selected;
     };
     if (selection) table.on('click.dt', 'tbody tr', function() {
       var $this = $(this), thisRow = table.row(this);
-      if (data.selection === 'multiple') {
+      if (data.selection.mode === 'multiple') {
         $this.toggleClass(selClass);
       } else {
         if ($this.hasClass(selClass)) {
@@ -388,17 +390,25 @@ HTMLWidgets.widget({
       changeInput('rows_selected', selectedRows());
       changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
     });
-    changeInput('rows_selected', selectedRows());
+    changeInput('rows_selected', selected);
+    var selectRows = function() {
+      if (selected.length === 0) return;
+      if (server) {
+        table.rows({page: 'current'}).every(function() {
+          if (inArray(this.data()[0], selected)) {
+            $(this.node()).addClass(selClass);
+          }
+        });
+      } else {
+        var selected0 = selected.map(function(i) { return i - 1; });
+        $(table.rows(selected0).nodes()).addClass(selClass);
+      }
+    };
+    if (selection) selectRows();  // in case users have specified pre-selected rows
     // restore selected rows after the table is redrawn (e.g. sort/search/page);
     // client-side tables will preserve the selections automatically; for
     // server-side tables, we have to check if the row name is in `selected`
-    if (server) table.on('draw.dt', function() {
-      table.rows({page: 'current'}).every(function() {
-        if (inArray(this.data()[0], selected)) {
-          $(this.node()).addClass(selClass);
-        }
-      });
-    });
+    if (server && selection) table.on('draw.dt', selectRows);
 
     // expose some table info to Shiny
     var updateTableInfo = function(e, settings) {
