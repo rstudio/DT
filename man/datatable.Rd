@@ -65,7 +65,12 @@ third), or \code{c('Species', 'Sepal.Length')}}
 currently only \code{'default'} and \code{'bootstrap'} are supported}
 
 \item{selection}{the row selection mode (single or multiple selection or
-disable selection) when a table widget is rendered in a Shiny app}
+disable selection) when a table widget is rendered in a Shiny app;
+alternatively, you can use a list of the form \code{list(mode = 'multiple',
+selected = c(1, 3, 8))} to pre-select rows, and please note the
+\code{selected} parameter should be the numeric row indices for client-side
+tables, and row names for server-side tables (e.g.
+\code{rownames(data)[c(1, 3, 8)]})}
 
 \item{extensions}{a character vector of the names of the DataTables
 extensions (\url{http://datatables.net/extensions/index}), or a named list
