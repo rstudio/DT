@@ -82,10 +82,13 @@ datatable = function(
   }
 
   hideDataTable = FALSE
-  if (is.null(data) || ncol(data) == 0) {
+  if (is.null(data) || identical(ncol(data), 0L)) {
     data = data.frame(numeric(0))
     names(data) = " "
     hideDataTable = TRUE
+  } else if (length(dim(data)) != 2) {
+    str(data)
+    stop("'data' must be 2-dimensional (e.g. data frame or matrix)")
   }
 
   if (is.data.frame(data)) {
