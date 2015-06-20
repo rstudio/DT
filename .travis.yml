@@ -1,19 +1,44 @@
 language: c
 
+sudo: false
+
 env:
   matrix:
     - R_PKG="$(basename $TRAVIS_REPO_SLUG)"
   global:
     secure: "UA1wwxtwlWOb7glP37H4zWmcd/NNToRtV33EoD5zutf4BF+nCs6TdDAcKCQEvJz6r0KQswwgzPWALbNfn3dFDyB01jXIqrznCAeJfyz8dI38lxDj7fEdUstFeKXwkizYB13w7lsIu2NXJQXS2Nr4Dot5sKFFV7JrPiXzfoKUcSM="
 
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - r-base-dev
+    - r-cran-boot
+    - r-cran-class
+    - r-cran-cluster
+    - r-cran-codetools
+    - r-cran-foreign
+    - r-cran-kernsmooth
+    - r-cran-lattice
+    - r-cran-mass
+    - r-cran-matrix
+    - r-cran-mgcv
+    - r-cran-nlme
+    - r-cran-nnet
+    - r-cran-rodbc
+    - r-cran-rpart
+    - r-cran-spatial
+    - r-cran-survival
+
 install:
-  - sudo apt-add-repository -y "deb http://cran.rstudio.com/bin/linux/ubuntu `lsb_release -cs`/"
-  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-  - sudo apt-add-repository -y ppa:marutter/c2d4u
-  - sudo apt-get update
-  - sudo apt-get install r-base-dev r-cran-devtools
   - "wget -q -O - http://yihui.name/xran/r-config | bash"
+  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
   - Rscript -e "devtools::install_deps(dep = TRUE)"
+
+cache:
+  directories:
+  - $HOME/R
 
 script:
   - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
