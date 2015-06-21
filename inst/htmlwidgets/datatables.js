@@ -63,6 +63,7 @@ HTMLWidgets.widget({
 
         var $td = $(td), type = $td.data('type'), filter;
         var $input = $td.children('div').first().children('input');
+        $input.prop('disabled', !table.settings()[0].aoColumns[i].bSearchable);
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
