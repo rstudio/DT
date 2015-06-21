@@ -365,9 +365,9 @@ HTMLWidgets.widget({
       selected = unique(selected.concat(ids));
       return selected;
     };
+    if (selection) table.on('click.dt', 'tbody tr', function() {
     var selection = inArray(data.selection, ['single', 'multiple']);
     var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
-    if (selection) table.on('click.dt', 'tr', function() {
       var $this = $(this), thisRow = table.row(this);
       if (data.selection === 'multiple') {
         $this.toggleClass(selClass);

@@ -61,7 +61,7 @@ The feature of row selection is enabled automatically when a table is embedded i
 ```{r echo=FALSE}
 library(DT)
 datatable(head(iris), options = list(dom = 't'), callback = JS(
-  "table.on('click.dt', 'tr', function() {",
+  "table.on('click.dt', 'tbody tr', function() {",
   "$(this).toggleClass('selected');",
   "})"
 ))
