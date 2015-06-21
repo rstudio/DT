@@ -137,3 +137,4 @@ We prepare more examples in this section as users ask questions:
 1. [UI language and internationalization](004-i18n.html)
 1. [Search result highlighting](006-highlight.html)
 1. [Search options (regular expressions and case-sensitive searching)](007-search.html)
+1. [Disable searching for individual columns](009-searchable.html)
