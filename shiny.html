@@ -137,7 +137,7 @@ img {
     )
   }
 )</code></pre>
-<p><strong>Important:</strong> Be sure to use the <code>DT::</code> prefix when calling <code>dataTableOutput</code> and <code>renderDataTable</code> so that the <strong>DT</strong> versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions.</p>
+<p><strong>Important:</strong> Be sure to use the <code>DT::</code> prefix when calling <code>dataTableOutput</code> and <code>renderDataTable</code> so that the <strong>DT</strong> versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions. If you make sure to <code>library(DT)</code> <em>after</em> <code>library(shiny)</code>, normally the <strong>DT</strong> versions should just override the <strong>shiny</strong> versions if you do not use the <code>DT::</code> prefix (when in doubt, use this prefix, until we completely remove these functions from <strong>shiny</strong>).</p>
 <p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note you should use <code>JS()</code> instead of <code>I()</code> to write literal JavaScript code in options.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 shiny::<span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(

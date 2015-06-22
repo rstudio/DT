@@ -26,7 +26,7 @@ shinyApp(
 )
 ```
 
-**Important:** Be sure to use the `DT::` prefix when calling `dataTableOutput` and `renderDataTable` so that the **DT** versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions.
+**Important:** Be sure to use the `DT::` prefix when calling `dataTableOutput` and `renderDataTable` so that the **DT** versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions. If you make sure to `library(DT)` _after_ `library(shiny)`, normally the **DT** versions should just override the **shiny** versions if you do not use the `DT::` prefix (when in doubt, use this prefix, until we completely remove these functions from **shiny**).
 
 If you have used the `renderDataTable()` function in **shiny** before, please note you should use `JS()` instead of `I()` to write literal JavaScript code in options.
 
