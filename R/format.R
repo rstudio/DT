@@ -230,15 +230,30 @@ styleEqual = function(levels, values) {
 }
 
 #' @param data the numeric vector to be represented as color bars (in fact, only
-#'   its range, i.e. min and max, is needed here)
+#'   its range, i.e. min and max, is needed here, so this doesn't need to be
+#'   specified if a limits vector is provided)
 #' @param color the color of the bars
+#' @param limits a numeric vector of length two for setting the range of values
+#'  to color. Values less than min are displayed as 0 and values greater than
+#'  max are displayed as 100.
+#' @param angle a number of degrees representing direction to fill gradient relative
+#' to a horizontal line and the gradient line, going counter-clockwise. Positive angles
+#' represent right angles, negative angles represent left angles. For example, 90 fills
+#' right to left and -90 fills left to right.
 #' @export
 #' @rdname styleInterval
-styleColorBar = function(data, color) {
-  rg = range(data, na.rm = TRUE, finite = TRUE)
-  r1 = rg[1]; r2 = rg[2]; r = r2 - r1
+styleColorBar = function(data, color, limits=NULL, angle=90) {
+  stopifnot(is.numeric(angle))
+  if (!is.null(limits) & length(limits) == 2) {
+    stopifnot(all(is.finite(limits)))
+    stopifnot(limits[2] > limits[1])
+    r1 = limits[1]; r2 = limits[2]; r = r2 - r1
+  } else {
+    rg = range(data, na.rm = TRUE, finite = TRUE)
+    r1 = rg[1]; r2 = rg[2]; r = r2 - r1
+  }
   JS(sprintf(
-    "isNaN(parseFloat(value)) || value == %s ? '' : 'linear-gradient(90deg, transparent ' + (%s - value)/%s * 100 + '%%, %s ' + (%s - value)/%s * 100 + '%%)'",
-    r1, r2, r, color, r2, r
+    "isNaN(parseFloat(value)) || value <= %s ? '' : 'linear-gradient(%sdeg, transparent ' + (%s - value)/%s * 100 + '%%, %s ' + (%s - value)/%s * 100 + '%%)'",
+    r1, angle, r2, r, color, r2, r
   ))
 }
