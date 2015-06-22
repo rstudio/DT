@@ -50,6 +50,17 @@ DT::renderDataTable(
 
 The `renderDataTable()` function in **shiny** uses [server-side processing](server.html) and it has no client-side support. **DT** supports both ways; the default is server-side processing, but you can switch to client-side by calling `DT::renderDataTable` with a `server = FALSE` argument. When the data object is relatively large, do not use `server = FALSE`, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
 
+The first argument of `DT::renderDataTable()` can be either a data object or a table widget returned by `datatable()`. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:
+
+```{r eval=FALSE}
+DT::renderDataTable({
+  datatable(iris) %>% formatStyle(
+    'Sepal.Width',
+    backgroundColor = styleInterval(3.4, c('gray', 'yellow'))
+  )
+})
+```
+
 # Interaction with Shiny
 
 There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `foo` to denote the output id of the table (i.e. the `outputId` in `dataTableOutput()`). You need to replace `foo` with the actual id of the table in your own app.

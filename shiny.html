@@ -152,6 +152,13 @@ DT::<span class="kw">renderDataTable</span>(
   )
 )</code></pre>
 <p>The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways; the default is server-side processing, but you can switch to client-side by calling <code>DT::renderDataTable</code> with a <code>server = FALSE</code> argument. When the data object is relatively large, do not use <code>server = FALSE</code>, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.</p>
+<p>The first argument of <code>DT::renderDataTable()</code> can be either a data object or a table widget returned by <code>datatable()</code>. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:</p>
+<pre class="sourceCode r"><code class="sourceCode r">DT::<span class="kw">renderDataTable</span>({
+  <span class="kw">datatable</span>(iris) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(
+    <span class="st">&#39;Sepal.Width&#39;</span>,
+    <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
+  )
+})</code></pre>
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
