@@ -8,6 +8,8 @@ NEW FEATURES
 
 - `formatCurrency()` will round numbers to 2 decimal places by default, and it is configurable via the new argument `digits` (thanks, @mebaran, #100).
 
+- In Shiny, `input$tableID_cell_clicked` gives the row and column indices of the currently clicked cell as a list of the form `list(row = row_index, column = column_index)`.
+
 BUG FIXES
 
 - Row selections are not preserved when column filters are enabled and clicked (thanks, @The-Dub, #97).
