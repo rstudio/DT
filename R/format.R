@@ -167,7 +167,7 @@ tplStyle = function(cols, styles) {
   }, FUN.VALUE = character(1))
   css = paste(sprintf("'%s':%s", upperToDash(names(styles)), styles), collapse = ',')
   sprintf(
-    "var value=data[%s]; $(this.api().cell(row, %s).node()).css({%s});",
+    "var value=data[%s]; if (value!==null) $(this.api().cell(row, %s).node()).css({%s});",
     cols, cols, css
   )
 }

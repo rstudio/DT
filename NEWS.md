@@ -14,6 +14,8 @@ BUG FIXES
 
 - Missing dates are not rendered correctly with formatDate() (thanks, @studerus, #112)
 
+- Missing values are mistakenly treated as 0 in formatStyle() (thanks, @studerus, #116)
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
