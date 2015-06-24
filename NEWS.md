@@ -12,6 +12,8 @@ BUG FIXES
 
 - Single row selection does not work for server-side tables (http://stackoverflow.com/q/30700143/559676).
 
+- Missing dates are not rendered correctly with formatDate() (thanks, @studerus, #112)
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.

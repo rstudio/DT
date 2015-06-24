@@ -145,7 +145,7 @@ tplRound = function(cols, digits) {
 
 tplDate = function(cols, method) {
   sprintf(
-    "var d = new Date(data[%d]); $(this.api().cell(row, %s).node()).html(d['%s']());",
+    "var d = data[%d]; d = d === null ? '' : new Date(d); $(this.api().cell(row, %s).node()).html(d === '' ? '' : d['%s']());",
     cols, cols, method
   )
 }
