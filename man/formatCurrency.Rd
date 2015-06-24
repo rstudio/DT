@@ -7,7 +7,7 @@
 \alias{formatStyle}
 \title{Format table columns}
 \usage{
-formatCurrency(table, columns, currency = "$", interval = 3, mark = ",")
+formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", digits = 2)
 
 formatPercentage(table, columns, digits = 0)
 

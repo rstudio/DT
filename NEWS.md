@@ -6,6 +6,8 @@ NEW FEATURES
 
 - Column filters may be disabled individually using the `searchable` settings of columns, e.g. http://rstudio.github.io/DT/009-searchable.html (thanks, @GitChub, #101).
 
+- `formatCurrency()` will round numbers to 2 decimal places by default, and it is configurable via the new argument `digits` (thanks, @mebaran, #100).
+
 BUG FIXES
 
 - Row selections are not preserved when column filters are enabled and clicked (thanks, @The-Dub, #97).

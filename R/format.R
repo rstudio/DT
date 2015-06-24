@@ -48,8 +48,10 @@ formatColumns = function(table, columns, template, ...) {
 #'     color = styleInterval(3.4, c('red', 'white')),
 #'     backgroundColor = styleInterval(3.4, c('yellow', 'gray'))
 #'   )
-formatCurrency = function(table, columns, currency = '$', interval = 3, mark = ',') {
-  formatColumns(table, columns, tplCurrency, currency, interval, mark)
+formatCurrency = function(
+  table, columns, currency = '$', interval = 3, mark = ',', digits = 2
+) {
+  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits)
 }
 
 #' @export
@@ -122,10 +124,10 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   ))
 }
 
-tplCurrency = function(cols, currency, interval, mark) {
+tplCurrency = function(cols, currency, interval, mark, digits) {
   sprintf(
-    "var d = parseFloat(data[%d]); $(this.api().cell(row, %d).node()).html(isNaN(d) ? '' : '%s' + d.toString().replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
-    cols, cols, currency, interval, mark
+    "var d = parseFloat(data[%d]); $(this.api().cell(row, %d).node()).html(isNaN(d) ? '' : '%s' + d.toFixed(%s).replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
+    cols, cols, currency, digits, interval, mark
   )
 }
 
