@@ -73,6 +73,9 @@ formatDate = function(table, columns, method = 'toDateString') {
   formatColumns(table, columns, tplDate, method)
 }
 
+#' @param valueColumns indices of the columns from which the cell values are
+#'   obtained; this can be different with the \code{columns} argument, e.g. you
+#'   may style one column based on the values of a different column
 #' @param fontWeight the font weight, e.g. \code{'bold'} and \code{'normal'}
 #' @param color the font color, e.g. \code{'red'} and \code{'#ee00aa'}
 #' @param backgroundColor the background color of table cells
@@ -89,14 +92,14 @@ formatDate = function(table, columns, method = 'toDateString') {
 #' @export
 #' @rdname formatCurrency
 formatStyle = function(
-  table, columns, fontWeight = NULL, color = NULL, backgroundColor = NULL,
-  background = NULL, ...
+  table, columns, valueColumns = columns, fontWeight = NULL, color = NULL,
+  backgroundColor = NULL, background = NULL, ...
 ) {
   styles = dropNULL(list(
     fontWeight = fontWeight, color = color, backgroundColor = backgroundColor,
     background = background, ...
   ))
-  formatColumns(table, columns, tplStyle, styles)
+  formatColumns(table, columns, tplStyle, valueColumns, styles)
 }
 
 # turn character/logical indices to numeric indices
@@ -158,7 +161,7 @@ DateMethods = c(
   'toLocaleTimeString', 'toString', 'toTimeString', 'toUTCString'
 )
 
-tplStyle = function(cols, styles) {
+tplStyle = function(cols, valueCols, styles, ...) {
   if (length(styles) == 0) return()
   if (!is.list(styles)) stop("'styles' must be a list")
   JSclass = class(JS(''))
@@ -169,9 +172,10 @@ tplStyle = function(cols, styles) {
     if (isJS) s else sprintf("'%s'", s)
   }, FUN.VALUE = character(1))
   css = paste(sprintf("'%s':%s", upperToDash(names(styles)), styles), collapse = ',')
+  valueCols = name2int(valueCols, ...)
   sprintf(
     "var value=data[%s]; if (value!==null) $(this.api().cell(row, %s).node()).css({%s});",
-    cols, cols, css
+    valueCols, cols, css
   )
 }
 

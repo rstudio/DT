@@ -10,6 +10,8 @@ NEW FEATURES
 
 - In Shiny, `input$tableID_cell_clicked` gives the row and column indices of the currently clicked cell as a list of the form `list(row = row_index, column = column_index)`.
 
+- Added a new argument `valueColumns` to `formatStyle()` so we can style a column based on the values of a different column (thanks, @zizaozi, #115). See http://rstudio.github.io/DT/010-style.html for examples.
+
 BUG FIXES
 
 - Row selections are not preserved when column filters are enabled and clicked (thanks, @The-Dub, #97).
