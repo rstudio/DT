@@ -126,8 +126,8 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
 
 tplCurrency = function(cols, currency, interval, mark, digits) {
   sprintf(
-    "var d = parseFloat(data[%d]); $(this.api().cell(row, %d).node()).html(isNaN(d) ? '' : '%s' + d.toFixed(%s).replace(/\\B(?=(\\d{%d})+(?!\\d))/g, '%s'));",
-    cols, cols, currency, digits, interval, mark
+    "var d = parseFloat(data[%d]); $(this.api().cell(row, %d).node()).html(isNaN(d) ? '' : '%s' + d.toFixed(%s).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{%s})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{%s})+(?=\\.)))/g, '$1%s'));",
+    cols, cols, currency, digits, interval, interval, mark
   )
 }
 

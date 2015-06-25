@@ -20,6 +20,8 @@ BUG FIXES
 
 - Missing values are mistakenly treated as 0 in formatStyle() (thanks, @studerus, #116)
 
+- The thousands separator (e.g. a common) in `formatCurrency()` should not be applied to the digits after the decimal point (thanks, @johnbaums, #116).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
