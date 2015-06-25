@@ -121,32 +121,32 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   i = name2int(name, names, rownames)
   JS(append(
     js, after = 1,
-    template(i, ...)
+    template(i, ..., names, rownames)
   ))
 }
 
-tplCurrency = function(cols, currency, interval, mark, digits) {
+tplCurrency = function(cols, currency, interval, mark, digits, ...) {
   sprintf(
     "var d = parseFloat(data[%d]); $(this.api().cell(row, %d).node()).html(isNaN(d) ? '' : '%s' + d.toFixed(%s).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{%s})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{%s})+(?=\\.)))/g, '$1%s'));",
     cols, cols, currency, digits, interval, interval, mark
   )
 }
 
-tplPercentage = function(cols, digits) {
+tplPercentage = function(cols, digits, ...) {
   sprintf(
     "var d = parseFloat(data[%d]); $(this.api().cell(row, %s).node()).html(isNaN(d) ? '' : (d * 100).toFixed(%d) + '%%');",
     cols, cols, digits
   )
 }
 
-tplRound = function(cols, digits) {
+tplRound = function(cols, digits, ...) {
   sprintf(
     "var d = parseFloat(data[%d]); $(this.api().cell(row, %s).node()).html(isNaN(d) ? '' : d.toFixed(%d));",
     cols, cols, digits
   )
 }
 
-tplDate = function(cols, method) {
+tplDate = function(cols, method, ...) {
   sprintf(
     "var d = data[%d]; if (d !== null) {d = new Date(d); $(this.api().cell(row, %s).node()).html(d['%s']())};",
     cols, cols, method
