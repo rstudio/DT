@@ -449,5 +449,17 @@ HTMLWidgets.widget({
     }
     table.on('draw.dt', updateSearchInfo);
     updateSearchInfo();
+
+    // the current cell clicked on
+    table.on('click.dt', 'tbody td', function() {
+      var info = table.cell(this).index();
+      if (server) {
+        info.row = table.row(info.row).data()[0];
+      } else {
+        info.row += 1;
+      }
+      changeInput('cell_clicked', info);
+    });
+    changeInput('cell_clicked', {});
   }
 });

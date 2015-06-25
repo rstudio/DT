@@ -161,7 +161,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $(this.api().cell(row, 3).node()).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[2]); $(this.api().cell(row, 2).node()).html(isNaN(d) ? '' : '$' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
+      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $(this.api().cell(row, 3).node()).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '$' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\nvar d = parseFloat(data[2]); $(this.api().cell(row, 2).node()).html(isNaN(d) ? '' : '$' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\n}"
     },
     "callback": null,
     "filter": "none"
@@ -191,7 +191,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $(this.api().cell(row, 4).node()).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\nvar d = parseFloat(data[1]); $(this.api().cell(row, 1).node()).html(isNaN(d) ? '' : '€' + d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','));\n}"
+      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $(this.api().cell(row, 4).node()).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '€' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\nvar d = parseFloat(data[1]); $(this.api().cell(row, 1).node()).html(isNaN(d) ? '' : '€' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\n}"
     },
     "callback": null,
     "filter": "none"
@@ -246,7 +246,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
         }
       ],
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar d = new Date(data[1]); $(this.api().cell(row, 1).node()).html(d['toDateString']());\nvar d = new Date(data[2]); $(this.api().cell(row, 2).node()).html(d['toLocaleDateString']());\nvar d = new Date(data[3]); $(this.api().cell(row, 3).node()).html(d['toLocaleString']());\nvar d = new Date(data[4]); $(this.api().cell(row, 4).node()).html(d['toUTCString']());\n}"
+      "rowCallback": "function(row, data) {\nvar d = data[1]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 1).node()).html(d['toDateString']())};\nvar d = data[2]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 2).node()).html(d['toLocaleDateString']())};\nvar d = data[3]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 3).node()).html(d['toLocaleString']())};\nvar d = data[4]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 4).node()).html(d['toUTCString']())};\n}"
     },
     "callback": null,
     "filter": "none"
@@ -288,7 +288,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
+      "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
     },
     "callback": null,
     "filter": "none"
@@ -351,7 +351,7 @@ The actual CSS property names are dash-separated, but you can use camelCase name
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value == 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
+      "rowCallback": "function(row, data) {\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value == 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
     },
     "callback": null,
     "filter": "none"
