@@ -16,9 +16,9 @@ BUG FIXES
 
 - Single row selection does not work for server-side tables (http://stackoverflow.com/q/30700143/559676).
 
-- Missing dates are not rendered correctly with formatDate() (thanks, @studerus, #112)
+- Missing dates are not rendered correctly with `formatDate()` (thanks, @studerus, #112)
 
-- Missing values are mistakenly treated as 0 in formatStyle() (thanks, @studerus, #116)
+- Missing values are mistakenly treated as 0 in `formatStyle()` (thanks, @studerus, #116)
 
 - The thousands separator (e.g. a common) in `formatCurrency()` should not be applied to the digits after the decimal point (thanks, @johnbaums, #116).
 
