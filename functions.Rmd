@@ -88,6 +88,8 @@ datatable(iris) %>%
 
 For the column `Sepal.Length`, the font weight in cells of which the values are greater than 5 will be bold. For `Sepal.Width`, both foreground and background colors are used: white for values smaller than 3.4, blue for those between 3.4 and 3.8, and red for those greater than 3.8; gray background for values below 3.4, and yellow for those above 3.4. For `Petal.Length`, a bar graph is presented as the background. For `Species`, the cells are actually rotated in 3D^[If you use Internet Explorer, its version should be at least 10. Other modern web browsers should just work.], with different background colors (light blue for `setosa`, light green for `versicolor`, and light pink for `virginica`).
 
+You can find more examples about styling cells on [this page](010-style.html).
+
 # Table Utilities
 
 The functions `tableHeader()` and `tableFooter` are wrappers of `htmltools::tags` to generate a table header or footer. It may be convenient when you want to define a custom [table container](./).

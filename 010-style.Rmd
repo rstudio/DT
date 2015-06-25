@@ -1,0 +1,31 @@
+---
+title: "More Examples on Styling Cells"
+output:
+  html_document:
+    includes: null
+---
+
+By default, `formatStyle()` uses the values of the column(s) specified by the `columns` argument to style column(s). You can also style a column conditional on the values of a different column using the `valueColumns` argument.
+
+```{r}
+library(DT)
+options(DT.options = list(pageLength = 5))
+df = as.data.frame(cbind(matrix(round(rnorm(50), 3), 10), sample(0:1, 10, TRUE)))
+# style V6 based on values of V6
+datatable(df) %>% formatStyle(
+  'V6',
+  backgroundColor = styleEqual(c(0, 1), c('gray', 'yellow'))
+)
+# style V1 base on values of V6
+datatable(df) %>% formatStyle(
+  'V1', 'V6',
+  backgroundColor = styleEqual(c(0, 1), c('gray', 'yellow'))
+)
+# hide V6
+datatable(df, options = list(
+    columnDefs = list(list(targets = 6, visible = FALSE))
+)) %>% formatStyle(
+  'V1', 'V6',
+  backgroundColor = styleEqual(c(0, 1), c('gray', 'yellow'))
+)
+```
