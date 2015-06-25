@@ -15,8 +15,8 @@ formatRound(table, columns, digits = 2)
 
 formatDate(table, columns, method = "toDateString")
 
-formatStyle(table, columns, fontWeight = NULL, color = NULL, backgroundColor = NULL, 
-    background = NULL, ...)
+formatStyle(table, columns, valueColumns = columns, fontWeight = NULL, color = NULL, 
+    backgroundColor = NULL, background = NULL, ...)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -36,6 +36,10 @@ equivalent to \code{c('V1', 'V2')})}
 \item{method}{the method(s) to convert a date to string in JavaScript; see
 \code{DT:::DateMethods} for a list of possible methods, and
 \url{http://mzl.la/1xGe99W} for a full reference}
+
+\item{valueColumns}{indices of the columns from which the cell values are
+obtained; this can be different with the \code{columns} argument, e.g. you
+may style one column based on the values of a different column}
 
 \item{fontWeight}{the font weight, e.g. \code{'bold'} and \code{'normal'}}
 
