@@ -236,16 +236,22 @@ styleEqual = function(levels, values) {
   JS(paste0(js, "''"))
 }
 
-#' @param data the numeric vector to be represented as color bars (in fact, only
-#'   its range, i.e. min and max, is needed here)
+#' @param data a numeric vector whose range will be used for scaling the
+#' table data from 0-100 before being represented as color bars. A vector
+#' of length 2 is acceptable here for specifying a range possibly wider or
+#' narrower than the range of the table data itself.
 #' @param color the color of the bars
+#' @param angle a number of degrees representing the direction to fill the
+#' gradient relative to a horizontal line and the gradient line, going
+#' counter-clockwise. For example, 90 fills right to left and -90 fills
+#' left to right.
 #' @export
 #' @rdname styleInterval
-styleColorBar = function(data, color) {
+styleColorBar = function(data, color, angle=90) {
   rg = range(data, na.rm = TRUE, finite = TRUE)
   r1 = rg[1]; r2 = rg[2]; r = r2 - r1
   JS(sprintf(
-    "isNaN(parseFloat(value)) || value == %s ? '' : 'linear-gradient(90deg, transparent ' + (%s - value)/%s * 100 + '%%, %s ' + (%s - value)/%s * 100 + '%%)'",
-    r1, r2, r, color, r2, r
+    "isNaN(parseFloat(value)) || value <= %s ? '' : 'linear-gradient(%sdeg, transparent ' + (%s - value)/%s * 100 + '%%, %s ' + (%s - value)/%s * 100 + '%%)'",
+    r1, angle, r2, r, color, r2, r
   ))
 }

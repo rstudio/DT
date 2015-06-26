@@ -9,7 +9,7 @@ styleInterval(cuts, values)
 
 styleEqual(levels, values)
 
-styleColorBar(data, color)
+styleColorBar(data, color, angle = 90)
 }
 \arguments{
 \item{cuts}{a vector of cut points (sorted increasingly)}
@@ -19,10 +19,17 @@ styleColorBar(data, color)
 \item{levels}{a character vector of data values to be mapped (one-to-one) to
 CSS values}
 
-\item{data}{the numeric vector to be represented as color bars (in fact, only
-its range, i.e. min and max, is needed here)}
+\item{data}{a numeric vector whose range will be used for scaling the
+table data from 0-100 before being represented as color bars. A vector
+of length 2 is acceptable here for specifying a range possibly wider or
+narrower than the range of the table data itself.}
 
 \item{color}{the color of the bars}
+
+\item{angle}{a number of degrees representing the direction to fill the
+gradient relative to a horizontal line and the gradient line, going
+counter-clockwise. For example, 90 fills right to left and -90 fills
+left to right.}
 }
 \description{
 A few helper functions for the \code{\link{formatStyle}()} function to
@@ -49,3 +56,4 @@ The function \code{styleColorBar()} can be used to draw background color bars
 behind table cells in a column, and the width of bars is proportional to the
 column values.
 }
+
