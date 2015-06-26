@@ -18,4 +18,4 @@ devtools::install_github('rstudio/DT')
 # then try DT::datatable(iris) as a hello world example
 ```
 
-See the full documentation at <http://rstudio.github.io/DT>.
+See the full documentation at <http://rstudio.github.io/DT>. Please use [Github issues](https://github.com/rstudio/DT/issues) if you want to file bug reports or feature requests, and you may use [StackOverflow](http://stackoverflow.com/questions/tagged/r+datatables) or the [shiny-discuss](https://groups.google.com/forum/#!forum/shiny-discuss) mailing list to ask questions.
