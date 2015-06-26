@@ -9,7 +9,7 @@ styleInterval(cuts, values)
 
 styleEqual(levels, values)
 
-styleColorBar(data, color, limits = NULL, angle = 90)
+styleColorBar(data, color, angle = 90)
 }
 \arguments{
 \item{cuts}{a vector of cut points (sorted increasingly)}
@@ -19,20 +19,17 @@ styleColorBar(data, color, limits = NULL, angle = 90)
 \item{levels}{a character vector of data values to be mapped (one-to-one) to
 CSS values}
 
-\item{data}{the numeric vector to be represented as color bars (in fact, only
-its range, i.e. min and max, is needed here, so this doesn't need to be
-specified if a limits vector is provided)}
+\item{data}{a numeric vector whose range will be used for scaling the
+table data from 0-100 before being represented as color bars. A vector
+of length 2 is acceptable here for specifying a range possibly wider or
+narrower than the range of the table data itself.}
 
 \item{color}{the color of the bars}
 
-\item{limits}{a numeric vector of length two for setting the range of values
-to color. Values less than min are displayed as 0 and values greater than
-max are displayed as 100.}
-
-\item{angle}{a number of degrees representing direction to fill gradient relative
-to a horizontal line and the gradient line, going counter-clockwise. Positive angles
-represent right angles, negative angles represent left angles. For example, 90 fills
-right to left and -90 fills left to right.}
+\item{angle}{a number of degrees representing the direction to fill the
+gradient relative to a horizontal line and the gradient line, going
+counter-clockwise. For example, 90 fills right to left and -90 fills
+left to right.}
 }
 \description{
 A few helper functions for the \code{\link{formatStyle}()} function to
