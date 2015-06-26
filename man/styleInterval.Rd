@@ -56,4 +56,3 @@ The function \code{styleColorBar()} can be used to draw background color bars
 behind table cells in a column, and the width of bars is proportional to the
 column values.
 }
-
