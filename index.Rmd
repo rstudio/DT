@@ -6,12 +6,14 @@ title: 'DT: An R interface to the DataTables library'
 
 The R package **DT** provides an R interface to the JavaScript library [**DataTables**](http://datatables.net). R data objects (matrices or data frames) can be displayed as tables on HTML pages, and **DataTables** provides filtering, pagination, sorting, and many other features in the tables.
 
-You may install the stable version from CRAN, or the development version using `devtools::install_github('rstudio/DT')` if necessary:
+You may install the stable version from CRAN, or the development version using `devtools::install_github('rstudio/DT')` if necessary (this website reflects the development version of **DT**):
 
 ```{r message=FALSE}
 if (!require("DT")) install.packages('DT', repos = 'http://cran.rstudio.com')
 sessionInfo()
 ```
+
+Please use [Github issues](https://github.com/rstudio/DT/issues) if you want to file bug reports or feature requests, and you may use [StackOverflow](http://stackoverflow.com/questions/tagged/r+datatables) or the [shiny-discuss](https://groups.google.com/forum/#!forum/shiny-discuss) mailing list to ask questions.
 
 # Usage
 
