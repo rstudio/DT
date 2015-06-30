@@ -458,6 +458,7 @@ HTMLWidgets.widget({
       } else {
         info.row += 1;
       }
+      info.value = table.cell(this).data();
       changeInput('cell_clicked', info);
     });
     changeInput('cell_clicked', {});
