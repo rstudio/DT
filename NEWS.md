@@ -8,7 +8,7 @@ NEW FEATURES
 
 - `formatCurrency()` will round numbers to 2 decimal places by default, and it is configurable via the new argument `digits` (thanks, @mebaran, #100).
 
-- In Shiny, `input$tableID_cell_clicked` gives the row and column indices of the currently clicked cell as a list of the form `list(row = row_index, column = column_index)`.
+- In Shiny, `input$tableId_cell_clicked` gives the row and column indices of the currently clicked cell as well as its value as a list of the form `list(row = row_index, column = column_index, value = cell_value)`.
 
 - Added a new argument `valueColumns` to `formatStyle()` so we can style a column based on the values of a different column (thanks, @zizaozi, #115). See http://rstudio.github.io/DT/010-style.html for examples.
 
