@@ -105,7 +105,7 @@ formatStyle = function(
 # turn character/logical indices to numeric indices
 name2int = function(name, names, rownames) {
   if (is.numeric(name)) {
-    i = if (all(name > 0)) name else seq_along(names)[name]
+    i = if (all(name >= 0)) name else seq_along(names)[name]
     if (!rownames) i = i - 1
     return(i)
   }
