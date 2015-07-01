@@ -63,11 +63,11 @@ DT::renderDataTable({
 
 # Interaction with Shiny
 
-There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `foo` to denote the output id of the table (i.e. the `outputId` in `dataTableOutput()`). You need to replace `foo` with the actual id of the table in your own app.
+There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `tableId` to denote the output id of the table (i.e. the `outputId` in `dataTableOutput()`). You need to replace `tableId` with the actual id of the table in your own app.
 
 ## Row Selection
 
-The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through `input$foo_rows_selected`. See [a live example here](https://yihui.shinyapps.io/DT-rows/). You can disable row selection by `datatable(..., selection = 'none')`, or use the single selection mode by `selection = 'single'`. The default selection mode is multiple selections (try the table below).
+The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through `input$tableId_rows_selected`. See [a live example here](https://yihui.shinyapps.io/DT-rows/). You can disable row selection by `datatable(..., selection = 'none')`, or use the single selection mode by `selection = 'single'`. The default selection mode is multiple selections (try the table below).
 
 ```{r echo=FALSE}
 library(DT)
@@ -89,23 +89,23 @@ shiny::runApp(app)
 <div class="panel panel-primary">
 <div class="panel-heading">Row Indices in the Case of Server-side Processing</div>
 <div class="panel-body">
-Note `input$foo_rows_selected` is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because **DT** does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by `datatable(data, rownames = TRUE)` (in most cases, this is just the default behavior) if you want to get the names of selected rows from `input$foo_rows_selected`.
+Note `input$tableId_rows_selected` is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because **DT** does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by `datatable(data, rownames = TRUE)` (in most cases, this is just the default behavior) if you want to get the names of selected rows from `input$tableId_rows_selected`.
 </div>
 </div>
 
-You can also obtain the index of the last clicked row via `input$foo_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
+You can also obtain the index of the last clicked row via `input$tableId_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
 
 ## DataTables Information
 
-As you interact with the table (e.g. sort columns, search the table, or navigate through pages), **DT** will expose some information about the current state of the table to Shiny. At the moment, these information are available in the `input` object of the Shiny server function (suppose the table output id is `foo`):
+As you interact with the table (e.g. sort columns, search the table, or navigate through pages), **DT** will expose some information about the current state of the table to Shiny. At the moment, these information are available in the `input` object of the Shiny server function (suppose the table output id is `tableId`):
 
-- `input$foo_rows_current`: the indices of rows on the current page
-- `input$foo_rows_all`: the indices of rows on all pages (after the table is filtered by the search strings)
+- `input$tableId_rows_current`: the indices of rows on the current page
+- `input$tableId_rows_all`: the indices of rows on all pages (after the table is filtered by the search strings)
     - similar to the indices of selected rows, the indices are row names when you use the server-side processing, and numeric indices when using client-side processing
-    - again, there is no way to know all the available data on the server side, `input$foo_rows_all` will be the same as `input$foo_rows_current` for tables using server-side processing
-- `input$foo_search`: the global search string
-- `input$foo_search_columns`: the vector of column search strings when column filters are enabled
-- `input$foo_state`: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option `stateSave = TRUE` is applied to the table)
+    - again, there is no way to know all the available data on the server side, `input$tableId_rows_all` will be the same as `input$tableId_rows_current` for tables using server-side processing
+- `input$tableId_search`: the global search string
+- `input$tableId_search_columns`: the vector of column search strings when column filters are enabled
+- `input$tableId_state`: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option `stateSave = TRUE` is applied to the table)
 
 [This example](https://yihui.shinyapps.io/DT-info/) shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.
 
