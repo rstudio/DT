@@ -5,7 +5,9 @@ shinyServer(function(input, output, session) {
 
   # add CSS style 'cursor: pointer' to the 0-th column (i.e. row names)
   output$x1 = DT::renderDataTable({
-    datatable(cars) %>% formatStyle(0, cursor = 'pointer')
+    datatable(
+      cars, selection = 'none', class = 'cell-border strip hover'
+    ) %>% formatStyle(0, cursor = 'pointer')
   })
 
   observe({
