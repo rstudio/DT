@@ -194,10 +194,12 @@ datatable = function(
   if (length(extOptions)) params$extOptions = extOptions
   # selection parameters in shiny
   if (inShiny()) {
-    selection = if (is.character(selection)) {
-      list(mode = match.arg(selection), selected = NULL)
-    } else modifyList(list(mode = 'multiple', selected = NULL), selection)
-
+    if (is.character(selection)) {
+      selection = list(mode = match.arg(selection))
+    }
+    selection = modifyList(
+      list(mode = 'multiple', selected = NULL, which = 'row'), selection
+    )
     params$selection = selection
   }
 
