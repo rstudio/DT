@@ -355,61 +355,116 @@ HTMLWidgets.widget({
       return ux;
     }
 
-    // selected rows
-    var selection = inArray(data.selection.mode, ['single', 'multiple']);
-    var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
-    var selected = data.selection.selected;
-    if (selected === null) selected = [];
-    var selectedRows = function() {
-      if (!selection) return [];
-      var rows = table.rows('.' + selClass, {search: 'applied'});
-      // return the first column in server mode, and row indices in client mode
-      if (!server) return addOne(rows.indexes().toArray());
-      var ids = rows.data().toArray().map(function(d) {
-        return d[0];  // assume the first column is row names
-      });
-      selected = data.selection.mode === 'multiple' ? unique(selected.concat(ids)) : ids;
-      return selected;
-    };
-    if (selection) table.on('click.dt', 'tbody tr', function() {
-      var $this = $(this), thisRow = table.row(this);
-      if (data.selection.mode === 'multiple') {
-        $this.toggleClass(selClass);
-      } else {
-        if ($this.hasClass(selClass)) {
-          $this.removeClass(selClass);
-        } else {
-          table.$('tr.' + selClass).removeClass(selClass);
-          $this.addClass(selClass);
-        }
-      }
-      if (server && !$this.hasClass(selClass)) {
-        var id = thisRow.data()[0];
-        // remove id from selected since its class .selected has been removed
-        selected.splice($.inArray(id, selected), 1);
-      }
-      changeInput('rows_selected', selectedRows());
-      changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
-    });
-    changeInput('rows_selected', selected);
-    var selectRows = function() {
-      if (selected.length === 0) return;
+    // change the row index of a cell
+    var tweakCellIndex = function(cell) {
+      var info = cell.index();
       if (server) {
-        table.rows({page: 'current'}).every(function() {
-          if (inArray(this.data()[0], selected)) {
-            $(this.node()).addClass(selClass);
-          }
-        });
+        info.row = table.row(info.row).data()[0];
       } else {
-        var selected0 = selected.map(function(i) { return i - 1; });
-        $(table.rows(selected0).nodes()).addClass(selClass);
+        info.row += 1;
       }
-    };
-    if (selection) selectRows();  // in case users have specified pre-selected rows
-    // restore selected rows after the table is redrawn (e.g. sort/search/page);
-    // client-side tables will preserve the selections automatically; for
-    // server-side tables, we have to check if the row name is in `selected`
-    if (server && selection) table.on('draw.dt', selectRows);
+      return {row: info.row, column: info.column};
+    }
+
+    var selMode = data.selection.mode;
+    if (inArray(selMode, ['single', 'multiple'])) {
+      var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
+      var selected = data.selection.selected;
+      if (selected === null) selected = [];
+      // row, column, or cell selection
+      if (data.selection.which === 'row') {
+        var selectedRows = function() {
+          var rows = table.rows('.' + selClass, {search: 'applied'});
+          // return the first column in server mode, and row indices in client mode
+          if (!server) return addOne(rows.indexes().toArray());
+          var ids = rows.data().toArray().map(function(d) {
+            return d[0];  // assume the first column is row names
+          });
+          selected = selMode === 'multiple' ? unique(selected.concat(ids)) : ids;
+          return selected;
+        };
+        table.on('click.dt', 'tbody tr', function() {
+          var $this = $(this), thisRow = table.row(this);
+          if (selMode === 'multiple') {
+            $this.toggleClass(selClass);
+          } else {
+            if ($this.hasClass(selClass)) {
+              $this.removeClass(selClass);
+            } else {
+              table.$('tr.' + selClass).removeClass(selClass);
+              $this.addClass(selClass);
+            }
+          }
+          if (server && !$this.hasClass(selClass)) {
+            var id = thisRow.data()[0];
+            // remove id from selected since its class .selected has been removed
+            selected.splice($.inArray(id, selected), 1);
+          }
+          changeInput('rows_selected', selectedRows());
+          changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
+        });
+        changeInput('rows_selected', selected);
+        var selectRows = function() {
+          if (selected.length === 0) return;
+          if (server) {
+            table.rows({page: 'current'}).every(function() {
+              if (inArray(this.data()[0], selected)) {
+                $(this.node()).addClass(selClass);
+              }
+            });
+          } else {
+            var selected0 = selected.map(function(i) { return i - 1; });
+            $(table.rows(selected0).nodes()).addClass(selClass);
+          }
+        };
+        selectRows();  // in case users have specified pre-selected rows
+        // restore selected rows after the table is redrawn (e.g. sort/search/page);
+        // client-side tables will preserve the selections automatically; for
+        // server-side tables, we have to check if the row name is in `selected`
+        if (server) table.on('draw.dt', selectRows);
+      } else if (data.selection.which === 'column') {
+        table.on('click.dt', 'tbody td', function() {
+          var colIdx = table.cell(this).index().column,
+              thisCol = $(table.column(colIdx).nodes());
+          if (thisCol.hasClass(selClass)) {
+            thisCol.removeClass(selClass);
+            selected.splice($.inArray(colIdx, selected), 1);
+          } else {
+            if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
+            thisCol.addClass(selClass);
+            selected = selMode === 'single' ? [colIdx] : unique(selected.concat([colIdx]));
+          }
+          changeInput('columns_selected', selected);
+        });
+        changeInput('columns_selected', selected);
+        var selectCols = function() {
+          if (selected.length > 0)
+            table.columns(selected).nodes().flatten().to$().addClass(selClass);
+        };
+        selectCols();  // in case users have specified pre-selected columns
+        if (server) table.on('draw.dt', selectCols);
+      } else if (data.selection.which === 'cell') {
+        table.on('click.dt', 'tbody td', function() {
+          var $this = $(this), info = tweakCellIndex(table.cell(this));
+          info = [info.row, info.column];
+          if ($this.hasClass(selClass)) {
+            $this.removeClass(selClass);
+            selected.splice($.inArray(info, selected), 1);
+          } else {
+            if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
+            $this.addClass(selClass);
+            selected = selMode === 'single' ? [info] : unique(selected.concat([info]));
+          }
+          changeInput('cells_selected', selected);
+        });
+        changeInput('cells_selected', selected);
+        var selectCells = function() {
+          // TODO
+        };
+        selectCells();  // in case users have specified pre-selected columns
+        if (server) table.on('draw.dt', selectCells);
+      }
+    }
 
     // expose some table info to Shiny
     var updateTableInfo = function(e, settings) {
@@ -452,12 +507,7 @@ HTMLWidgets.widget({
 
     // the current cell clicked on
     table.on('click.dt', 'tbody td', function() {
-      var info = table.cell(this).index();
-      if (server) {
-        info.row = table.row(info.row).data()[0];
-      } else {
-        info.row += 1;
-      }
+      var info = tweakCellIndex(table.cell(this));
       info.value = table.cell(this).data();
       changeInput('cell_clicked', info);
     });

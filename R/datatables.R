@@ -46,13 +46,14 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
-#' @param selection the row selection mode (single or multiple selection or
-#'   disable selection) when a table widget is rendered in a Shiny app;
+#' @param selection the row/column selection mode (single or multiple selection
+#'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
-#'   selected = c(1, 3, 8))} to pre-select rows, and please note the
-#'   \code{selected} parameter should be the numeric row indices for client-side
-#'   tables, and row names for server-side tables (e.g.
-#'   \code{rownames(data)[c(1, 3, 8)]})
+#'   selected = c(1, 3, 8), which = 'row')} to pre-select rows, and please note
+#'   the \code{selected} parameter should be the numeric row indices for
+#'   client-side tables, and row names for server-side tables (e.g.
+#'   \code{rownames(data)[c(1, 3, 8)]}); the element \code{which} in the list
+#'   can be \code{'column'} to enable column selection
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the
