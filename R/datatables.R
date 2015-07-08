@@ -199,7 +199,7 @@ datatable = function(
       selection = list(mode = match.arg(selection))
     }
     selection = modifyList(
-      list(mode = 'multiple', selected = NULL, which = 'row'), selection
+      list(mode = 'multiple', selected = NULL, target = 'row'), selection
     )
     params$selection = selection
   }
