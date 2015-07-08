@@ -363,7 +363,7 @@ HTMLWidgets.widget({
       } else {
         info.row += 1;
       }
-      return {row: info.row, column: info.column};
+      return {row: info.row, col: info.column};
     }
 
     var selMode = data.selection.mode;

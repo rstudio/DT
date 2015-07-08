@@ -13,7 +13,7 @@ shinyServer(function(input, output, session) {
   observe({
     info = input$x1_cell_clicked
     # do nothing if not clicked yet, or the clicked cell is not in the 1st column
-    if (is.null(info$value) || info$column != 0) return()
+    if (is.null(info$value) || info$col != 0) return()
     updateTabsetPanel(session, 'x0', selected = 'Plot')
     updateTextInput(session, 'x2', value = info$value)
   })
