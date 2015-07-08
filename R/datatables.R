@@ -49,11 +49,13 @@
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
-#'   selected = c(1, 3, 8), which = 'row')} to pre-select rows, and please note
+#'   selected = c(1, 3, 8), target = 'row')} to pre-select rows, and please note
 #'   the \code{selected} parameter should be the numeric row indices for
 #'   client-side tables, and row names for server-side tables (e.g.
-#'   \code{rownames(data)[c(1, 3, 8)]}); the element \code{which} in the list
-#'   can be \code{'column'} to enable column selection
+#'   \code{rownames(data)[c(1, 3, 8)]}); the element \code{target} in the list
+#'   can be \code{'column'} to enable column selection, or \code{'row+column'}
+#'   to make it possible to select both rows and columns (click on the footer to
+#'   select columns)
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the

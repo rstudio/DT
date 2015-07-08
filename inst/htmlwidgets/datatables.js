@@ -17,6 +17,14 @@ HTMLWidgets.widget({
     var $table = $el.find('table');
     if (data.caption) $table.prepend(data.caption);
 
+    if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
+        data.selection.target === 'row+column') {
+      if ($table.children('tfoot').length === 0) {
+        $table.append($('<tfoot>'));
+      }
+      $table.find('thead tr:first').clone().appendTo($table.find('tfoot'));
+    }
+
     // column filters
     var filterRow;
     switch (data.filter) {
@@ -366,13 +374,22 @@ HTMLWidgets.widget({
       return {row: info.row, col: info.column};
     }
 
-    var selMode = data.selection.mode;
+    var selMode = data.selection.mode, selTarget = data.selection.target;
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
-      var selected = data.selection.selected;
-      if (selected === null) selected = [];
+      var selected = data.selection.selected, selected1, selected2;
+      if (selected === null) {
+        selected1 = selected2 = [];
+      } else if (selTarget === 'row') {
+        selected1 = selected;
+      } else if (selTarget === 'column') {
+        selected2 = selected;
+      } else if (selTarget === 'row+column') {
+        selected1 = selected.rows;
+        selected2 = selected.cols;
+      }
       // row, column, or cell selection
-      if (data.selection.which === 'row') {
+      if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
           var rows = table.rows('.' + selClass, {search: 'applied'});
           // return the first column in server mode, and row indices in client mode
@@ -380,8 +397,8 @@ HTMLWidgets.widget({
           var ids = rows.data().toArray().map(function(d) {
             return d[0];  // assume the first column is row names
           });
-          selected = selMode === 'multiple' ? unique(selected.concat(ids)) : ids;
-          return selected;
+          selected1 = selMode === 'multiple' ? unique(selected1.concat(ids)) : ids;
+          return selected1;
         };
         table.on('click.dt', 'tbody tr', function() {
           var $this = $(this), thisRow = table.row(this);
@@ -397,23 +414,23 @@ HTMLWidgets.widget({
           }
           if (server && !$this.hasClass(selClass)) {
             var id = thisRow.data()[0];
-            // remove id from selected since its class .selected has been removed
-            selected.splice($.inArray(id, selected), 1);
+            // remove id from selected1 since its class .selected has been removed
+            selected1.splice($.inArray(id, selected1), 1);
           }
           changeInput('rows_selected', selectedRows());
           changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
         });
-        changeInput('rows_selected', selected);
+        changeInput('rows_selected', selected1);
         var selectRows = function() {
-          if (selected.length === 0) return;
+          if (selected1.length === 0) return;
           if (server) {
             table.rows({page: 'current'}).every(function() {
-              if (inArray(this.data()[0], selected)) {
+              if (inArray(this.data()[0], selected1)) {
                 $(this.node()).addClass(selClass);
               }
             });
           } else {
-            var selected0 = selected.map(function(i) { return i - 1; });
+            var selected0 = selected1.map(function(i) { return i - 1; });
             $(table.rows(selected0).nodes()).addClass(selClass);
           }
         };
@@ -422,40 +439,55 @@ HTMLWidgets.widget({
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to check if the row name is in `selected`
         if (server) table.on('draw.dt', selectRows);
-      } else if (data.selection.which === 'column') {
-        table.on('click.dt', 'tbody td', function() {
-          var colIdx = table.cell(this).index().column,
+      }
+
+      if (inArray(selTarget, ['column', 'row+column'])) {
+        table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr:last th', function() {
+          var colIdx = selTarget === 'column' ? table.cell(this).index().column :
+              $.inArray(this, $table.find('tfoot tr:last th')),
               thisCol = $(table.column(colIdx).nodes());
           if (thisCol.hasClass(selClass)) {
             thisCol.removeClass(selClass);
-            selected.splice($.inArray(colIdx, selected), 1);
+            selected2.splice($.inArray(colIdx, selected2), 1);
           } else {
             if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
             thisCol.addClass(selClass);
-            selected = selMode === 'single' ? [colIdx] : unique(selected.concat([colIdx]));
+            selected2 = selMode === 'single' ? [colIdx] : unique(selected2.concat([colIdx]));
           }
-          changeInput('columns_selected', selected);
+          changeInput('columns_selected', selected2);
         });
-        changeInput('columns_selected', selected);
+        changeInput('columns_selected', selected2);
         var selectCols = function() {
-          if (selected.length > 0)
-            table.columns(selected).nodes().flatten().to$().addClass(selClass);
+          if (selected2.length > 0)
+            table.columns(selected2).nodes().flatten().to$().addClass(selClass);
         };
         selectCols();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCols);
-      } else if (data.selection.which === 'cell') {
+      }
+
+      if (selTarget === 'cell') {
+        var selected0;
+        if (selected === null) {
+          selected0 = [];
+        } else {
+          selected0 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
+        }
+        var arrayToList = function(a) {
+          var x = HTMLWidgets.transposeArray2D(a);
+          return x.length == 2 ? {rows: x[0], cols: x[1]} : {};
+        }
         table.on('click.dt', 'tbody td', function() {
           var $this = $(this), info = tweakCellIndex(table.cell(this));
-          info = [info.row, info.column];
           if ($this.hasClass(selClass)) {
             $this.removeClass(selClass);
-            selected.splice($.inArray(info, selected), 1);
+            selected0.splice($.inArray([info.row, info.col], selected0), 1);
           } else {
             if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
             $this.addClass(selClass);
-            selected = selMode === 'single' ? [info] : unique(selected.concat([info]));
+            selected0 = selMode === 'single' ? [info.row, info.col] :
+              unique(selected0.concat([[info.row, info.col]]));
           }
-          changeInput('cells_selected', selected);
+          changeInput('cells_selected', arrayToList(selected0));
         });
         changeInput('cells_selected', selected);
         var selectCells = function() {
