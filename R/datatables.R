@@ -46,6 +46,7 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
+#' @param width the width of the table
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
@@ -70,7 +71,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default',
+  escape = TRUE, style = 'default', width = '100%',
   selection = c('multiple', 'single', 'none'), extensions = list()
 ) {
 
@@ -218,7 +219,7 @@ datatable = function(
 
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
-    package = 'DT', width = '100%', height = 'auto',
+    package = 'DT', width = width, height = 'auto',
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]

@@ -16,6 +16,8 @@ NEW FEATURES
 
 - Row and column selections can be enabled simultaneously using `datatable(..., selection = list(target = 'row+column')`. Column selection is done via clicking on the table footer.
 
+- Added a `width` argument to `datatable` (thanks, @taiyun).
+
 BUG FIXES
 
 - Row selections are not preserved when column filters are enabled and clicked (thanks, @The-Dub, #97).
