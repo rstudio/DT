@@ -6,7 +6,8 @@
 datatable(data, options = list(), class = "display", callback = JS("return table;"), 
     rownames, colnames, container, caption = NULL, filter = c("none", 
         "bottom", "top"), escape = TRUE, style = "default", width = "100\%", 
-    selection = c("multiple", "single", "none"), extensions = list())
+    selection = c("multiple", "single", "none"), extensions = list(), 
+    plugins = NULL)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -81,6 +82,9 @@ select columns)}
 extensions (\url{http://datatables.net/extensions/index}), or a named list
 of initialization options for the extensions (the names of the list are the
 names of extensions)}
+
+\item{plugins}{a character vector of the names of DataTables plug-ins
+(\url{http://rstudio.github.io/plugins/})}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
