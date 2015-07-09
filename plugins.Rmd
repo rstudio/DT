@@ -1,0 +1,32 @@
+---
+title: DataTables Plug-ins
+---
+
+---
+
+**DataTables** has provided a large number of [plug-ins](http://datatables.net/plug-ins/), and we have integrated a subset of them in **DT**. You may enable plug-ins via the `plugins` argument of `datatable()`, e.g. `plugins = c('natural')`. If you find any plug-ins that you are interested in but are not listed here, you may file a feature request using [Github issues](https://github.com/rstudio/DT/issues). Currently these plug-ins have been integrated into **DT**:
+
+- Sorting
+    - natural
+- Filtering
+    - searchHighlight
+
+Please note the plug-ins for filtering and sorting may not work for server-side processing, e.g. when you render tables in Shiny.
+
+# Examples
+
+Here is an example of the plug-in `natural.js` for natural sorting. Compare the last column of the two tables after sorting:
+
+```{r}
+library(DT)
+d = cbind(
+  head(iris),
+  Mixed = c(1, 2, 3, '10', '1a', '1b')
+)
+datatable(d, options = list(dom = 't'))
+datatable(d, plugins = 'natural', options = list(
+  dom = 't',
+  columnDefs = list(list(type = 'natural', targets = 6))
+))
+```
+

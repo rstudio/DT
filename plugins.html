@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>DataTables Plug-ins</title>
+
+<script src="libs/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
+<script src="libs/datatables/jquery.dataTables.min.js"></script>
+<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
+<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="libs/datatables-natural/natural.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 70px;
+}
+p code {
+  white-space: inherit;
+}
+.panel-heading {
+  text-align: center;
+}
+</style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="./">DT</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="options.html">Options</a></li>
+        <li><a href="functions.html">Functions</a></li>
+        <li><a href="server.html">Server-side Processing</a></li>
+        <li><a href="extensions.html">Extensions</a></li>
+        <li><a href="plugins.html">Plug-ins</a></li>
+        <li><a href="shiny.html">Shiny</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/rstudio/DT" title="View Source on Github"><i class="fa fa-github fa-lg"></i></a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</nav><!--/.navbar -->
+
+<div id="header">
+<h1 class="title">DataTables Plug-ins</h1>
+</div>
+
+
+<hr />
+<p><strong>DataTables</strong> has provided a large number of <a href="http://datatables.net/plug-ins/">plug-ins</a>, and we have integrated a subset of them in <strong>DT</strong>. You may enable plug-ins via the <code>plugins</code> argument of <code>datatable()</code>, e.g. <code>plugins = c('natural')</code>. If you find any plug-ins that you are interested in but are not listed here, you may file a feature request using <a href="https://github.com/rstudio/DT/issues">Github issues</a>. Currently these plug-ins have been integrated into <strong>DT</strong>:</p>
+<ul>
+<li>Sorting
+<ul>
+<li>natural</li>
+</ul></li>
+<li>Filtering
+<ul>
+<li>searchHighlight</li>
+</ul></li>
+</ul>
+<p>Please note the plug-ins for filtering and sorting may not work for server-side processing, e.g. when you render tables in Shiny.</p>
+<div id="examples" class="section level1">
+<h1><span class="header-section-number">1</span> Examples</h1>
+<p>Here is an example of the plug-in <code>natural.js</code> for natural sorting. Compare the last column of the two tables after sorting:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+d =<span class="st"> </span><span class="kw">cbind</span>(
+  <span class="kw">head</span>(iris),
+  <span class="dt">Mixed =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&#39;10&#39;</span>, <span class="st">&#39;1a&#39;</span>, <span class="st">&#39;1b&#39;</span>)
+)
+<span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</code></pre>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-5716">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa"],
+      ["1", "2", "3", "10", "1a", "1b"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n      <th>Mixed</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "dom": "t",
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
+    },
+    "callback": null,
+    "filter": "none"
+  },
+  "evals": []
+}</script></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(d, <span class="dt">plugins =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
+  <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
+  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">type =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">targets =</span> <span class="dv">6</span>))
+))</code></pre>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-4929">{
+  "x": {
+    "data": [
+      ["1", "2", "3", "4", "5", "6"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa"],
+      ["1", "2", "3", "10", "1a", "1b"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n      <th>Mixed</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "dom": "t",
+      "columnDefs": [
+        {
+          "type": "natural",
+          "targets": 6
+        },
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
+    },
+    "callback": null,
+    "filter": "none"
+  },
+  "evals": []
+}</script></p>
+</div>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+    // active menu
+    var href = window.location.pathname;
+    href = href.substr(href.lastIndexOf('/') + 1);
+    if (href === '') href = './';
+    $('a[href="' + href + '"]').parent().addClass('active');
+});
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
