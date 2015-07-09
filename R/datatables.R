@@ -351,13 +351,18 @@ filterRow = function(
         }
         d = as.numeric(d) * 1000  # use milliseconds for JavaScript
       }
-      tags$div(
+      suppressWarnings({
+        d1 = min(d, na.rm = TRUE)
+        d2 = max(d, na.rm = TRUE)
+      })
+      if (is.finite(d1) && is.finite(d2)) tags$div(
         style = 'display: none; position: absolute; width: 200px;',
-        tags$div(
-          `data-min` = min(d, na.rm = TRUE), `data-max` = max(d, na.rm = TRUE)
-        ),
+        tags$div(`data-min` = d1, `data-max` = d2),
         tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
-      )
+      ) else {
+        t = 'disabled'
+        NULL
+      }
     } else if (is.factor(d) || is.logical(d)) {
       if (is.logical(d)) {
         t = 'logical'

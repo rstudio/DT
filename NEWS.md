@@ -18,6 +18,8 @@ NEW FEATURES
 
 - Added a `width` argument to `datatable` (thanks, @taiyun).
 
+- When all values in a numeric column are missing (`NA`), the column filter will be disabled (http://stackoverflow.com/q/31323807/559676).
+
 BUG FIXES
 
 - Row selections are not preserved when column filters are enabled and clicked (thanks, @The-Dub, #97).
