@@ -13,13 +13,13 @@ table.dataTable tr.even td.sorting_1 { background-color: #EAEBFF; }
 table.dataTable tr.even td.sorting_2 { background-color: #F2F3FF; }
 table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 
-/* Selected rows */
-table.dataTable tbody tr.selected,
-table.dataTable tr.selected td.sorting_1,
-table.dataTable tr.selected td.sorting_2,
-table.dataTable tr.selected td.sorting_3,
-div.DTS tbody tr.even.selected,
-.table-striped tbody>tr.selected:nth-child(odd)>td,
-.table-striped tbody>tr.selected:nth-child(even)>td {
+/* Selected rows/cells */
+table.dataTable tbody .selected,
+table.dataTable .selected td.sorting_1,
+table.dataTable .selected td.sorting_2,
+table.dataTable .selected td.sorting_3,
+div.DTS tbody .even.selected,
+.table-striped tbody>.selected:nth-child(odd)>td,
+.table-striped tbody>.selected:nth-child(even)>td {
   background-color: #b0bed9;
 }

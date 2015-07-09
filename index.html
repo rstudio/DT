@@ -145,20 +145,21 @@ img {
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] DT_0.1.10
+## [1] DT_0.1.16
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] htmlwidgets_0.5 magrittr_1.5    formatR_1.2     tools_3.2.1    
-##  [5] htmltools_0.2.9 yaml_2.1.13     stringi_0.5-2   rmarkdown_0.7  
-##  [9] knitr_1.10.12   stringr_1.0.0   digest_0.6.8    evaluate_0.7</code></pre>
+##  [5] htmltools_0.2.9 yaml_2.1.13     stringi_0.5-5   rmarkdown_0.7  
+##  [9] knitr_1.10.12   methods_3.2.1   stringr_1.0.0   digest_0.6.8   
+## [13] evaluate_0.7.1</code></pre>
 <p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> if you want to file bug reports or feature requests, and you may use <a href="http://stackoverflow.com/questions/tagged/r+datatables">StackOverflow</a> or the <a href="https://groups.google.com/forum/#!forum/shiny-discuss">shiny-discuss</a> mailing list to ask questions.</p>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>, <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), 
     rownames, colnames, container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, 
-        <span class="st">&quot;top&quot;</span>), <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">selection =</span> <span class="kw">c</span>(<span class="st">&quot;multiple&quot;</span>, 
-        <span class="st">&quot;single&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="dt">extensions =</span> <span class="kw">list</span>())</code></pre>
+        <span class="st">&quot;top&quot;</span>), <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="dt">selection =</span> <span class="kw">c</span>(<span class="st">&quot;multiple&quot;</span>, 
+        <span class="st">&quot;single&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="dt">extensions =</span> <span class="kw">list</span>(), <span class="dt">plugins =</span> <span class="ot">NULL</span>)</code></pre>
 <p>Here is a “hello world” example with zero configuration:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 <span class="kw">datatable</span>(iris)</code></pre>
