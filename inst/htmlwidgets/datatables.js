@@ -1,3 +1,5 @@
+(function() {
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
@@ -347,6 +349,8 @@ HTMLWidgets.widget({
     // interaction with shiny
     if (!HTMLWidgets.shinyMode) return;
 
+    var methods = {};
+
     var changeInput = function(id, data) {
       Shiny.onInputChange(el.id + '_' + id, data);
     };
@@ -422,6 +426,7 @@ HTMLWidgets.widget({
         });
         changeInput('rows_selected', selected1);
         var selectRows = function() {
+          table.$('tr.' + selClass).removeClass(selClass);
           if (selected1.length === 0) return;
           if (server) {
             table.rows({page: 'current'}).every(function() {
@@ -439,6 +444,11 @@ HTMLWidgets.widget({
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to check if the row name is in `selected`
         if (server) table.on('draw.dt', selectRows);
+        methods.selectRows = function(selected) {
+          selected1 = selected ? selected : [];
+          selectRows();
+          changeInput('rows_selected', selected1);
+        }
       }
 
       if (inArray(selTarget, ['column', 'row+column'])) {
@@ -458,11 +468,17 @@ HTMLWidgets.widget({
         });
         changeInput('columns_selected', selected2);
         var selectCols = function() {
+          table.columns().nodes().flatten().to$().removeClass(selClass);
           if (selected2.length > 0)
             table.columns(selected2).nodes().flatten().to$().addClass(selClass);
         }
         selectCols();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCols);
+        methods.selectColumns = function(selected) {
+          selected2 = selected ? selected : [];
+          selectCols();
+          changeInput('columns_selected', selected2);
+        }
       }
 
       if (selTarget === 'cell') {
@@ -546,3 +562,24 @@ HTMLWidgets.widget({
     changeInput('cell_clicked', {});
   }
 });
+
+  if (!HTMLWidgets.shinyMode) return;
+
+  Shiny.addCustomMessageHandler('datatable-calls', function(data) {
+    var id = data.id;
+    var el = document.getElementById(id);
+    var table = el ? $(el).data('datatable') : null;
+    if (!table) {
+      console.log("Couldn't find table with id " + id);
+      return;
+    }
+
+    var methods = table.shinyMethods, call = data.call;
+    if (methods[call.method]) {
+      methods[call.method].apply(table, call.args);
+    } else {
+      console.log("Unknown method " + call.method);
+    }
+  });
+
+})();

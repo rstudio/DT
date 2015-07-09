@@ -110,6 +110,68 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
   })
 }
 
+#' Manipulate an existing DataTables instance in a Shiny app
+#'
+#' The function \code{datatableProxy()} creates a proxy object that can be used
+#' to manipulate an existing DataTables instance in a Shiny app, e.g. select
+#' rows/columns, or add rows.
+#' @param outputId the id of the table to be manipulated (the same id as the one
+#'   you used in \code{\link{dataTableOutput}()})
+#' @param session the Shiny session object (from the server function of the
+#'   Shiny app)
+#' @param deferUtilFlush whether an action should be carried out right away, or
+#'   should be held until after the next time all of the outputs are updated
+#' @note \code{addRow()} only works for client-side tables. If you want to use
+#'   it in a Shiny app, make sure to use \code{renderDataTable(..., server =
+#'   FALSE)}.
+#' @references \url{http://rstudio.github.io/DT/shiny.html}
+#' @rdname proxy
+#' @export
+dataTableProxy = function(
+  outputId, session = shiny::getDefaultReactiveDomain(), deferUntilFlush = TRUE
+) {
+  if (is.null(session))
+    stop('datatableProxy() must be called from the server function of a Shiny app')
+
+  structure(
+    list(id = outputId, session = session, deferUntilFlush = deferUntilFlush),
+    class = 'datatableProxy'
+  )
+}
+
+#' @param proxy a proxy object returned by \code{dataTableProxy()}
+#' @param selected an integer vector of row/column indices; for server-side
+#'   tables, the row indices should be row names (i.e. a character vector); you
+#'   may use \code{NULL} to clear existing selections
+#' @rdname proxy
+#' @export
+selectRows = function(proxy, selected) {
+  invokeRemote(proxy, 'selectRows', list(I(selected)))
+}
+
+#' @rdname proxy
+#' @export
+selectColumns = function(proxy, selected) {
+  invokeRemote(proxy, 'selectColumns', list(I(selected)))
+}
+
+invokeRemote = function(proxy, method, args = list()) {
+  if (!inherits(proxy, 'datatableProxy'))
+    stop('Invalid proxy argument; table proxy object was expected')
+
+  msg = list(id = proxy$id, call = list(method = method, args = args))
+
+  sess = proxy$session
+  if (proxy$deferUntilFlush) {
+    sess$onFlushed(function() {
+      sess$sendCustomMessage('datatable-calls', msg)
+    }, once = TRUE)
+  } else {
+    sess$sendCustomMessage('datatable-calls', msg)
+  }
+  proxy
+}
+
 shinyFun = function(name) getFromNamespace(name, 'shiny')
 
 #' Register a data object in a shiny session for DataTables
