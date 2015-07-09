@@ -155,6 +155,19 @@ selectColumns = function(proxy, selected) {
   invokeRemote(proxy, 'selectColumns', list(I(selected)))
 }
 
+#' @param data a single row of data to be added to the table; it can be a matrix
+#'   or data frame of one row, or a vector or list of row data (in the latter
+#'   case, please be cautious about the row name: if your table contains row
+#'   names, here \code{data} must also contain the row name as the first
+#'   element)
+#' @rdname proxy
+#' @export
+addRow = function(proxy, data) {
+  if ((is.matrix(data) || is.data.frame(data)) && nrow(data) != 1)
+    stop("'data' must be of only one row")
+  invokeRemote(proxy, 'addRow', list(as.list(unname(data)), I(rownames(data))))
+}
+
 invokeRemote = function(proxy, method, args = list()) {
   if (!inherits(proxy, 'datatableProxy'))
     stop('Invalid proxy argument; table proxy object was expected')

@@ -560,6 +560,21 @@ HTMLWidgets.widget({
       changeInput('cell_clicked', info);
     })
     changeInput('cell_clicked', {});
+
+    methods.addRow = function(data, rowname) {
+      var data0 = table.row(0).data(), n = data0.length, d = n - data.length;
+      if (d === 1) {
+        data = rowname.concat(data)
+      } else if (d !== 0) {
+        console.log(data);
+        console.log(data0);
+        throw 'New data must be of the same length as current data (' + n + ')';
+      };
+      table.row.add(data).draw();
+    }
+
+    table.shinyMethods = methods;
+    $el.data('datatable', table);
   }
 });
 
