@@ -61,6 +61,8 @@
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the
 #'   names of extensions)
+#' @param plugins a character vector of the names of DataTables plug-ins
+#'   (\url{http://rstudio.github.io/plugins/})
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
@@ -72,7 +74,7 @@ datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
   escape = TRUE, style = 'default', width = '100%',
-  selection = c('multiple', 'single', 'none'), extensions = list()
+  selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
 ) {
 
   # yes, we all hate it
@@ -216,6 +218,8 @@ datatable = function(
   if (params$filter != 'none') deps = c(deps, filterDependencies())
   if (isTRUE(options$searchHighlight))
     deps = c(deps, list(pluginDependency('searchHighlight')))
+  if (length(plugins))
+    deps = c(deps, lapply(plugins, pluginDependency))
 
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,

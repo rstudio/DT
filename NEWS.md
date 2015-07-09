@@ -16,7 +16,9 @@ NEW FEATURES
 
 - Row and column selections can be enabled simultaneously using `datatable(..., selection = list(target = 'row+column')`. Column selection is done via clicking on the table footer.
 
-- Added a `width` argument to `datatable` (thanks, @taiyun).
+- Added a `width` argument to `datatable()` (thanks, @taiyun).
+
+- Added a `plugins` argument to `datatable()` to support **DataTables** plugins. See http://rstudio.github.io/plugins/ for more information.
 
 - When all values in a numeric column are missing (`NA`), the column filter will be disabled (http://stackoverflow.com/q/31323807/559676).
 
