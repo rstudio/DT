@@ -95,6 +95,12 @@ Note `input$tableId_rows_selected` is the numeric indices of the selected rows w
 
 You can also obtain the index of the last clicked row via `input$tableId_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
 
+## Column Selection
+
+Row selection is the default mode in **DT**. You can turn on column selection using `datatable(..., selection = list(target = 'column'))`. In this case, you can click on any cell to select a column, and the (numeric) indices of the selected columns will be available in `input$tableId_columns_selected`.
+
+You may also select rows and columns simultaneously using `target = 'row+column'`. In this case, column selection is achieved by clicking on the table footer. Clicking on the table body will select/deselect rows.
+
 ## DataTables Information
 
 As you interact with the table (e.g. sort columns, search the table, or navigate through pages), **DT** will expose some information about the current state of the table to Shiny. At the moment, these information are available in the `input` object of the Shiny server function (suppose the table output id is `tableId`):
@@ -115,3 +121,7 @@ shiny::runApp(app)
 ```
 
 [![DataTables information in shiny](http://i.imgur.com/iLJNC60.png)](https://yihui.shinyapps.io/DT-info/)
+
+## Manipulate An Existing DataTables Instance
+
+After a table has been rendered in a Shiny app, you can use the proxy object returned from `dataTableProxy()` to manipulate it. Currently supported methods are `selectRows()`, `selectColumns()`, and `addRow()`. See [this Shiny app](https://yihui.shinyapps.io/DT-proxy) for an example of using these methods to update a table.
