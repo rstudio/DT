@@ -1,6 +1,6 @@
 checkShinyVersion = function() {
-  if (packageVersion('shiny') < '0.12.0') stop(
-    'DT requires shiny >= 0.12.0. ',
+  if (packageVersion('shiny') < '0.12.1') stop(
+    'DT requires shiny >= 0.12.1. ',
     'Please install the latest version of shiny from CRAN: ',
     'update.packages(ask = FALSE)'
   )
