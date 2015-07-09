@@ -399,7 +399,7 @@ HTMLWidgets.widget({
           });
           selected1 = selMode === 'multiple' ? unique(selected1.concat(ids)) : ids;
           return selected1;
-        };
+        }
         table.on('click.dt', 'tbody tr', function() {
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
@@ -433,7 +433,7 @@ HTMLWidgets.widget({
             var selected0 = selected1.map(function(i) { return i - 1; });
             $(table.rows(selected0).nodes()).addClass(selClass);
           }
-        };
+        }
         selectRows();  // in case users have specified pre-selected rows
         // restore selected rows after the table is redrawn (e.g. sort/search/page);
         // client-side tables will preserve the selections automatically; for
@@ -460,7 +460,7 @@ HTMLWidgets.widget({
         var selectCols = function() {
           if (selected2.length > 0)
             table.columns(selected2).nodes().flatten().to$().addClass(selClass);
-        };
+        }
         selectCols();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCols);
       }
@@ -517,7 +517,7 @@ HTMLWidgets.widget({
       };
       updateRowInfo('current', {page: 'current'});
       updateRowInfo('all', {});
-    };
+    }
     table.on('draw.dt', updateTableInfo);
     updateTableInfo();
 
@@ -542,7 +542,7 @@ HTMLWidgets.widget({
       var info = tweakCellIndex(table.cell(this));
       info.value = table.cell(this).data();
       changeInput('cell_clicked', info);
-    });
+    })
     changeInput('cell_clicked', {});
   }
 });
