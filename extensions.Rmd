@@ -15,7 +15,9 @@ For the time being, because the **DataTables** library does not have a consisten
 Most **DataTables** extensions work on their own, but some may not work well when certain non-default features are enabled or used in Shiny apps. Below is a list of known issues:
 
 - Column filters may not work well with the extensions `FixedColumns`, `FixedHeader`, and `Scroller` ([#41](https://github.com/rstudio/DT/issues/41));
-- The `Responsive` extension does not work well in Shiny apps ([#69](https://github.com/rstudio/DT/issues/69));
+- These extensions do/may not work in Shiny apps:
+    - `Responsive` ([#69](https://github.com/rstudio/DT/issues/69))
+    - `KeyTable` ([#132](https://github.com/rstudio/DT/issues/132))
 
 </div>
 </div>
