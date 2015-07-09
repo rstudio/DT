@@ -86,4 +86,9 @@ in_dir('features/searchHighlight', {
   )
 })
 
+file.copy(
+  c('sorting/natural.js'),
+  dt_path('..', 'datatables-plugins', 'natural'), overwrite = TRUE
+)
+
 setwd(owd)
