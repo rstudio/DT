@@ -389,8 +389,8 @@ HTMLWidgets.widget({
       } else if (selTarget === 'column') {
         selected2 = $.makeArray(selected);
       } else if (selTarget === 'row+column') {
-        selected1 = selected.rows;
-        selected2 = selected.cols;
+        selected1 = $.makeArray(selected.rows);
+        selected2 = $.makeArray(selected.cols);
       }
       // row, column, or cell selection
       if (inArray(selTarget, ['row', 'row+column'])) {
