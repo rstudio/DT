@@ -64,7 +64,7 @@ HTMLWidgets.widget({
     var server = data.options.serverSide === true;
 
     var inArray = function(val, array) {
-      return $.inArray(val, array) > -1;
+      return $.inArray(val, $.makeArray(array)) > -1;
     };
 
     if (data.filter !== 'none') {
@@ -385,9 +385,9 @@ HTMLWidgets.widget({
       if (selected === null) {
         selected1 = selected2 = [];
       } else if (selTarget === 'row') {
-        selected1 = selected;
+        selected1 = $.makeArray(selected);
       } else if (selTarget === 'column') {
-        selected2 = selected;
+        selected2 = $.makeArray(selected);
       } else if (selTarget === 'row+column') {
         selected1 = selected.rows;
         selected2 = selected.cols;
