@@ -51,6 +51,8 @@ formatColumns = function(table, columns, template, ...) {
 formatCurrency = function(
   table, columns, currency = '$', interval = 3, mark = ',', digits = 2
 ) {
+  currency = gsub("'", "\\\\'", currency)
+  mark = gsub("'", "\\\\'", mark)
   formatColumns(table, columns, tplCurrency, currency, interval, mark, digits)
 }
 
