@@ -23,8 +23,8 @@ HTMLWidgets.widget({
         data.selection.target === 'row+column') {
       if ($table.children('tfoot').length === 0) {
         $table.append($('<tfoot>'));
+        $table.find('thead tr').clone().appendTo($table.find('tfoot'));
       }
-      $table.find('thead tr:first').clone().appendTo($table.find('tfoot'));
     }
 
     // column filters
@@ -64,7 +64,7 @@ HTMLWidgets.widget({
     var server = data.options.serverSide === true;
 
     var inArray = function(val, array) {
-      return $.inArray(val, array) > -1;
+      return $.inArray(val, $.makeArray(array)) > -1;
     };
 
     if (data.filter !== 'none') {
@@ -385,12 +385,12 @@ HTMLWidgets.widget({
       if (selected === null) {
         selected1 = selected2 = [];
       } else if (selTarget === 'row') {
-        selected1 = selected;
+        selected1 = $.makeArray(selected);
       } else if (selTarget === 'column') {
-        selected2 = selected;
+        selected2 = $.makeArray(selected);
       } else if (selTarget === 'row+column') {
-        selected1 = selected.rows;
-        selected2 = selected.cols;
+        selected1 = $.makeArray(selected.rows);
+        selected2 = $.makeArray(selected.cols);
       }
       // row, column, or cell selection
       if (inArray(selTarget, ['row', 'row+column'])) {
@@ -452,10 +452,11 @@ HTMLWidgets.widget({
       }
 
       if (inArray(selTarget, ['column', 'row+column'])) {
-        table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr:last th', function() {
+        table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr th', function() {
           var colIdx = selTarget === 'column' ? table.cell(this).index().column :
-              $.inArray(this, $table.find('tfoot tr:last th')),
+              $.inArray(this, table.columns().footer()),
               thisCol = $(table.column(colIdx).nodes());
+          if (colIdx === -1) return;
           if (thisCol.hasClass(selClass)) {
             thisCol.removeClass(selClass);
             selected2.splice($.inArray(colIdx, selected2), 1);
