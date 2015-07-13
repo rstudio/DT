@@ -452,10 +452,11 @@ HTMLWidgets.widget({
       }
 
       if (inArray(selTarget, ['column', 'row+column'])) {
-        table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr:last th', function() {
+        table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr th', function() {
           var colIdx = selTarget === 'column' ? table.cell(this).index().column :
-              $.inArray(this, $table.find('tfoot tr:last th')),
+              $.inArray(this, table.columns().footer()),
               thisCol = $(table.column(colIdx).nodes());
+          if (colIdx === -1) return;
           if (thisCol.hasClass(selClass)) {
             thisCol.removeClass(selClass);
             selected2.splice($.inArray(colIdx, selected2), 1);
