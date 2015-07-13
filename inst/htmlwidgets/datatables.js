@@ -23,8 +23,8 @@ HTMLWidgets.widget({
         data.selection.target === 'row+column') {
       if ($table.children('tfoot').length === 0) {
         $table.append($('<tfoot>'));
+        $table.find('thead tr').clone().appendTo($table.find('tfoot'));
       }
-      $table.find('thead tr:first').clone().appendTo($table.find('tfoot'));
     }
 
     // column filters
