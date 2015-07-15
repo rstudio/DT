@@ -81,6 +81,7 @@ datatable = function(
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
   options = modifyList(getOption('DT.options', list()), options)
+  params = list()
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
@@ -152,6 +153,8 @@ datatable = function(
   if (filter$position == 'top') options$orderCellsTop = TRUE
   if (missing(container)) {
     container = tags$table(tableHeader(colnames, escape), class = class)
+  } else {
+    params$class = class
   }
 
   # indices of columns that need to be escaped
@@ -188,11 +191,11 @@ datatable = function(
       options$tableTools$aButtons = c('copy', 'csv', 'xls', 'print')
   }
 
-  params = structure(list(
+  params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
     callback = if (!missing(callback)) JS('function(table) {', callback, '}'),
     caption = caption, filter = filter$position
-  ), colnames = cn, rownames = length(rn) > 0)
+  )), colnames = cn, rownames = length(rn) > 0)
   if (length(params$caption) == 0) params$caption = NULL
   if (params$filter != 'none') params$filterHTML = filterHTML
   if (style != 'default') params$style = style

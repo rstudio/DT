@@ -36,6 +36,8 @@ BUG FIXES
 
 - The thousands separator (e.g. a comma) in `formatCurrency()` should not be applied to the digits after the decimal point (thanks, @johnbaums, #116).
 
+- The `class` argument does not work when a custom table `container` is used in `datatable()` (thanks, @DarioS, #138).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.

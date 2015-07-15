@@ -17,6 +17,7 @@ HTMLWidgets.widget({
 
     $el.append(data.container);
     var $table = $el.find('table');
+    if (data.class) $table.addClass(data.class);
     if (data.caption) $table.prepend(data.caption);
 
     if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
