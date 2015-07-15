@@ -143,6 +143,7 @@ datatable = function(
 
   style = match.arg(style, list.files(depPath('datatables', 'css')))
   if (style == 'bootstrap') class = DT2BSClass(class)
+  if (style != 'default') params$style = style
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
   filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
@@ -151,6 +152,9 @@ datatable = function(
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
+  params$filter = filter$position
+  if (filter$position != 'none') params$filterHTML = filterHTML
+
   if (missing(container)) {
     container = tags$table(tableHeader(colnames, escape), class = class)
   } else {
@@ -166,15 +170,18 @@ datatable = function(
   } else if (is.character(extensions)) {
     extOptions = setNames(vector('list', length(extensions)), extensions)
   } else stop("'extensions' must be either a character vector or a named list")
+  params$extensions = if (length(extensions)) as.list(extensions)
 
   # automatically configure options and callback for extensions
   if ('Responsive' %in% extensions) options$responsive = TRUE
   # these extensions need to be initialized via new $.fn.dataTable...
   extOptions = extOptions[intersect(extensions, extNew)]
+  params$extOptions = if (length(extOptions)) extOptions
 
   # generate <caption></caption>
   if (is.character(caption)) caption = tags$caption(caption)
   caption = as.character(caption)
+  params$caption = if (length(caption)) caption
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
@@ -193,14 +200,8 @@ datatable = function(
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
-    callback = if (!missing(callback)) JS('function(table) {', callback, '}'),
-    caption = caption, filter = filter$position
+    callback = if (!missing(callback)) JS('function(table) {', callback, '}')
   )), colnames = cn, rownames = length(rn) > 0)
-  if (length(params$caption) == 0) params$caption = NULL
-  if (params$filter != 'none') params$filterHTML = filterHTML
-  if (style != 'default') params$style = style
-  if (length(extensions)) params$extensions = as.list(extensions)
-  if (length(extOptions)) params$extOptions = extOptions
   # selection parameters in shiny
   if (inShiny()) {
     if (is.character(selection)) {
