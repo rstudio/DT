@@ -24,6 +24,8 @@ NEW FEATURES
 
 - When all values in a numeric column are missing (`NA`), the column filter will be disabled (http://stackoverflow.com/q/31323807/559676).
 
+- Added an argument `dec.mark` to `formatCurrency()` to customize the character for the decimal point (thanks, @frajuegies, #128).
+
 BUG FIXES
 
 - Row selections are not preserved when column filters are enabled and clicked (thanks, @The-Dub, #97).
