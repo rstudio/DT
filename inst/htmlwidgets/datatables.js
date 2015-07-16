@@ -1,5 +1,29 @@
 (function() {
 
+// some helper functions: using a global object DTWidget so that it can be used
+// in JS() code, e.g. datatable(options = list(foo = JS('code'))); unlike R's
+// dynamic scoping, when 'code' is eval()'ed, JavaScript does not know objects
+// from the "parent frame", e.g. JS('DTWidget') will not work unless it was made
+// a global object
+var DTWidget = {};
+
+DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  // 123456666.7890 -> 123,456,666.7890
+  var markInterval = function(x, interval, mark) {
+    if (!/^-?[\d.]+$/.test(x)) return x;
+    var xv = x.split('.');
+    if (xv.length > 2) return x;  // should have at most one decimal point
+    xv[0] = xv[0].replace(new RegExp('\\B(?=(\\d{' + interval + '})+(?!\\d))', 'g'), mark);
+    return xv.join('.');
+  };
+  d = d.toFixed(digits);
+  $(thiz.api().cell(row, col).node()).html(currency + markInterval(d, interval, mark));
+};
+
+window.DTWidget = DTWidget;
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
