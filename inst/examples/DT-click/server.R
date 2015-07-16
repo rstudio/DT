@@ -10,7 +10,7 @@ shinyServer(function(input, output, session) {
     ) %>% formatStyle(0, cursor = 'pointer')
   })
 
-  observe({
+  observeEvent(input$x1_cell_clicked, {
     info = input$x1_cell_clicked
     # do nothing if not clicked yet, or the clicked cell is not in the 1st column
     if (is.null(info$value) || info$col != 0) return()
