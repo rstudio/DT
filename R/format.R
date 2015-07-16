@@ -140,24 +140,15 @@ tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, ...) {
 }
 
 tplPercentage = function(cols, digits, ...) {
-  sprintf(
-    "var d = parseFloat(data[%d]); $(this.api().cell(row, %s).node()).html(isNaN(d) ? '' : (d * 100).toFixed(%d) + '%%');",
-    cols, cols, digits
-  )
+  sprintf("DTWidget.formatPercentage(this, row, data, %d, %s);", cols, digits)
 }
 
 tplRound = function(cols, digits, ...) {
-  sprintf(
-    "var d = parseFloat(data[%d]); $(this.api().cell(row, %s).node()).html(isNaN(d) ? '' : d.toFixed(%d));",
-    cols, cols, digits
-  )
+  sprintf("DTWidget.formatRound(this, row, data, %d, %d);", cols, digits)
 }
 
 tplDate = function(cols, method, ...) {
-  sprintf(
-    "var d = data[%d]; if (d !== null) {d = new Date(d); $(this.api().cell(row, %s).node()).html(d['%s']())};",
-    cols, cols, method
-  )
+  sprintf("DTWidget.formatDate(this, row, data, %d, '%s')", cols, method);
 }
 
 DateMethods = c(

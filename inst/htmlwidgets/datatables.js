@@ -22,6 +22,25 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
   $(thiz.api().cell(row, col).node()).html(currency + markInterval(d, interval, mark));
 };
 
+DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node()).html((d * 100).toFixed(digits) + '%');
+};
+
+DTWidget.formatRound = function(thiz, row, data, col, digits) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node()).html(d.toFixed(digits));
+};
+
+DTWidget.formatDate = function(thiz, row, data, col, method) {
+  var d = data[col];
+  if (d === null) return;
+  d = new Date(d);
+  $(thiz.api().cell(row, col).node()).html(d[method]());
+};
+
 window.DTWidget = DTWidget;
 
 HTMLWidgets.widget({
