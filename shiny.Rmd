@@ -86,13 +86,6 @@ shiny::runApp(app)
 
 [![Row selection in DataTables](http://i.imgur.com/jBxAm4F.png)](https://yihui.shinyapps.io/DT-rows/)
 
-<div class="panel panel-primary">
-<div class="panel-heading">Row Indices in the Case of Server-side Processing</div>
-<div class="panel-body">
-Note `input$tableId_rows_selected` is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because **DT** does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by `datatable(data, rownames = TRUE)` (in most cases, this is just the default behavior) if you want to get the names of selected rows from `input$tableId_rows_selected`.
-</div>
-</div>
-
 You can also obtain the index of the last clicked row via `input$tableId_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
 
 ## Column Selection
@@ -107,8 +100,6 @@ As you interact with the table (e.g. sort columns, search the table, or navigate
 
 - `input$tableId_rows_current`: the indices of rows on the current page
 - `input$tableId_rows_all`: the indices of rows on all pages (after the table is filtered by the search strings)
-    - similar to the indices of selected rows, the indices are row names when you use the server-side processing, and numeric indices when using client-side processing
-    - again, there is no way to know all the available data on the server side, `input$tableId_rows_all` will be the same as `input$tableId_rows_current` for tables using server-side processing
 - `input$tableId_search`: the global search string
 - `input$tableId_search_columns`: the vector of column search strings when column filters are enabled
 - `input$tableId_state`: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option `stateSave = TRUE` is applied to the table)

@@ -203,14 +203,6 @@ DT::<span class="kw">renderDataTable</span>(
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="http://i.imgur.com/jBxAm4F.png" alt="Row selection in DataTables" /></a></p>
-<div class="panel panel-primary">
-<div class="panel-heading">
-Row Indices in the Case of Server-side Processing
-</div>
-<div class="panel-body">
-Note <code>input$tableId_rows_selected</code> is the numeric indices of the selected rows when the table is processed on the client side. For server-side processing, there is no way to obtain the numeric indices because <strong>DT</strong> does not know the full table: only one page of the table data is returned from the server, and we have no idea the n-th row on a page is which row in the full table (by comparison, client-side tables fully live in the web browser). A workaround in this case is to use the row names as the indices. You must turn on the display of row names by <code>datatable(data, rownames = TRUE)</code> (in most cases, this is just the default behavior) if you want to get the names of selected rows from <code>input$tableId_rows_selected</code>.
-</div>
-</div>
 <p>You can also obtain the index of the last clicked row via <code>input$tableId_row_last_clicked</code> (it may be <code>NULL</code> initially and when the table is redrawn).</p>
 </div>
 <div id="column-selection" class="section level2">
@@ -223,11 +215,7 @@ Note <code>input$tableId_rows_selected</code> is the numeric indices of the sele
 <p>As you interact with the table (e.g. sort columns, search the table, or navigate through pages), <strong>DT</strong> will expose some information about the current state of the table to Shiny. At the moment, these information are available in the <code>input</code> object of the Shiny server function (suppose the table output id is <code>tableId</code>):</p>
 <ul>
 <li><code>input$tableId_rows_current</code>: the indices of rows on the current page</li>
-<li><code>input$tableId_rows_all</code>: the indices of rows on all pages (after the table is filtered by the search strings)
-<ul>
-<li>similar to the indices of selected rows, the indices are row names when you use the server-side processing, and numeric indices when using client-side processing</li>
-<li>again, there is no way to know all the available data on the server side, <code>input$tableId_rows_all</code> will be the same as <code>input$tableId_rows_current</code> for tables using server-side processing</li>
-</ul></li>
+<li><code>input$tableId_rows_all</code>: the indices of rows on all pages (after the table is filtered by the search strings)</li>
 <li><code>input$tableId_search</code>: the global search string</li>
 <li><code>input$tableId_search_columns</code>: the vector of column search strings when column filters are enabled</li>
 <li><code>input$tableId_state</code>: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option <code>stateSave = TRUE</code> is applied to the table)</li>
