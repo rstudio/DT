@@ -52,10 +52,10 @@ shinyServer(function(input, output, session) {
 
   output$x5 = renderPrint({
     cat('Rows on the current page:\n\n')
-    cat(input$x4_rows_current, sep = '\n')
-    cat('\nAll rows (same as rows_current in the server mode):\n\n')
-    cat(input$x4_rows_all, sep = '\n')
-    cat('\nSelected rows:\n\n')
-    cat(input$x4_rows_selected, sep = '\n')
+    cat(input$x4_rows_current, sep = ', ')
+    cat('\n\nAll rows:\n\n')
+    cat(input$x4_rows_all, sep = ', ')
+    cat('\n\nSelected rows:\n\n')
+    cat(input$x4_rows_selected, sep = ', ')
   })
 })

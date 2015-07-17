@@ -13,17 +13,16 @@ shinyServer(function(input, output, session) {
     if (length(s)) points(cars[s, , drop = FALSE], pch = 19, cex = 2)
   })
 
-  # you must include row names for server-side tables to be able to get the row
-  # indices of the selected rows
+  # server-side processing
   mtcars2 = mtcars[, 1:8]
-  output$x3 = DT::renderDataTable(mtcars2, rownames = TRUE, server = TRUE)
+  output$x3 = DT::renderDataTable(mtcars2, server = TRUE)
 
   # print the selected indices
   output$x4 = renderPrint({
     s = input$x3_rows_selected
     if (length(s)) {
       cat('These rows were selected:\n\n')
-      cat(s, sep = '\n')
+      cat(s, sep = ', ')
     }
   })
 

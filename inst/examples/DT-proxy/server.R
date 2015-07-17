@@ -4,8 +4,7 @@ library(DT)
 shinyServer(function(input, output, session) {
 
   # using server = FALSE mainly for addRow(); server = TRUE works for
-  # selectRows() and selectColumns() (for selectRows() + server = TRUE, don't
-  # use as.numeric() below)
+  # selectRows() and selectColumns()
   output$foo = DT::renderDataTable(
     iris, server = FALSE, selection = list(target = 'row+column')
   )
