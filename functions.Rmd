@@ -22,7 +22,7 @@ head(m)
 datatable(m) %>% formatCurrency(c('A', 'C')) %>% formatPercentage('D', 2)
 
 # the first two columns are Euro currency, and round column E to 3 decimal places
-datatable(m) %>% formatCurrency(1:2, '\U20AC') %>% formatRound('E', 3)
+datatable(m) %>% formatCurrency(1:2, '\U20AC', digits = 0) %>% formatRound('E', 3)
 ```
 
 Under the hood, these formatting functions are just wrappers for the `rowCallback` option to generate the appropriate JavaScript code.
