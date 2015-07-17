@@ -53,7 +53,8 @@
 #'   selected = c(1, 3, 8), target = 'row')} to pre-select rows; the element
 #'   \code{target} in the list can be \code{'column'} to enable column
 #'   selection, or \code{'row+column'} to make it possible to select both rows
-#'   and columns (click on the footer to select columns)
+#'   and columns (click on the footer to select columns), or \code{'cell'} to
+#'   select cells
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{http://datatables.net/extensions/index}), or a named list
 #'   of initialization options for the extensions (the names of the list are the

@@ -570,7 +570,19 @@ HTMLWidgets.widget({
         });
         changeInput('cells_selected', selected);
         var selectCells = function() {
-          // TODO
+          table.$('td.' + selClass).removeClass(selClass);
+          if (selected3.length === 0) return;
+          if (server) {
+            table.cells({page: 'current'}).every(function() {
+              var info = tweakCellIndex(this);
+              if (findIndex([info.row, info.col], selected3) > -1)
+                $(this.node()).addClass(selClass);
+            });
+          } else {
+            selected3.map(function(ij) {
+              $(table.cell(ij[0] - 1, ij[1]).node()).addClass(selClass);
+            });
+          }
         };
         selectCells();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCells);
