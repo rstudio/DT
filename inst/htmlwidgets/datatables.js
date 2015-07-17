@@ -410,8 +410,10 @@ HTMLWidgets.widget({
 
     var methods = {};
 
-    var changeInput = function(id, data) {
-      Shiny.onInputChange(el.id + '_' + id, data);
+    var changeInput = function(id, data, type) {
+      id = el.id + '_' + id;
+      if (type) id = id + ':' + type;
+      Shiny.onInputChange(id, data);
     };
 
     var addOne = function(x) {
@@ -570,9 +572,9 @@ HTMLWidgets.widget({
             selected3 = selMode === 'single' ? [[info.row, info.col]] :
               unique(selected3.concat([[info.row, info.col]]));
           }
-          changeInput('cells_selected', arrayToList(selected3));
+          changeInput('cells_selected', arrayToList(selected3), 'shiny.matrix');
         });
-        changeInput('cells_selected', selected);
+        changeInput('cells_selected', selected, 'shiny.matrix');
         var selectCells = function() {
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
