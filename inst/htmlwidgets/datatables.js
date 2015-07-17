@@ -549,11 +549,7 @@ HTMLWidgets.widget({
         if (selected === null) {
           selected3 = [];
         } else {
-          selected3 = transposeArray2D([selected.rows, selected.cols]);
-        }
-        var arrayToList = function(a) {
-          var x = transposeArray2D(a);
-          return x.length == 2 ? {rows: x[0], cols: x[1]} : {};
+          selected3 = selected;
         }
         var findIndex = function(ij) {
           for (var i = 0; i < selected3.length; i++) {
@@ -572,9 +568,9 @@ HTMLWidgets.widget({
             selected3 = selMode === 'single' ? [[info.row, info.col]] :
               unique(selected3.concat([[info.row, info.col]]));
           }
-          changeInput('cells_selected', arrayToList(selected3), 'shiny.matrix');
+          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         });
-        changeInput('cells_selected', selected, 'shiny.matrix');
+        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         var selectCells = function() {
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
