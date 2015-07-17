@@ -43,6 +43,10 @@ DTWidget.formatDate = function(thiz, row, data, col, method) {
 
 window.DTWidget = DTWidget;
 
+var transposeArray2D = function(a) {
+  return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
+};
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
@@ -56,7 +60,7 @@ HTMLWidgets.widget({
 
     var cells = data.data;
 
-    if (cells instanceof Array) cells = HTMLWidgets.transposeArray2D(cells);
+    if (cells instanceof Array) cells = transposeArray2D(cells);
 
     $el.append(data.container);
     var $table = $el.find('table');
@@ -543,10 +547,10 @@ HTMLWidgets.widget({
         if (selected === null) {
           selected3 = [];
         } else {
-          selected3 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
+          selected3 = transposeArray2D([selected.rows, selected.cols]);
         }
         var arrayToList = function(a) {
-          var x = HTMLWidgets.transposeArray2D(a);
+          var x = transposeArray2D(a);
           return x.length == 2 ? {rows: x[0], cols: x[1]} : {};
         }
         var findIndex = function(ij) {
