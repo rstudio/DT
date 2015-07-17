@@ -563,7 +563,7 @@ HTMLWidgets.widget({
           } else {
             if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
             $this.addClass(selClass);
-            selected3 = selMode === 'single' ? [info.row, info.col] :
+            selected3 = selMode === 'single' ? [[info.row, info.col]] :
               unique(selected3.concat([[info.row, info.col]]));
           }
           changeInput('cells_selected', arrayToList(selected3));
