@@ -207,6 +207,10 @@ datatable = function(
     selection = modifyList(
       list(mode = 'multiple', selected = NULL, target = 'row'), selection
     )
+    # for compatibility with DT < 0.1.22 ('selected' could be row names)
+    if (grepl('^row', selection$target) && is.character(selection$selected) && length(rn)) {
+      selection$selected = match(selection$selected, rn)
+    }
     params$selection = selection
   }
 
