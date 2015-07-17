@@ -539,11 +539,11 @@ HTMLWidgets.widget({
       }
 
       if (selTarget === 'cell') {
-        var selected0;
+        var selected3;
         if (selected === null) {
-          selected0 = [];
+          selected3 = [];
         } else {
-          selected0 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
+          selected3 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
         }
         var arrayToList = function(a) {
           var x = HTMLWidgets.transposeArray2D(a);
@@ -553,14 +553,14 @@ HTMLWidgets.widget({
           var $this = $(this), info = tweakCellIndex(table.cell(this));
           if ($this.hasClass(selClass)) {
             $this.removeClass(selClass);
-            selected0.splice($.inArray([info.row, info.col], selected0), 1);
+            selected3.splice($.inArray([info.row, info.col], selected3), 1);
           } else {
             if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
             $this.addClass(selClass);
-            selected0 = selMode === 'single' ? [info.row, info.col] :
-              unique(selected0.concat([[info.row, info.col]]));
+            selected3 = selMode === 'single' ? [info.row, info.col] :
+              unique(selected3.concat([[info.row, info.col]]));
           }
-          changeInput('cells_selected', arrayToList(selected0));
+          changeInput('cells_selected', arrayToList(selected3));
         });
         changeInput('cells_selected', selected);
         var selectCells = function() {
