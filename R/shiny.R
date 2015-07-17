@@ -300,6 +300,7 @@ dataTablesFilter = function(data, params) {
     if (length(i) == 0) break
   }
   if (length(i) != n) data = data[i, , drop = FALSE]
+  iAll = i  # row indices of filtered data
 
   # sorting
   oList = list()
@@ -315,13 +316,18 @@ dataTablesFilter = function(data, params) {
   if (length(oList)) {
     i = do.call(order, oList)
     data = data[i, , drop = FALSE]
+    iAll = iAll[i]
   }
   # paging
   if (q$length != '-1') {
     i = seq(as.integer(q$start) + 1L, length.out = as.integer(q$length))
     i = i[i <= nrow(data)]
     fdata = data[i, , drop = FALSE]  # filtered data
-  } else fdata = data
+    iCurrent = iAll[i]
+  } else {
+    fdata = data
+    iCurrent = iAll
+  }
 
   fdata = unname(as.matrix(fdata))
   if (is.character(fdata) && q$escape != 'false') {
@@ -336,7 +342,9 @@ dataTablesFilter = function(data, params) {
     draw = as.integer(q$draw),
     recordsTotal = n,
     recordsFiltered = nrow(data),
-    data = fdata
+    data = fdata,
+    DT_rows_all = iAll,
+    DT_rows_current = iCurrent
   )
 }
 

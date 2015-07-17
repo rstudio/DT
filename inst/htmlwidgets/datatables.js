@@ -102,10 +102,21 @@ HTMLWidgets.widget({
       delete options.searchCols;
     }
 
-    var table = $table.DataTable(options);
-
     // server-side processing?
-    var server = data.options.serverSide === true;
+    var server = options.serverSide === true;
+
+    // use the dataSrc function to pre-process JSON data returned from R
+    var DT_rows_all = [], DT_rows_current = [];
+    if (server && HTMLWidgets.shinyMode && typeof options.ajax === 'object' &&
+        /^session\/[\da-z]+\/dataobj/.test(options.ajax.url) && !options.ajax.dataSrc) {
+      options.ajax.dataSrc = function(json) {
+        DT_rows_all = $.makeArray(json.DT_rows_all);
+        DT_rows_current = $.makeArray(json.DT_rows_current);
+        return json.data;
+      };
+    }
+
+    var table = $table.DataTable(options);
 
     var inArray = function(val, array) {
       return $.inArray(val, $.makeArray(array)) > -1;
@@ -415,7 +426,7 @@ HTMLWidgets.widget({
     var tweakCellIndex = function(cell) {
       var info = cell.index();
       if (server) {
-        info.row = table.row(info.row).data()[0];
+        info.row = DT_rows_current[info.row];
       } else {
         info.row += 1;
       }
@@ -440,12 +451,12 @@ HTMLWidgets.widget({
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
           var rows = table.rows('.' + selClass, {search: 'applied'});
-          // return the first column in server mode, and row indices in client mode
-          if (!server) return addOne(rows.indexes().toArray());
-          var ids = rows.data().toArray().map(function(d) {
-            return d[0];  // assume the first column is row names
+          var idx = rows.indexes().toArray();
+          if (!server) return addOne(idx);
+          idx = idx.map(function(i) {
+            return DT_rows_current[i];
           });
-          selected1 = selMode === 'multiple' ? unique(selected1.concat(ids)) : ids;
+          selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
           return selected1;
         }
         table.on('click.dt', 'tbody tr', function() {
@@ -461,12 +472,13 @@ HTMLWidgets.widget({
             }
           }
           if (server && !$this.hasClass(selClass)) {
-            var id = thisRow.data()[0];
+            var id = DT_rows_current[thisRow.index()];
             // remove id from selected1 since its class .selected has been removed
             selected1.splice($.inArray(id, selected1), 1);
           }
           changeInput('rows_selected', selectedRows());
-          changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
+          changeInput('row_last_clicked', server ?
+                      DT_rows_current[thisRow.index()] : thisRow.index() + 1);
         });
         changeInput('rows_selected', selected1);
         var selectRows = function() {
@@ -474,7 +486,7 @@ HTMLWidgets.widget({
           if (selected1.length === 0) return;
           if (server) {
             table.rows({page: 'current'}).every(function() {
-              if (inArray(this.data()[0], selected1)) {
+              if (inArray(DT_rows_current[this.index()], selected1)) {
                 $(this.node()).addClass(selClass);
               }
             });
@@ -486,7 +498,7 @@ HTMLWidgets.widget({
         selectRows();  // in case users have specified pre-selected rows
         // restore selected rows after the table is redrawn (e.g. sort/search/page);
         // client-side tables will preserve the selections automatically; for
-        // server-side tables, we have to check if the row name is in `selected`
+        // server-side tables, we have to *real* row indices are in `selected1`
         if (server) table.on('draw.dt', selectRows);
         methods.selectRows = function(selected) {
           selected1 = selected ? selected : [];
@@ -564,14 +576,14 @@ HTMLWidgets.widget({
       // TODO: is anyone interested in the page info?
       // changeInput('page_info', table.page.info());
       var updateRowInfo = function(id, modifier) {
-        var rows = table.rows($.extend({
-          search: 'applied',
-          page: 'all'
-        }, modifier));
         var idx;
         if (server) {
-          idx = rows.data().toArray().map(function(x) { return x[0]; });
+          idx = modifier.page === 'current' ? DT_rows_current : DT_rows_all;
         } else {
+          var rows = table.rows($.extend({
+            search: 'applied',
+            page: 'all'
+          }, modifier));
           idx = addOne(rows.indexes().toArray());
         }
         changeInput('rows' + '_' + id, idx);
