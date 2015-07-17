@@ -549,11 +549,17 @@ HTMLWidgets.widget({
           var x = HTMLWidgets.transposeArray2D(a);
           return x.length == 2 ? {rows: x[0], cols: x[1]} : {};
         }
+        var findIndex = function(ij) {
+          for (var i = 0; i < selected3.length; i++) {
+            if (ij[0] === selected3[i][0] && ij[1] === selected3[i][1]) return i;
+          }
+          return -1;
+        }
         table.on('click.dt', 'tbody td', function() {
           var $this = $(this), info = tweakCellIndex(table.cell(this));
           if ($this.hasClass(selClass)) {
             $this.removeClass(selClass);
-            selected3.splice($.inArray([info.row, info.col], selected3), 1);
+            selected3.splice(findIndex([info.row, info.col]), 1);
           } else {
             if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
             $this.addClass(selClass);
