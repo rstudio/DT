@@ -1,5 +1,48 @@
 (function() {
 
+// some helper functions: using a global object DTWidget so that it can be used
+// in JS() code, e.g. datatable(options = list(foo = JS('code'))); unlike R's
+// dynamic scoping, when 'code' is eval()'ed, JavaScript does not know objects
+// from the "parent frame", e.g. JS('DTWidget') will not work unless it was made
+// a global object
+var DTWidget = {};
+
+DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  // 123456666.7890 -> 123,456,666.7890
+  var markInterval = function(x, interval, mark) {
+    if (!/^-?[\d.]+$/.test(x)) return x;
+    var xv = x.split('.');
+    if (xv.length > 2) return x;  // should have at most one decimal point
+    xv[0] = xv[0].replace(new RegExp('\\B(?=(\\d{' + interval + '})+(?!\\d))', 'g'), mark);
+    return xv.join(decMark);
+  };
+  d = d.toFixed(digits);
+  $(thiz.api().cell(row, col).node()).html(currency + markInterval(d, interval, mark));
+};
+
+DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node()).html((d * 100).toFixed(digits) + '%');
+};
+
+DTWidget.formatRound = function(thiz, row, data, col, digits) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node()).html(d.toFixed(digits));
+};
+
+DTWidget.formatDate = function(thiz, row, data, col, method) {
+  var d = data[col];
+  if (d === null) return;
+  d = new Date(d);
+  $(thiz.api().cell(row, col).node()).html(d[method]());
+};
+
+window.DTWidget = DTWidget;
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
@@ -17,6 +60,7 @@ HTMLWidgets.widget({
 
     $el.append(data.container);
     var $table = $el.find('table');
+    if (data.class) $table.addClass(data.class);
     if (data.caption) $table.prepend(data.caption);
 
     if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
@@ -58,10 +102,21 @@ HTMLWidgets.widget({
       delete options.searchCols;
     }
 
-    var table = $table.DataTable(options);
-
     // server-side processing?
-    var server = data.options.serverSide === true;
+    var server = options.serverSide === true;
+
+    // use the dataSrc function to pre-process JSON data returned from R
+    var DT_rows_all = [], DT_rows_current = [];
+    if (server && HTMLWidgets.shinyMode && typeof options.ajax === 'object' &&
+        /^session\/[\da-z]+\/dataobj/.test(options.ajax.url) && !options.ajax.dataSrc) {
+      options.ajax.dataSrc = function(json) {
+        DT_rows_all = $.makeArray(json.DT_rows_all);
+        DT_rows_current = $.makeArray(json.DT_rows_current);
+        return json.data;
+      };
+    }
+
+    var table = $table.DataTable(options);
 
     var inArray = function(val, array) {
       return $.inArray(val, $.makeArray(array)) > -1;
@@ -371,7 +426,7 @@ HTMLWidgets.widget({
     var tweakCellIndex = function(cell) {
       var info = cell.index();
       if (server) {
-        info.row = table.row(info.row).data()[0];
+        info.row = DT_rows_current[info.row];
       } else {
         info.row += 1;
       }
@@ -396,12 +451,12 @@ HTMLWidgets.widget({
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
           var rows = table.rows('.' + selClass, {search: 'applied'});
-          // return the first column in server mode, and row indices in client mode
-          if (!server) return addOne(rows.indexes().toArray());
-          var ids = rows.data().toArray().map(function(d) {
-            return d[0];  // assume the first column is row names
+          var idx = rows.indexes().toArray();
+          if (!server) return addOne(idx);
+          idx = idx.map(function(i) {
+            return DT_rows_current[i];
           });
-          selected1 = selMode === 'multiple' ? unique(selected1.concat(ids)) : ids;
+          selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
           return selected1;
         }
         table.on('click.dt', 'tbody tr', function() {
@@ -417,12 +472,13 @@ HTMLWidgets.widget({
             }
           }
           if (server && !$this.hasClass(selClass)) {
-            var id = thisRow.data()[0];
+            var id = DT_rows_current[thisRow.index()];
             // remove id from selected1 since its class .selected has been removed
             selected1.splice($.inArray(id, selected1), 1);
           }
           changeInput('rows_selected', selectedRows());
-          changeInput('row_last_clicked', server ? thisRow.data()[0] : thisRow.index() + 1);
+          changeInput('row_last_clicked', server ?
+                      DT_rows_current[thisRow.index()] : thisRow.index() + 1);
         });
         changeInput('rows_selected', selected1);
         var selectRows = function() {
@@ -430,7 +486,7 @@ HTMLWidgets.widget({
           if (selected1.length === 0) return;
           if (server) {
             table.rows({page: 'current'}).every(function() {
-              if (inArray(this.data()[0], selected1)) {
+              if (inArray(DT_rows_current[this.index()], selected1)) {
                 $(this.node()).addClass(selClass);
               }
             });
@@ -442,7 +498,7 @@ HTMLWidgets.widget({
         selectRows();  // in case users have specified pre-selected rows
         // restore selected rows after the table is redrawn (e.g. sort/search/page);
         // client-side tables will preserve the selections automatically; for
-        // server-side tables, we have to check if the row name is in `selected`
+        // server-side tables, we have to *real* row indices are in `selected1`
         if (server) table.on('draw.dt', selectRows);
         methods.selectRows = function(selected) {
           selected1 = selected ? selected : [];
@@ -483,32 +539,50 @@ HTMLWidgets.widget({
       }
 
       if (selTarget === 'cell') {
-        var selected0;
+        var selected3;
         if (selected === null) {
-          selected0 = [];
+          selected3 = [];
         } else {
-          selected0 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
+          selected3 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
         }
         var arrayToList = function(a) {
           var x = HTMLWidgets.transposeArray2D(a);
           return x.length == 2 ? {rows: x[0], cols: x[1]} : {};
         }
+        var findIndex = function(ij) {
+          for (var i = 0; i < selected3.length; i++) {
+            if (ij[0] === selected3[i][0] && ij[1] === selected3[i][1]) return i;
+          }
+          return -1;
+        }
         table.on('click.dt', 'tbody td', function() {
           var $this = $(this), info = tweakCellIndex(table.cell(this));
           if ($this.hasClass(selClass)) {
             $this.removeClass(selClass);
-            selected0.splice($.inArray([info.row, info.col], selected0), 1);
+            selected3.splice(findIndex([info.row, info.col]), 1);
           } else {
             if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
             $this.addClass(selClass);
-            selected0 = selMode === 'single' ? [info.row, info.col] :
-              unique(selected0.concat([[info.row, info.col]]));
+            selected3 = selMode === 'single' ? [[info.row, info.col]] :
+              unique(selected3.concat([[info.row, info.col]]));
           }
-          changeInput('cells_selected', arrayToList(selected0));
+          changeInput('cells_selected', arrayToList(selected3));
         });
         changeInput('cells_selected', selected);
         var selectCells = function() {
-          // TODO
+          table.$('td.' + selClass).removeClass(selClass);
+          if (selected3.length === 0) return;
+          if (server) {
+            table.cells({page: 'current'}).every(function() {
+              var info = tweakCellIndex(this);
+              if (findIndex([info.row, info.col], selected3) > -1)
+                $(this.node()).addClass(selClass);
+            });
+          } else {
+            selected3.map(function(ij) {
+              $(table.cell(ij[0] - 1, ij[1]).node()).addClass(selClass);
+            });
+          }
         };
         selectCells();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCells);
@@ -520,14 +594,14 @@ HTMLWidgets.widget({
       // TODO: is anyone interested in the page info?
       // changeInput('page_info', table.page.info());
       var updateRowInfo = function(id, modifier) {
-        var rows = table.rows($.extend({
-          search: 'applied',
-          page: 'all'
-        }, modifier));
         var idx;
         if (server) {
-          idx = rows.data().toArray().map(function(x) { return x[0]; });
+          idx = modifier.page === 'current' ? DT_rows_current : DT_rows_all;
         } else {
+          var rows = table.rows($.extend({
+            search: 'applied',
+            page: 'all'
+          }, modifier));
           idx = addOne(rows.indexes().toArray());
         }
         changeInput('rows' + '_' + id, idx);
