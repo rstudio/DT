@@ -111,6 +111,7 @@ img {
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
+    "filter": "none",
     "data": [
       ["Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout", "Valiant", "Duster 360", "Merc 240D", "Merc 230", "Merc 280", "Merc 280C", "Merc 450SE", "Merc 450SL", "Merc 450SLC", "Cadillac Fleetwood", "Lincoln Continental", "Chrysler Imperial", "Fiat 128", "Honda Civic", "Toyota Corolla", "Toyota Corona", "Dodge Challenger", "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lotus Europa", "Ford Pantera L", "Ferrari Dino", "Maserati Bora", "Volvo 142E"],
       ["&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;", "&oplus;"],
@@ -151,8 +152,7 @@ img {
       "autoWidth": false,
       "orderClasses": false
     },
-    "callback": "function(table) {\n\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });\n}",
-    "filter": "none"
+    "callback": "function(table) {\n\n  table.column(1).nodes().to$().css({cursor: 'pointer'});\n  var format = function(d) {\n    return '<div style=\"background-color:#eee; padding: .5em;\"> Model: ' +\n            d[0] + ', mpg: ' + d[2] + ', cyl: ' + d[3] + '</div>';\n  };\n  table.on('click', 'td.details-control', function() {\n    var td = $(this), row = table.row(td.closest('tr'));\n    if (row.child.isShown()) {\n      row.child.hide();\n      td.html('&oplus;');\n    } else {\n      row.child(format(row.data())).show();\n      td.html('&CircleMinus;');\n    }\n  });\n}"
   },
   "evals": ["callback"]
 }</script></p>

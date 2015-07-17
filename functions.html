@@ -143,6 +143,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 <p><div id="htmlwidget-8397" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-8397">{
   "x": {
+    "filter": "none",
     "data": [
       [-460476, -130177, 1658708, 170508, 229288, 1815065, 560916, -1165061, -586853, -345662, 1324082, 459814, 500771, 210683, -455841, 1886913, 597850, -1866617, 801356, -372791],
       [-967824, -117975, -926004, -628891, -525039, -1586693, 937787, 253373, -1038137, 1353815, 526464, -195071, 995126, 978133, 921581, 788640, 653918, 38088, -205963, -280471],
@@ -161,10 +162,8 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[3]); $(this.api().cell(row, 3).node()).html(isNaN(d) ? '' : (d * 100).toFixed(2) + '%');\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '$' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\nvar d = parseFloat(data[2]); $(this.api().cell(row, 2).node()).html(isNaN(d) ? '' : '$' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\n}"
-    },
-    "callback": null,
-    "filter": "none"
+      "rowCallback": "function(row, data) {\nDTWidget.formatPercentage(this, row, data, 3, 2);\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.');\n}"
+    }
   },
   "evals": ["options.rowCallback"]
 }</script></p>
@@ -173,6 +172,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 <p><div id="htmlwidget-3125" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-3125">{
   "x": {
+    "filter": "none",
     "data": [
       [-460476, -130177, 1658708, 170508, 229288, 1815065, 560916, -1165061, -586853, -345662, 1324082, 459814, 500771, 210683, -455841, 1886913, 597850, -1866617, 801356, -372791],
       [-967824, -117975, -926004, -628891, -525039, -1586693, 937787, 253373, -1038137, 1353815, 526464, -195071, 995126, 978133, 921581, 788640, 653918, 38088, -205963, -280471],
@@ -191,10 +191,8 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar d = parseFloat(data[4]); $(this.api().cell(row, 4).node()).html(isNaN(d) ? '' : d.toFixed(3));\nvar d = parseFloat(data[0]); $(this.api().cell(row, 0).node()).html(isNaN(d) ? '' : '€' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\nvar d = parseFloat(data[1]); $(this.api().cell(row, 1).node()).html(isNaN(d) ? '' : '€' + d.toFixed(2).replace(/(\\d)(?:(?=\\d+(?=[^\\d.]))(?=(?:\\d{3})+\\b)|(?=\\d+(?=\\.))(?=(?:\\d{3})+(?=\\.)))/g, '$1,'));\n}"
-    },
-    "callback": null,
-    "filter": "none"
+      "rowCallback": "function(row, data) {\nDTWidget.formatRound(this, row, data, 4, 3);\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.');\n}"
+    }
   },
   "evals": ["options.rowCallback"]
 }</script></p>
@@ -225,6 +223,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 <p><div id="htmlwidget-7083" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-7083">{
   "x": {
+    "filter": "none",
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       ["2015-03-27T14:12:31Z", "2015-03-28T21:04:22Z", "2015-03-30T03:56:13Z", "2015-03-31T10:48:04Z", "2015-04-01T17:39:55Z", "2015-04-03T00:31:46Z", "2015-04-04T07:23:37Z", "2015-04-05T14:15:28Z", "2015-04-06T21:07:19Z", "2015-04-08T03:59:10Z"],
@@ -246,10 +245,8 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
         }
       ],
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar d = data[1]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 1).node()).html(d['toDateString']())};\nvar d = data[2]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 2).node()).html(d['toLocaleDateString']())};\nvar d = data[3]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 3).node()).html(d['toLocaleString']())};\nvar d = data[4]; if (d !== null) {d = new Date(d); $(this.api().cell(row, 4).node()).html(d['toUTCString']())};\n}"
-    },
-    "callback": null,
-    "filter": "none"
+      "rowCallback": "function(row, data) {\nDTWidget.formatDate(this, row, data, 1, 'toDateString')\nDTWidget.formatDate(this, row, data, 2, 'toLocaleDateString')\nDTWidget.formatDate(this, row, data, 3, 'toLocaleString')\nDTWidget.formatDate(this, row, data, 4, 'toUTCString')\n}"
+    }
   },
   "evals": ["options.rowCallback"]
 }</script></p>
@@ -263,6 +260,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 <p><div id="htmlwidget-2650" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-2650">{
   "x": {
+    "filter": "none",
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150"],
       [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1, 5.4, 5.1, 4.6, 5.1, 4.8, 5, 5, 5.2, 5.2, 4.7, 4.8, 5.4, 5.2, 5.5, 4.9, 5, 5.5, 4.9, 4.4, 5.1, 5, 4.5, 4.4, 5, 5.1, 4.8, 5.1, 4.6, 5.3, 5, 7, 6.4, 6.9, 5.5, 6.5, 5.7, 6.3, 4.9, 6.6, 5.2, 5, 5.9, 6, 6.1, 5.6, 6.7, 5.6, 5.8, 6.2, 5.6, 5.9, 6.1, 6.3, 6.1, 6.4, 6.6, 6.8, 6.7, 6, 5.7, 5.5, 5.5, 5.8, 6, 5.4, 6, 6.7, 6.3, 5.6, 5.5, 5.5, 6.1, 5.8, 5, 5.6, 5.7, 5.7, 6.2, 5.1, 5.7, 6.3, 5.8, 7.1, 6.3, 6.5, 7.6, 4.9, 7.3, 6.7, 7.2, 6.5, 6.4, 6.8, 5.7, 5.8, 6.4, 6.5, 7.7, 7.7, 6, 6.9, 5.6, 7.7, 6.3, 6.7, 7.2, 6.2, 6.1, 6.4, 7.2, 7.4, 7.9, 6.4, 6.3, 6.1, 7.7, 6.3, 6.4, 6, 6.9, 6.7, 6.9, 5.8, 6.8, 6.7, 6.7, 6.3, 6.5, 6.2, 5.9],
@@ -289,9 +287,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
       "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
-    },
-    "callback": null,
-    "filter": "none"
+    }
   },
   "evals": ["options.rowCallback"]
 }</script></p>
@@ -328,6 +324,7 @@ The actual CSS property names are dash-separated, but you can use camelCase name
 <p><div id="htmlwidget-5943" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5943">{
   "x": {
+    "filter": "none",
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150"],
       [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1, 5.4, 5.1, 4.6, 5.1, 4.8, 5, 5, 5.2, 5.2, 4.7, 4.8, 5.4, 5.2, 5.5, 4.9, 5, 5.5, 4.9, 4.4, 5.1, 5, 4.5, 4.4, 5, 5.1, 4.8, 5.1, 4.6, 5.3, 5, 7, 6.4, 6.9, 5.5, 6.5, 5.7, 6.3, 4.9, 6.6, 5.2, 5, 5.9, 6, 6.1, 5.6, 6.7, 5.6, 5.8, 6.2, 5.6, 5.9, 6.1, 6.3, 6.1, 6.4, 6.6, 6.8, 6.7, 6, 5.7, 5.5, 5.5, 5.8, 6, 5.4, 6, 6.7, 6.3, 5.6, 5.5, 5.5, 6.1, 5.8, 5, 5.6, 5.7, 5.7, 6.2, 5.1, 5.7, 6.3, 5.8, 7.1, 6.3, 6.5, 7.6, 4.9, 7.3, 6.7, 7.2, 6.5, 6.4, 6.8, 5.7, 5.8, 6.4, 6.5, 7.7, 7.7, 6, 6.9, 5.6, 7.7, 6.3, 6.7, 7.2, 6.2, 6.1, 6.4, 7.2, 7.4, 7.9, 6.4, 6.3, 6.1, 7.7, 6.3, 6.4, 6, 6.9, 6.7, 6.9, 5.8, 6.8, 6.7, 6.7, 6.3, 6.5, 6.2, 5.9],
@@ -352,9 +349,7 @@ The actual CSS property names are dash-separated, but you can use camelCase name
       "autoWidth": false,
       "orderClasses": false,
       "rowCallback": "function(row, data) {\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
-    },
-    "callback": null,
-    "filter": "none"
+    }
   },
   "evals": ["options.rowCallback"]
 }</script></p>
