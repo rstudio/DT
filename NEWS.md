@@ -16,6 +16,8 @@ NEW FEATURES
 
 - Row and column selections can be enabled simultaneously using `datatable(..., selection = list(target = 'row+column')`. Column selection is done via clicking on the table footer.
 
+- Cell selection can be enabled via `datatable(..., selection = list(target = 'cell'))`. See http://rstudio.github.io/DT/shiny.html for more info.
+
 - Added a `width` argument to `datatable()` (thanks, @taiyun).
 
 - Added a `plugins` argument to `datatable()` to support **DataTables** plugins. See http://rstudio.github.io/plugins/ for more information.
