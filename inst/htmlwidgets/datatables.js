@@ -591,6 +591,11 @@ HTMLWidgets.widget({
         };
         selectCells();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCells);
+        methods.selectCells = function(selected) {
+          selected3 = selected ? selected : [];
+          selectCells();
+          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+        }
       }
     }
 

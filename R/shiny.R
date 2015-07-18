@@ -140,9 +140,9 @@ dataTableProxy = function(
 }
 
 #' @param proxy a proxy object returned by \code{dataTableProxy()}
-#' @param selected an integer vector of row/column indices; for server-side
-#'   tables, the row indices should be row names (i.e. a character vector); you
-#'   may use \code{NULL} to clear existing selections
+#' @param selected an integer vector of row/column indices, or a matrix of two
+#'   columns (row and column indices, respectively) for cell indices; you may
+#'   use \code{NULL} to clear existing selections
 #' @rdname proxy
 #' @export
 selectRows = function(proxy, selected) {
@@ -153,6 +153,12 @@ selectRows = function(proxy, selected) {
 #' @export
 selectColumns = function(proxy, selected) {
   invokeRemote(proxy, 'selectColumns', list(I(selected)))
+}
+
+#' @rdname proxy
+#' @export
+selectCells = function(proxy, selected) {
+  invokeRemote(proxy, 'selectCells', list(selected))
 }
 
 #' @param data a single row of data to be added to the table; it can be a matrix
