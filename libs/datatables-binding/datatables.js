@@ -43,6 +43,10 @@ DTWidget.formatDate = function(thiz, row, data, col, method) {
 
 window.DTWidget = DTWidget;
 
+var transposeArray2D = function(a) {
+  return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
+};
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
@@ -56,7 +60,7 @@ HTMLWidgets.widget({
 
     var cells = data.data;
 
-    if (cells instanceof Array) cells = HTMLWidgets.transposeArray2D(cells);
+    if (cells instanceof Array) cells = transposeArray2D(cells);
 
     $el.append(data.container);
     var $table = $el.find('table');
@@ -406,8 +410,10 @@ HTMLWidgets.widget({
 
     var methods = {};
 
-    var changeInput = function(id, data) {
-      Shiny.onInputChange(el.id + '_' + id, data);
+    var changeInput = function(id, data, type) {
+      id = el.id + '_' + id;
+      if (type) id = id + ':' + type;
+      Shiny.onInputChange(id, data);
     };
 
     var addOne = function(x) {
@@ -508,6 +514,9 @@ HTMLWidgets.widget({
       }
 
       if (inArray(selTarget, ['column', 'row+column'])) {
+        if (selTarget === 'row+column') {
+          $(table.columns().footer()).css('cursor', 'pointer');
+        }
         table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr th', function() {
           var colIdx = selTarget === 'column' ? table.cell(this).index().column :
               $.inArray(this, table.columns().footer()),
@@ -543,11 +552,7 @@ HTMLWidgets.widget({
         if (selected === null) {
           selected3 = [];
         } else {
-          selected3 = HTMLWidgets.transposeArray2D([selected.rows, selected.cols]);
-        }
-        var arrayToList = function(a) {
-          var x = HTMLWidgets.transposeArray2D(a);
-          return x.length == 2 ? {rows: x[0], cols: x[1]} : {};
+          selected3 = selected;
         }
         var findIndex = function(ij) {
           for (var i = 0; i < selected3.length; i++) {
@@ -566,9 +571,9 @@ HTMLWidgets.widget({
             selected3 = selMode === 'single' ? [[info.row, info.col]] :
               unique(selected3.concat([[info.row, info.col]]));
           }
-          changeInput('cells_selected', arrayToList(selected3));
+          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         });
-        changeInput('cells_selected', selected);
+        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         var selectCells = function() {
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
@@ -586,6 +591,11 @@ HTMLWidgets.widget({
         };
         selectCells();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCells);
+        methods.selectCells = function(selected) {
+          selected3 = selected ? selected : [];
+          selectCells();
+          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+        }
       }
     }
 
