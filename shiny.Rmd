@@ -65,7 +65,11 @@ DT::renderDataTable({
 
 There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `tableId` to denote the output id of the table (i.e. the `outputId` in `dataTableOutput()`). You need to replace `tableId` with the actual id of the table in your own app.
 
-## Row Selection
+## Selecting Rows/Columns/Cells
+
+You may select rows, columns, or cells in the table, and obtain the indices of the selected objects. See [this Shiny app](https://yihui.shinyapps.io/DT-selection) for a comprehensive example (you can find its source code under `system.file('examples', 'DT-selection', package = 'DT')`).
+
+### Row Selection
 
 The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through `input$tableId_rows_selected`. See [a live example here](https://yihui.shinyapps.io/DT-rows/). You can disable row selection by `datatable(..., selection = 'none')`, or use the single selection mode by `selection = 'single'`. The default selection mode is multiple selections (try the table below).
 
@@ -88,11 +92,19 @@ shiny::runApp(app)
 
 You can also obtain the index of the last clicked row via `input$tableId_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
 
-## Column Selection
+### Column Selection
 
 Row selection is the default mode in **DT**. You can turn on column selection using `datatable(..., selection = list(target = 'column'))`. In this case, you can click on any cell to select a column, and the (numeric) indices of the selected columns will be available in `input$tableId_columns_selected`.
 
 You may also select rows and columns simultaneously using `target = 'row+column'`. In this case, column selection is achieved by clicking on the table footer. Clicking on the table body will select/deselect rows.
+
+### Cell Selection
+
+Cell selection is enabled by `target = 'cell'` in the `selection` argument. The indices of selected cells are available through `input$tableId_cells_selected` as a matrix of two columns: each row of the matrix contains the row index and column index of a selected cell. When no cells are selected, the matrix has zero rows.
+
+### Pre-selection
+
+The `selection` argument of `datatable()` can also include a component `selected` to specify which rows/columns/cells to be pre-selected when the table is initialized. When `target = 'row'` or `'column'`, `selected` is a vector of row or column indices. For the case of `target = 'row+column'`, `selected` should be a list of two components `rows` and `cols`, e.g. `list(rows = c(1, 2, 4, 9), cols = c(1, 3))`. For `target = 'cell'`, it should be a matrix of two columns: the first column is the row indices of selected cells, and the second column is the column indices.
 
 ## DataTables Information
 

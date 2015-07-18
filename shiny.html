@@ -163,8 +163,11 @@ DT::<span class="kw">renderDataTable</span>(
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
 <p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>tableId</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>dataTableOutput()</code>). You need to replace <code>tableId</code> with the actual id of the table in your own app.</p>
-<div id="row-selection" class="section level2">
-<h2><span class="header-section-number">2.1</span> Row Selection</h2>
+<div id="selecting-rowscolumnscells" class="section level2">
+<h2><span class="header-section-number">2.1</span> Selecting Rows/Columns/Cells</h2>
+<p>You may select rows, columns, or cells in the table, and obtain the indices of the selected objects. See <a href="https://yihui.shinyapps.io/DT-selection">this Shiny app</a> for a comprehensive example (you can find its source code under <code>system.file('examples', 'DT-selection', package = 'DT')</code>).</p>
+<div id="row-selection" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Row Selection</h3>
 <p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$tableId_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>. You can disable row selection by <code>datatable(..., selection = 'none')</code>, or use the single selection mode by <code>selection = 'single'</code>. The default selection mode is multiple selections (try the table below).</p>
 <p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
@@ -205,13 +208,22 @@ shiny::<span class="kw">runApp</span>(app)</code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="http://i.imgur.com/jBxAm4F.png" alt="Row selection in DataTables" /></a></p>
 <p>You can also obtain the index of the last clicked row via <code>input$tableId_row_last_clicked</code> (it may be <code>NULL</code> initially and when the table is redrawn).</p>
 </div>
-<div id="column-selection" class="section level2">
-<h2><span class="header-section-number">2.2</span> Column Selection</h2>
+<div id="column-selection" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Column Selection</h3>
 <p>Row selection is the default mode in <strong>DT</strong>. You can turn on column selection using <code>datatable(..., selection = list(target = 'column'))</code>. In this case, you can click on any cell to select a column, and the (numeric) indices of the selected columns will be available in <code>input$tableId_columns_selected</code>.</p>
 <p>You may also select rows and columns simultaneously using <code>target = 'row+column'</code>. In this case, column selection is achieved by clicking on the table footer. Clicking on the table body will select/deselect rows.</p>
 </div>
+<div id="cell-selection" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Cell Selection</h3>
+<p>Cell selection is enabled by <code>target = 'cell'</code> in the <code>selection</code> argument. The indices of selected cells are available through <code>input$tableId_cells_selected</code> as a matrix of two columns: each row of the matrix contains the row index and column index of a selected cell. When no cells are selected, the matrix has zero rows.</p>
+</div>
+<div id="pre-selection" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Pre-selection</h3>
+<p>The <code>selection</code> argument of <code>datatable()</code> can also include a component <code>selected</code> to specify which rows/columns/cells to be pre-selected when the table is initialized. When <code>target = 'row'</code> or <code>'column'</code>, <code>selected</code> is a vector of row or column indices. For the case of <code>target = 'row+column'</code>, <code>selected</code> should be a list of two components <code>rows</code> and <code>cols</code>, e.g. <code>list(rows = c(1, 2, 4, 9), cols = c(1, 3))</code>. For <code>target = 'cell'</code>, it should be a matrix of two columns: the first column is the row indices of selected cells, and the second column is the column indices.</p>
+</div>
+</div>
 <div id="datatables-information" class="section level2">
-<h2><span class="header-section-number">2.3</span> DataTables Information</h2>
+<h2><span class="header-section-number">2.2</span> DataTables Information</h2>
 <p>As you interact with the table (e.g. sort columns, search the table, or navigate through pages), <strong>DT</strong> will expose some information about the current state of the table to Shiny. At the moment, these information are available in the <code>input</code> object of the Shiny server function (suppose the table output id is <code>tableId</code>):</p>
 <ul>
 <li><code>input$tableId_rows_current</code>: the indices of rows on the current page</li>
@@ -226,7 +238,7 @@ shiny::<span class="kw">runApp</span>(app)</code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-info/"><img src="http://i.imgur.com/iLJNC60.png" alt="DataTables information in shiny" /></a></p>
 </div>
 <div id="manipulate-an-existing-datatables-instance" class="section level2">
-<h2><span class="header-section-number">2.4</span> Manipulate An Existing DataTables Instance</h2>
+<h2><span class="header-section-number">2.3</span> Manipulate An Existing DataTables Instance</h2>
 <p>After a table has been rendered in a Shiny app, you can use the proxy object returned from <code>dataTableProxy()</code> to manipulate it. Currently supported methods are <code>selectRows()</code>, <code>selectColumns()</code>, and <code>addRow()</code>. See <a href="https://yihui.shinyapps.io/DT-proxy">this Shiny app</a> for an example of using these methods to update a table.</p>
 </div>
 </div>
