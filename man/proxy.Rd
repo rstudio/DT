@@ -2,6 +2,7 @@
 \name{dataTableProxy}
 \alias{addRow}
 \alias{dataTableProxy}
+\alias{selectCells}
 \alias{selectColumns}
 \alias{selectRows}
 \title{Manipulate an existing DataTables instance in a Shiny app}
@@ -12,6 +13,8 @@ dataTableProxy(outputId, session = shiny::getDefaultReactiveDomain(),
 selectRows(proxy, selected)
 
 selectColumns(proxy, selected)
+
+selectCells(proxy, selected)
 
 addRow(proxy, data)
 }
@@ -24,9 +27,9 @@ Shiny app)}
 
 \item{proxy}{a proxy object returned by \code{dataTableProxy()}}
 
-\item{selected}{an integer vector of row/column indices; for server-side
-tables, the row indices should be row names (i.e. a character vector); you
-may use \code{NULL} to clear existing selections}
+\item{selected}{an integer vector of row/column indices, or a matrix of two
+columns (row and column indices, respectively) for cell indices; you may
+use \code{NULL} to clear existing selections}
 
 \item{data}{a single row of data to be added to the table; it can be a matrix
 or data frame of one row, or a vector or list of row data (in the latter
