@@ -514,6 +514,9 @@ HTMLWidgets.widget({
       }
 
       if (inArray(selTarget, ['column', 'row+column'])) {
+        if (selTarget === 'row+column') {
+          $(table.columns().footer()).css('cursor', 'pointer');
+        }
         table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr th', function() {
           var colIdx = selTarget === 'column' ? table.cell(this).index().column :
               $.inArray(this, table.columns().footer()),
