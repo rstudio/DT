@@ -110,6 +110,7 @@ The `selection` argument of `datatable()` can also include a component `selected
 
 As you interact with the table (e.g. sort columns, search the table, or navigate through pages), **DT** will expose some information about the current state of the table to Shiny. At the moment, these information are available in the `input` object of the Shiny server function (suppose the table output id is `tableId`):
 
+- `input$tableId_cell_clicked`: information about the cell being clicked of the form `list(row = row_index, col = column_index, value = cell_value)` ([example](https://yihui.shinyapps.io/DT-click))
 - `input$tableId_rows_current`: the indices of rows on the current page
 - `input$tableId_rows_all`: the indices of rows on all pages (after the table is filtered by the search strings)
 - `input$tableId_search`: the global search string
