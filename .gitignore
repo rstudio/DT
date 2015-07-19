@@ -5,3 +5,4 @@ tools/DataTables*
 tools/Plugins
 rsconnect/
 large.txt
+inst/examples/random.R
