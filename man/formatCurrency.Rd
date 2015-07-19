@@ -16,8 +16,9 @@ formatRound(table, columns, digits = 2)
 
 formatDate(table, columns, method = "toDateString")
 
-formatStyle(table, columns, valueColumns = columns, fontWeight = NULL, color = NULL, 
-    backgroundColor = NULL, background = NULL, ...)
+formatStyle(table, columns, valueColumns = columns, target = c("cell", "row"), 
+    fontWeight = NULL, color = NULL, backgroundColor = NULL, background = NULL, 
+    ...)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -43,6 +44,9 @@ equivalent to \code{c('V1', 'V2')})}
 \item{valueColumns}{indices of the columns from which the cell values are
 obtained; this can be different with the \code{columns} argument, e.g. you
 may style one column based on the values of a different column}
+
+\item{target}{the target to apply the CSS styles to (the current cell or the
+full row)}
 
 \item{fontWeight}{the font weight, e.g. \code{'bold'} and \code{'normal'}}
 
