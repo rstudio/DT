@@ -5,6 +5,8 @@ output:
     includes: null
 ---
 
+# Style One Column Based on Another Column
+
 By default, `formatStyle()` uses the values of the column(s) specified by the `columns` argument to style column(s). You can also style a column conditional on the values of a different column using the `valueColumns` argument.
 
 ```{r}
@@ -26,6 +28,18 @@ datatable(df, options = list(
     columnDefs = list(list(targets = 6, visible = FALSE))
 )) %>% formatStyle(
   'V1', 'V6',
+  backgroundColor = styleEqual(c(0, 1), c('gray', 'yellow'))
+)
+```
+
+# Style A Full Row
+
+You can also style the full row instead of a single cell by using the argument `target = 'row'` in `formatStyle()`, e.g.
+
+```{r}
+datatable(df) %>% formatStyle(
+  'V6',
+  target = 'row',
   backgroundColor = styleEqual(c(0, 1), c('gray', 'yellow'))
 )
 ```

@@ -81,6 +81,8 @@ img {
 </div>
 
 
+<div id="style-one-column-based-on-another-column" class="section level1">
+<h1><span class="header-section-number">1</span> Style One Column Based on Another Column</h1>
 <p>By default, <code>formatStyle()</code> uses the values of the column(s) specified by the <code>columns</code> argument to style column(s). You can also style a column conditional on the values of a different column using the <code>valueColumns</code> argument.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 <span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))
@@ -211,6 +213,51 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   },
   "evals": ["options.rowCallback"]
 }</script></p>
+</div>
+<div id="style-a-full-row" class="section level1">
+<h1><span class="header-section-number">2</span> Style A Full Row</h1>
+<p>You can also style the full row instead of a single cell by using the argument <code>target = 'row'</code> in <code>formatStyle()</code>, e.g.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(
+  <span class="st">&#39;V6&#39;</span>,
+  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,
+  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
+)</code></pre>
+<p><div id="htmlwidget-3626" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-3626">{
+  "x": {
+    "filter": "none",
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
+      [1.445, 0.115, -0.627, -1.269, -0.228, -0.26, -1.574, 1.754, -1.678, 0.531],
+      [0.753, -0.21, -1.319, -0.981, -0.357, -0.185, 0.082, 0.173, 1.092, 2.012],
+      [1.364, -0.064, -1.1, -0.155, 1.199, 2.117, 1.718, -0.362, 0.032, 3.114],
+      [0.407, 0.048, -0.91, -0.272, 0.405, -0.998, 2.736, -1.121, 0.433, -0.566],
+      [1, 0, 1, 0, 0, 1, 0, 1, 0, 0]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n      <th>V6</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "pageLength": 5,
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4, 5, 6]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
+      "lengthMenu": [5, 10, 25, 50, 100],
+      "rowCallback": "function(row, data) {\nvar value=data[6]; if (value!==null) $(row).css({'background-color':value == '0' ? 'gray' : value == '1' ? 'yellow' : ''});\n}"
+    }
+  },
+  "evals": ["options.rowCallback"]
+}</script></p>
+</div>
 
 
 </div>
