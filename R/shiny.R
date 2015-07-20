@@ -344,6 +344,8 @@ dataTablesFilter = function(data, params) {
     }
   }
 
+  # TODO: if iAll is just 1:n, is it necessary to pass this vector to JSON, then
+  # to R? When n is large, it may not be very efficient
   list(
     draw = as.integer(q$draw),
     recordsTotal = n,
