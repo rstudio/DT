@@ -1,5 +1,5 @@
 ---
-title: "More Examples on Styling Cells"
+title: "More Examples on Styling Cells, Rows, and Tables"
 output:
   html_document:
     includes: null
@@ -34,7 +34,7 @@ datatable(df, options = list(
 
 # Style A Full Row
 
-You can also style the full row instead of a single cell by using the argument `target = 'row'` in `formatStyle()`, e.g.
+You can also style the full row instead of a single cell by using the argument `target = 'row'` in `formatStyle()`, e.g.,
 
 ```{r}
 datatable(df) %>% formatStyle(
@@ -42,4 +42,23 @@ datatable(df) %>% formatStyle(
   target = 'row',
   backgroundColor = styleEqual(c(0, 1), c('gray', 'yellow'))
 )
+```
+
+# Style A Full Table
+
+You can also style the full table as a type of heat map by using either `styleInterval` or `styleColorBar`, e.g.,
+
+```{r}
+# create 19 breaks and 20 rgb color values ranging from white to red
+brks <- quantile(df, probs = seq(.05, .95, .05), na.rm = TRUE)
+clrs <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+  {paste0("rgb(255,", ., ",", ., ")")}
+datatable(df) %>% formatStyle(names(df), backgroundColor = styleInterval(brks, clrs))
+
+# using styleColorBar
+datatable(df) %>% formatStyle(names(df),
+  background = styleColorBar(range(df), 'lightblue'),
+  backgroundSize = '98% 88%',
+  backgroundRepeat = 'no-repeat',
+  backgroundPosition = 'center')
 ```
