@@ -36,3 +36,24 @@ toJSON = function(...) {
   FUN = getFromNamespace('toJSON', 'htmlwidgets')
   FUN(...)
 }
+
+# coerce a value to the same type as an old value
+coerceValue = function(val, old) {
+  if (is.integer(old)) return(as.integer(val))
+  if (is.numeric(old)) return(as.numeric(val))
+  if (inherits(old, 'Date')) return(as.Date(val))
+  if (inherits(old, c('POSIXlt', 'POSIXct'))) {
+    val = strptime(val, '%Y-%m-%dT%H:%M:%SZ', tz = 'UTC')
+    if (inherits(old, 'POSIXlt')) return(val)
+    return(as.POSIXct(val))
+  }
+  if (is.factor(old)) {
+    if (val %in% levels(old)) return(val)
+    warning(
+      'New value ', val, ' not in the original factor levels: ',
+      paste(levels(old), collapse = ', ')
+    )
+    return(NA)
+  }
+  val
+}
