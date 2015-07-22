@@ -10,7 +10,7 @@
 
 
 
-<title>More Examples on Styling Cells</title>
+<title>More Examples on Styling Cells, Rows, and Tables</title>
 
 <script src="libs/jquery/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -77,7 +77,7 @@ img {
 
 
 <div id="header">
-<h1 class="title">More Examples on Styling Cells</h1>
+<h1 class="title">More Examples on Styling Cells, Rows, and Tables</h1>
 </div>
 
 
@@ -216,7 +216,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
 </div>
 <div id="style-a-full-row" class="section level1">
 <h1><span class="header-section-number">2</span> Style A Full Row</h1>
-<p>You can also style the full row instead of a single cell by using the argument <code>target = 'row'</code> in <code>formatStyle()</code>, e.g.</p>
+<p>You can also style the full row instead of a single cell by using the argument <code>target = 'row'</code> in <code>formatStyle()</code>, e.g.,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(
   <span class="st">&#39;V6&#39;</span>,
   <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,
@@ -253,6 +253,91 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
       "rowCallback": "function(row, data) {\nvar value=data[6]; if (value!==null) $(row).css({'background-color':value == '0' ? 'gray' : value == '1' ? 'yellow' : ''});\n}"
+    }
+  },
+  "evals": ["options.rowCallback"]
+}</script></p>
+</div>
+<div id="style-a-full-table" class="section level1">
+<h1><span class="header-section-number">3</span> Style A Full Table</h1>
+<p>You can also style the full table as a type of heat map by using either <code>styleInterval</code> or <code>styleColorBar</code>, e.g.,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create 19 breaks and 20 rgb color values ranging from white to red</span>
+brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span class="dt">probs =</span> <span class="kw">seq</span>(.<span class="dv">05</span>, .<span class="dv">95</span>, .<span class="dv">05</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) +<span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) %&gt;%
+<span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}
+<span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</code></pre>
+<p><div id="htmlwidget-9437" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-9437">{
+  "x": {
+    "filter": "none",
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
+      [1.445, 0.115, -0.627, -1.269, -0.228, -0.26, -1.574, 1.754, -1.678, 0.531],
+      [0.753, -0.21, -1.319, -0.981, -0.357, -0.185, 0.082, 0.173, 1.092, 2.012],
+      [1.364, -0.064, -1.1, -0.155, 1.199, 2.117, 1.718, -0.362, 0.032, 3.114],
+      [0.407, 0.048, -0.91, -0.272, 0.405, -0.998, 2.736, -1.121, 0.433, -0.566],
+      [1, 0, 1, 0, 0, 1, 0, 1, 0, 0]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n      <th>V6</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "pageLength": 5,
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4, 5, 6]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
+      "lengthMenu": [5, 10, 25, 50, 100],
+      "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[4]; if (value!==null) $(this.api().cell(row, 4).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 6).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\n}"
+    }
+  },
+  "evals": ["options.rowCallback"]
+}</script></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using styleColorBar</span>
+<span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df),
+  <span class="dt">background =</span> <span class="kw">styleColorBar</span>(<span class="kw">range</span>(df), <span class="st">&#39;lightblue&#39;</span>),
+  <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,
+  <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
+  <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</code></pre>
+<p><div id="htmlwidget-3422" style="width:100%;height:auto;" class="datatables"></div>
+<script type="application/json" data-for="htmlwidget-3422">{
+  "x": {
+    "filter": "none",
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
+      [1.445, 0.115, -0.627, -1.269, -0.228, -0.26, -1.574, 1.754, -1.678, 0.531],
+      [0.753, -0.21, -1.319, -0.981, -0.357, -0.185, 0.082, 0.173, 1.092, 2.012],
+      [1.364, -0.064, -1.1, -0.155, 1.199, 2.117, 1.718, -0.362, 0.032, 3.114],
+      [0.407, 0.048, -0.91, -0.272, 0.405, -0.998, 2.736, -1.121, 0.433, -0.566],
+      [1, 0, 1, 0, 0, 1, 0, 1, 0, 0]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>V1</th>\n      <th>V2</th>\n      <th>V3</th>\n      <th>V4</th>\n      <th>V5</th>\n      <th>V6</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "pageLength": 5,
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4, 5, 6]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
+      "lengthMenu": [5, 10, 25, 50, 100],
+      "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[4]; if (value!==null) $(this.api().cell(row, 4).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 6).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\n}"
     }
   },
   "evals": ["options.rowCallback"]
