@@ -410,6 +410,9 @@ fixServerOptions = function(options) {
       tolower(!isFALSE(options[['search']]$caseInsensitive))
     ),
     sprintf('d.escape = %s;', attr(options, 'escapeIdx', exact = TRUE)),
+    'var encodeAmp = function(x) { x.value = x.value.replace(/&/g, "%26"); }',
+    'encodeAmp(d.search);',
+    '$.each(d.columns, function(i, v) {encodeAmp(v.search);});',
     '}'
   )
   options

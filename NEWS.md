@@ -52,6 +52,8 @@ BUG FIXES
 
 - The column filters for numeric columns (sliders) do not work well when the columns contain very small values or values with a large number of decimal places (thanks, @DarioS, #150).
 
+- Searching for the ampersand `&` in the table does not work in Shiny.
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
