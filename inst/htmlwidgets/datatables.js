@@ -209,7 +209,7 @@ HTMLWidgets.widget({
           var r1 = +$x.data('min'), r2 = +$x.data('max');
           // when the numbers are too small or have many decimal places, the
           // slider may have numeric precision problems (#150)
-          var scale = Math.pow(10, Math.max(0, +$x.data('scale')));
+          var scale = Math.pow(10, Math.max(0, +$x.data('scale') || 0));
           r1 *= scale; r2 *= scale;
           var scaleBack = function(x, scale) {
             if (scale === 1) return x;

@@ -346,7 +346,7 @@ filterRow = function(
   tds = list()
   decimals = function(x) {
     x = abs(na.omit(x)) %% 1
-    if (all(x == 0)) 0 else max(nchar(format(x)) - 2)
+    if (!all(x == 0)) max(nchar(format(x)) - 2)
   }
   for (j in seq_len(ncol(data))) {
     if (j == 1 && rownames) {
