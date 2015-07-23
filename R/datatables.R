@@ -344,6 +344,10 @@ filterRow = function(
 ) {
   if (filter$position == 'none') return()
   tds = list()
+  decimals = function(x) {
+    x = abs(na.omit(x)) %% 1
+    if (all(x == 0)) 0 else max(nchar(format(x)) - 2)
+  }
   for (j in seq_len(ncol(data))) {
     if (j == 1 && rownames) {
       tds[[j]] = tags$td('')  # no filter for row names (may change in future)
@@ -365,9 +369,9 @@ filterRow = function(
         d1 = min(d, na.rm = TRUE)
         d2 = max(d, na.rm = TRUE)
       })
-      if (is.finite(d1) && is.finite(d2)) tags$div(
+      if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
         style = 'display: none; position: absolute; width: 200px;',
-        tags$div(`data-min` = d1, `data-max` = d2),
+        tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = decimals(d)),
         tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
       ) else {
         t = 'disabled'

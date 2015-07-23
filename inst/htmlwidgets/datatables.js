@@ -207,6 +207,16 @@ HTMLWidgets.widget({
           });
           var $span1 = $spans.first(), $span2 = $spans.last();
           var r1 = +$x.data('min'), r2 = +$x.data('max');
+          // when the numbers are too small or have many decimal places, the
+          // slider may have numeric precision problems (#150)
+          var scale = Math.pow(10, Math.max(0, +$x.data('scale')));
+          r1 *= scale; r2 *= scale;
+          var scaleBack = function(x, scale) {
+            if (scale === 1) return x;
+            var d = Math.round(Math.log(scale) / Math.log(10));
+            // to avoid problems like 3.423/100 -> 0.034230000000000003
+            return (x / scale).toFixed(d);
+          };
           $input.on({
             focus: function() {
               $x0.show();
@@ -256,10 +266,13 @@ HTMLWidgets.widget({
                 v[0] = strTime(v[0]);
                 v[1] = strTime(v[1]);
               }
+              if (v[0] != r1) v[0] *= scale;
+              if (v[1] != r2) v[1] *= scale;
               filter.val(v);
             }
           });
           var formatDate = function(d) {
+            d = scaleBack(d, scale);
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
@@ -331,11 +344,12 @@ HTMLWidgets.widget({
             v = parseFloat(data[i]);
             // how to handle NaN? currently exclude these rows
             if (isNaN(v)) return(false);
-            r0 = parseFloat(r[0]); r1 = parseFloat(r[1]);
+            r0 = parseFloat(scaleBack(r[0], scale))
+            r1 = parseFloat(scaleBack(r[1], scale));
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'date' || type === 'time') {
             v = new Date(data[i]);
-            r0 = new Date(+r[0]); r1 = new Date(+r[1]);
+            r0 = new Date(r[0] / scale); r1 = new Date(r[1] / scale);
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'factor') {
             if (r.length === 0 || inArray(data[i], r)) return true;
