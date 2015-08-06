@@ -71,4 +71,5 @@ table.dataTable tbody td.dt-body-nowrap {
 }
 .table.dataTable tbody td.active {
 	background-color: #0075b0 !important;
+	color: white;
 }
