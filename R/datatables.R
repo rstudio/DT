@@ -356,8 +356,9 @@ filterRow = function(
     t = NULL
     d = data[, j]
     x = if (is.numeric(d) || is.Date(d)) {
-      t = if (is.numeric(d)) 'number' else 'time'
-      if (is.integer(d)) t = 'integer'
+      t = if (is.numeric(d)) {
+        if (is.integer(d)) 'integer' else 'number'
+      } else 'time'
       if (t == 'time') {
         # JavaScript does have the Date type like R (YYYY-mm-dd without time)
         if (inherits(d, 'Date')) {
