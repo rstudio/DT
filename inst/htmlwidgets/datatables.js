@@ -50,7 +50,16 @@ var transposeArray2D = function(a) {
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
-  renderValue: function(el, data) {
+  initialize: function(el, width, height) {
+    $(el).text('TO BE RENDERED...');
+    return { data: null };
+  },
+  renderValue: function(el, data, instance) {
+    if (el.offsetWidth === 0 || el.offsetHeight === 0) {
+      instance.data = data;
+      return;
+    }
+    instance.data = null;
     var $el = $(el);
     $el.empty();
 
@@ -674,6 +683,9 @@ HTMLWidgets.widget({
 
     table.shinyMethods = methods;
     $el.data('datatable', table);
+  },
+  resize: function(el, width, height, instance) {
+    if (instance.data) this.renderValue(el, instance.data, instance);
   }
 });
 
