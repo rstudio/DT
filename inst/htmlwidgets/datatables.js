@@ -51,7 +51,7 @@ HTMLWidgets.widget({
   name: "datatables",
   type: "output",
   initialize: function(el, width, height) {
-    $(el).text('TO BE RENDERED...');
+    $(el).html('&nbsp;');
     return { data: null };
   },
   renderValue: function(el, data, instance) {
