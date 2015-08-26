@@ -345,8 +345,12 @@ filterRow = function(
   if (filter$position == 'none') return()
   tds = list()
   decimals = function(x) {
-    x = abs(na.omit(x)) %% 1
-    if (!all(x == 0)) max(nchar(format(x)) - 2)
+    x = abs(na.omit(x))
+    if (length(x) == 0) return()
+    is.wholenumber = function(x) all(x == round(x))
+    i = 0L
+    while (!is.wholenumber(x * 10L ^ i)) i = i + 1L
+    if (i > 0L) i
   }
   for (j in seq_len(ncol(data))) {
     if (j == 1 && rownames) {
