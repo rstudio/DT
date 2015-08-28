@@ -219,7 +219,7 @@ HTMLWidgets.widget({
           // when the numbers are too small or have many decimal places, the
           // slider may have numeric precision problems (#150)
           var scale = Math.pow(10, Math.max(0, +$x.data('scale') || 0));
-          r1 *= scale; r2 *= scale;
+          r1 = Math.round(r1 * scale); r2 = Math.round(r2 * scale);
           var scaleBack = function(x, scale) {
             if (scale === 1) return x;
             var d = Math.round(Math.log(scale) / Math.log(10));
@@ -306,7 +306,7 @@ HTMLWidgets.widget({
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
-            $td.data('filter', val[0] != r1 || val[1] != r2);
+            $td.data('filter', val[0] > r1 || val[1] < r2);
             var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
             if ($td.data('filter')) {
               ival = v1 + ' ... ' + v2;

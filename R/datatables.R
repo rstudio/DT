@@ -347,9 +347,8 @@ filterRow = function(
   decimals = function(x) {
     x = abs(na.omit(x))
     if (length(x) == 0) return()
-    is.wholenumber = function(x) all(x == round(x))
     i = 0L
-    while (!is.wholenumber(x * 10L ^ i)) i = i + 1L
+    while (any(round(x, i) != x)) i = i + 1L
     if (i > 0L) i
   }
   for (j in seq_len(ncol(data))) {
