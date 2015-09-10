@@ -48,7 +48,7 @@ employee = data.frame(
   Office = character(), `Start date` = character(), Salary = numeric(),
   check.names = FALSE
 )
-datatable(employee, options = list(
+datatable(employee, rownames = FALSE, options = list(
   ajax = list(
     serverSide = TRUE, processing = TRUE,
     url = 'http://datatables.net/examples/server_side/scripts/jsonp.php',
