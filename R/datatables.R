@@ -105,7 +105,7 @@ datatable = function(
     numc = if (is.numeric(data)) seq_len(ncol(data))
     data = as.data.frame(data)
   }
-  if (length(rn)) {
+  if (!is.null(rn)) {
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
   }
@@ -146,7 +146,7 @@ datatable = function(
   if (is.character(filter)) filter = list(position = match.arg(filter))
   filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
   # HTML code for column filters
-  filterHTML = as.character(filterRow(data, length(rn) > 0 && colnames[1] == ' ', filter))
+  filterHTML = as.character(filterRow(data, !is.null(rn) && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
