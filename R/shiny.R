@@ -326,7 +326,13 @@ dataTablesFilter = function(data, params) {
   }
   # paging
   if (q$length != '-1') {
-    i = seq(as.integer(q$start) + 1L, length.out = as.integer(q$length))
+    len = as.integer(q$length)
+    # I don't know why this can happen, but see https://github.com/rstudio/DT/issues/164
+    if (is.na(len)) {
+      warning("The DataTables parameter 'length' is '", q$length, "' (invalid).")
+      len = 0
+    }
+    i = seq(as.integer(q$start) + 1L, length.out = len)
     i = i[i <= nrow(data)]
     fdata = data[i, , drop = FALSE]  # filtered data
     iCurrent = iAll[i]
