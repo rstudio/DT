@@ -104,7 +104,7 @@ HTMLWidgets.widget({
     if (cells !== null) $.extend(options, {
       data: cells
     });
-    $.extend(options, data.options || {});
+    $.extend(true, options, data.options || {});
 
     var searchCols = options.searchCols;
     if (searchCols) {
