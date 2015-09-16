@@ -101,9 +101,9 @@ HTMLWidgets.widget({
     }
 
     var options = { searchDelay: 1000 };
-    if (cells !== null) options = {
+    if (cells !== null) $.extend(options, {
       data: cells
-    };
+    });
     $.extend(options, data.options || {});
 
     var searchCols = options.searchCols;
