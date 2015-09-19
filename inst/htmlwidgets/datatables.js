@@ -302,6 +302,25 @@ HTMLWidgets.widget({
             range: {min: r1, max: r2},
             connect: true
           }, opts));
+          if (scale > 1) (function() {
+            var t1 = r1, t2 = r2;
+            var val = filter.val();
+            while (val[0] > r1 || val[1] < r2) {
+              if (val[0] > r1) {
+                t1 -= val[0] - r1;
+              }
+              if (val[1] < r2) {
+                t2 += r2 - val[1];
+              }
+              filter = $x.noUiSlider($.extend({
+                start: [t1, t2],
+                range: {min: t1, max: t2},
+                connect: true
+              }, opts), true);
+              val = filter.val();
+            }
+            r1  = t1; r2 = t2;
+          })();
           $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
           var updateSlider = function(e) {
             var val = filter.val();
