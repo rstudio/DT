@@ -348,7 +348,7 @@ filterRow = function(
     x = abs(na.omit(x))
     if (length(x) == 0) return()
     i = 0L
-    while (any(round(x, i) != x)) i = i + 1L
+    while (i < 15 && any(round(x, i) != x)) i = i + 1L
     if (i > 0L) i
   }
   for (j in seq_len(ncol(data))) {
