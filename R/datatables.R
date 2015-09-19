@@ -373,9 +373,14 @@ filterRow = function(
         d1 = min(d, na.rm = TRUE)
         d2 = max(d, na.rm = TRUE)
       })
+      dec = decimals(d)
+      if (!is.null(dec)) {
+        d1 = floor(d1 * 10^dec) / 10^dec
+        d2 = ceiling(d2 * 10^dec) / 10^dec
+      }
       if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
         style = 'display: none; position: absolute; width: 200px;',
-        tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = decimals(d)),
+        tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
         tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
       ) else {
         t = 'disabled'
