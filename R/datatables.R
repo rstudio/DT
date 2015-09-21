@@ -387,14 +387,16 @@ filterRow = function(
         NULL
       }
     } else if (is.factor(d) || is.logical(d)) {
-      if (is.logical(d)) {
+      if (length(unique(d)) <= 1) {
+        t = 'disabled'
+      } else if (is.logical(d)) {
         t = 'logical'
         d = c('true', 'false', if (any(is.na(d))) 'na')
       } else {
         t = 'factor'
         d = sort(unique(d))
       }
-      tags$div(
+      if (t != 'disabled') tags$div(
         tags$select(
           multiple = 'multiple', style = 'width: 100%;',
           lapply(d, function(x) tags$option(value = x, x))
@@ -402,7 +404,7 @@ filterRow = function(
         style = 'width: 100%; display: none;'
       )
     } else if (is.character(d)) {
-      t = 'character'
+      t = if (length(unique(d)) <= 1) 'disabled' else 'character'
       NULL
     }
     clear = filter$clear
