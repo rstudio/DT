@@ -92,7 +92,7 @@ datatable(head(iris, 20), options = list(
 ))
 ```
 
-The function `JS()` tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using **RJSONIO**) and decode it in the browser.
+The function `JS()` tells R that this element is not an ordinary character vector, but literal JavaScript code, which will be evaluated in the web browser. We need this special function because there is no way to encode a JavaScript function in R (using **jsonlite**) and decode it in the browser.
 
 ## Column Rendering
 
