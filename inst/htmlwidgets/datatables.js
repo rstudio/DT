@@ -259,9 +259,9 @@ HTMLWidgets.widget({
                 if (val.lastIndexOf(">=",0) == 0) {
                   v = [val.substring(2), r2];
                 } else if (val.lastIndexOf("<=",0) == 0) {
-                  v = [r1, substring(2)];
+                  v = [r1, val.substring(2)];
                 } else if (val.lastIndexOf("=",0) == 0) {
-                  v = [val.substring(1), ];
+                  v = [val.substring(1), val.substring(1)];
                 } 
               } 
               if (v.length !== 2) {
