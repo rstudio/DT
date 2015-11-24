@@ -256,21 +256,15 @@ HTMLWidgets.widget({
               v = val.split('...');
               // allow simple comparators for filtering ('=', '>=', '<=')
               if (v.length == 1) {
-                v = ['',''];
                 if (val.lastIndexOf(">=",0) == 0) {
-                  v[0] = val.substring(2);
-                  v[1] = r2;
+                  v = [val.substring(2), r2];
                 } else if (val.lastIndexOf("<=",0) == 0) {
-                  v[0] = r1;
-                  v[1] = val.substring(2);
+                  v = [r1, substring(2)];
                 } else if (val.lastIndexOf("=",0) == 0) {
-                  v[0] = val.substring(1);
-                  v[1] = v[0];
-                } else {
-                  $input.parent().addClass('has-error');
-                  return;
-                }
-              } else if (v.length !== 2) {
+                  v = [val.substring(1), ];
+                } 
+              } 
+              if (v.length !== 2) {
                 $input.parent().addClass('has-error');
                 return;
               }
