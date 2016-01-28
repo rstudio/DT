@@ -4,7 +4,7 @@ sudo: false
 
 env:
   matrix:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)"
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$PATH
   global:
     secure: "UA1wwxtwlWOb7glP37H4zWmcd/NNToRtV33EoD5zutf4BF+nCs6TdDAcKCQEvJz6r0KQswwgzPWALbNfn3dFDyB01jXIqrznCAeJfyz8dI38lxDj7fEdUstFeKXwkizYB13w7lsIu2NXJQXS2Nr4Dot5sKFFV7JrPiXzfoKUcSM="
 
@@ -18,12 +18,14 @@ addons:
 
 install:
   - "wget -q -O - http://yihui.name/xran/r-config | bash"
+  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
   - Rscript -e "if (!require('devtools')) install.packages('devtools')"
   - Rscript -e "devtools::install_deps(dep = TRUE)"
 
 cache:
   directories:
   - $HOME/R
+  - $HOME/bin
 
 script:
   - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
