@@ -20,7 +20,8 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
   };
   d = d.toFixed(digits);
   var res = markInterval(d, interval, mark);
-  res = before ? currency + res : res + currency;
+  res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
+    res + currency;
   $(thiz.api().cell(row, col).node()).html(res);
 };
 
