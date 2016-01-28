@@ -119,7 +119,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 #'   you used in \code{\link{dataTableOutput}()})
 #' @param session the Shiny session object (from the server function of the
 #'   Shiny app)
-#' @param deferUtilFlush whether an action should be carried out right away, or
+#' @param deferUntilFlush whether an action should be carried out right away, or
 #'   should be held until after the next time all of the outputs are updated
 #' @note \code{addRow()} only works for client-side tables. If you want to use
 #'   it in a Shiny app, make sure to use \code{renderDataTable(..., server =

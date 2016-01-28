@@ -25,6 +25,9 @@ you used in \code{\link{dataTableOutput}()})}
 \item{session}{the Shiny session object (from the server function of the
 Shiny app)}
 
+\item{deferUntilFlush}{whether an action should be carried out right away, or
+should be held until after the next time all of the outputs are updated}
+
 \item{proxy}{a proxy object returned by \code{dataTableProxy()}}
 
 \item{selected}{an integer vector of row/column indices, or a matrix of two
@@ -36,9 +39,6 @@ or data frame of one row, or a vector or list of row data (in the latter
 case, please be cautious about the row name: if your table contains row
 names, here \code{data} must also contain the row name as the first
 element)}
-
-\item{deferUtilFlush}{whether an action should be carried out right away, or
-should be held until after the next time all of the outputs are updated}
 }
 \description{
 The function \code{datatableProxy()} creates a proxy object that can be used
