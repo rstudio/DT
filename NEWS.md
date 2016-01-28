@@ -54,6 +54,8 @@ BUG FIXES
 
 - Searching for the ampersand `&` in the table does not work in Shiny.
 
+- Searching for `+` in columns does not work in Shiny (thanks, @vnijs, #214).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
