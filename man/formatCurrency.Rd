@@ -8,7 +8,7 @@
 \title{Format table columns}
 \usage{
 formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", digits = 2, 
-    dec.mark = getOption("OutDec"))
+    dec.mark = getOption("OutDec"), before = TRUE)
 
 formatPercentage(table, columns, digits = 0)
 
@@ -36,6 +36,8 @@ equivalent to \code{c('V1', 'V2')})}
 \item{digits}{the number of decimal places to round to}
 
 \item{dec.mark}{a character to indicate the decimal point}
+
+\item{before}{whether to place the currency symbol before or after the values}
 
 \item{method}{the method(s) to convert a date to string in JavaScript; see
 \code{DT:::DateMethods} for a list of possible methods, and
