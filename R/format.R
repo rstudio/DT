@@ -24,6 +24,7 @@ formatColumns = function(table, columns, template, ...) {
 #' @param interval put a marker after how many digits of the numbers
 #' @param mark the marker after every \code{interval} decimals in the numbers
 #' @param dec.mark a character to indicate the decimal point
+#' @param before whether to place the currency symbol before or after the values
 #' @param method the method(s) to convert a date to string in JavaScript; see
 #'   \code{DT:::DateMethods} for a list of possible methods, and
 #'   \url{http://mzl.la/1xGe99W} for a full reference
@@ -51,11 +52,11 @@ formatColumns = function(table, columns, template, ...) {
 #'   )
 formatCurrency = function(
   table, columns, currency = '$', interval = 3, mark = ',', digits = 2,
-  dec.mark = getOption('OutDec')
+  dec.mark = getOption('OutDec'), before = TRUE
 ) {
   currency = gsub("'", "\\\\'", currency)
   mark = gsub("'", "\\\\'", mark)
-  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark)
+  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark, before)
 }
 
 #' @export
@@ -134,10 +135,10 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   ))
 }
 
-tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, ...) {
+tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, before, ...) {
   sprintf(
-    "DTWidget.formatCurrency(this, row, data, %d, '%s', %d, %d, '%s', '%s');",
-    cols, currency, digits, interval, mark, dec.mark
+    "DTWidget.formatCurrency(this, row, data, %d, '%s', %d, %d, '%s', '%s', %s);",
+    cols, currency, digits, interval, mark, dec.mark, if (before) 'true' else 'false'
   )
 }
 

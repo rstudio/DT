@@ -7,7 +7,7 @@
 // a global object
 var DTWidget = {};
 
-DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark) {
+DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark, before) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
   // 123456666.7890 -> 123,456,666.7890
@@ -19,7 +19,9 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
     return xv.join(decMark);
   };
   d = d.toFixed(digits);
-  $(thiz.api().cell(row, col).node()).html(currency + markInterval(d, interval, mark));
+  var res = markInterval(d, interval, mark);
+  res = before ? currency + res : res + currency;
+  $(thiz.api().cell(row, col).node()).html(res);
 };
 
 DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
