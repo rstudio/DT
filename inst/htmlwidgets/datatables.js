@@ -135,6 +135,13 @@ HTMLWidgets.widget({
       return $.inArray(val, $.makeArray(array)) > -1;
     };
 
+    // encode + to %2B when searching in the table on server side, because
+    // shiny::parseQueryString() treats + as spaces, and DataTables does not
+    // encode + to %2B (or % to %25) when sending the request
+    var encode_plus = function(x) {
+      return server ? x.replace(/%/g, '%25').replace(/\+/g, '%2B') : x;
+    };
+
     if (data.filter !== 'none') {
 
       filterRow.each(function(i, td) {
@@ -174,7 +181,7 @@ HTMLWidgets.widget({
               if (value) $input.trigger('input');
               $input.attr('title', $input.val());
               if (server) {
-                table.column(i).search(value ? JSON.stringify(value) : '').draw();
+                table.column(i).search(value ? encode_plus(JSON.stringify(value)) : '').draw();
                 return;
               }
               // turn off filter if nothing selected
@@ -195,7 +202,7 @@ HTMLWidgets.widget({
               regex = options.search.regex,
               ci = options.search.caseInsensitive !== false;
             }
-            table.column(i).search($input.val(), regex, !regex, ci).draw();
+            table.column(i).search(encode_plus($input.val()), regex, !regex, ci).draw();
           };
           if (server) {
             fun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
@@ -352,7 +359,7 @@ HTMLWidgets.widget({
         // processing
         if (server) {
           // if a search string has been pre-set, search now
-          if (searchCol) table.column(i).search(searchCol).draw();
+          if (searchCol) table.column(i).search(encode_plus(searchCol)).draw();
           return;
         }
 
