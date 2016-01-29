@@ -37,6 +37,12 @@ DTWidget.formatRound = function(thiz, row, data, col, digits) {
   $(thiz.api().cell(row, col).node()).html(d.toFixed(digits));
 };
 
+DTWidget.formatSignif = function(thiz, row, data, col, digits) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node()).html(d.toPrecision(digits));
+};
+
 DTWidget.formatDate = function(thiz, row, data, col, method) {
   var d = data[col];
   if (d === null) return;

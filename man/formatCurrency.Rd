@@ -4,21 +4,24 @@
 \alias{formatDate}
 \alias{formatPercentage}
 \alias{formatRound}
+\alias{formatSignif}
 \alias{formatStyle}
 \title{Format table columns}
 \usage{
-formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", digits = 2, 
-    dec.mark = getOption("OutDec"), before = TRUE)
+formatCurrency(table, columns, currency = "$", interval = 3, mark = ",",
+  digits = 2, dec.mark = getOption("OutDec"), before = TRUE)
 
 formatPercentage(table, columns, digits = 0)
 
 formatRound(table, columns, digits = 2)
 
+formatSignif(table, columns, digits = 2)
+
 formatDate(table, columns, method = "toDateString")
 
-formatStyle(table, columns, valueColumns = columns, target = c("cell", "row"), 
-    fontWeight = NULL, color = NULL, backgroundColor = NULL, background = NULL, 
-    ...)
+formatStyle(table, columns, valueColumns = columns, target = c("cell",
+  "row"), fontWeight = NULL, color = NULL, backgroundColor = NULL,
+  background = NULL, ...)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -71,7 +74,8 @@ dash-separated names (e.g. \code{'fontWeight'} will be converted to
 \description{
 Format numeric columns in a table as currency (\code{formatCurrency()}) or
 percentages (\code{formatPercentage()}), or round numbers to a specified
-number of decimal places (\code{formatRound()}). The function
+number of decimal places (\code{formatRound()}), or a specified number
+of significant figures (\code{formatSignif()}).  The function
 \code{formatStyle()} applies CSS styles to table cells by column.
 }
 \examples{
@@ -86,6 +90,9 @@ datatable(m) \%>\% formatCurrency(c('A', 'C')) \%>\% formatPercentage('D', 2)
 # the first two columns are Euro currency, and round column E to 3 decimal places
 datatable(m) \%>\% formatCurrency(1:2, '\\U20AC') \%>\% formatRound('E', 3)
 
+# render vapor pressure with only two significant figures.
+datatable(pressure) \%>\% formatSignif('pressure',2)
+
 # apply CSS styles to columns
 datatable(iris) \%>\%
   formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('bold', 'weight'))) \%>\%
@@ -98,3 +105,4 @@ datatable(iris) \%>\%
 See \url{http://rstudio.github.io/DT/functions.html} for detailed
   documentation and examples.
 }
+
