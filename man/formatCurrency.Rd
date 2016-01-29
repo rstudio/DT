@@ -8,8 +8,8 @@
 \alias{formatStyle}
 \title{Format table columns}
 \usage{
-formatCurrency(table, columns, currency = "$", interval = 3, mark = ",",
-  digits = 2, dec.mark = getOption("OutDec"), before = TRUE)
+formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", digits = 2, 
+    dec.mark = getOption("OutDec"), before = TRUE)
 
 formatPercentage(table, columns, digits = 0)
 
@@ -19,9 +19,9 @@ formatSignif(table, columns, digits = 2)
 
 formatDate(table, columns, method = "toDateString")
 
-formatStyle(table, columns, valueColumns = columns, target = c("cell",
-  "row"), fontWeight = NULL, color = NULL, backgroundColor = NULL,
-  background = NULL, ...)
+formatStyle(table, columns, valueColumns = columns, target = c("cell", "row"), 
+    fontWeight = NULL, color = NULL, backgroundColor = NULL, background = NULL, 
+    ...)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -105,4 +105,3 @@ datatable(iris) \%>\%
 See \url{http://rstudio.github.io/DT/functions.html} for detailed
   documentation and examples.
 }
-
