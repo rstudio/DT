@@ -14,7 +14,8 @@ formatColumns = function(table, columns, template, ...) {
 #'
 #' Format numeric columns in a table as currency (\code{formatCurrency()}) or
 #' percentages (\code{formatPercentage()}), or round numbers to a specified
-#' number of decimal places (\code{formatRound()}). The function
+#' number of decimal places (\code{formatRound()}), or a specified number
+#' of significant figures (\code{formatSignif()}).  The function
 #' \code{formatStyle()} applies CSS styles to table cells by column.
 #' @param table a table object created from \code{\link{datatable}()}
 #' @param columns the indices of the columns to be formatted (can be character,
@@ -43,6 +44,9 @@ formatColumns = function(table, columns, template, ...) {
 #' # the first two columns are Euro currency, and round column E to 3 decimal places
 #' datatable(m) %>% formatCurrency(1:2, '\U20AC') %>% formatRound('E', 3)
 #'
+#' # render vapor pressure with only two significant figures.
+#' datatable(pressure) %>% formatSignif('pressure',2)
+#'
 #' # apply CSS styles to columns
 #' datatable(iris) %>%
 #'   formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('bold', 'weight'))) %>%
@@ -70,6 +74,12 @@ formatPercentage = function(table, columns, digits = 0) {
 #' @rdname formatCurrency
 formatRound = function(table, columns, digits = 2) {
   formatColumns(table, columns, tplRound, digits)
+}
+
+#' @export
+#' @rdname formatCurrency
+formatSignif = function(table, columns, digits = 2) {
+  formatColumns(table, columns, tplSignif, digits)
 }
 
 #' @export
@@ -148,6 +158,10 @@ tplPercentage = function(cols, digits, ...) {
 
 tplRound = function(cols, digits, ...) {
   sprintf("DTWidget.formatRound(this, row, data, %d, %d);", cols, digits)
+}
+
+tplSignif = function(cols, digits, ...) {
+  sprintf("DTWidget.formatSignif(this, row, data, %d, %d);", cols, digits)
 }
 
 tplDate = function(cols, method, ...) {
