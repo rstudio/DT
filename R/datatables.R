@@ -464,7 +464,7 @@ extAll = function() {
 extDependency = function(extension) {
   # correct ExtName to extName just in case
   extension = sub('^(.)', '\\L\\1', extension, perl = TRUE)
-  if (!(extension %in% extAll())) stop('The extension ', extension, 'does not exist')
+  if (!(extension %in% extAll())) stop('The extension ', extension, ' does not exist')
   js = sprintf('dataTables.%s.min.js', extension)
   css = sprintf('dataTables.%s.min.css', extension)
   htmlDependency(
