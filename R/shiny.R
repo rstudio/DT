@@ -272,6 +272,14 @@ dataTablesFilter = function(data, params) {
   n = nrow(data)
   q = params
   ci = q$search[['caseInsensitive']] == 'true'
+  if (length(q$columns) != ncol(data)) return(list(
+    draw = as.integer(q$draw),
+    recordsTotal = n,
+    recordsFiltered = 0,
+    data = NULL,
+    DT_rows_all = seq_len(n),
+    DT_rows_current = NULL
+  ))
 
   # global searching
   i = seq_len(n)
