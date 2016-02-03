@@ -62,6 +62,8 @@ BUG FIXES
 
 - Searching for `+` in columns does not work in Shiny (thanks, @vnijs, #214).
 
+- Fixed a bug that triggers a DataTables warning dialog box in the browser (thanks, @zross, https://github.com/WHOequity/who-heat/issues/229 and https://github.com/rstudio/shiny/issues/561)
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
