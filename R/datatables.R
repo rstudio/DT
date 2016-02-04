@@ -76,9 +76,12 @@ datatable = function(
 ) {
 
   # yes, we all hate it
-  oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
+  oop = base::options(stringsAsFactors = FALSE); on.exit(base::options(oop), add = TRUE)
 
-  options = modifyList(getOption('DT.options', list()), options)
+  options = modifyList(
+    getOption('DT.options', list()),
+    if (is.function(options)) options() else options
+  )
   params = list()
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
