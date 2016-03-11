@@ -23,3 +23,8 @@ div.DTS tbody .even.selected,
 .table-striped tbody>.selected:nth-child(even)>td {
   background-color: #b0bed9 !important;
 }
+
+.dataTables_scrollBody .dataTables_sizing {
+  visibility: hidden;
+}
+

@@ -502,6 +502,15 @@ HTMLWidgets.widget({
       var thiz = this;
       setTimeout(function() {
 
+        // if we have a filter then remove it's overflow: hidden attribute
+        // (otherwise the scrolling table body obscures it)
+        if (data.filter !== 'none') {
+          var scrollHead = $(el).find('.dataTables_scrollHead');
+          var css = scrollHead.prop('style');
+          if (css)
+            css.removeProperty('overflow');
+        }
+
         // calculate correct height
         thiz.fillAvailableHeight(el, $(el).innerHeight());
 
