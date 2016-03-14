@@ -76,6 +76,9 @@ HTMLWidgets.widget({
       return;
     }
 
+    // propagate fillContainer to instance (so we have it in resize)
+    instance.fillContainer = data.fillContainer;
+
     var cells = data.data;
 
     if (cells instanceof Array) cells = transposeArray2D(cells);
@@ -113,6 +116,34 @@ HTMLWidgets.widget({
     if (cells !== null) $.extend(options, {
       data: cells
     });
+
+    // options for fillContainer
+    if (instance.fillContainer) {
+
+      // force scrollX/scrollY and turn off autoWidth
+      options.scrollX = true;
+      options.scrollY = "100px"; // can be any value, we'll adjust below
+      options.bAutoWidth = true;
+
+      // if we aren't paginating then move around the info/filter controls
+      // to save space at the bottom and rephrase the info callback
+      if (data.options.bPaginate === false) {
+
+        // we know how to do this cleanly for bootstrap, not so much
+        // for other themes/layouts
+        var bootstrapActive = typeof($.fn.popover) != 'undefined';
+        if (bootstrapActive) {
+          options.dom = "<'row'<'col-sm-4'i><'col-sm-8'f>>" +
+                        "<'row'<'col-sm-12'tr>>";
+        }
+
+        options.fnInfoCallback = function(oSettings, iStart, iEnd,
+                                           iMax, iTotal, sPre) {
+          return Number(iTotal).toLocaleString() + " records";
+        };
+      }
+    }
+
     $.extend(true, options, data.options || {});
 
     var searchCols = options.searchCols;
@@ -463,6 +494,32 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
+     // fillContainer = TRUE behavior
+    if (instance.fillContainer) {
+
+      // we need to wait just a bit to do this so DT can completely
+      // finish laying itself out
+      var thiz = this;
+      setTimeout(function() {
+
+        // if we have a filter then remove it's overflow: hidden attribute
+        // (otherwise the scrolling table body obscures it)
+        if (data.filter !== 'none') {
+          var scrollHead = $(el).find('.dataTables_scrollHead');
+          var css = scrollHead.prop('style');
+          if (css)
+            css.removeProperty('overflow');
+        }
+
+        // calculate correct height
+        thiz.fillAvailableHeight(el, $(el).innerHeight());
+
+        // we need to force DT to recalculate column widths
+        // (otherwise all the columns are the same size)
+        table.columns.adjust().draw();
+      }, 200);
+    }
+
     // interaction with shiny
     if (!HTMLWidgets.shinyMode) return;
 
@@ -721,6 +778,25 @@ HTMLWidgets.widget({
   },
   resize: function(el, width, height, instance) {
     if (instance.data) this.renderValue(el, instance.data, instance);
+
+    // dynamically adjust height if fillContainer = TRUE
+    if (instance.fillContainer)
+      this.fillAvailableHeight(el, height);
+  },
+
+  // dynamically set the scroll body to fill available height
+  // (used with fillContainer = TRUE)
+  fillAvailableHeight: function(el, availableHeight) {
+
+    // see how much of the table is occupied by header/footer elements
+    // and use that to compute a target scroll body height
+    var dtWrapper = $(el).find('div.dataTables_wrapper');
+    var dtScrollBody = $(el).find($('div.dataTables_scrollBody'));
+    var framingHeight = dtWrapper.innerHeight() - dtScrollBody.innerHeight();
+    var scrollBodyHeight = availableHeight - framingHeight;
+
+    // set the height
+    dtScrollBody.height(scrollBodyHeight + 'px');
   }
 });
 

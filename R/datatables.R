@@ -47,6 +47,9 @@
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
 #' @param width the width of the table
+#' @param fillContainer \code{TRUE} to configure the table to automatically fill
+#'   it's containing element. If the table can't fit fully into it's container
+#'   then vertical and/or horizontal scrolling of the table cells will occur.
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
@@ -72,6 +75,7 @@ datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
   escape = TRUE, style = 'default', width = '100%',
+  fillContainer = getOption('DT.fillContainer', FALSE),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
 ) {
 
@@ -198,6 +202,9 @@ datatable = function(
       options$tableTools$aButtons = c('copy', 'csv', 'xls', 'print')
   }
 
+  # record fillContainer
+  params$fillContainer = fillContainer;
+
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
     callback = if (!missing(callback)) JS('function(table) {', callback, '}')
@@ -229,9 +236,17 @@ datatable = function(
   if (length(plugins))
     deps = c(deps, lapply(plugins, pluginDependency))
 
+  # tweak width and height based on fillContainer
+  height = 'auto'
+  if (fillContainer) {
+    width = NULL
+    height = NULL
+  }
+
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
-    package = 'DT', width = width, height = 'auto',
+    package = 'DT', width = width, height = height,
+    sizingPolicy = htmlwidgets::sizingPolicy(browser.fill = TRUE),
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]
