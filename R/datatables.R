@@ -145,7 +145,7 @@ datatable = function(
   if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
-  style = match.arg(style, list.files(depPath('datatables', 'css')))
+  style = match.arg(tolower(style), DTStyles())
   if (style == 'bootstrap') class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
@@ -203,7 +203,7 @@ datatable = function(
   }
 
   # record fillContainer
-  params$fillContainer = fillContainer;
+  params$fillContainer = fillContainer
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
@@ -224,12 +224,7 @@ datatable = function(
     params$selection = selection
   }
 
-  deps = list(htmlDependency(
-    'datatables', DataTablesVersion, src = depPath('datatables', 'js'),
-    script = 'jquery.dataTables.min.js'
-  ))
-  deps = c(deps, list(styleDependency(style)))
-  deps = c(deps, lapply(extensions, extDependency))
+  deps = c(list(DTDependency(style)), lapply(extensions, extDependency, style))
   if (params$filter != 'none') deps = c(deps, filterDependencies())
   if (isTRUE(options$searchHighlight))
     deps = c(deps, list(pluginDependency('searchHighlight')))
@@ -469,6 +464,12 @@ depPath = function(...) {
   system.file('htmlwidgets', 'lib', ..., package = 'DT')
 }
 
+DTStyles = function() {
+  r = '^dataTables[.]([^.]+)[.]min[.]css$'
+  x = list.files(depPath('datatables', 'css'), r)
+  c('default', gsub(r, '\\1', x))
+}
+
 extNew = c('AutoFill', 'FixedColumns', 'FixedHeader', 'KeyTable')
 
 extPath = function(...) {
@@ -479,14 +480,19 @@ extAll = function() {
   list.dirs(extPath(), FALSE, FALSE)
 }
 
-extDependency = function(extension) {
-  # correct ExtName to extName just in case
-  extension = sub('^(.)', '\\L\\1', extension, perl = TRUE)
+extDependency = function(extension, style) {
   if (!(extension %in% extAll())) stop('The extension ', extension, ' does not exist')
-  js = sprintf('dataTables.%s.min.js', extension)
-  css = sprintf('dataTables.%s.min.css', extension)
+  src = extPath(extension)
+  ext = sub('^(.)', '\\L\\1', extension, perl = TRUE)
+  js = sprintf('dataTables.%s.min.js', ext)
+  if (style != 'default') js = c(js, sprintf('%s.%s.min.js', ext, style))
+  css = sprintf('%s.%s.min.css', ext, if (style == 'default') 'dataTables' else style)
+  js = file.path('js', js); css = file.path('css', css)
+  in_dir(src, {
+    js = existing_files(js); css = existing_files(css)
+  })
   htmlDependency(
-    paste('datatables', extension, sep = '-'), DataTablesVersion, extPath(extension),
+    paste('datatables', extension, sep = '-'), DataTablesVersion, src,
     script = js, stylesheet = css
   )
 }
@@ -512,11 +518,21 @@ copySWF = function(dest = '.', pdf = FALSE) {
   file.path(dest, swf, fsep = '/')
 }
 
-styleDependency = function(style) {
-  d = depPath('datatables', 'css', style)
+# core JS and CSS dependencies of DataTables
+DTDependency = function(style) {
+  js = 'jquery.dataTables.min.js'
+  css = 'jquery.dataTables.min.css'
+  if (style == 'default') {
+    css = c(css, 'jquery.dataTables.extra.css')  # patch the default style
+  } else {
+    js = c(js, sprintf('dataTables.%s.min.js', style))
+    css = c(css, sprintf('dataTables.%s.min.css', style))
+    # patch the Bootstrap style
+    if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
+  }
   htmlDependency(
-    paste('datatables', style, sep = '-'), DataTablesVersion, src = d,
-    script = list.files(d, '[.]min[.]js$'), stylesheet = list.files(d, '[.]css$')
+    'datatables', DataTablesVersion, src = depPath('datatables'),
+    script = file.path('js', js), stylesheet = file.path('css', css)
   )
 }
 
