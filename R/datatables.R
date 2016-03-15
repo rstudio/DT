@@ -95,7 +95,7 @@ datatable = function(
 
   hideDataTable = FALSE
   if (is.null(data) || identical(ncol(data), 0L)) {
-    data = matrix(ncol = 0, nrow = nrow(data))
+    data = matrix(ncol = 0, nrow = NROW(data))
     hideDataTable = TRUE
   } else if (length(dim(data)) != 2) {
     str(data)
