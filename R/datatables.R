@@ -224,7 +224,8 @@ datatable = function(
     params$selection = selection
   }
 
-  deps = c(list(DTDependency(style)), lapply(extensions, extDependency, style))
+  deps = list(DTDependency(style))
+  deps = c(deps, lapply(extensions, extDependency, style, options, extOptions))
   if (params$filter != 'none') deps = c(deps, filterDependencies())
   if (isTRUE(options$searchHighlight))
     deps = c(deps, list(pluginDependency('searchHighlight')))
@@ -480,11 +481,22 @@ extAll = function() {
   list.dirs(extPath(), FALSE, FALSE)
 }
 
-extDependency = function(extension, style) {
+extDependency = function(extension, style, options, extOptions) {
   if (!(extension %in% extAll())) stop('The extension ', extension, ' does not exist')
   src = extPath(extension)
   ext = sub('^(.)', '\\L\\1', extension, perl = TRUE)
-  js = sprintf('dataTables.%s.min.js', ext)
+  if (extension == 'Buttons') {
+    js = NULL
+    buttons = listButtons(options, extOptions)
+    if (excelButton <- 'excel' %in% buttons) js = c(js, 'jszip.min.js')
+    if (pdfButton <- 'pdf' %in% buttons) js = c(js, 'pdfmake.min.js', 'vfs_fonts.js')
+    js = c(js, sprintf('dataTables.%s.min.js', ext))
+    js = c(js, sprintf('buttons.%s.min.js', c(
+      if (excelButton || pdfButton) c('flash', 'html5'),
+      if ('colvis' %in% buttons) 'colVis',
+      if ('print' %in% buttons) 'print'
+    )))
+  } else js = sprintf('dataTables.%s.min.js', ext)
   if (style != 'default') js = c(js, sprintf('%s.%s.min.js', ext, style))
   css = sprintf('%s.%s.min.css', ext, if (style == 'default') 'dataTables' else style)
   js = file.path('js', js); css = file.path('css', css)
@@ -495,6 +507,19 @@ extDependency = function(extension, style) {
     paste('datatables', extension, sep = '-'), DataTablesVersion, src,
     script = js, stylesheet = css
   )
+}
+
+# whether a button was configured in the options
+listButtons = function(options, extOptions) {
+  config = options[['buttons']]
+  if (is.null(config)) config = extOptions[['Buttons']]
+  if (is.null(config)) return()
+  if (is.character(config)) return(config)
+  if (is.list(config)) return(unlist(lapply(config, function(cfg) {
+    if (is.character(cfg)) return(cfg)
+    if (is.list(cfg)) return(cfg$extend)
+  })))
+  stop('Options for DataTables extensions must be either a character vector or a list')
 }
 
 #' Copy the Flash SWF file from the TableTools extension

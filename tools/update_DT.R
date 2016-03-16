@@ -60,7 +60,14 @@ lapply(list.files(), function(ext) {
   dirs = file.path(ext, c('css', 'js', if (ext == 'Buttons') 'swf'))
   allf = list.files(ext, all.files = TRUE, full.names = TRUE, no.. = TRUE)
   unlink(allf[!(file_test('-d', allf) & (allf %in% dirs))], recursive = TRUE)
-  if (ext == 'Buttons') unlink(file.path(ext, 'css', '*.scss'))
+  if (ext == 'Buttons') {
+    unlink(file.path(ext, 'css', '*.scss'))
+    for (u in c(
+      'https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js',
+      'https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js',
+      'https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js'
+    )) download.file(u, file.path(ext, 'js', basename(u)))
+  }
   allf = list.files(ext, all.files = TRUE, recursive = TRUE, full.names = TRUE, no.. = TRUE)
   allf = grep('[.](css|js|swf)$', allf, value = TRUE, invert = TRUE)
   if (length(allf)) warning('These files may not be needed: ', paste(allf, collapse = ', '))
