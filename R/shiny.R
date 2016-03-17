@@ -272,6 +272,7 @@ dataTablesFilter = function(data, params) {
   n = nrow(data)
   q = params
   ci = q$search[['caseInsensitive']] == 'true'
+  # users may be updating the table too frequently
   if (length(q$columns) != ncol(data)) return(list(
     draw = as.integer(q$draw),
     recordsTotal = n,
