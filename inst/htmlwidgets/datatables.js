@@ -206,11 +206,11 @@ HTMLWidgets.widget({
 
         // remove the overflow: hidden attribute of the scrollHead
         // (otherwise the scrolling table body obscures the filters)
-        var scrollHead = $(el).find('.dataTables_scrollHead');
+        var scrollHead = $(el).find('.dataTables_scrollHead,.dataTables_scrollFoot');
         var cssOverflow = scrollHead.css('overflow');
         if (cssOverflow === 'hidden') {
-          $input.on('focus blur', function(e) {
-            scrollHead.css('overflow', e.type === 'focus' ? '' : cssOverflow);
+          $x.on('show hide', function(e) {
+            scrollHead.css('overflow', e.type === 'show' ? '' : cssOverflow);
           });
           $x.css('z-index', 25);
         }
@@ -218,7 +218,7 @@ HTMLWidgets.widget({
         if (inArray(type, ['factor', 'logical'])) {
           $input.on({
             click: function() {
-              $input.parent().hide(); $x.show(); filter[0].selectize.focus();
+              $input.parent().hide(); $x.show().trigger('show'); filter[0].selectize.focus();
             },
             input: function() {
               if ($input.val() === '') filter[0].selectize.setValue([]);
@@ -243,7 +243,7 @@ HTMLWidgets.widget({
           // an ugly hack to deal with shiny: for some reason, the onBlur event
           // of selectize does not work in shiny
           $x.find('div > div.selectize-input > input').on('blur', function() {
-            $x.hide(); $input.parent().show();
+            $x.hide().trigger('hide'); $input.parent().show();
           });
           filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
@@ -286,7 +286,7 @@ HTMLWidgets.widget({
           };
           $input.on({
             focus: function() {
-              $x0.show();
+              $x0.show().trigger('show');
               // first, make sure the slider div leaves at least 20px between
               // the two (slider value) span's
               $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
@@ -303,7 +303,7 @@ HTMLWidgets.widget({
               }
             },
             blur: function() {
-              $x0.hide();
+              $x0.hide().trigger('hide');
             },
             input: function() {
               if ($input.val() === '') filter.val([r1, r2]);
