@@ -170,6 +170,7 @@ HTMLWidgets.widget({
     }
 
     var table = $table.DataTable(options);
+    $el.data('datatable', table);
 
     var inArray = function(val, array) {
       return $.inArray(val, $.makeArray(array)) > -1;
@@ -774,7 +775,6 @@ HTMLWidgets.widget({
     }
 
     table.shinyMethods = methods;
-    $el.data('datatable', table);
   },
   resize: function(el, width, height, instance) {
     if (instance.data) this.renderValue(el, instance.data, instance);
@@ -782,6 +782,9 @@ HTMLWidgets.widget({
     // dynamically adjust height if fillContainer = TRUE
     if (instance.fillContainer)
       this.fillAvailableHeight(el, height);
+
+    var table = $(el).data('datatable');
+    if (table) table.columns.adjust();
   },
 
   // dynamically set the scroll body to fill available height
