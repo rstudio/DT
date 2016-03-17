@@ -546,12 +546,12 @@ copySWF = function(dest = '.', pdf = FALSE) {
 # core JS and CSS dependencies of DataTables
 DTDependency = function(style) {
   js = 'jquery.dataTables.min.js'
-  css = 'jquery.dataTables.min.css'
   if (style == 'default') {
-    css = c(css, 'jquery.dataTables.extra.css')  # patch the default style
+    # patch the default style
+    css = c('jquery.dataTables.min.css', 'jquery.dataTables.extra.css')
   } else {
     js = c(js, sprintf('dataTables.%s.min.js', style))
-    css = c(css, sprintf('dataTables.%s.min.css', style))
+    css = sprintf('dataTables.%s.min.css', style)
     # patch the Bootstrap style
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
   }
