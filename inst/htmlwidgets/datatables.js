@@ -123,7 +123,6 @@ HTMLWidgets.widget({
       // force scrollX/scrollY and turn off autoWidth
       options.scrollX = true;
       options.scrollY = "100px"; // can be any value, we'll adjust below
-      options.bAutoWidth = true;
 
       // if we aren't paginating then move around the info/filter controls
       // to save space at the bottom and rephrase the info callback
@@ -204,6 +203,17 @@ HTMLWidgets.widget({
           $(this).hide().prev('input').val('').trigger('input').focus();
         });
         var $x = $td.children('div').last();
+
+        // remove the overflow: hidden attribute of the scrollHead
+        // (otherwise the scrolling table body obscures the filters)
+        var scrollHead = $(el).find('.dataTables_scrollHead');
+        var cssOverflow = scrollHead.css('overflow');
+        if (cssOverflow === 'hidden') {
+          $input.on('focus blur', function(e) {
+            scrollHead.css('overflow', e.type === 'focus' ? '' : cssOverflow);
+          });
+          $x.css('z-index', 25);
+        }
 
         if (inArray(type, ['factor', 'logical'])) {
           $input.on({
@@ -503,21 +513,12 @@ HTMLWidgets.widget({
       var thiz = this;
       setTimeout(function() {
 
-        // if we have a filter then remove it's overflow: hidden attribute
-        // (otherwise the scrolling table body obscures it)
-        if (data.filter !== 'none') {
-          var scrollHead = $(el).find('.dataTables_scrollHead');
-          var css = scrollHead.prop('style');
-          if (css)
-            css.removeProperty('overflow');
-        }
-
         // calculate correct height
         thiz.fillAvailableHeight(el, $(el).innerHeight());
 
         // we need to force DT to recalculate column widths
         // (otherwise all the columns are the same size)
-        table.columns.adjust().draw();
+        table.columns.adjust();
       }, 200);
     }
 
