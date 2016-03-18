@@ -517,7 +517,10 @@ listButtons = function(options, extOptions) {
   if (is.character(config)) return(config)
   if (is.list(config)) return(unlist(lapply(config, function(cfg) {
     if (is.character(cfg)) return(cfg)
-    if (is.list(cfg)) return(cfg$extend)
+    if (is.list(cfg)) {
+      extend = cfg$extend
+      return(if (extend != 'collection') extend else listButtons(cfg, list()))
+    }
   })))
   stop('Options for DataTables extensions must be either a character vector or a list')
 }
