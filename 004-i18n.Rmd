@@ -23,11 +23,11 @@ You can replace the whole `language` list if you prove a URL that returns a JSON
 
 ```{r}
 datatable(iris2, options = list(
-  language = list(url = '//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json'),
+  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'),
   pageLength = 5
 ))
 datatable(iris2, options = list(
-  language = list(url = '//cdn.datatables.net/plug-ins/1.10.7/i18n/Chinese.json'),
+  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Chinese.json'),
   pageLength = 5
 ))
 ```
