@@ -203,7 +203,7 @@ datatable = function(
   }
 
   # record fillContainer
-  params$fillContainer = fillContainer
+  if (fillContainer) params$fillContainer = fillContainer
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
