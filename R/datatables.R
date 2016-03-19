@@ -480,17 +480,17 @@ extDependency = function(extension, style, options) {
   if (!(extension %in% extAll())) stop('The extension ', extension, ' does not exist')
   src = extPath(extension)
   ext = sub('^(.)', '\\L\\1', extension, perl = TRUE)
+  buttonDeps = NULL
   if (extension == 'Buttons') {
-    js = NULL
-    if (excelButton <- 'excel' %in% buttons) js = c(js, 'jszip.min.js')
-    if (pdfButton <- 'pdf' %in% buttons) js = c(js, 'pdfmake.min.js', 'vfs_fonts.js')
-    js = c(js, sprintf('dataTables.%s.min.js', ext))
-    js = c(js, sprintf('buttons.%s.min.js', c(
-      if (excelButton || pdfButton) c('flash', 'html5'),
-      if ('colvis' %in% buttons) 'colVis',
-      if ('print' %in% buttons) 'print'
-    )))
     buttons = listButtons(options)
+    buttonDeps = extraDependency(
+      c(if ('excel' %in% buttons) 'jszip', if ('pdf' %in% buttons) 'pdfmake'),
+      extension, 'js'
+    )
+    js = c(
+      sprintf('dataTables.%s.min.js', ext),
+      sprintf('buttons.%s.min.js', c('flash', 'html5', 'colVis', 'print'))
+    )
   } else js = sprintf('dataTables.%s.min.js', ext)
   if (style != 'default') js = c(js, sprintf('%s.%s.min.js', ext, style))
   css = sprintf('%s.%s.min.css', ext, if (style == 'default') 'dataTables' else style)
@@ -498,10 +498,11 @@ extDependency = function(extension, style, options) {
   in_dir(src, {
     js = existing_files(js); css = existing_files(css)
   })
-  htmlDependency(
-    paste('datatables', extension, sep = '-'), DataTablesVersion, src,
+  deps = htmlDependency(
+    paste0('dt-ext-', tolower(extension)), DataTablesVersion, src,
     script = js, stylesheet = css
   )
+  append(buttonDeps, list(deps))
 }
 
 # whether a button was configured in the options
@@ -518,6 +519,19 @@ listButtons = function(options) {
   })))
   stop('Options for DataTables extensions must be either a character vector or a list')
 }
+
+extraDepData = list(
+  jszip = list(script = 'jszip.min.js'),
+  pdfmake = list(script = c('pdfmake.min.js', 'vfs_fonts.js'))
+)
+
+extraDependency = function(names = NULL, ...) {
+  lapply(names, function(name) {
+    htmlDependency(
+      paste0('dt-3rd-', name), DataTablesVersion, extPath(...),
+      script = extraDepData[[name]][['script']]
+    )
+  })
 
 
 # core JS and CSS dependencies of DataTables
