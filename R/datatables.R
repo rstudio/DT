@@ -532,7 +532,7 @@ extraDependency = function(names = NULL, ...) {
       script = extraDepData[[name]][['script']]
     )
   })
-
+}
 
 # core JS and CSS dependencies of DataTables
 DTDependency = function(style) {
