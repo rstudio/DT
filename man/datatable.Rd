@@ -81,9 +81,7 @@ and columns (click on the footer to select columns), or \code{'cell'} to
 select cells}
 
 \item{extensions}{a character vector of the names of the DataTables
-extensions (\url{http://datatables.net/extensions/index}), or a named list
-of initialization options for the extensions (the names of the list are the
-names of extensions)}
+extensions (\url{http://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
 (\url{http://rstudio.github.io/plugins/})}

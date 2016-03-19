@@ -1,7 +1,6 @@
 export("%>%")
 export(JS)
 export(addRow)
-export(copySWF)
 export(dataTableAjax)
 export(dataTableOutput)
 export(dataTableProxy)
