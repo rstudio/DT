@@ -519,26 +519,6 @@ listButtons = function(options) {
   stop('Options for DataTables extensions must be either a character vector or a list')
 }
 
-#' Copy the Flash SWF file from the TableTools extension
-#'
-#' This is a convenience function to copy the SWF file since the TableTools
-#' extension depends on it.
-#' @param dest the destination directory
-#' @param pdf \code{TRUE} if you want to save the table as PDF
-#'   (\file{copy_csv_xls_pdf.swf} will be copied); \code{FALSE} otherwise (use
-#'   \file{copy_csv_xls.swf})
-#' @references \url{http://datatables.net/extensions/tabletools}
-#' @return A character string of the path of the SWF file, which may be used as
-#'   the \code{sSwfPath} option for TableTools.
-#' @export
-copySWF = function(dest = '.', pdf = FALSE) {
-  if (!file_test('-d', dest)) stop("'dest' must be a directory")
-  swf = if (pdf) 'copy_csv_xls_pdf.swf' else 'copy_csv_xls.swf'
-  file.copy(extPath(swf), dest, overwrite = TRUE)
-  if (sub('/$', '', dest) == 'www') dest = sub('www/?', '', dest)
-  if (dest == '') dest = '.'
-  file.path(dest, swf, fsep = '/')
-}
 
 # core JS and CSS dependencies of DataTables
 DTDependency = function(style) {
