@@ -500,7 +500,7 @@ extDependency = function(extension, style, options) {
   })
   deps = htmlDependency(
     paste0('dt-ext-', tolower(extension)), DataTablesVersion, src,
-    script = js, stylesheet = css
+    script = js, stylesheet = css, all_files = FALSE
   )
   append(buttonDeps, list(deps))
 }
@@ -529,7 +529,7 @@ extraDependency = function(names = NULL, ...) {
   lapply(names, function(name) {
     htmlDependency(
       paste0('dt-3rd-', name), DataTablesVersion, extPath(...),
-      script = extraDepData[[name]][['script']]
+      script = extraDepData[[name]][['script']], all_files = FALSE
     )
   })
 }
@@ -548,7 +548,8 @@ DTDependency = function(style) {
   }
   htmlDependency(
     'dt-core', DataTablesVersion, src = depPath('datatables'),
-    script = file.path('js', js), stylesheet = file.path('css', css)
+    script = file.path('js', js), stylesheet = file.path('css', css),
+    all_files = FALSE
   )
 }
 
