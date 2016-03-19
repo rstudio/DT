@@ -59,9 +59,7 @@
 #'   and columns (click on the footer to select columns), or \code{'cell'} to
 #'   select cells
 #' @param extensions a character vector of the names of the DataTables
-#'   extensions (\url{http://datatables.net/extensions/index}), or a named list
-#'   of initialization options for the extensions (the names of the list are the
-#'   names of extensions)
+#'   extensions (\url{http://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
 #'   (\url{http://rstudio.github.io/plugins/})
 #' @note You are recommended to escape the table content for security reasons
@@ -169,18 +167,14 @@ datatable = function(
   attr(options, 'escapeIdx') = escapeToConfig(escape, colnames)
 
   if (is.list(extensions)) {
-    extOptions = extensions
     extensions = names(extensions)
-  } else if (is.character(extensions)) {
-    extOptions = setNames(vector('list', length(extensions)), extensions)
-  } else stop("'extensions' must be either a character vector or a named list")
+  } else if (!is.character(extensions)) {
+    stop("'extensions' must be either a character vector or a named list")
+  }
   params$extensions = if (length(extensions)) as.list(extensions)
 
   # automatically configure options and callback for extensions
   if ('Responsive' %in% extensions) options$responsive = TRUE
-  # these extensions need to be initialized via new $.fn.dataTable...
-  extOptions = extOptions[intersect(extensions, extNew)]
-  params$extOptions = if (length(extOptions)) extOptions
 
   # generate <caption></caption>
   if (is.character(caption)) caption = tags$caption(caption)
@@ -225,7 +219,10 @@ datatable = function(
   }
 
   deps = list(DTDependency(style))
-  deps = c(deps, lapply(extensions, extDependency, style, options, extOptions))
+  deps = c(deps, unlist(
+    lapply(extensions, extDependency, style, options),
+    recursive = FALSE
+  ))
   if (params$filter != 'none') deps = c(deps, filterDependencies())
   if (isTRUE(options$searchHighlight))
     deps = c(deps, list(pluginDependency('searchHighlight')))
@@ -471,8 +468,6 @@ DTStyles = function() {
   c('default', gsub(r, '\\1', x))
 }
 
-extNew = c('AutoFill', 'FixedColumns', 'FixedHeader', 'KeyTable')
-
 extPath = function(...) {
   depPath('datatables-extensions', ...)
 }
@@ -481,13 +476,12 @@ extAll = function() {
   list.dirs(extPath(), FALSE, FALSE)
 }
 
-extDependency = function(extension, style, options, extOptions) {
+extDependency = function(extension, style, options) {
   if (!(extension %in% extAll())) stop('The extension ', extension, ' does not exist')
   src = extPath(extension)
   ext = sub('^(.)', '\\L\\1', extension, perl = TRUE)
   if (extension == 'Buttons') {
     js = NULL
-    buttons = listButtons(options, extOptions)
     if (excelButton <- 'excel' %in% buttons) js = c(js, 'jszip.min.js')
     if (pdfButton <- 'pdf' %in% buttons) js = c(js, 'pdfmake.min.js', 'vfs_fonts.js')
     js = c(js, sprintf('dataTables.%s.min.js', ext))
@@ -496,6 +490,7 @@ extDependency = function(extension, style, options, extOptions) {
       if ('colvis' %in% buttons) 'colVis',
       if ('print' %in% buttons) 'print'
     )))
+    buttons = listButtons(options)
   } else js = sprintf('dataTables.%s.min.js', ext)
   if (style != 'default') js = c(js, sprintf('%s.%s.min.js', ext, style))
   css = sprintf('%s.%s.min.css', ext, if (style == 'default') 'dataTables' else style)
@@ -510,16 +505,15 @@ extDependency = function(extension, style, options, extOptions) {
 }
 
 # whether a button was configured in the options
-listButtons = function(options, extOptions) {
+listButtons = function(options) {
   config = options[['buttons']]
-  if (is.null(config)) config = extOptions[['Buttons']]
   if (is.null(config)) return()
   if (is.character(config)) return(config)
   if (is.list(config)) return(unlist(lapply(config, function(cfg) {
     if (is.character(cfg)) return(cfg)
     if (is.list(cfg)) {
       extend = cfg$extend
-      return(if (extend != 'collection') extend else listButtons(cfg, list()))
+      return(if (extend != 'collection') extend else listButtons(cfg))
     }
   })))
   stop('Options for DataTables extensions must be either a character vector or a list')
