@@ -66,7 +66,7 @@
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
 #' @references See \url{http://rstudio.github.io/DT} for the full documentation.
-#' @importFrom htmltools tags htmlDependency
+#' @importFrom htmltools tags
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(
@@ -462,6 +462,10 @@ depPath = function(...) {
   system.file('htmlwidgets', 'lib', ..., package = 'DT')
 }
 
+depName = function(style = 'default', ...) {
+  tolower(paste(c(..., if (style != 'default') c('-', style)), collapse = ''))
+}
+
 DTStyles = function() {
   r = '^dataTables[.]([^.]+)[.]min[.]css$'
   x = list.files(depPath('datatables', 'css'), r)
@@ -499,7 +503,7 @@ extDependency = function(extension, style, options) {
     js = existing_files(js); css = existing_files(css)
   })
   deps = htmlDependency(
-    paste0('dt-ext-', tolower(extension)), DataTablesVersion, src,
+    depName(style, 'dt-ext-', extension), DataTablesVersion, src,
     script = js, stylesheet = css, all_files = FALSE
   )
   append(buttonDeps, list(deps))
@@ -547,7 +551,7 @@ DTDependency = function(style) {
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
   }
   htmlDependency(
-    'dt-core', DataTablesVersion, src = depPath('datatables'),
+    depName(style, 'dt-core'), DataTablesVersion, src = depPath('datatables'),
     script = file.path('js', js), stylesheet = file.path('css', css),
     all_files = FALSE
   )
