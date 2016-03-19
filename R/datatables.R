@@ -547,7 +547,7 @@ DTDependency = function(style) {
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
   }
   htmlDependency(
-    'datatables', DataTablesVersion, src = depPath('datatables'),
+    'dt-core', DataTablesVersion, src = depPath('datatables'),
     script = file.path('js', js), stylesheet = file.path('css', css)
   )
 }
@@ -572,7 +572,7 @@ DT2BSClass = function(class) {
 pluginDependency = function(plugin) {
   d = depPath('datatables-plugins', plugin)
   htmlDependency(
-    paste('datatables', plugin, sep = '-'), DataTablesVersion, src = d,
+    paste0('dt-plugin-', tolower(plugin)), DataTablesVersion, src = d,
     script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
   )
 }
