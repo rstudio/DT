@@ -528,7 +528,7 @@ extraDepData = list(
 extraDependency = function(names = NULL, ...) {
   lapply(names, function(name) {
     htmlDependency(
-      paste0('dt-3rd-', name), DataTablesVersion, extPath(...),
+      name, DataTablesVersion, extPath(...),
       script = extraDepData[[name]][['script']], all_files = FALSE
     )
   })
