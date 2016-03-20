@@ -22,8 +22,8 @@ URL: http://rstudio.github.io/DT
 BugReports: https://github.com/rstudio/DT/issues
 License: GPL-3 | file LICENSE
 Imports:
-    htmltools,
-    htmlwidgets (>= 0.4),
+    htmltools (>= 0.3.5),
+    htmlwidgets (>= 0.6),
     magrittr
 Suggests:
     jsonlite (>= 0.9.16),
@@ -32,3 +32,4 @@ Suggests:
     shiny (>= 0.12.1)
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
+Remotes: rstudio/htmltools@create-dest-dir
