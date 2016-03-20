@@ -4,9 +4,7 @@ title: DataTables Extensions
 
 ---
 
-**DataTables** has a number of extensions, and all of them have been integrated into **DT**. You can use the `extensions` argument of `datatable()` to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. `extensions = c('AutoFill', 'ColReorder')`.
-
-For the time being, because the **DataTables** library does not have a consistent way to specify initialization options for its extensions, some extensions can be initialized via the `options` argument of `datatable()`, and some have to be initialized differently (including `r paste(DT:::extNew, sep = ', ')`). In the latter case, you can use a named list for the `extensions` argument: the name of each element is the extension name, and the list element is the initialization options, e.g. `extensions = list(AutoFill = list(mode = 'both'), ColReorder = NULL)`.
+**DataTables** has a number of extensions, and all of them have been integrated into **DT**. You can use the `extensions` argument of `datatable()` to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. `extensions = c('AutoFill', 'ColReorder')`. Please take a look at the [feature compatibility chart](https://datatables.net/download/compatibility) to know which extensions can be used together.
 
 <div class="panel panel-danger">
 <div class="panel-heading">Known Issues of Extensions</div>
@@ -29,48 +27,62 @@ iris2 = head(iris, 30)
 
 # AutoFill
 
-With the `AutoFill` extension, you will see a plus sign in the bottom-right corner of a cell when you mouse over the cell. You can drag the sign to automatically fill the column.
+With the `AutoFill` extension, you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.
 
 ```{r}
-datatable(iris2, extensions = 'AutoFill')
-# pass some initialization options to AutoFill: disable auto filling on the
-# first (0) column and last (-1) column; disable incremental filling on the
-# columns 2 and 3 (i.e. 1 and 2 using JavaScript indexing)
-datatable(iris2, extensions = list(AutoFill = list(
-  columnDefs = list(
-    list(enable = FALSE, targets = c(0, -1)),
-    list(increment = FALSE, targets = c(1, 2))
-  )
-)))
+datatable(iris2, extensions = 'AutoFill', options = list(autoFill = TRUE))
+# pass some initialization options to AutoFill: only enable auto filling on the
+# columns 2, 3, 4; show the blue square on click instead of hover
+datatable(iris2, extensions = 'AutoFill', options = list(
+  autoFill = list(columns = c(1, 2, 3), focus = 'click')
+))
 ```
+
+# Buttons
+
+The `Buttons` extension adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note `B` in `dom` denotes the place where the buttons are to be inserted):
+
+```{r}
+datatable(
+  iris, extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  )
+)
+```
+
+Below are more examples of `Buttons`:
+
+- [Customize TableTools Buttons](003-tabletools-buttons.html)
 
 # ColReorder
 
 You can click and drag the table header to move a certain column to a different place using the `ColReorder` extension.
 
 ```{r}
-datatable(iris2, extensions = 'ColReorder', options = list(dom = 'Rlfrtip'))
-# realtime updating
+datatable(iris2, extensions = 'ColReorder', options = list(colReorder = TRUE))
+# disable realtime updating
 datatable(iris2, extensions = 'ColReorder', options = list(
-  dom = 'Rlfrtip', colReorder = list(realtime = TRUE)
+  colReorder = list(realtime = FALSE)
 ))
 ```
 
 # ColVis
 
-The `ColVis` extension adds a button to the table to show/hide certain columns.
+The `ColVis` extension has been removed from **DT** after v0.1 because it was [replaced by the Buttons extension](http://datatables.net/blog/2015-08-13) in the **DataTables** library. You can use the button `colvis` instead.
 
 ```{r}
+# using I() here to make sure it is converted to an array in JavaScript
 datatable(
   iris2, rownames = FALSE,
-  extensions = 'ColVis', options = list(dom = 'C<"clear">lfrtip')
+  extensions = 'Buttons', options = list(dom = 'Bfrtip', buttons = I('colvis'))
 )
 # exclude the first two columns (i.e. they are always visible)
 datatable(
   iris2, rownames = FALSE,
-  extensions = 'ColVis', options = list(
-    dom = 'C<"clear">lfrtip',
-    colVis = list(exclude = c(0, 1), activate = 'mouseover')
+  extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = list(list(extend = 'colvis', columns = c(2, 3, 4)))
   )
 )
 ```
@@ -86,16 +98,16 @@ datatable(
   options = list(
     dom = 't',
     scrollX = TRUE,
-    scrollCollapse = TRUE
+    fixedColumns = TRUE
   )
 )
-# fix some left and right columns
+# fix some left 2 columns and right 1 column
 datatable(
-  m, extensions = list(FixedColumns = list(leftColumns = 2, rightColumns = 1)),
+  m, extensions = 'FixedColumns',
   options = list(
     dom = 't',
     scrollX = TRUE,
-    scrollCollapse = TRUE
+    fixedColumns = list(leftColumns = 2, rightColumns = 1)
   )
 )
 ```
@@ -106,7 +118,8 @@ You may want the table header to be always visible when scrolling down the table
 
 ```{r eval=FALSE}
 datatable(
-  iris, options = list(pageLength = 50), extensions = 'FixedHeader'
+  iris, extensions = 'FixedHeader',
+  options = list(pageLength = 50, fixedHeader = TRUE)
 )
 ```
 
@@ -117,7 +130,7 @@ Since we have a navigation bar on the top of this page, this extension does not 
 The `KeyTable` extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
 
 ```{r}
-datatable(iris, extensions = 'KeyTable')
+datatable(iris, extensions = 'KeyTable', options = list(keys = TRUE))
 ```
 
 # Responsive
@@ -126,6 +139,17 @@ The `Responsive` extension makes the table columns responsive in the sense that 
 
 ```{r}
 datatable(iris, extensions = 'Responsive')
+```
+
+# RowReorder
+
+The `RowReorder` extension allows you to drag and reorder a certain row in the table. Note the first column `ID` is not changed when you reorder the rows in the example below, which can be a little confusing:
+
+```{r}
+datatable(
+  iris2, colnames = c(ID = 1), extensions = 'RowReorder',
+  options = list(rowReorder = TRUE)
+)
 ```
 
 # Scroller
@@ -137,9 +161,8 @@ m = matrix(runif(1000 * 4), ncol = 4, dimnames = list(NULL, letters[1:4]))
 m = cbind(id = seq_len(nrow(m)), round(m, 2))
 datatable(m, extensions = 'Scroller', options = list(
   deferRender = TRUE,
-  dom = "frtiS",
   scrollY = 200,
-  scrollCollapse = TRUE
+  scroller = TRUE
 ))
 ```
 
@@ -147,48 +170,4 @@ You can also save the data as JSON in a file and load it via the `ajax` option. 
 
 # TableTools
 
-The `TableTools` extension adds a button toolbar to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Unlike other extensions, it has a special dependency on a Flash SWF file, which you have to copy to your application. The function `DT::copySWF()` was designed to do this job, and it returns a character string that can be used as the `sSwfPath` option of `TableTools`. This function has an argument `pdf = FALSE`, which determines if you want to enable the feature of saving the table as PDF (disabled by default).
-
-Please note that you must view the table via an HTTP server when you enable this extension, because the SWF file does not work on a static HTML page when opened locally without an HTTP server. There are several possible solutions, e.g.
-
-- render the table in a [Shiny](shiny.html) app (since **shiny** will start a server to serve the app)
-- if you rendered the table to a static HTML page (e.g. in an R Markdown document), you can
-    - publish the HTML page to a website (e.g. Github pages)
-    - serve the HTML page locally (e.g. using the [**servr**](https://github.com/yihui/servr) package)
-
-This page is currently hosted on Github, so you should see the toolbar from `TableTools` below:
-
-```{r}
-datatable(
-  iris, extensions = 'TableTools', options = list(
-    dom = 'T<"clear">lfrtip',
-    tableTools = list(sSwfPath = copySWF())
-  )
-)
-```
-
-If you want to view this page locally, you cannot just click and open the file `extensions.html`. Instead, you may run `servr::httd()` in R to host the website locally.
-
-As mentioned before, you can use this extension in a Shiny app, and here is a minimal example. You may save the R code below to a file named `app.R`, and create a directory named `www` under the directory of `app.R`. Then `shiny::runApp()` should launch the app of the table rendered with `TableTools`.
-
-```{r eval=FALSE, message=FALSE}
-library(shiny)
-library(DT)
-shinyApp(
-  ui = fluidPage(dataTableOutput('foo')),
-  server = function(input, output) {
-    output$foo = renderDataTable({
-      datatable(
-        iris, extensions = 'TableTools', options = list(
-          dom = 'T<"clear">lfrtip',
-          tableTools = list(sSwfPath = copySWF('www'))
-        )
-      )
-    })
-  }
-)
-```
-
-Below are more examples of TableTools:
-
-- [Customize TableTools Buttons](003-tabletools-buttons.html)
+The `TableTools` extension has been removed from **DT**. Please use the `Buttons` extension instead.

@@ -10,6 +10,7 @@ Here is an example of the `FixedHeader` extension. Scroll down the page, and you
 ```{r}
 library(DT)
 datatable(
-  iris, options = list(pageLength = 50), extensions = 'FixedHeader'
+  iris, extensions = 'FixedHeader',
+  options = list(pageLength = 50, fixedHeader = TRUE)
 )
 ```
