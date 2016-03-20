@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -20,9 +21,9 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -98,12 +99,55 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -132,16 +176,16 @@ img {
   </div><!--/.container -->
 </nav><!--/.navbar -->
 
-<div id="header">
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">Server-side Processing in R</h1>
+
 </div>
 
 
 <hr />
 <p>We have been using client-side processing in all the above examples, i.e., searching, pagination, and ordering are done using JavaScript in the web browser. When the size of the data is huge, it may be more efficient to process the data on the server. DataTables supports retrieving data from a server by sending Ajax requests, a.k.a the <a href="http://datatables.net/examples/data_sources/server_side.html">“server-side processing”</a>.</p>
-<div class="alert alert-info">
-<p><strong>Version Note:</strong> The API for doing server-side processing changed in DT v0.0.65. Please update if you are using an older version.</p>
-</div>
 <div id="a-shiny-example" class="section level1">
 <h1><span class="header-section-number">1</span> A Shiny Example</h1>
 <p>If you have used <strong>DataTables</strong> in <strong>shiny</strong> before, you might know that <strong>shiny</strong> uses the server-side processing model for <strong>DataTables</strong>, which basically means the data is processed through R, and R will return the JSON data to the client.</p>
@@ -174,7 +218,7 @@ img {
 <span class="kw">library</span>(DT)
 
 <span class="kw">shinyServer</span>(function(input, output, session) {
-  output$tbl_a =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>)
+  output$tbl_a =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;print&#39;</span>), <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>))
   output$tbl_b =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris)
 })</code></pre></div>
 </div>
@@ -194,7 +238,7 @@ img {
     <span class="dt">dataType =</span> <span class="st">&#39;jsonp&#39;</span>
   )
 ))</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
     "filter": "none",
@@ -225,7 +269,8 @@ img {
       "orderClasses": false
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
 </div>
 
@@ -239,6 +284,8 @@ $(document).ready(function () {
     $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>
+
+
 
 </div>
 

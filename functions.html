@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -20,9 +21,9 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -98,12 +99,55 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -132,8 +176,11 @@ img {
   </div><!--/.container -->
 </nav><!--/.navbar -->
 
-<div id="header">
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">Helper Functions</h1>
+
 </div>
 
 
@@ -157,7 +204,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 ## [6,] 1815065 -1586693 -1023109 0.9842192 101.02557</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format the columns A and C as currency, and D as percentages</span>
 <span class="kw">datatable</span>(m) %&gt;%<span class="st"> </span><span class="kw">formatCurrency</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) %&gt;%<span class="st"> </span><span class="kw">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</code></pre></div>
-<p><div id="htmlwidget-8397" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-8397" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-8397">{
   "x": {
     "filter": "none",
@@ -179,14 +226,15 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nDTWidget.formatPercentage(this, row, data, 3, 2);\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.');\n}"
+      "rowCallback": "function(row, data) {\nDTWidget.formatPercentage(this, row, data, 3, 2);\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.', true);\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span>
 <span class="kw">datatable</span>(m) %&gt;%<span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="dt">digits =</span> <span class="dv">0</span>) %&gt;%<span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre></div>
-<p><div id="htmlwidget-3125" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-3125" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3125">{
   "x": {
     "filter": "none",
@@ -208,10 +256,11 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nDTWidget.formatRound(this, row, data, 4, 3);\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.');\n}"
+      "rowCallback": "function(row, data) {\nDTWidget.formatRound(this, row, data, 4, 3);\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.', true);\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 <p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
@@ -237,7 +286,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 ##  $ toUTCString       : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
 <span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) %&gt;%
 <span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span>:<span class="kw">ncol</span>(d), m)</code></pre></div>
-<p><div id="htmlwidget-7083" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-7083" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7083">{
   "x": {
     "filter": "none",
@@ -265,7 +314,8 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "rowCallback": "function(row, data) {\nDTWidget.formatDate(this, row, data, 1, 'toDateString')\nDTWidget.formatDate(this, row, data, 2, 'toLocaleDateString')\nDTWidget.formatDate(this, row, data, 3, 'toLocaleString')\nDTWidget.formatDate(this, row, data, 4, 'toUTCString')\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <p>Please note that these conversion methods may be dependent on your system locale and web browser. The same method may lead to different output in different web browsers and system languages.</p>
 </div>
@@ -274,7 +324,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 <p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. We have picked a few commonly used CSS properties as the arguments of <code>formatStyle()</code>, such as <code>color</code> and <code>fontWeight</code>. You can pass arbitrary CSS properties to <code>formatStyle()</code>. Here is a quick example to show the syntax:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) %&gt;%
 <span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-2650" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-2650" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2650">{
   "x": {
     "filter": "none",
@@ -306,7 +356,8 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <div class="panel panel-primary">
 <div class="panel-heading">
@@ -338,7 +389,7 @@ CSS Property Names
       <span class="kw">unique</span>(iris$Species), <span class="kw">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)
     )
   )</code></pre></div>
-<p><div id="htmlwidget-5943" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-5943" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5943">{
   "x": {
     "filter": "none",
@@ -368,7 +419,8 @@ CSS Property Names
       "rowCallback": "function(row, data) {\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <p>For the column <code>Sepal.Length</code>, the font weight in cells of which the values are greater than 5 will be bold. For <code>Sepal.Width</code>, both foreground and background colors are used: white for values smaller than 3.4, blue for those between 3.4 and 3.8, and red for those greater than 3.8; gray background for values below 3.4, and yellow for those above 3.4. For <code>Petal.Length</code>, a bar graph is presented as the background. For <code>Species</code>, the cells are actually rotated in 3D<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, with different background colors (light blue for <code>setosa</code>, light green for <code>versicolor</code>, and light pink for <code>virginica</code>).</p>
 <p>You can find more examples about styling cells on <a href="010-style.html">this page</a>.</p>
@@ -385,7 +437,7 @@ CSS Property Names
     &lt;th&gt;Petal.Width&lt;/th&gt;
     &lt;th&gt;Species&lt;/th&gt;
   &lt;/tr&gt;
-&lt;/thead&gt; </code></pre>
+&lt;/thead&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableHeader</span>(<span class="kw">colnames</span>(iris))  <span class="co"># equivalent to tableHeader(iris)</span></code></pre></div>
 <pre><code>&lt;thead&gt;
   &lt;tr&gt;
@@ -395,7 +447,7 @@ CSS Property Names
     &lt;th&gt;Petal.Width&lt;/th&gt;
     &lt;th&gt;Species&lt;/th&gt;
   &lt;/tr&gt;
-&lt;/thead&gt; </code></pre>
+&lt;/thead&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableFooter</span>(iris)  <span class="co"># footer</span></code></pre></div>
 <pre><code>&lt;tfoot&gt;
   &lt;tr&gt;
@@ -405,7 +457,7 @@ CSS Property Names
     &lt;th&gt;Petal.Width&lt;/th&gt;
     &lt;th&gt;Species&lt;/th&gt;
   &lt;/tr&gt;
-&lt;/tfoot&gt; </code></pre>
+&lt;/tfoot&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(htmltools)
 tags$<span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <span class="kw">tableFooter</span>(iris))</code></pre></div>
 <pre><code>&lt;table&gt;
@@ -427,7 +479,7 @@ tags$<span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <s
       &lt;th&gt;Species&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/tfoot&gt;
-&lt;/table&gt; </code></pre>
+&lt;/table&gt;</code></pre>
 </div>
 <div id="functions-imported-from-htmlwidgets" class="section level1">
 <h1><span class="header-section-number">4</span> Functions Imported from htmlwidgets</h1>
@@ -463,6 +515,8 @@ $(document).ready(function () {
     $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>
+
+
 
 </div>
 

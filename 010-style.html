@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -20,9 +21,9 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -85,16 +86,62 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
 
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
 
-<div id="header">
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">More Examples on Styling Cells, Rows, and Tables</h1>
+
 </div>
 
 
@@ -109,7 +156,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-7028" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-7028" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7028">{
   "x": {
     "filter": "none",
@@ -142,14 +189,15 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
       "rowCallback": "function(row, data) {\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 6).node()).css({'background-color':value == '0' ? 'gray' : value == '1' ? 'yellow' : ''});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># style V1 base on values of V6</span>
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(
   <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-876" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-876" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-876">{
   "x": {
     "filter": "none",
@@ -182,7 +230,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
       "rowCallback": "function(row, data) {\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 1).node()).css({'background-color':value == '0' ? 'gray' : value == '1' ? 'yellow' : ''});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hide V6</span>
 <span class="kw">datatable</span>(df, <span class="dt">options =</span> <span class="kw">list</span>(
@@ -191,7 +240,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-3402" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-3402" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3402">{
   "x": {
     "filter": "none",
@@ -228,7 +277,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
       "rowCallback": "function(row, data) {\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 1).node()).css({'background-color':value == '0' ? 'gray' : value == '1' ? 'yellow' : ''});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 </div>
 <div id="style-a-full-row" class="section level1">
@@ -239,7 +289,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-3626" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-3626" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3626">{
   "x": {
     "filter": "none",
@@ -272,7 +322,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
       "rowCallback": "function(row, data) {\nvar value=data[6]; if (value!==null) $(row).css({'background-color':value == '0' ? 'gray' : value == '1' ? 'yellow' : ''});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 </div>
 <div id="style-a-full-table" class="section level1">
@@ -283,7 +334,7 @@ brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span cl
 clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) +<span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) %&gt;%
 <span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</code></pre></div>
-<p><div id="htmlwidget-9437" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-9437" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-9437">{
   "x": {
     "filter": "none",
@@ -316,7 +367,8 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
       "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[4]; if (value!==null) $(this.api().cell(row, 4).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 6).node()).css({'background-color':value <= -1.3207 ? 'rgb(255,255,255)' : value <= -1.1021 ? 'rgb(255,244,244)' : value <= -0.92065 ? 'rgb(255,232,232)' : value <= -0.4028 ? 'rgb(255,221,221)' : value <= -0.263 ? 'rgb(255,210,210)' : value <= -0.1925 ? 'rgb(255,198,198)' : value <= -0.0223999999999999 ? 'rgb(255,187,187)' : value <= 0 ? 'rgb(255,176,176)' : value <= 0.0176 ? 'rgb(255,164,164)' : value <= 0.0985 ? 'rgb(255,153,153)' : value <= 0.21385 ? 'rgb(255,142,142)' : value <= 0.4174 ? 'rgb(255,131,131)' : value <= 0.621050000000002 ? 'rgb(255,119,119)' : value <= 0.9272 ? 'rgb(255,108,108)' : value <= 1 ? 'rgb(255,97,97)' : value <= 1.1994 ? 'rgb(255,85,85)' : value <= 1.37615 ? 'rgb(255,74,74)' : value <= 1.7689 ? 'rgb(255,63,63)' : value <= 2.01725 ? 'rgb(255,51,51)' : 'rgb(255,40,40)'});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using styleColorBar</span>
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df),
@@ -324,7 +376,7 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
   <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,
   <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
   <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-3422" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-3422" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3422">{
   "x": {
     "filter": "none",
@@ -357,9 +409,12 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
       "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[4]; if (value!==null) $(this.api().cell(row, 4).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[6]; if (value!==null) $(this.api().cell(row, 6).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678 ? '' : 'linear-gradient(90deg, transparent ' + (3.114 - value)/4.792 * 100 + '%, lightblue ' + (3.114 - value)/4.792 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\n}"
     }
   },
-  "evals": ["options.rowCallback"]
+  "evals": ["options.rowCallback"],
+  "jsHooks": []
 }</script></p>
 </div>
+
+
 
 
 </div>

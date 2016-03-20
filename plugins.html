@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -20,10 +21,10 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="libs/datatables-natural/natural.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<script src="libs/dt-plugin-natural/natural.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -99,12 +100,55 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -133,8 +177,11 @@ img {
   </div><!--/.container -->
 </nav><!--/.navbar -->
 
-<div id="header">
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">DataTables Plug-ins</h1>
+
 </div>
 
 
@@ -160,7 +207,7 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
   <span class="dt">Mixed =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&#39;10&#39;</span>, <span class="st">&#39;1a&#39;</span>, <span class="st">&#39;1b&#39;</span>)
 )
 <span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
     "filter": "none",
@@ -191,13 +238,14 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
       "orderClasses": false
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(d, <span class="dt">plugins =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
   <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">type =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">targets =</span> <span class="dv">6</span>))
 ))</code></pre></div>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4929">{
   "x": {
     "filter": "none",
@@ -232,7 +280,8 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
       "orderClasses": false
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
 </div>
 
@@ -246,6 +295,8 @@ $(document).ready(function () {
     $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>
+
+
 
 </div>
 

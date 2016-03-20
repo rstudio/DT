@@ -7,10 +7,11 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
-<title>TableTools Buttons</title>
+<title>Buttons</title>
 
 <script src="libs/jquery/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,11 +21,18 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/datatables-tableTools/dataTables.tableTools.min.css" rel="stylesheet" />
-<script src="libs/datatables-tableTools/dataTables.tableTools.min.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/dt-ext-buttons/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-buttons/js/dataTables.buttons.min.js"></script>
+<script src="libs/dt-ext-buttons/js/buttons.flash.min.js"></script>
+<script src="libs/dt-ext-buttons/js/buttons.html5.min.js"></script>
+<script src="libs/dt-ext-buttons/js/buttons.colVis.min.js"></script>
+<script src="libs/dt-ext-buttons/js/buttons.print.min.js"></script>
+<script src="libs/jszip/jszip.min.js"></script>
+<script src="libs/pdfmake/pdfmake.min.js"></script>
+<script src="libs/pdfmake/vfs_fonts.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -87,36 +95,82 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
 
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
 
-<div id="header">
-<h1 class="title">TableTools Buttons</h1>
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">Buttons</h1>
+
 </div>
 
 
-<p>You can choose to use a subset of the buttons in the TableTools extension, or arrange some buttons in a collection. There are <a href="http://datatables.net/extensions/tabletools/examples">such examples</a> on the <strong>DataTables</strong> website. We rewrite two simple examples in R below:</p>
+<p>You can choose to use a subset of the buttons in the Buttons extension, or arrange some buttons in a collection. There are <a href="http://datatables.net/extensions/buttons/examples/">such examples</a> on the <strong>DataTables</strong> website. We rewrite two simple examples in R below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
 <span class="co"># only show the Copy and Print buttons</span>
 <span class="kw">datatable</span>(
   iris2,
-  <span class="dt">extensions =</span> <span class="st">&#39;TableTools&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;T&lt;&quot;clear&quot;&gt;lfrtip&#39;</span>,
-    <span class="dt">tableTools =</span> <span class="kw">list</span>(<span class="dt">sSwfPath =</span> <span class="kw">copySWF</span>(), <span class="dt">aButtons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>))
+  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
+    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,
+    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>)
   )
 )</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
     "filter": "none",
     "extensions": [
-      "TableTools"
+      "Buttons"
     ],
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
@@ -128,11 +182,8 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
     ],
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
     "options": {
-      "dom": "T<\"clear\">lfrtip",
-      "tableTools": {
-        "sSwfPath": "./copy_csv_xls.swf",
-        "aButtons": ["copy", "print"]
-      },
+      "dom": "Bfrtip",
+      "buttons": ["copy", "print"],
       "columnDefs": [
         {
           "className": "dt-right",
@@ -148,28 +199,29 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "orderClasses": false
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># put CSV, XLS, and PDF in a collection</span>
 <span class="kw">datatable</span>(
   iris2,
-  <span class="dt">extensions =</span> <span class="st">&#39;TableTools&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;T&lt;&quot;clear&quot;&gt;lfrtip&#39;</span>,
-    <span class="dt">tableTools =</span> <span class="kw">list</span>(
-      <span class="dt">sSwfPath =</span> <span class="kw">copySWF</span>(),
-      <span class="dt">aButtons =</span> <span class="kw">list</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>, <span class="kw">list</span>(
-        <span class="dt">sExtends =</span> <span class="st">&#39;collection&#39;</span>,
-        <span class="dt">sButtonText =</span> <span class="st">&#39;Save&#39;</span>,
-        <span class="dt">aButtons =</span> <span class="kw">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;xls&#39;</span>)
-      )))
+  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
+    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,
+    <span class="dt">buttons =</span> 
+      <span class="kw">list</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>, <span class="kw">list</span>(
+        <span class="dt">extend =</span> <span class="st">&#39;collection&#39;</span>,
+        <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>),
+        <span class="dt">text =</span> <span class="st">&#39;Download&#39;</span>
+      ))
+    
   )
 )</code></pre></div>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4929">{
   "x": {
     "filter": "none",
     "extensions": [
-      "TableTools"
+      "Buttons"
     ],
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
@@ -181,19 +233,16 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
     ],
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
     "options": {
-      "dom": "T<\"clear\">lfrtip",
-      "tableTools": {
-        "sSwfPath": "./copy_csv_xls.swf",
-        "aButtons": [
-          "copy",
-          "print",
-          {
-            "sExtends": "collection",
-            "sButtonText": "Save",
-            "aButtons": ["csv", "xls"]
-          }
-        ]
-      },
+      "dom": "Bfrtip",
+      "buttons": [
+        "copy",
+        "print",
+        {
+          "extend": "collection",
+          "buttons": ["csv", "excel", "pdf"],
+          "text": "Download"
+        }
+      ],
       "columnDefs": [
         {
           "className": "dt-right",
@@ -209,51 +258,11 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
       "orderClasses": false
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
-<p>We <a href="extensions.html">mentioned</a> that the PDF button is disabled by default if you use <code>DT::copySWF()</code>. You can enable it using <code>copySWF(pdf = TRUE)</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;TableTools&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;T&lt;&quot;clear&quot;&gt;lfrtip&#39;</span>,
-    <span class="dt">tableTools =</span> <span class="kw">list</span>(<span class="dt">sSwfPath =</span> <span class="kw">copySWF</span>(<span class="dt">pdf =</span> <span class="ot">TRUE</span>))
-))</code></pre></div>
-<p><div id="htmlwidget-7837" style="width:100%;height:auto;" class="datatables"></div>
-<script type="application/json" data-for="htmlwidget-7837">{
-  "x": {
-    "filter": "none",
-    "extensions": [
-      "TableTools"
-    ],
-    "data": [
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
-      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1],
-      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8],
-      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.4, 1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5],
-      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3],
-      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa"]
-    ],
-    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
-    "options": {
-      "dom": "T<\"clear\">lfrtip",
-      "tableTools": {
-        "sSwfPath": "./copy_csv_xls_pdf.swf"
-      },
-      "columnDefs": [
-        {
-          "className": "dt-right",
-          "targets": [1, 2, 3, 4]
-        },
-        {
-          "orderable": false,
-          "targets": 0
-        }
-      ],
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false
-    }
-  },
-  "evals": []
-}</script></p>
+
+
 
 
 </div>

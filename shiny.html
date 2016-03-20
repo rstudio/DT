@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -20,9 +21,9 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -98,12 +99,55 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -132,8 +176,11 @@ img {
   </div><!--/.container -->
 </nav><!--/.navbar -->
 
-<div id="header">
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">Using DT in Shiny</h1>
+
 </div>
 
 
@@ -141,9 +188,6 @@ img {
 <p>You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page.</p>
 <div id="a-minimal-example" class="section level1">
 <h1><span class="header-section-number">1</span> A Minimal Example</h1>
-<div class="alert alert-info">
-<p><strong>Version Note:</strong> The behavior of <code>DT::renderDataTable</code> changed in version 0.0.65. Please update if you are using an older version.</p>
-</div>
 <p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>dataTableOutput()</code> and <code>renderDataTable()</code> in the <strong>DT</strong> namespace (instead of <strong>shiny</strong>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 <span class="kw">shinyApp</span>(
@@ -186,7 +230,7 @@ DT::<span class="kw">renderDataTable</span>(
 <div id="row-selection" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Row Selection</h3>
 <p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$tableId_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>. You can disable row selection by <code>datatable(..., selection = 'none')</code>, or use the single selection mode by <code>selection = 'single'</code>. The default selection mode is multiple selections (try the table below).</p>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
     "filter": "none",
@@ -217,7 +261,8 @@ DT::<span class="kw">renderDataTable</span>(
     },
     "callback": "function(table) {\ntable.on('click.dt', 'tbody tr', function() {\n$(this).toggleClass('selected');\n})\n}"
   },
-  "evals": ["callback"]
+  "evals": ["callback"],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
@@ -271,6 +316,8 @@ $(document).ready(function () {
     $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>
+
+
 
 </div>
 

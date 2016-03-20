@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -20,11 +21,12 @@
 <script src="libs/bootstrap/shim/respond.min.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/datatables-binding/datatables.js"></script>
-<script src="libs/datatables/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/datatables-searchHighlight/dataTables.searchHighlight.css" rel="stylesheet" />
-<script src="libs/datatables-searchHighlight/jquery.highlight.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/dt-plugin-searchhighlight/dataTables.searchHighlight.css" rel="stylesheet" />
+<script src="libs/dt-plugin-searchhighlight/dataTables.searchHighlight.min.js"></script>
+<script src="libs/dt-plugin-searchhighlight/jquery.highlight.js"></script>
 <link href="libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider/jquery.nouislider.min.js"></script>
 <link href="libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
@@ -91,16 +93,62 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
 
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
 
-<div id="header">
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">Search result highlighting</h1>
+
 </div>
 
 
@@ -112,7 +160,7 @@ mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2
 <span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))
 <span class="co"># global search</span>
 <span class="kw">datatable</span>(mtcars2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">searchHighlight =</span> <span class="ot">TRUE</span>, <span class="dt">search =</span> <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;da&#39;</span>)))</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5716">{
   "x": {
     "filter": "none",
@@ -148,11 +196,12 @@ mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2
       "lengthMenu": [5, 10, 25, 50, 100]
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># individual column filters</span>
 <span class="kw">datatable</span>(mtcars2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">searchHighlight =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables"></div>
+<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4929">{
   "x": {
     "filter": "top",
@@ -187,9 +236,12 @@ mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2
       "lengthMenu": [5, 10, 25, 50, 100]
     }
   },
-  "evals": []
+  "evals": [],
+  "jsHooks": []
 }</script></p>
 <p>Note highlighting is only applied to character columns when you use individual column filters. For example, in the above table, highlighting only works when you type in the search box of the <code>model</code> column; for other columns, highlighting does not make much sense since searching is performed via sliders. However, highlighting for global searching is applied to the whole table (e.g. type <code>21</code> in the global search box).</p>
+
+
 
 
 </div>

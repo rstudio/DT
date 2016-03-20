@@ -7,7 +7,7 @@
 // a global object
 var DTWidget = {};
 
-DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark) {
+DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark, before) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
   // 123456666.7890 -> 123,456,666.7890
@@ -19,7 +19,10 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
     return xv.join(decMark);
   };
   d = d.toFixed(digits);
-  $(thiz.api().cell(row, col).node()).html(currency + markInterval(d, interval, mark));
+  var res = markInterval(d, interval, mark);
+  res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
+    res + currency;
+  $(thiz.api().cell(row, col).node()).html(res);
 };
 
 DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
@@ -32,6 +35,12 @@ DTWidget.formatRound = function(thiz, row, data, col, digits) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
   $(thiz.api().cell(row, col).node()).html(d.toFixed(digits));
+};
+
+DTWidget.formatSignif = function(thiz, row, data, col, digits) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node()).html(d.toPrecision(digits));
 };
 
 DTWidget.formatDate = function(thiz, row, data, col, method) {
@@ -66,6 +75,9 @@ HTMLWidgets.widget({
     if (data === null) {
       return;
     }
+
+    // propagate fillContainer to instance (so we have it in resize)
+    instance.fillContainer = data.fillContainer;
 
     var cells = data.data;
 
@@ -104,6 +116,33 @@ HTMLWidgets.widget({
     if (cells !== null) $.extend(options, {
       data: cells
     });
+
+    // options for fillContainer
+    if (instance.fillContainer) {
+
+      // force scrollX/scrollY and turn off autoWidth
+      options.scrollX = true;
+      options.scrollY = "100px"; // can be any value, we'll adjust below
+
+      // if we aren't paginating then move around the info/filter controls
+      // to save space at the bottom and rephrase the info callback
+      if (data.options.bPaginate === false) {
+
+        // we know how to do this cleanly for bootstrap, not so much
+        // for other themes/layouts
+        var bootstrapActive = typeof($.fn.popover) != 'undefined';
+        if (bootstrapActive) {
+          options.dom = "<'row'<'col-sm-4'i><'col-sm-8'f>>" +
+                        "<'row'<'col-sm-12'tr>>";
+        }
+
+        options.fnInfoCallback = function(oSettings, iStart, iEnd,
+                                           iMax, iTotal, sPre) {
+          return Number(iTotal).toLocaleString() + " records";
+        };
+      }
+    }
+
     $.extend(true, options, data.options || {});
 
     var searchCols = options.searchCols;
@@ -130,9 +169,17 @@ HTMLWidgets.widget({
     }
 
     var table = $table.DataTable(options);
+    $el.data('datatable', table);
 
     var inArray = function(val, array) {
       return $.inArray(val, $.makeArray(array)) > -1;
+    };
+
+    // encode + to %2B when searching in the table on server side, because
+    // shiny::parseQueryString() treats + as spaces, and DataTables does not
+    // encode + to %2B (or % to %25) when sending the request
+    var encode_plus = function(x) {
+      return server ? x.replace(/%/g, '%25').replace(/\+/g, '%2B') : x;
     };
 
     if (data.filter !== 'none') {
@@ -157,10 +204,21 @@ HTMLWidgets.widget({
         });
         var $x = $td.children('div').last();
 
+        // remove the overflow: hidden attribute of the scrollHead
+        // (otherwise the scrolling table body obscures the filters)
+        var scrollHead = $(el).find('.dataTables_scrollHead,.dataTables_scrollFoot');
+        var cssOverflow = scrollHead.css('overflow');
+        if (cssOverflow === 'hidden') {
+          $x.on('show hide', function(e) {
+            scrollHead.css('overflow', e.type === 'show' ? '' : cssOverflow);
+          });
+          $x.css('z-index', 25);
+        }
+
         if (inArray(type, ['factor', 'logical'])) {
           $input.on({
             click: function() {
-              $input.parent().hide(); $x.show(); filter[0].selectize.focus();
+              $input.parent().hide(); $x.show().trigger('show'); filter[0].selectize.focus();
             },
             input: function() {
               if ($input.val() === '') filter[0].selectize.setValue([]);
@@ -174,7 +232,7 @@ HTMLWidgets.widget({
               if (value) $input.trigger('input');
               $input.attr('title', $input.val());
               if (server) {
-                table.column(i).search(value ? JSON.stringify(value) : '').draw();
+                table.column(i).search(value ? encode_plus(JSON.stringify(value)) : '').draw();
                 return;
               }
               // turn off filter if nothing selected
@@ -185,7 +243,7 @@ HTMLWidgets.widget({
           // an ugly hack to deal with shiny: for some reason, the onBlur event
           // of selectize does not work in shiny
           $x.find('div > div.selectize-input > input').on('blur', function() {
-            $x.hide(); $input.parent().show();
+            $x.hide().trigger('hide'); $input.parent().show();
           });
           filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
@@ -195,7 +253,7 @@ HTMLWidgets.widget({
               regex = options.search.regex,
               ci = options.search.caseInsensitive !== false;
             }
-            table.column(i).search($input.val(), regex, !regex, ci).draw();
+            table.column(i).search(encode_plus($input.val()), regex, !regex, ci).draw();
           };
           if (server) {
             fun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
@@ -228,7 +286,7 @@ HTMLWidgets.widget({
           };
           $input.on({
             focus: function() {
-              $x0.show();
+              $x0.show().trigger('show');
               // first, make sure the slider div leaves at least 20px between
               // the two (slider value) span's
               $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
@@ -245,7 +303,7 @@ HTMLWidgets.widget({
               }
             },
             blur: function() {
-              $x0.hide();
+              $x0.hide().trigger('hide');
             },
             input: function() {
               if ($input.val() === '') filter.val([r1, r2]);
@@ -352,7 +410,7 @@ HTMLWidgets.widget({
         // processing
         if (server) {
           // if a search string has been pre-set, search now
-          if (searchCol) table.column(i).search(searchCol).draw();
+          if (searchCol) table.column(i).search(encode_plus(searchCol)).draw();
           return;
         }
 
@@ -439,13 +497,25 @@ HTMLWidgets.widget({
       highlight();
     }
 
-    // initialize extensions
-    for (var ext in data.extOptions) {
-      new $.fn.dataTable[ext](table, data.extOptions[ext] || {});
-    }
-
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
+
+     // fillContainer = TRUE behavior
+    if (instance.fillContainer) {
+
+      // we need to wait just a bit to do this so DT can completely
+      // finish laying itself out
+      var thiz = this;
+      setTimeout(function() {
+
+        // calculate correct height
+        thiz.fillAvailableHeight(el, $(el).innerHeight());
+
+        // we need to force DT to recalculate column widths
+        // (otherwise all the columns are the same size)
+        table.columns.adjust();
+      }, 200);
+    }
 
     // interaction with shiny
     if (!HTMLWidgets.shinyMode) return;
@@ -701,10 +771,31 @@ HTMLWidgets.widget({
     }
 
     table.shinyMethods = methods;
-    $el.data('datatable', table);
   },
   resize: function(el, width, height, instance) {
     if (instance.data) this.renderValue(el, instance.data, instance);
+
+    // dynamically adjust height if fillContainer = TRUE
+    if (instance.fillContainer)
+      this.fillAvailableHeight(el, height);
+
+    var table = $(el).data('datatable');
+    if (table) table.columns.adjust();
+  },
+
+  // dynamically set the scroll body to fill available height
+  // (used with fillContainer = TRUE)
+  fillAvailableHeight: function(el, availableHeight) {
+
+    // see how much of the table is occupied by header/footer elements
+    // and use that to compute a target scroll body height
+    var dtWrapper = $(el).find('div.dataTables_wrapper');
+    var dtScrollBody = $(el).find($('div.dataTables_scrollBody'));
+    var framingHeight = dtWrapper.innerHeight() - dtScrollBody.innerHeight();
+    var scrollBodyHeight = availableHeight - framingHeight;
+
+    // set the height
+    dtScrollBody.height(scrollBodyHeight + 'px');
   }
 });
 
