@@ -130,7 +130,7 @@ Since we have a navigation bar on the top of this page, this extension does not 
 The `KeyTable` extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
 
 ```{r}
-datatable(iris, extensions = 'KeyTable', options = list(keys = TRUE))
+datatable(iris2, extensions = 'KeyTable', options = list(keys = TRUE))
 ```
 
 # Responsive
@@ -138,7 +138,7 @@ datatable(iris, extensions = 'KeyTable', options = list(keys = TRUE))
 The `Responsive` extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.
 
 ```{r}
-datatable(iris, extensions = 'Responsive')
+datatable(iris2, extensions = 'Responsive')
 ```
 
 # RowReorder
