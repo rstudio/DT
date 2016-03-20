@@ -2,7 +2,9 @@ set.seed(0102)
 options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE), htmltools.dir.version = FALSE)
 Sys.setenv(R_KNITR_OPTIONS = 'knitr.chunk.tidy=FALSE')
 library(DT)
-rmarkdown::render(commandArgs(TRUE))
+o = rmarkdown::render(commandArgs(TRUE))
+x = gsub('\\u003c', '<', readLines(o), fixed = TRUE)
+writeLines(x, o)
 unlink(list.files('.', '[.]map$', recursive = TRUE))
 unlink(c(
   'libs/bootstrap/js/npm.js', 'libs/bootstrap/js/bootstrap.js',
