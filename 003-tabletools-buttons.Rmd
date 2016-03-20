@@ -26,7 +26,8 @@ datatable(
     buttons = 
       list('copy', 'print', list(
         extend = 'collection',
-        buttons = c('csv', 'excel', 'pdf')
+        buttons = c('csv', 'excel', 'pdf'),
+        text = 'Download'
       ))
     
   )
