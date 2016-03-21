@@ -73,3 +73,6 @@ table.dataTable tbody td.dt-body-nowrap {
 	background-color: #0075b0 !important;
 	color: white;
 }
+.dataTables_scrollBody .dataTables_sizing {
+  visibility: hidden;
+}
