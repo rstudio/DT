@@ -32,4 +32,4 @@ Suggests:
     shiny (>= 0.12.1)
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
-Remotes: rstudio/htmltools@create-dest-dir
+Remotes: rstudio/htmltools
