@@ -64,10 +64,8 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
     instance = exprFunc()
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
       instance = datatable(instance, ...)
-    } else {
-      if (length(list(...)) != 0) {
-        warning("renderDataTable ignores ... arguments when expr yields a datatable object; see ?renderDataTable")
-      }
+    } else if (length(list(...)) != 0) {
+      warning("renderDataTable ignores ... arguments when expr yields a datatable object; see ?renderDataTable")
     }
 
     # in the server mode, we should not store the full data in JSON
