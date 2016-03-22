@@ -1,11 +1,5 @@
 /* Selected rows/cells */
-table.dataTable tbody .selected,
-table.dataTable .selected td.sorting_1,
-table.dataTable .selected td.sorting_2,
-table.dataTable .selected td.sorting_3,
-div.DTS tbody .even.selected,
-.table-striped tbody>.selected:nth-child(odd)>td,
-.table-striped tbody>.selected:nth-child(even)>td {
+table.dataTable tr.selected td, table.dataTable td.selected {
   background-color: #b0bed9 !important;
 }
 
