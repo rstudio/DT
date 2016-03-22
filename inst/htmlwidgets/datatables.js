@@ -499,6 +499,7 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
+    this.adjustWidth(el);
 
      // fillContainer = TRUE behavior
     if (instance.fillContainer) {
@@ -786,8 +787,7 @@ HTMLWidgets.widget({
     if (instance.fillContainer)
       this.fillAvailableHeight(el, height);
 
-    var table = $(el).data('datatable');
-    if (table) table.columns.adjust();
+    this.adjustWidth(el);
   },
 
   // dynamically set the scroll body to fill available height
@@ -803,6 +803,15 @@ HTMLWidgets.widget({
 
     // set the height
     dtScrollBody.height(scrollBodyHeight + 'px');
+  },
+
+  // adjust the width of columns; remove the hard-coded widths on table and the
+  // scroll header when scrollX/Y are enabled
+  adjustWidth: function(el) {
+    var $el = $(el), table = $el.data('datatable');
+    if (table) table.columns.adjust();
+    $el.find('.dataTables_scrollHeadInner').css('width', '')
+        .children('table').css('margin-left', '');
   }
 });
 
