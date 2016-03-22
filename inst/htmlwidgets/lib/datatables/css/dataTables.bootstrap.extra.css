@@ -76,6 +76,3 @@ table.dataTable tbody td.dt-body-nowrap {
 .dataTables_scrollBody .dataTables_sizing {
   visibility: hidden;
 }
-a {
-  cursor: pointer;
-}
