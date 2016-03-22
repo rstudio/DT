@@ -1,11 +1,3 @@
-checkShinyVersion = function() {
-  if (packageVersion('shiny') < '0.12.1') stop(
-    'DT requires shiny >= 0.12.1. ',
-    'Please install the latest version of shiny from CRAN: ',
-    'update.packages(ask = FALSE)'
-  )
-}
-
 #' Helper functions for using DT in Shiny
 #'
 #' These two functions are like most \code{fooOutput()} and \code{renderFoo()}
@@ -30,7 +22,6 @@ checkShinyVersion = function() {
 #'   )
 #' }
 dataTableOutput = function(outputId, width = '100%', height = 'auto') {
-  checkShinyVersion()
   htmlwidgets::shinyWidgetOutput(
     outputId, 'datatables', width, height, package = 'DT'
   )
@@ -51,7 +42,6 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
 #'   additional arguments to \code{datatable()} when \code{expr} returns a data
 #'   object
 renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = FALSE, ...) {
-  checkShinyVersion()
   if (!quoted) expr = substitute(expr)
 
   # TODO: this can be simplified after this htmlwidgets PR is merged
