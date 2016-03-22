@@ -275,9 +275,9 @@ dataTablesFilter = function(data, params) {
     draw = as.integer(q$draw),
     recordsTotal = n,
     recordsFiltered = 0,
-    data = NULL,
+    data = list(),
     DT_rows_all = seq_len(n),
-    DT_rows_current = NULL
+    DT_rows_current = list()
   ))
 
   # global searching
