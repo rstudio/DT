@@ -149,6 +149,10 @@ datatable = function(
   if (style == 'bootstrap') class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
+  # add class for fillContainer if necessary
+  if (fillContainer)
+    class = paste(class, 'fill-container');
+
   if (is.character(filter)) filter = list(position = match.arg(filter))
   filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
   # HTML code for column filters
