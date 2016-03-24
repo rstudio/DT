@@ -69,6 +69,8 @@
 
 - Fixed a bug that triggers a DataTables warning dialog box in the browser (thanks, @zross, https://github.com/WHOequity/who-heat/issues/229 and https://github.com/rstudio/shiny/issues/561)
 
+- Factors will a huge number of levels may slow down the rendering of the table significantly (thanks, @vnijs, #169).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.

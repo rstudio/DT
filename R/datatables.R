@@ -409,7 +409,7 @@ filterRow = function(
       if (t != 'disabled') tags$div(
         tags$select(
           multiple = 'multiple', style = 'width: 100%;',
-          lapply(d, function(x) tags$option(value = x, x))
+          `data-options` = jsonlite::toJSON(as.character(d))
         ),
         style = 'width: 100%; display: none;'
       )

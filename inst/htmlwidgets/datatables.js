@@ -224,7 +224,11 @@ HTMLWidgets.widget({
               if ($input.val() === '') filter[0].selectize.setValue([]);
             }
           });
-          filter = $x.children('select').selectize({
+          var $input2 = $x.children('select');
+          filter = $input2.selectize({
+            options: $input2.data('options').map(function(v, i) {
+              return ({text: v, value: v});
+            }),
             plugins: ['remove_button'],
             hideSelected: true,
             onChange: function(value) {
