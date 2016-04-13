@@ -76,6 +76,16 @@ HTMLWidgets.widget({
       return;
     }
 
+    // If we are in a flexdashboard mobile phone layout then we:
+    //  (a) Always want to use pagination (otherwise we'll have
+    //      a "double scroll bar" effect on the phone); and
+    //  (b) Never want to fill the container (we want the pagination
+    //      level to determine the size of the container)
+    if (window.FlexDashboard && window.FlexDashboard.isMobilePhone()) {
+      data.options.bPaginate = true;
+      data.fillContainer = false;
+    }
+
     // propagate fillContainer to instance (so we have it in resize)
     instance.fillContainer = data.fillContainer;
 
