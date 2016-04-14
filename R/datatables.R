@@ -50,6 +50,8 @@
 #' @param fillContainer \code{TRUE} to configure the table to automatically fill
 #'   it's containing element. If the table can't fit fully into it's container
 #'   then vertical and/or horizontal scrolling of the table cells will occur.
+#' @param autoHideNavigation \code{TRUE} to automatically hide navigational UI
+#'   when the number of total records is less than the page size.
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
@@ -74,6 +76,7 @@ datatable = function(
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
   escape = TRUE, style = 'default', width = '100%',
   fillContainer = getOption('DT.fillContainer', FALSE),
+  autoHideNavigation = getOption('DT.autoHideNavigation', FALSE),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
 ) {
 
@@ -200,8 +203,9 @@ datatable = function(
       options$tableTools$aButtons = c('copy', 'csv', 'xls', 'print')
   }
 
-  # record fillContainer
+  # record fillContainer and autoHideNavigation
   if (fillContainer) params$fillContainer = fillContainer
+  if (autoHideNavigation) params$autoHideNavigation = autoHideNavigation
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,

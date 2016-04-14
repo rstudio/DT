@@ -153,6 +153,15 @@ HTMLWidgets.widget({
       }
     }
 
+    // auto hide navigation if requested
+    if (data.autoHideNavigation === true) {
+      if (data.options.bPaginate !== false && data.options.iDisplayLength >= cells.length) {
+        var bootstrapActive = typeof($.fn.popover) != 'undefined';
+        if (bootstrapActive)
+          options.dom = "<'row'<'col-sm-12'tr>>";
+      }
+    }
+
     $.extend(true, options, data.options || {});
 
     var searchCols = options.searchCols;
