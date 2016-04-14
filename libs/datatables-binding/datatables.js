@@ -76,6 +76,16 @@ HTMLWidgets.widget({
       return;
     }
 
+    // If we are in a flexdashboard mobile phone layout then we:
+    //  (a) Always want to use pagination (otherwise we'll have
+    //      a "double scroll bar" effect on the phone); and
+    //  (b) Never want to fill the container (we want the pagination
+    //      level to determine the size of the container)
+    if (window.FlexDashboard && window.FlexDashboard.isMobilePhone()) {
+      data.options.bPaginate = true;
+      data.fillContainer = false;
+    }
+
     // propagate fillContainer to instance (so we have it in resize)
     instance.fillContainer = data.fillContainer;
 
@@ -140,6 +150,15 @@ HTMLWidgets.widget({
                                            iMax, iTotal, sPre) {
           return Number(iTotal).toLocaleString() + " records";
         };
+      }
+    }
+
+    // auto hide navigation if requested
+    if (data.autoHideNavigation === true) {
+      if (data.options.bPaginate !== false && data.options.iDisplayLength >= cells.length) {
+        var bootstrapActive = typeof($.fn.popover) != 'undefined';
+        if (bootstrapActive)
+          options.dom = "<'row'<'col-sm-12'tr>>";
       }
     }
 
@@ -224,7 +243,11 @@ HTMLWidgets.widget({
               if ($input.val() === '') filter[0].selectize.setValue([]);
             }
           });
-          filter = $x.children('select').selectize({
+          var $input2 = $x.children('select');
+          filter = $input2.selectize({
+            options: $input2.data('options').map(function(v, i) {
+              return ({text: v, value: v});
+            }),
             plugins: ['remove_button'],
             hideSelected: true,
             onChange: function(value) {
@@ -499,6 +522,7 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
+    this.adjustWidth(el);
 
      // fillContainer = TRUE behavior
     if (instance.fillContainer) {
@@ -521,10 +545,15 @@ HTMLWidgets.widget({
     if (!HTMLWidgets.shinyMode) return;
 
     var methods = {};
+    var shinyData = {};
 
     var changeInput = function(id, data, type) {
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
+      // do not update if the new data is the same as old data
+      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(data))
+        return;
+      shinyData[id] = JSON.stringify(data);
       Shiny.onInputChange(id, data);
     };
 
@@ -779,8 +808,7 @@ HTMLWidgets.widget({
     if (instance.fillContainer)
       this.fillAvailableHeight(el, height);
 
-    var table = $(el).data('datatable');
-    if (table) table.columns.adjust();
+    this.adjustWidth(el);
   },
 
   // dynamically set the scroll body to fill available height
@@ -796,6 +824,15 @@ HTMLWidgets.widget({
 
     // set the height
     dtScrollBody.height(scrollBodyHeight + 'px');
+  },
+
+  // adjust the width of columns; remove the hard-coded widths on table and the
+  // scroll header when scrollX/Y are enabled
+  adjustWidth: function(el) {
+    var $el = $(el), table = $el.data('datatable');
+    if (table) table.columns.adjust();
+    $el.find('.dataTables_scrollHeadInner').css('width', '')
+        .children('table').css('margin-left', '');
   }
 });
 

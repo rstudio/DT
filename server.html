@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 
 
@@ -84,25 +84,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </style>
 
 
-
-</head>
-
-<body>
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
+<style type="text/css">
 h1 {
   font-size: 34px;
 }
@@ -123,6 +105,27 @@ h5 {
 }
 h6 {
   font-size: 12px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -179,7 +182,8 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Server-side Processing in R</h1>
+
+<h1 class="title toc-ignore">Server-side Processing in R</h1>
 
 </div>
 
@@ -218,7 +222,7 @@ $(document).ready(function () {
 <span class="kw">library</span>(DT)
 
 <span class="kw">shinyServer</span>(function(input, output, session) {
-  output$tbl_a =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>, <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;print&#39;</span>), <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>))
+  output$tbl_a =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>)
   output$tbl_b =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris)
 })</code></pre></div>
 </div>
