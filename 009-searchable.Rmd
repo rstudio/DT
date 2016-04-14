@@ -9,7 +9,7 @@ Global searching can be turned off using the option `searching = FALSE`, and you
 
 ```{r}
 library(DT)
-iris2 = head(iris, 10)
+iris2 = iris[46:55, ]
 datatable(
   iris2, filter = 'top',
   options = list(
