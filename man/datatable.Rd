@@ -5,9 +5,11 @@
 \usage{
 datatable(data, options = list(), class = "display", callback = JS("return table;"), 
     rownames, colnames, container, caption = NULL, filter = c("none", 
-        "bottom", "top"), escape = TRUE, style = "default", width = "100\%", 
-    fillContainer = getOption("DT.fillContainer", FALSE), selection = c("multiple", 
-        "single", "none"), extensions = list(), plugins = NULL)
+        "bottom", "top"), escape = TRUE, style = "default", 
+    width = "100\%", fillContainer = getOption("DT.fillContainer", 
+        FALSE), autoHideNavigation = getOption("DT.autoHideNavigation", 
+        FALSE), selection = c("multiple", "single", "none"), 
+    extensions = list(), plugins = NULL)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -70,6 +72,9 @@ currently only \code{'default'} and \code{'bootstrap'} are supported}
 \item{fillContainer}{\code{TRUE} to configure the table to automatically fill
 it's containing element. If the table can't fit fully into it's container
 then vertical and/or horizontal scrolling of the table cells will occur.}
+
+\item{autoHideNavigation}{\code{TRUE} to automatically hide navigational UI
+when the number of total records is less than the page size.}
 
 \item{selection}{the row/column selection mode (single or multiple selection
 or disable selection) when a table widget is rendered in a Shiny app;
