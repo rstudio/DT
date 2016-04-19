@@ -251,9 +251,19 @@ HTMLWidgets.widget({
               if ($input.val() === '') filter.val([r1, r2]);
             },
             change: function() {
-              var v = $input.val().replace(/\s/g, '');
-              if (v === '') return;
-              v = v.split('...');
+              var val = $input.val().replace(/\s/g, '');
+              if (val === '') return;
+              v = val.split('...');
+              // allow simple comparators for filtering ('=', '>=', '<=')
+              if (v.length == 1) {
+                if (val.lastIndexOf(">=",0) == 0) {
+                  v = [val.substring(2), r2];
+                } else if (val.lastIndexOf("<=",0) == 0) {
+                  v = [r1, val.substring(2)];
+                } else if (val.lastIndexOf("=",0) == 0) {
+                  v = [val.substring(1), val.substring(1)];
+                } 
+              } 
               if (v.length !== 2) {
                 $input.parent().addClass('has-error');
                 return;
