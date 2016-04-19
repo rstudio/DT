@@ -261,7 +261,7 @@ sessionDataURL = function(session, data, id, filter) {
     res = tryCatch(filter(data, params), error = function(e) {
       list(error = as.character(e))
     })
-    httpResponse(200, 'application/json', enc2utf8(toJSON(res)))
+    httpResponse(200, 'application/json', enc2utf8(toJSON(res, dataframe = 'rows')))
   }
 
   session$registerDataObj(id, data, filterFun)
@@ -341,13 +341,13 @@ dataTablesFilter = function(data, params) {
     iCurrent = iAll
   }
 
-  fdata = unname(as.matrix(fdata))
-  if (is.character(fdata) && q$escape != 'false') {
-    if (q$escape == 'true') fdata = htmlEscape(fdata) else {
-      k = as.integer(strsplit(q$escape, ',')[[1]])
-      # use seq_len() in case escape = negative indices, e.g. c(-1, -5)
-      for (j in seq_len(ncol(fdata))[k]) fdata[, j] = htmlEscape(fdata[, j])
+  if (q$escape != 'false') {
+    k = seq_len(ncol(fdata))
+    if (q$escape != 'true') {
+      # q$escape might be negative indices, e.g. c(-1, -5)
+      k = k[as.integer(strsplit(q$escape, ',')[[1]])]
     }
+    for (j in k) if (maybe_character(fdata[, j])) fdata[, j] = htmlEscape(fdata[, j])
   }
 
   # TODO: if iAll is just 1:n, is it necessary to pass this vector to JSON, then
@@ -356,7 +356,7 @@ dataTablesFilter = function(data, params) {
     draw = as.integer(q$draw),
     recordsTotal = n,
     recordsFiltered = nrow(data),
-    data = fdata,
+    data = unname(fdata),
     DT_rows_all = iAll,
     DT_rows_current = iCurrent
   )
@@ -396,6 +396,11 @@ filterRange = function(d, string) {
   if (r[1] == '') return(d <= r2)
   if (r[2] == '') return(d >= r1)
   d >= r1 & d <= r2
+}
+
+# treat factors as characters
+maybe_character = function(x) {
+  is.character(x) || is.factor(x)
 }
 
 fixServerOptions = function(options) {
