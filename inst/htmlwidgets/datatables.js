@@ -25,6 +25,12 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
   $(thiz.api().cell(row, col).node()).html(res);
 };
 
+DTWidget.formatString = function(thiz, row, data, col, string_before, string_after) {
+  var d = data[col];
+  if (d == null) return;
+  $(thiz.api().cell(row, col).node()).html(string_before + d + string_after);
+};
+
 DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
