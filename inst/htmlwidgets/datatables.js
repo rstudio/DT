@@ -128,6 +128,7 @@ HTMLWidgets.widget({
     });
 
     // options for fillContainer
+    var bootstrapActive = typeof($.fn.popover) != 'undefined';
     if (instance.fillContainer) {
 
       // force scrollX/scrollY and turn off autoWidth
@@ -140,7 +141,6 @@ HTMLWidgets.widget({
 
         // we know how to do this cleanly for bootstrap, not so much
         // for other themes/layouts
-        var bootstrapActive = typeof($.fn.popover) != 'undefined';
         if (bootstrapActive) {
           options.dom = "<'row'<'col-sm-4'i><'col-sm-8'f>>" +
                         "<'row'<'col-sm-12'tr>>";
@@ -155,10 +155,16 @@ HTMLWidgets.widget({
 
     // auto hide navigation if requested
     if (data.autoHideNavigation === true) {
-      if (data.options.bPaginate !== false && data.options.iDisplayLength >= cells.length) {
-        var bootstrapActive = typeof($.fn.popover) != 'undefined';
-        if (bootstrapActive)
+      if (bootstrapActive && data.options.bPaginate !== false) {
+        // strip all nav if length >= cells
+        if (data.options.iDisplayLength >= cells.length)
           options.dom = "<'row'<'col-sm-12'tr>>";
+        // alternatively lean things out for flexdashboard mobile portrait
+        else if (window.FlexDashboard && window.FlexDashboard.isMobilePhone())
+          options.dom = "<'row'<'col-sm-12'f>>" +
+                        "<'row'<'col-sm-12'tr>>"  +
+                        "<'row'<'col-sm-12'p>>";
+          options.iDisplayLength = 10;
       }
     }
 
