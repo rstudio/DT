@@ -164,7 +164,6 @@ HTMLWidgets.widget({
           options.dom = "<'row'<'col-sm-12'f>>" +
                         "<'row'<'col-sm-12'tr>>"  +
                         "<'row'<'col-sm-12'p>>";
-          options.iDisplayLength = 10;
       }
     }
 
