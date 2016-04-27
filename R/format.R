@@ -65,6 +65,14 @@ formatCurrency = function(
 
 #' @export
 #' @rdname formatCurrency
+#' @param string_before string to put in front of the columns values
+#' @param string_after string to put after the column values
+formatString = function(table, columns, string_before='', string_after='') {
+  formatColumns(table, columns, tplString, string_before, string_after)
+}
+
+#' @export
+#' @rdname formatCurrency
 #' @param digits the number of decimal places to round to
 formatPercentage = function(table, columns, digits = 0) {
   formatColumns(table, columns, tplPercentage, digits)
@@ -150,6 +158,10 @@ tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, before,
     "DTWidget.formatCurrency(this, row, data, %d, '%s', %d, %d, '%s', '%s', %s);",
     cols, currency, digits, interval, mark, dec.mark, if (before) 'true' else 'false'
   )
+}
+
+tplString = function(cols, string_before, string_after, ...) {
+  sprintf("DTWidget.formatString(this, row, data, %d, '%s', '%s');", cols, string_before, string_after)
 }
 
 tplPercentage = function(cols, digits, ...) {
