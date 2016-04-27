@@ -36,6 +36,8 @@
 
 - Added a `formatSignif()` function to format numbers to a specified number of significant digits (thanks, @shabbychef, #216).
 
+- Added a `formatString()` function to format strings; currently it has two arguments `prefix` and `suffix`, and you may add strings before/after column values (thanks, @fbreitwieser, #279)
+
 ## MAJOR CHANGES
 
 - Upgraded the DataTables library to 1.10.11; there have been many changes from 1.10.7 to this version: http://datatables.net/blog/2015-08-13
