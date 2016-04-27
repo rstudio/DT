@@ -9,10 +9,10 @@
 \alias{formatStyle}
 \title{Format table columns}
 \usage{
-formatCurrency(table, columns, currency = "$", interval = 3, mark = ",",
-  digits = 2, dec.mark = getOption("OutDec"), before = TRUE)
+formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", digits = 2, 
+    dec.mark = getOption("OutDec"), before = TRUE)
 
-formatString(table, columns, string_before = "", string_after = "")
+formatString(table, columns, prefix = "", suffix = "")
 
 formatPercentage(table, columns, digits = 0)
 
@@ -45,9 +45,9 @@ equivalent to \code{c('V1', 'V2')})}
 
 \item{before}{whether to place the currency symbol before or after the values}
 
-\item{string_before}{string to put in front of the columns values}
+\item{prefix}{string to put in front of the column values}
 
-\item{string_after}{string to put after the column values}
+\item{suffix}{string to put after the column values}
 
 \item{method}{the method(s) to convert a date to string in JavaScript; see
 \code{DT:::DateMethods} for a list of possible methods, and
