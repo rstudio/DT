@@ -92,6 +92,15 @@ HTMLWidgets.widget({
       data.fillContainer = false;
     }
 
+    // if we are in the viewer then we always want to fillContainer and
+    // and autoHideNavigation (unless the user has explicitly set these)
+    if (window.HTMLWidgets.viewerMode) {
+      if (!data.hasOwnProperty("fillContainer"))
+        data.fillContainer = true;
+      if (!data.hasOwnProperty("autoHideNavigation"))
+        data.autoHideNavigation = true;
+    }
+
     // propagate fillContainer to instance (so we have it in resize)
     instance.fillContainer = data.fillContainer;
 
