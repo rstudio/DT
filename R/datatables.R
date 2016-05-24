@@ -46,7 +46,8 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
-#' @param width the width of the table
+#' @param width Width in pixels (optional, defaults to automatic sizing)
+#' @param height Height in pixels (optional, defaults to automatic sizing)
 #' @param fillContainer \code{TRUE} to configure the table to automatically fill
 #'   it's containing element. If the table can't fit fully into it's container
 #'   then vertical and/or horizontal scrolling of the table cells will occur.
@@ -74,7 +75,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = '100%',
+  escape = TRUE, style = 'default', width = NULL, height = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
@@ -237,15 +238,18 @@ datatable = function(
   if (length(plugins))
     deps = c(deps, lapply(plugins, pluginDependency))
 
-  # tweak width and height based on fillContainer
-  height = NULL
-  if (isTRUE(fillContainer))
+  # force width and height to NULL for fillContainer
+  if (isTRUE(fillContainer)) {
     width = NULL
+    height = NULL
+  }
 
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
     package = 'DT', width = width, height = height,
-    sizingPolicy = htmlwidgets::sizingPolicy(knitr.figure = FALSE),
+    sizingPolicy = htmlwidgets::sizingPolicy(knitr.figure = FALSE,
+                                             knitr.defaultWidth = "100%",
+                                             knitr.defaultHeight = "auto"),
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]

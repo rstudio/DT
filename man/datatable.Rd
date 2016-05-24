@@ -5,11 +5,11 @@
 \usage{
 datatable(data, options = list(), class = "display", callback = JS("return table;"), 
     rownames, colnames, container, caption = NULL, filter = c("none", 
-        "bottom", "top"), escape = TRUE, style = "default", 
-    width = "100\%", fillContainer = getOption("DT.fillContainer", 
-        NULL), autoHideNavigation = getOption("DT.autoHideNavigation", 
-        NULL), selection = c("multiple", "single", "none"), 
-    extensions = list(), plugins = NULL)
+        "bottom", "top"), escape = TRUE, style = "default", width = NULL, 
+    height = NULL, fillContainer = getOption("DT.fillContainer", NULL), 
+    autoHideNavigation = getOption("DT.autoHideNavigation", NULL), 
+    selection = c("multiple", "single", "none"), extensions = list(), 
+    plugins = NULL)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -67,7 +67,9 @@ third), or \code{c('Species', 'Sepal.Length')}}
 \item{style}{the style name (\url{http://datatables.net/manual/styling/});
 currently only \code{'default'} and \code{'bootstrap'} are supported}
 
-\item{width}{the width of the table}
+\item{width}{Width in pixels (optional, defaults to automatic sizing)}
+
+\item{height}{Height in pixels (optional, defaults to automatic sizing)}
 
 \item{fillContainer}{\code{TRUE} to configure the table to automatically fill
 it's containing element. If the table can't fit fully into it's container
