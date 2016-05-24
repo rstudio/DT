@@ -75,8 +75,8 @@ datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
   escape = TRUE, style = 'default', width = '100%',
-  fillContainer = getOption('DT.fillContainer', FALSE),
-  autoHideNavigation = getOption('DT.autoHideNavigation', FALSE),
+  fillContainer = getOption('DT.fillContainer', NULL),
+  autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
 ) {
 
@@ -151,7 +151,7 @@ datatable = function(
   if (style != 'default') params$style = style
 
   # add class for fillContainer if necessary
-  if (fillContainer)
+  if (isTRUE(fillContainer))
     class = paste(class, 'fill-container');
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
@@ -204,8 +204,8 @@ datatable = function(
   }
 
   # record fillContainer and autoHideNavigation
-  if (fillContainer) params$fillContainer = fillContainer
-  if (autoHideNavigation) params$autoHideNavigation = autoHideNavigation
+  if (!is.null(fillContainer)) params$fillContainer = fillContainer
+  if (!is.null(autoHideNavigation)) params$autoHideNavigation = autoHideNavigation
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
@@ -238,16 +238,14 @@ datatable = function(
     deps = c(deps, lapply(plugins, pluginDependency))
 
   # tweak width and height based on fillContainer
-  height = 'auto'
-  if (fillContainer) {
+  height = NULL
+  if (isTRUE(fillContainer))
     width = NULL
-    height = NULL
-  }
 
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
     package = 'DT', width = width, height = height,
-    sizingPolicy = htmlwidgets::sizingPolicy(browser.fill = TRUE),
+    sizingPolicy = htmlwidgets::sizingPolicy(knitr.figure = FALSE),
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]

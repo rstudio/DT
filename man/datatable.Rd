@@ -7,8 +7,8 @@ datatable(data, options = list(), class = "display", callback = JS("return table
     rownames, colnames, container, caption = NULL, filter = c("none", 
         "bottom", "top"), escape = TRUE, style = "default", 
     width = "100\%", fillContainer = getOption("DT.fillContainer", 
-        FALSE), autoHideNavigation = getOption("DT.autoHideNavigation", 
-        FALSE), selection = c("multiple", "single", "none"), 
+        NULL), autoHideNavigation = getOption("DT.autoHideNavigation", 
+        NULL), selection = c("multiple", "single", "none"), 
     extensions = list(), plugins = NULL)
 }
 \arguments{
