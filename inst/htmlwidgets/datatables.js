@@ -163,7 +163,7 @@ HTMLWidgets.widget({
     if (data.autoHideNavigation === true) {
       if (bootstrapActive && data.options.bPaginate !== false) {
         // strip all nav if length >= cells
-        if (data.options.iDisplayLength >= cells.length)
+        if ((cells instanceof Array) && data.options.iDisplayLength >= cells.length)
           options.dom = "<'row'<'col-sm-12'tr>>";
         // alternatively lean things out for flexdashboard mobile portrait
         else if (window.FlexDashboard && window.FlexDashboard.isMobilePhone())
