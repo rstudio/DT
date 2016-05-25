@@ -46,7 +46,8 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
-#' @param width the width of the table
+#' @param width Width in pixels (optional, defaults to automatic sizing)
+#' @param height Height in pixels (optional, defaults to automatic sizing)
 #' @param fillContainer \code{TRUE} to configure the table to automatically fill
 #'   it's containing element. If the table can't fit fully into it's container
 #'   then vertical and/or horizontal scrolling of the table cells will occur.
@@ -74,9 +75,9 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = '100%',
-  fillContainer = getOption('DT.fillContainer', FALSE),
-  autoHideNavigation = getOption('DT.autoHideNavigation', FALSE),
+  escape = TRUE, style = 'default', width = NULL, height = NULL,
+  fillContainer = getOption('DT.fillContainer', NULL),
+  autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
 ) {
 
@@ -151,7 +152,7 @@ datatable = function(
   if (style != 'default') params$style = style
 
   # add class for fillContainer if necessary
-  if (fillContainer)
+  if (isTRUE(fillContainer))
     class = paste(class, 'fill-container');
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
@@ -204,8 +205,8 @@ datatable = function(
   }
 
   # record fillContainer and autoHideNavigation
-  if (fillContainer) params$fillContainer = fillContainer
-  if (autoHideNavigation) params$autoHideNavigation = autoHideNavigation
+  if (!is.null(fillContainer)) params$fillContainer = fillContainer
+  if (!is.null(autoHideNavigation)) params$autoHideNavigation = autoHideNavigation
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
@@ -237,9 +238,8 @@ datatable = function(
   if (length(plugins))
     deps = c(deps, lapply(plugins, pluginDependency))
 
-  # tweak width and height based on fillContainer
-  height = 'auto'
-  if (fillContainer) {
+  # force width and height to NULL for fillContainer
+  if (isTRUE(fillContainer)) {
     width = NULL
     height = NULL
   }
@@ -247,7 +247,9 @@ datatable = function(
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
     package = 'DT', width = width, height = height,
-    sizingPolicy = htmlwidgets::sizingPolicy(browser.fill = TRUE),
+    sizingPolicy = htmlwidgets::sizingPolicy(knitr.figure = FALSE,
+                                             knitr.defaultWidth = "100%",
+                                             knitr.defaultHeight = "auto"),
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]
