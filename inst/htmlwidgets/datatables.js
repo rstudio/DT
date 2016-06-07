@@ -65,6 +65,23 @@ var transposeArray2D = function(a) {
   return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
 };
 
+var crosstalkPluginsInstalled = false;
+
+function maybeInstallCrosstalkPlugins() {
+  if (crosstalkPluginsInstalled)
+    return;
+  crosstalkPluginsInstalled = true;
+
+  $.fn.dataTable.ext.afnFiltering.push(
+    function(oSettings, aData, iDataIndex) {
+      var ctfilter = oSettings.nTable.ctfilter;
+      if (!ctfilter)
+        return true;
+      return ctfilter[iDataIndex];
+    }
+  );
+}
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
@@ -83,6 +100,12 @@ HTMLWidgets.widget({
 
     if (data === null) {
       return;
+    }
+
+    if (data.options.crosstalkOptions.group) {
+      maybeInstallCrosstalkPlugins();
+      var ctGroup = data.options.crosstalkOptions.group;
+      data.options.crosstalkOptions.filterHandle = crosstalk.filter.createHandle(crosstalk.group(ctGroup));
     }
 
     // If we are in a flexdashboard scroll layout then we:
@@ -212,6 +235,28 @@ HTMLWidgets.widget({
 
     var table = $table.DataTable(options);
     $el.data('datatable', table);
+    if (data.options.crosstalkOptions.group) {
+      var crosstalkFilter = crosstalk.filter.createHandle(crosstalk.group(data.options.crosstalkOptions.group));
+      var key = data.options.crosstalkOptions.key;
+      crosstalkFilter.on("change", function(e) {
+        if (!e.value) {
+          $table[0].ctfilter = null;
+          table.draw();
+        } else {
+          var selectedKeys = {};
+          for (var i = 0; i < e.value.length; i++) {
+            selectedKeys[e.value[i]] = true;
+          }
+          var matches = {};
+          for (var j = 0; j < key.length; j++) {
+            if (selectedKeys[key[j]])
+              matches[j] = true;
+          }
+          $table[0].ctfilter = matches;
+          table.draw();
+        }
+      });
+    }
 
     var inArray = function(val, array) {
       return $.inArray(val, $.makeArray(array)) > -1;
