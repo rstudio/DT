@@ -235,10 +235,12 @@ HTMLWidgets.widget({
 
     var table = $table.DataTable(options);
     $el.data('datatable', table);
-    if (data.options.crosstalkOptions.group) {
+    if (!data.options.crosstalkOptions.group) {
+      $table[0].ctfilter = null;
+    } else {
       var crosstalkFilter = crosstalk.filter.createHandle(crosstalk.group(data.options.crosstalkOptions.group));
       var key = data.options.crosstalkOptions.key;
-      crosstalkFilter.on("change", function(e) {
+      crosstalkFilter.on("change", function applyCrosstalkFilter(e) {
         if (!e.value) {
           $table[0].ctfilter = null;
           table.draw();
@@ -256,6 +258,7 @@ HTMLWidgets.widget({
           table.draw();
         }
       });
+      applyCrosstalkFilter({value: crosstalkFilter.filteredKeys});
     }
 
     var inArray = function(val, array) {
