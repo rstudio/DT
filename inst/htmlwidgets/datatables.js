@@ -75,9 +75,14 @@ function maybeInstallCrosstalkPlugins() {
   $.fn.dataTable.ext.afnFiltering.push(
     function(oSettings, aData, iDataIndex) {
       var ctfilter = oSettings.nTable.ctfilter;
-      if (!ctfilter)
-        return true;
-      return ctfilter[iDataIndex];
+      if (ctfilter && !ctfilter[iDataIndex])
+        return false;
+
+      var ctselect = oSettings.nTable.ctselect;
+      if (ctselect && !ctselect[iDataIndex])
+        return false;
+
+      return true;
     }
   );
 }
@@ -233,32 +238,72 @@ HTMLWidgets.widget({
       };
     }
 
+    var highlightKeys = null;
+    options.rowCallback = function(row, data, index, fullIndex) {
+      var $row = $(row);
+      if (highlightKeys === null) {
+        $row.removeClass("dt-crosstalk-fade");
+      } else {
+        $row.toggleClass("dt-crosstalk-fade", !highlightKeys[key[fullIndex]]);
+      }
+    };
+
     var table = $table.DataTable(options);
     $el.data('datatable', table);
     if (!data.options.crosstalkOptions.group) {
       $table[0].ctfilter = null;
+      $table[0].ctselect = null;
     } else {
       var crosstalkFilter = crosstalk.filter.createHandle(crosstalk.group(data.options.crosstalkOptions.group));
       var key = data.options.crosstalkOptions.key;
-      crosstalkFilter.on("change", function applyCrosstalkFilter(e) {
-        if (!e.value) {
-          $table[0].ctfilter = null;
-          table.draw();
+      function keysToMatches(keys) {
+        if (!keys) {
+          return null;
         } else {
           var selectedKeys = {};
-          for (var i = 0; i < e.value.length; i++) {
-            selectedKeys[e.value[i]] = true;
+          for (var i = 0; i < keys.length; i++) {
+            selectedKeys[keys[i]] = true;
           }
           var matches = {};
           for (var j = 0; j < key.length; j++) {
             if (selectedKeys[key[j]])
               matches[j] = true;
           }
-          $table[0].ctfilter = matches;
-          table.draw();
+          return matches;
         }
-      });
+      }
+
+      function applyCrosstalkFilter(e) {
+        $table[0].ctfilter = keysToMatches(e.value);
+        table.draw();
+      }
+      crosstalkFilter.on("change", applyCrosstalkFilter);
       applyCrosstalkFilter({value: crosstalkFilter.filteredKeys});
+
+      function applyCrosstalkSelection(e) {
+        if (e.sender !== el) {
+          table
+            .rows('.' + selClass, {search: 'applied'})
+            .nodes()
+            .to$()
+            .removeClass(selClass);
+          if (selectedRows)
+            changeInput('rows_selected', selectedRows(), void 0, true);
+        }
+
+        if (e.sender !== el && e.value && e.value.length) {
+          $table[0].ctselect = keysToMatches(e.value);
+          table.draw();
+        } else {
+          if ($table[0].ctselect) {
+            $table[0].ctselect = null;
+            table.draw();
+          }
+        }
+      }
+      var crosstalkSelection = crosstalk.group(data.options.crosstalkOptions.group).var("selection");
+      crosstalkSelection.on("change", applyCrosstalkSelection);
+      applyCrosstalkSelection({value: crosstalkSelection.get()});
     }
 
     var inArray = function(val, array) {
@@ -609,7 +654,7 @@ HTMLWidgets.widget({
     });
 
     // interaction with shiny
-    if (!HTMLWidgets.shinyMode) return;
+    if (!HTMLWidgets.shinyMode && !data.options.crosstalkOptions.group) return;
 
     var methods = {};
     var shinyData = {};
@@ -619,14 +664,25 @@ HTMLWidgets.widget({
       $table.children('caption').replaceWith(caption);
     }
 
-    var changeInput = function(id, data, type) {
+    var changeInput = function(id, value, type, noCrosstalk) {
+      var event = id;
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
-      // do not update if the new data is the same as old data
-      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(data))
+      // do not update if the new value is the same as old value
+      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
-      shinyData[id] = JSON.stringify(data);
-      Shiny.onInputChange(id, data);
+      shinyData[id] = JSON.stringify(value);
+      if (HTMLWidgets.shinyMode)
+        Shiny.onInputChange(id, value);
+
+      // HACK
+      if (event === "rows_selected" && !noCrosstalk) {
+        if (data.options.crosstalkOptions.group) {
+          crosstalk.group(data.options.crosstalkOptions.group)
+            .var("selection")
+            .set(value, {sender: el});
+        }
+      }
     };
 
     var addOne = function(x) {
