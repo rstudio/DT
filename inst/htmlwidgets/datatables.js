@@ -303,6 +303,7 @@ HTMLWidgets.widget({
       }
       var crosstalkSelection = crosstalk.group(data.options.crosstalkOptions.group).var("selection");
       crosstalkSelection.on("change", applyCrosstalkSelection);
+      // TODO: This next line doesn't seem to work when renderDataTable is used
       applyCrosstalkSelection({value: crosstalkSelection.get()});
     }
 
@@ -678,9 +679,19 @@ HTMLWidgets.widget({
       // HACK
       if (event === "rows_selected" && !noCrosstalk) {
         if (data.options.crosstalkOptions.group) {
+          var keys = data.options.crosstalkOptions.key;
+          var selectedKeys = null;
+          if (value) {
+            selectedKeys = [];
+            for (var i = 0; i < value.length; i++) {
+              // The value array's contents use 1-based row numbers, so we must
+              // convert to 0-based before indexing into the keys array.
+              selectedKeys.push(keys[value[i] - 1]);
+            }
+          }
           crosstalk.group(data.options.crosstalkOptions.group)
             .var("selection")
-            .set(value, {sender: el});
+            .set(selectedKeys, {sender: el});
         }
       }
     };
