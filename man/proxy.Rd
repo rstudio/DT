@@ -1,6 +1,7 @@
 % Please edit documentation in R/shiny.R
 \name{dataTableProxy}
 \alias{addRow}
+\alias{clearSearch}
 \alias{dataTableProxy}
 \alias{selectCells}
 \alias{selectColumns}
@@ -17,6 +18,8 @@ selectColumns(proxy, selected)
 selectCells(proxy, selected)
 
 addRow(proxy, data)
+
+clearSearch(proxy)
 }
 \arguments{
 \item{outputId}{the id of the table to be manipulated (the same id as the one

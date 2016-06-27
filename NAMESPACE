@@ -1,6 +1,7 @@
 export("%>%")
 export(JS)
 export(addRow)
+export(clearSearch)
 export(dataTableAjax)
 export(dataTableOutput)
 export(dataTableProxy)
