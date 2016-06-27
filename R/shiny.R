@@ -162,6 +162,12 @@ addRow = function(proxy, data) {
   invokeRemote(proxy, 'addRow', list(as.list(unname(data)), I(rownames(data))))
 }
 
+#' @rdname proxy
+#' @export
+clearSearch = function(proxy) {
+  invokeRemote(proxy, 'clearSearch')
+}
+
 invokeRemote = function(proxy, method, args = list()) {
   if (!inherits(proxy, 'datatableProxy'))
     stop('Invalid proxy argument; table proxy object was expected')

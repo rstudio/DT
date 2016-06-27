@@ -819,6 +819,11 @@ HTMLWidgets.widget({
       table.row.add(data).draw();
     }
 
+    methods.clearSearch = function() {
+      table.search('');
+      table.columns().search('').draw();
+    }
+
     table.shinyMethods = methods;
   },
   resize: function(el, width, height, instance) {

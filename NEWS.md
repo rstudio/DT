@@ -26,6 +26,8 @@
 
 - Added a function `selectCells()` to select table cells.
 
+- Added a function `clearSearch()` to clear the filters.
+
 - When all values in a numeric column are missing (`NA`), the column filter will be disabled (http://stackoverflow.com/q/31323807/559676).
 
 - Added an argument `dec.mark` to `formatCurrency()` to customize the character for the decimal point (thanks, @frajuegies, #128).
