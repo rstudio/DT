@@ -824,6 +824,13 @@ HTMLWidgets.widget({
       table.columns().search('').draw();
     }
 
+    methods.selectPage = function(page) {
+      if (table.page.info().pages < page || page < 1) {
+        throw 'Selected page is out of range';
+      };
+      table.page(page - 1).draw(false);
+    }
+
     table.shinyMethods = methods;
   },
   resize: function(el, width, height, instance) {
