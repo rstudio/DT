@@ -91,7 +91,7 @@ select cells}
 extensions (\url{http://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
-(\url{http://rstudio.github.io/plugins/})}
+(\url{http://rstudio.github.io/DT/plugins.html})}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
