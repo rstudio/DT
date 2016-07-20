@@ -5,6 +5,7 @@
 \alias{dataTableProxy}
 \alias{selectCells}
 \alias{selectColumns}
+\alias{selectPage}
 \alias{selectRows}
 \title{Manipulate an existing DataTables instance in a Shiny app}
 \usage{
@@ -20,6 +21,8 @@ selectCells(proxy, selected)
 addRow(proxy, data)
 
 clearSearch(proxy)
+
+selectPage(proxy, page)
 }
 \arguments{
 \item{outputId}{the id of the table to be manipulated (the same id as the one
@@ -42,6 +45,8 @@ or data frame of one row, or a vector or list of row data (in the latter
 case, please be cautious about the row name: if your table contains row
 names, here \code{data} must also contain the row name as the first
 element)}
+
+\item{page}{a number indicating the page to select}
 }
 \description{
 The function \code{datatableProxy()} creates a proxy object that can be used

@@ -168,6 +168,15 @@ clearSearch = function(proxy) {
   invokeRemote(proxy, 'clearSearch')
 }
 
+#' @param page a number indicating the page to select
+#' @rdname proxy
+#' @export
+
+selectPage = function(proxy, page) {
+  invokeRemote(proxy, 'selectPage', list(page))
+}
+
+
 invokeRemote = function(proxy, method, args = list()) {
   if (!inherits(proxy, 'datatableProxy'))
     stop('Invalid proxy argument; table proxy object was expected')
