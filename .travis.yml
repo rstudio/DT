@@ -1,38 +1,17 @@
-language: c
-
+language: r
 sudo: false
+cache: packages
 
 env:
-  matrix:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$PATH
   global:
-    secure: "UA1wwxtwlWOb7glP37H4zWmcd/NNToRtV33EoD5zutf4BF+nCs6TdDAcKCQEvJz6r0KQswwgzPWALbNfn3dFDyB01jXIqrznCAeJfyz8dI38lxDj7fEdUstFeKXwkizYB13w7lsIu2NXJQXS2Nr4Dot5sKFFV7JrPiXzfoKUcSM="
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)"
+    - secure: UA1wwxtwlWOb7glP37H4zWmcd/NNToRtV33EoD5zutf4BF+nCs6TdDAcKCQEvJz6r0KQswwgzPWALbNfn3dFDyB01jXIqrznCAeJfyz8dI38lxDj7fEdUstFeKXwkizYB13w7lsIu2NXJQXS2Nr4Dot5sKFFV7JrPiXzfoKUcSM=
 
-addons:
-  apt:
-    sources:
-    - r-packages-precise
-    packages:
-    - r-base-dev
-    - r-recommended
+repos:
+  XRAN: http://yihui.name/xran
 
-install:
-  - "wget -q -O - http://yihui.name/xran/r-config | bash"
-  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
-  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
-  - Rscript -e "devtools::install_deps(dep = TRUE)"
+before_install:
+  - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
 
-cache:
-  directories:
-  - $HOME/R
-  - $HOME/bin
-
-script:
-  - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
-  - R CMD check $R_PKG*.tar.gz --no-manual
-  - cd $R_PKG
-
-# deploy to XRAN
 after_success:
-  - set -e
   - "(wget -q -O - http://yihui.name/xran/r-xran | bash)"
