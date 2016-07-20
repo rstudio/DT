@@ -272,13 +272,13 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 }</script>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 <p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-03-27 14:12:30&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;CDT&#39;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-07-23 22:05:21&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;EST&#39;</span>)
 (<span class="dt">x =</span> x +<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
-##  [1] &quot;2015-03-27 14:12:31 CDT&quot; &quot;2015-03-28 21:04:22 CDT&quot;
-##  [3] &quot;2015-03-30 03:56:13 CDT&quot; &quot;2015-03-31 10:48:04 CDT&quot;
-##  [5] &quot;2015-04-01 17:39:55 CDT&quot; &quot;2015-04-03 00:31:46 CDT&quot;
-##  [7] &quot;2015-04-04 07:23:37 CDT&quot; &quot;2015-04-05 14:15:28 CDT&quot;
-##  [9] &quot;2015-04-06 21:07:19 CDT&quot; &quot;2015-04-08 03:59:10 CDT&quot;
+##  [1] &quot;2015-07-23 22:05:22 EST&quot; &quot;2015-07-25 04:57:13 EST&quot;
+##  [3] &quot;2015-07-26 11:49:04 EST&quot; &quot;2015-07-27 18:40:55 EST&quot;
+##  [5] &quot;2015-07-29 01:32:46 EST&quot; &quot;2015-07-30 08:24:37 EST&quot;
+##  [7] &quot;2015-07-31 15:16:28 EST&quot; &quot;2015-08-01 22:08:19 EST&quot;
+##  [9] &quot;2015-08-03 05:00:10 EST&quot; &quot;2015-08-04 11:52:01 EST&quot;
 DT:::DateMethods
 ## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;
 ## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          
@@ -288,10 +288,10 @@ m =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;toDa
 d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, function(.) x), m))
 <span class="kw">str</span>(d)
 ## &#39;data.frame&#39;:    10 obs. of  4 variables:
-##  $ toDateString      : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
-##  $ toLocaleDateString: POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
-##  $ toLocaleString    : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
-##  $ toUTCString       : POSIXct, format: &quot;2015-03-27 14:12:31&quot; &quot;2015-03-28 21:04:22&quot; ...
+##  $ toDateString      : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
+##  $ toLocaleDateString: POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
+##  $ toLocaleString    : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
+##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
 <span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) %&gt;%
 <span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span>:<span class="kw">ncol</span>(d), m)</code></pre></div>
 <div id="htmlwidget-68a827923df69983" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -300,10 +300,10 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
     "filter": "none",
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-      ["2015-03-27T14:12:31Z", "2015-03-28T21:04:22Z", "2015-03-30T03:56:13Z", "2015-03-31T10:48:04Z", "2015-04-01T17:39:55Z", "2015-04-03T00:31:46Z", "2015-04-04T07:23:37Z", "2015-04-05T14:15:28Z", "2015-04-06T21:07:19Z", "2015-04-08T03:59:10Z"],
-      ["2015-03-27T14:12:31Z", "2015-03-28T21:04:22Z", "2015-03-30T03:56:13Z", "2015-03-31T10:48:04Z", "2015-04-01T17:39:55Z", "2015-04-03T00:31:46Z", "2015-04-04T07:23:37Z", "2015-04-05T14:15:28Z", "2015-04-06T21:07:19Z", "2015-04-08T03:59:10Z"],
-      ["2015-03-27T14:12:31Z", "2015-03-28T21:04:22Z", "2015-03-30T03:56:13Z", "2015-03-31T10:48:04Z", "2015-04-01T17:39:55Z", "2015-04-03T00:31:46Z", "2015-04-04T07:23:37Z", "2015-04-05T14:15:28Z", "2015-04-06T21:07:19Z", "2015-04-08T03:59:10Z"],
-      ["2015-03-27T14:12:31Z", "2015-03-28T21:04:22Z", "2015-03-30T03:56:13Z", "2015-03-31T10:48:04Z", "2015-04-01T17:39:55Z", "2015-04-03T00:31:46Z", "2015-04-04T07:23:37Z", "2015-04-05T14:15:28Z", "2015-04-06T21:07:19Z", "2015-04-08T03:59:10Z"]
+      ["2015-07-24T03:05:22Z", "2015-07-25T09:57:13Z", "2015-07-26T16:49:04Z", "2015-07-27T23:40:55Z", "2015-07-29T06:32:46Z", "2015-07-30T13:24:37Z", "2015-07-31T20:16:28Z", "2015-08-02T03:08:19Z", "2015-08-03T10:00:10Z", "2015-08-04T16:52:01Z"],
+      ["2015-07-24T03:05:22Z", "2015-07-25T09:57:13Z", "2015-07-26T16:49:04Z", "2015-07-27T23:40:55Z", "2015-07-29T06:32:46Z", "2015-07-30T13:24:37Z", "2015-07-31T20:16:28Z", "2015-08-02T03:08:19Z", "2015-08-03T10:00:10Z", "2015-08-04T16:52:01Z"],
+      ["2015-07-24T03:05:22Z", "2015-07-25T09:57:13Z", "2015-07-26T16:49:04Z", "2015-07-27T23:40:55Z", "2015-07-29T06:32:46Z", "2015-07-30T13:24:37Z", "2015-07-31T20:16:28Z", "2015-08-02T03:08:19Z", "2015-08-03T10:00:10Z", "2015-08-04T16:52:01Z"],
+      ["2015-07-24T03:05:22Z", "2015-07-25T09:57:13Z", "2015-07-26T16:49:04Z", "2015-07-27T23:40:55Z", "2015-07-29T06:32:46Z", "2015-07-30T13:24:37Z", "2015-07-31T20:16:28Z", "2015-08-02T03:08:19Z", "2015-08-03T10:00:10Z", "2015-08-04T16:52:01Z"]
     ],
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>toDateString</th>\n      <th>toLocaleDateString</th>\n      <th>toLocaleString</th>\n      <th>toUTCString</th>\n    </tr>\n  </thead>\n</table>",
     "options": {

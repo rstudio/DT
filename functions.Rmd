@@ -30,7 +30,7 @@ Under the hood, these formatting functions are just wrappers for the `rowCallbac
 Similarly, there is a `formatDate()` function that can be used to format date/time columns. It has a `method` argument that takes values from a list of possible [conversion methods](http://mzl.la/1xGe99W): `r paste(sprintf('\x60%s\x60', DT:::DateMethods), collapse = ', ')`.
 
 ```{r collapse=TRUE}
-x = strptime('2015-03-27 14:12:30', '%Y-%m-%d %H:%M:%S', tz = 'CDT')
+x = strptime('2015-07-23 22:05:21', '%Y-%m-%d %H:%M:%S', tz = 'EST')
 (x = x + seq(1, 1e6, length.out = 10))
 DT:::DateMethods
 # use m = DT:::DateMethods below to see the output of all methods
