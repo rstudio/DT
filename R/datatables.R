@@ -75,7 +75,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = NULL, height = NULL,
+  escape = TRUE, style = 'default', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
@@ -246,7 +246,7 @@ datatable = function(
 
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
-    package = 'DT', width = width, height = height,
+    package = 'DT', width = width, height = height, elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(knitr.figure = FALSE,
                                              knitr.defaultWidth = "100%",
                                              knitr.defaultHeight = "auto"),
