@@ -106,6 +106,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 
@@ -136,10 +139,11 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -234,8 +238,8 @@ DT::<span class="kw">renderDataTable</span>(
 <div id="row-selection" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Row Selection</h3>
 <p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$tableId_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>. You can disable row selection by <code>datatable(..., selection = 'none')</code>, or use the single selection mode by <code>selection = 'single'</code>. The default selection mode is multiple selections (try the table below).</p>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5716">{
+<div id="htmlwidget-927ec88a166bf954" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-927ec88a166bf954">{
   "x": {
     "filter": "none",
     "data": [
@@ -267,7 +271,7 @@ DT::<span class="kw">renderDataTable</span>(
   },
   "evals": ["callback"],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny::<span class="kw">runApp</span>(app)</code></pre></div>
@@ -331,6 +335,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

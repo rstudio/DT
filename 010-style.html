@@ -93,6 +93,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 
@@ -123,10 +126,11 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -160,8 +164,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-7028" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7028">{
+<div id="htmlwidget-b316575cf157472f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b316575cf157472f">{
   "x": {
     "filter": "none",
     "data": [
@@ -195,14 +199,14 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># style V1 base on values of V6</span>
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(
   <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-876" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-876">{
+<div id="htmlwidget-83013f5e488e9608" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-83013f5e488e9608">{
   "x": {
     "filter": "none",
     "data": [
@@ -236,7 +240,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hide V6</span>
 <span class="kw">datatable</span>(df, <span class="dt">options =</span> <span class="kw">list</span>(
     <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">targets =</span> <span class="dv">6</span>, <span class="dt">visible =</span> <span class="ot">FALSE</span>))
@@ -244,8 +248,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-3402" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3402">{
+<div id="htmlwidget-f6a7f9e8cbc86b4b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6a7f9e8cbc86b4b">{
   "x": {
     "filter": "none",
     "data": [
@@ -283,7 +287,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
-}</script></p>
+}</script>
 </div>
 <div id="style-a-full-row" class="section level1">
 <h1><span class="header-section-number">2</span> Style A Full Row</h1>
@@ -293,8 +297,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<p><div id="htmlwidget-3626" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3626">{
+<div id="htmlwidget-37848581b7da5241" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-37848581b7da5241">{
   "x": {
     "filter": "none",
     "data": [
@@ -328,7 +332,7 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
-}</script></p>
+}</script>
 </div>
 <div id="style-a-full-table" class="section level1">
 <h1><span class="header-section-number">3</span> Style A Full Table</h1>
@@ -338,8 +342,8 @@ brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span cl
 clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) +<span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) %&gt;%
 <span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</code></pre></div>
-<p><div id="htmlwidget-9437" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9437">{
+<div id="htmlwidget-a31e495880dde1f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a31e495880dde1f2">{
   "x": {
     "filter": "none",
     "data": [
@@ -373,15 +377,15 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using styleColorBar</span>
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df),
   <span class="dt">background =</span> <span class="kw">styleColorBar</span>(<span class="kw">range</span>(df), <span class="st">&#39;lightblue&#39;</span>),
   <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,
   <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
   <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-3422" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3422">{
+<div id="htmlwidget-fa3e0f9670f171d9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa3e0f9670f171d9">{
   "x": {
     "filter": "none",
     "data": [
@@ -415,7 +419,7 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
-}</script></p>
+}</script>
 </div>
 
 
@@ -429,6 +433,7 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

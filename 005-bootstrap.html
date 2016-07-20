@@ -94,6 +94,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 
@@ -124,10 +127,11 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -156,8 +160,8 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))
 <span class="co"># default Bootstrap style in DT</span>
 <span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5716">{
+<div id="htmlwidget-927ec88a166bf954" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-927ec88a166bf954">{
   "x": {
     "style": "bootstrap",
     "filter": "none",
@@ -190,11 +194,11 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with cell borders</span>
 <span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>, <span class="dt">class =</span> <span class="st">&#39;table-bordered&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4929">{
+<div id="htmlwidget-e46ae2aad06f99e8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e46ae2aad06f99e8">{
   "x": {
     "style": "bootstrap",
     "filter": "none",
@@ -227,11 +231,11 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with cell borders, and make the table compact</span>
 <span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>, <span class="dt">class =</span> <span class="st">&#39;table-bordered table-condensed&#39;</span>)</code></pre></div>
-<p><div id="htmlwidget-7837" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7837">{
+<div id="htmlwidget-b55df8d8ec9d8b9e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b55df8d8ec9d8b9e">{
   "x": {
     "style": "bootstrap",
     "filter": "none",
@@ -264,7 +268,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 <p>Note the appearance depends on which Bootstrap theme you use. We are using the <a href="http://bootswatch.com/flatly/">Flatly theme</a> on this website, and the tables may look different when you use a different theme.</p>
 
 
@@ -278,6 +282,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

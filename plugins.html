@@ -107,6 +107,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 
@@ -137,10 +140,11 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -211,8 +215,8 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
   <span class="dt">Mixed =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&#39;10&#39;</span>, <span class="st">&#39;1a&#39;</span>, <span class="st">&#39;1b&#39;</span>)
 )
 <span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5716">{
+<div id="htmlwidget-927ec88a166bf954" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-927ec88a166bf954">{
   "x": {
     "filter": "none",
     "data": [
@@ -244,13 +248,13 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(d, <span class="dt">plugins =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
   <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">type =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">targets =</span> <span class="dv">6</span>))
 ))</code></pre></div>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4929">{
+<div id="htmlwidget-e46ae2aad06f99e8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e46ae2aad06f99e8">{
   "x": {
     "filter": "none",
     "data": [
@@ -286,7 +290,7 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 </div>
 
 <script>
@@ -310,6 +314,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

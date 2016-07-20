@@ -102,6 +102,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 
@@ -132,10 +135,11 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -169,8 +173,8 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
     <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>)
   )
 )</code></pre></div>
-<p><div id="htmlwidget-5716" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5716">{
+<div id="htmlwidget-927ec88a166bf954" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-927ec88a166bf954">{
   "x": {
     "filter": "none",
     "extensions": [
@@ -205,7 +209,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># put CSV, XLS, and PDF in a collection</span>
 <span class="kw">datatable</span>(
   iris2,
@@ -220,8 +224,8 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
     
   )
 )</code></pre></div>
-<p><div id="htmlwidget-4929" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4929">{
+<div id="htmlwidget-e46ae2aad06f99e8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e46ae2aad06f99e8">{
   "x": {
     "filter": "none",
     "extensions": [
@@ -264,7 +268,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   },
   "evals": [],
   "jsHooks": []
-}</script></p>
+}</script>
 
 
 
@@ -277,6 +281,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

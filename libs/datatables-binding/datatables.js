@@ -25,6 +25,12 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
   $(thiz.api().cell(row, col).node()).html(res);
 };
 
+DTWidget.formatString = function(thiz, row, data, col, prefix, suffix) {
+  var d = data[col];
+  if (d == null) return;
+  $(thiz.api().cell(row, col).node()).html(prefix + d + suffix);
+};
+
 DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
@@ -76,14 +82,23 @@ HTMLWidgets.widget({
       return;
     }
 
-    // If we are in a flexdashboard mobile phone layout then we:
+    // If we are in a flexdashboard scroll layout then we:
     //  (a) Always want to use pagination (otherwise we'll have
     //      a "double scroll bar" effect on the phone); and
     //  (b) Never want to fill the container (we want the pagination
     //      level to determine the size of the container)
-    if (window.FlexDashboard && window.FlexDashboard.isMobilePhone()) {
+    if (window.FlexDashboard && !window.FlexDashboard.isFillPage()) {
       data.options.bPaginate = true;
       data.fillContainer = false;
+    }
+
+    // if we are in the viewer then we always want to fillContainer and
+    // and autoHideNavigation (unless the user has explicitly set these)
+    if (window.HTMLWidgets.viewerMode) {
+      if (!data.hasOwnProperty("fillContainer"))
+        data.fillContainer = true;
+      if (!data.hasOwnProperty("autoHideNavigation"))
+        data.autoHideNavigation = true;
     }
 
     // propagate fillContainer to instance (so we have it in resize)
@@ -128,6 +143,7 @@ HTMLWidgets.widget({
     });
 
     // options for fillContainer
+    var bootstrapActive = typeof($.fn.popover) != 'undefined';
     if (instance.fillContainer) {
 
       // force scrollX/scrollY and turn off autoWidth
@@ -140,7 +156,6 @@ HTMLWidgets.widget({
 
         // we know how to do this cleanly for bootstrap, not so much
         // for other themes/layouts
-        var bootstrapActive = typeof($.fn.popover) != 'undefined';
         if (bootstrapActive) {
           options.dom = "<'row'<'col-sm-4'i><'col-sm-8'f>>" +
                         "<'row'<'col-sm-12'tr>>";
@@ -155,10 +170,15 @@ HTMLWidgets.widget({
 
     // auto hide navigation if requested
     if (data.autoHideNavigation === true) {
-      if (data.options.bPaginate !== false && data.options.iDisplayLength >= cells.length) {
-        var bootstrapActive = typeof($.fn.popover) != 'undefined';
-        if (bootstrapActive)
+      if (bootstrapActive && data.options.bPaginate !== false) {
+        // strip all nav if length >= cells
+        if ((cells instanceof Array) && data.options.iDisplayLength >= cells.length)
           options.dom = "<'row'<'col-sm-12'tr>>";
+        // alternatively lean things out for flexdashboard mobile portrait
+        else if (window.FlexDashboard && window.FlexDashboard.isMobilePhone())
+          options.dom = "<'row'<'col-sm-12'f>>" +
+                        "<'row'<'col-sm-12'tr>>"  +
+                        "<'row'<'col-sm-12'p>>";
       }
     }
 
@@ -797,6 +817,11 @@ HTMLWidgets.widget({
         throw 'New data must be of the same length as current data (' + n + ')';
       };
       table.row.add(data).draw();
+    }
+
+    methods.clearSearch = function() {
+      table.search('');
+      table.columns().search('').draw();
     }
 
     table.shinyMethods = methods;
