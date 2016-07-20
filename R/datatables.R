@@ -46,8 +46,9 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
 #'   currently only \code{'default'} and \code{'bootstrap'} are supported
-#' @param width Width in pixels (optional, defaults to automatic sizing)
-#' @param height Height in pixels (optional, defaults to automatic sizing)
+#' @param width,height Width/Height in pixels (optional, defaults to automatic
+#'   sizing)
+#' @param elementId An id for the widget (a random string by default).
 #' @param fillContainer \code{TRUE} to configure the table to automatically fill
 #'   it's containing element. If the table can't fit fully into it's container
 #'   then vertical and/or horizontal scrolling of the table cells will occur.
