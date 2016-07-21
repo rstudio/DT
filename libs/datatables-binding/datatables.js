@@ -807,6 +807,11 @@ HTMLWidgets.widget({
     })
     changeInput('cell_clicked', {});
 
+    // do not trigger table selection when clicking on links
+    table.on('click.dt', 'tbody td a', function(e) {
+      e.stopPropagation();
+    });
+
     methods.addRow = function(data, rowname) {
       var data0 = table.row(0).data(), n = data0.length, d = n - data.length;
       if (d === 1) {
@@ -822,6 +827,13 @@ HTMLWidgets.widget({
     methods.clearSearch = function() {
       table.search('');
       table.columns().search('').draw();
+    }
+
+    methods.selectPage = function(page) {
+      if (table.page.info().pages < page || page < 1) {
+        throw 'Selected page is out of range';
+      };
+      table.page(page - 1).draw(false);
     }
 
     table.shinyMethods = methods;
