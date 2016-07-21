@@ -79,6 +79,8 @@
 
 - Factors will a huge number of levels may slow down the rendering of the table significantly (thanks, @vnijs, #169).
 
+- Clicking links in table cells should not trigger row/column/cell selection (thanks, @daattali, #265).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.

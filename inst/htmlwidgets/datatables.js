@@ -807,6 +807,11 @@ HTMLWidgets.widget({
     })
     changeInput('cell_clicked', {});
 
+    // do not trigger table selection when clicking on links
+    table.on('click.dt', 'tbody td a', function(e) {
+      e.stopPropagation();
+    });
+
     methods.addRow = function(data, rowname) {
       var data0 = table.row(0).data(), n = data0.length, d = n - data.length;
       if (d === 1) {
