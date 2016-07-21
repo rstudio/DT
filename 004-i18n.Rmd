@@ -5,7 +5,7 @@ output:
     includes: null
 ---
 
-You can use the `language` option to change the language of the user interface of **DataTables**. In the following example, we change `info` (the text at the bottom of the table) and the two pagination buttons:
+You can use the [`language` option](https://datatables.net/reference/option/language) to change the language of the user interface of **DataTables**. In the following example, we change `info` (the text at the bottom of the table) and the two pagination buttons:
 
 ```{r}
 library(DT)
