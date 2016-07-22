@@ -83,6 +83,8 @@
 
 - White spaces may be trimmed unexpectedly in select inputs when `dataTableOutput()` is present in a Shiny app (thanks, @Yang-Tang, #303).
 
+- Respect column-wise `searchable` options when performing global searching (thanks, @aj2duncan, #311).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.

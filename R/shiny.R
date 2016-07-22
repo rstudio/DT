@@ -286,15 +286,17 @@ dataTablesFilter = function(data, params) {
   ))
 
   # global searching
-  i = seq_len(n)
+  i = logical(n)
   # for some reason, q$search might be NULL, leading to error `if (logical(0))`
-  if (isTRUE(q$search[['value']] != '')) {
-    i0 = apply(data, 2, function(x) {
-      grep2(q$search[['value']], as.character(x),
-            fixed = q$search[['regex']] == 'false', ignore.case = ci)
-    })
-    i = intersect(i, unique(unlist(i0)))
-  }
+  if (isTRUE(q$search[['value']] != '')) for (j in seq_len(ncol(data))) {
+    if (q$columns[[j]][['searchable']] != 'true') next
+    i0 = grep2(
+      q$search[['value']], as.character(data[, j]),
+      fixed = q$search[['regex']] == 'false', ignore.case = ci
+    )
+    i[i0] = TRUE
+  } else i = !i
+  i = which(i)
 
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
