@@ -81,6 +81,8 @@
 
 - Clicking links in table cells should not trigger row/column/cell selection (thanks, @daattali, #265).
 
+- White spaces may be trimmed unexpectedly in select inputs when `dataTableOutput()` is present in a Shiny app (thanks, @Yang-Tang, #303).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
