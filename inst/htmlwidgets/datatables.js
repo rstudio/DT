@@ -807,9 +807,9 @@ HTMLWidgets.widget({
     })
     changeInput('cell_clicked', {});
 
-    // do not trigger table selection when clicking on links
+    // do not trigger table selection when clicking on links unless they have classes
     table.on('click.dt', 'tbody td a', function(e) {
-      e.stopPropagation();
+      if (this.className === '') e.stopPropagation();
     });
 
     methods.addRow = function(data, rowname) {
