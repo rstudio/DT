@@ -271,15 +271,16 @@ HTMLWidgets.widget({
             plugins: ['remove_button'],
             hideSelected: true,
             onChange: function(value) {
-              $input.val(value === null ? '' : JSON.stringify(value));
-              if (value) $input.trigger('input');
+              if (value === null) value = []; // compatibility with jQuery 3.0
+              $input.val(value.length ? JSON.stringify(value) : '');
+              if (value.length) $input.trigger('input');
               $input.attr('title', $input.val());
               if (server) {
-                table.column(i).search(value ? encode_plus(JSON.stringify(value)) : '').draw();
+                table.column(i).search(value.length ? encode_plus(JSON.stringify(value)) : '').draw();
                 return;
               }
               // turn off filter if nothing selected
-              $td.data('filter', value !== null && value.length > 0);
+              $td.data('filter', value.length > 0);
               table.draw();  // redraw table, and filters will be applied
             }
           });
