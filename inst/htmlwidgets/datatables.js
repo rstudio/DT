@@ -284,6 +284,7 @@ HTMLWidgets.widget({
               table.draw();  // redraw table, and filters will be applied
             }
           });
+          if (searchCol) filter[0].selectize.setValue(JSON.parse(searchCol));
           // an ugly hack to deal with shiny: for some reason, the onBlur event
           // of selectize does not work in shiny
           $x.find('div > div.selectize-input > input').on('blur', function() {
