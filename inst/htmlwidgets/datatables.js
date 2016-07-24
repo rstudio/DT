@@ -231,16 +231,16 @@ HTMLWidgets.widget({
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
-        var searchCol;  // search string for this column
-        if (searchCols && searchCols[i]) {
-          searchCol = searchCols[i];
-          $input.val(searchCol);
-        }
         // Bootstrap sets pointer-events to none and we won't be able to click
         // the clear button
         $input.next('span').css('pointer-events', 'auto').hide().click(function() {
           $(this).hide().prev('input').val('').trigger('input').focus();
         });
+        var searchCol;  // search string for this column
+        if (searchCols && searchCols[i]) {
+          searchCol = searchCols[i];
+          $input.val(searchCol).trigger('input');
+        }
         var $x = $td.children('div').last();
 
         // remove the overflow: hidden attribute of the scrollHead

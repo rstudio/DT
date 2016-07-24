@@ -85,6 +85,8 @@
 
 - Respect column-wise `searchable` options when performing global searching (thanks, @aj2duncan, #311).
 
+- Clear buttons do not work when column filters are pre-set (thanks, @nutterb, #319).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.
