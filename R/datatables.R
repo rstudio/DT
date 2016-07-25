@@ -242,15 +242,14 @@ datatable = function(
   htmlwidgets::createWidget(
     'datatables', if (hideDataTable) NULL else params,
     package = 'DT', width = width, height = height, elementId = elementId,
-    sizingPolicy = htmlwidgets::sizingPolicy(knitr.figure = FALSE,
-                                             knitr.defaultWidth = "100%",
-                                             knitr.defaultHeight = "auto"),
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      knitr.figure = FALSE, knitr.defaultWidth = "100%", knitr.defaultHeight = "auto"
+    ),
     dependencies = deps, preRenderHook = function(instance) {
 
       data = instance[['x']][['data']]
 
       # 1.5Mb is just an arbitrary size from my experiments
-      # TODO: Move this to widget_data override, or preRenderHook
       if (object.size(data) > 1.5e6 && getOption('DT.warn.size', TRUE))
         warning(
           'It seems your data is too big for client-side DataTables. You may ',
