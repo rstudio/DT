@@ -231,16 +231,16 @@ HTMLWidgets.widget({
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
-        var searchCol;  // search string for this column
-        if (searchCols && searchCols[i]) {
-          searchCol = searchCols[i];
-          $input.val(searchCol);
-        }
         // Bootstrap sets pointer-events to none and we won't be able to click
         // the clear button
         $input.next('span').css('pointer-events', 'auto').hide().click(function() {
           $(this).hide().prev('input').val('').trigger('input').focus();
         });
+        var searchCol;  // search string for this column
+        if (searchCols && searchCols[i]) {
+          searchCol = searchCols[i];
+          $input.val(searchCol).trigger('input');
+        }
         var $x = $td.children('div').last();
 
         // remove the overflow: hidden attribute of the scrollHead
@@ -271,18 +271,20 @@ HTMLWidgets.widget({
             plugins: ['remove_button'],
             hideSelected: true,
             onChange: function(value) {
-              $input.val(value === null ? '' : JSON.stringify(value));
-              if (value) $input.trigger('input');
+              if (value === null) value = []; // compatibility with jQuery 3.0
+              $input.val(value.length ? JSON.stringify(value) : '');
+              if (value.length) $input.trigger('input');
               $input.attr('title', $input.val());
               if (server) {
-                table.column(i).search(value ? encode_plus(JSON.stringify(value)) : '').draw();
+                table.column(i).search(value.length ? encode_plus(JSON.stringify(value)) : '').draw();
                 return;
               }
               // turn off filter if nothing selected
-              $td.data('filter', value !== null && value.length > 0);
+              $td.data('filter', value.length > 0);
               table.draw();  // redraw table, and filters will be applied
             }
           });
+          if (searchCol) filter[0].selectize.setValue(JSON.parse(searchCol));
           // an ugly hack to deal with shiny: for some reason, the onBlur event
           // of selectize does not work in shiny
           $x.find('div > div.selectize-input > input').on('blur', function() {
@@ -807,9 +809,9 @@ HTMLWidgets.widget({
     })
     changeInput('cell_clicked', {});
 
-    // do not trigger table selection when clicking on links
+    // do not trigger table selection when clicking on links unless they have classes
     table.on('click.dt', 'tbody td a', function(e) {
-      e.stopPropagation();
+      if (this.className === '') e.stopPropagation();
     });
 
     methods.addRow = function(data, rowname) {
@@ -834,6 +836,14 @@ HTMLWidgets.widget({
         throw 'Selected page is out of range';
       };
       table.page(page - 1).draw(false);
+    }
+
+    methods.reloadData = function(resetPaging) {
+      // empty selections first
+      if (methods.selectRows) methods.selectRows([]);
+      if (methods.selectColumns) methods.selectColumns([]);
+      if (methods.selectCells) methods.selectCells([]);
+      table.ajax.reload(null, resetPaging);
     }
 
     table.shinyMethods = methods;
