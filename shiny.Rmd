@@ -124,4 +124,11 @@ shiny::runApp(app)
 
 ## Manipulate An Existing DataTables Instance
 
-After a table has been rendered in a Shiny app, you can use the proxy object returned from `dataTableProxy()` to manipulate it. Currently supported methods are `selectRows()`, `selectColumns()`, and `addRow()`. See [this Shiny app](https://yihui.shinyapps.io/DT-proxy) for an example of using these methods to update a table.
+After a table has been rendered in a Shiny app, you can use the proxy object returned from `dataTableProxy()` to manipulate it. Currently supported methods are `selectRows()`, `selectColumns()`, `selectCells()`, `selectPage()`, and `addRow()`. See [this Shiny app](https://yihui.shinyapps.io/DT-proxy) for an example of using these methods to update a table.
+
+Sometimes the data behind the table may change, and you do not want to regenerate the whole table, but only want to replace the data values. The state of the table (sorting, filtering, and pagination) can be preserved while you replace the data with `dataTableAjax()` and reload it in the table with `reloadData()`. Here is a short example:
+
+```{r eval=FALSE}
+app = system.file('examples', 'DT-reload', package = 'DT')
+shiny::runApp(app)
+```
