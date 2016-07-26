@@ -838,6 +838,14 @@ HTMLWidgets.widget({
       table.page(page - 1).draw(false);
     }
 
+    methods.reloadData = function(resetPaging) {
+      // empty selections first
+      if (methods.selectRows) methods.selectRows([]);
+      if (methods.selectColumns) methods.selectColumns([]);
+      if (methods.selectCells) methods.selectCells([]);
+      table.ajax.reload(null, resetPaging);
+    }
+
     table.shinyMethods = methods;
   },
   resize: function(el, width, height, instance) {

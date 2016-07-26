@@ -171,11 +171,18 @@ clearSearch = function(proxy) {
 #' @param page a number indicating the page to select
 #' @rdname proxy
 #' @export
-
 selectPage = function(proxy, page) {
   invokeRemote(proxy, 'selectPage', list(page))
 }
 
+#' @param resetPaging whether to reset the paging position
+#' @note \code{reloadData()} only works for tables in the server-side processing
+#'   mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}.
+#' @rdname proxy
+#' @export
+reloadData = function(proxy, resetPaging = TRUE) {
+  invokeRemote(proxy, 'reloadData', list(resetPaging))
+}
 
 invokeRemote = function(proxy, method, args = list()) {
   if (!inherits(proxy, 'datatableProxy'))
@@ -210,6 +217,15 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #' table option \code{ajax} automatically. If you are familiar with
 #' \pkg{DataTables}' server-side processing, and want to use a custom filter
 #' function, you may call this function to get an Ajax URL.
+#'
+#' Another use case of this function is to replace the data registered for a
+#' table output when you do not want to regenerate the full table, in which case
+#' the state of the current table will be preserved (sorting, filtering, and
+#' pagination) and applied to the table with new data. Be sure to provide the
+#' \code{outputId} argument, which should take the same value as the one you
+#' used in \code{dataTableOutput()}. After you call this function to replace the
+#' data in the shiny session, you may want to use \code{reloadData()} to refresh
+#' the table so you can see the new data.
 #' @param session the \code{session} object in the shiny server function
 #'   (\code{function(input, output, session)})
 #' @param data a data object (will be coerced to a data frame internally)
@@ -221,16 +237,18 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #'   and \code{params} (Ajax parameters, a list of the form \code{list(search =
 #'   list(value = 'FOO', regex = 'false'), length = 10, ...)}) that return the
 #'   filtered table result according to the DataTables Ajax request
+#' @param outputId the output ID of the table (the same ID passed to
+#'   \code{dataTableOutput()}; if missing, a random string)
 #' @references \url{http://rstudio.github.io/DT/server.html}
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
 #' @export
-dataTableAjax = function(session, data, rownames, filter = dataTablesFilter) {
+dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, outputId) {
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
   # abuse tempfile() to obtain a random id unique to this R session
-  id = basename(tempfile(''))
+  if (missing(outputId)) outputId = basename(tempfile(''))
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
@@ -239,7 +257,7 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter) {
   data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
 
-  sessionDataURL(session, data, id, filter)
+  sessionDataURL(session, data, outputId, filter)
 }
 
 sessionDataURL = function(session, data, id, filter) {
