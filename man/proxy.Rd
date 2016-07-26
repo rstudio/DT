@@ -3,6 +3,7 @@
 \alias{addRow}
 \alias{clearSearch}
 \alias{dataTableProxy}
+\alias{reloadData}
 \alias{selectCells}
 \alias{selectColumns}
 \alias{selectPage}
@@ -23,6 +24,8 @@ addRow(proxy, data)
 clearSearch(proxy)
 
 selectPage(proxy, page)
+
+reloadData(proxy, resetPaging = TRUE)
 }
 \arguments{
 \item{outputId}{the id of the table to be manipulated (the same id as the one
@@ -47,6 +50,8 @@ names, here \code{data} must also contain the row name as the first
 element)}
 
 \item{page}{a number indicating the page to select}
+
+\item{resetPaging}{whether to reset the paging position}
 }
 \description{
 The function \code{datatableProxy()} creates a proxy object that can be used
@@ -57,6 +62,9 @@ rows/columns, or add rows.
 \code{addRow()} only works for client-side tables. If you want to use
   it in a Shiny app, make sure to use \code{renderDataTable(..., server =
   FALSE)}.
+
+\code{reloadData()} only works for tables in the server-side processing
+  mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}.
 }
 \references{
 \url{http://rstudio.github.io/DT/shiny.html}
