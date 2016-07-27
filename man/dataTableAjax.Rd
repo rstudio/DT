@@ -49,7 +49,13 @@ pagination) and applied to the table with new data. Be sure to provide the
 \code{outputId} argument, which should take the same value as the one you
 used in \code{dataTableOutput()}. After you call this function to replace the
 data in the shiny session, you may want to use \code{reloadData()} to refresh
-the table so you can see the new data.
+the table so you can see the new data. When you replace the data in an
+existing table, please make sure the new data has the same number of columns
+as the current data. When you have enabled column filters, you should also
+make sure the attributes of every column remain the same, e.g. factor columns
+should have the same or fewer levels, and numeric columns should have the
+same or smaller range, otherwise the filters may never be able to reach
+certain rows in the data.
 }
 \examples{
 DTApp = function(data, ..., options = list()) {

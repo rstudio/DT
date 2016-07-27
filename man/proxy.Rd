@@ -25,7 +25,8 @@ clearSearch(proxy)
 
 selectPage(proxy, page)
 
-reloadData(proxy, resetPaging = TRUE)
+reloadData(proxy, resetPaging = TRUE, clearSelection = c("all", "none", 
+    "row", "column", "cell"))
 }
 \arguments{
 \item{outputId}{the id of the table to be manipulated (the same id as the one
@@ -52,6 +53,11 @@ element)}
 \item{page}{a number indicating the page to select}
 
 \item{resetPaging}{whether to reset the paging position}
+
+\item{clearSelection}{which existing selections to clear: it can be any
+combinations of \code{row}, \code{column}, and \code{cell}, or \code{all}
+for all three, or \code{none} to keep current selections (by default, all
+selections are cleared after the data is reloaded)}
 }
 \description{
 The function \code{datatableProxy()} creates a proxy object that can be used
@@ -64,7 +70,10 @@ rows/columns, or add rows.
   FALSE)}.
 
 \code{reloadData()} only works for tables in the server-side processing
-  mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}.
+  mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}. The
+  data to be reloaded (i.e. the one you pass to \code{dataTableAjax()}) must
+  have exactly the same number of columns as the previous data object in the
+  table.
 }
 \references{
 \url{http://rstudio.github.io/DT/shiny.html}
