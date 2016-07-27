@@ -838,11 +838,11 @@ HTMLWidgets.widget({
       table.page(page - 1).draw(false);
     }
 
-    methods.reloadData = function(resetPaging) {
-      // empty selections first
-      if (methods.selectRows) methods.selectRows([]);
-      if (methods.selectColumns) methods.selectColumns([]);
-      if (methods.selectCells) methods.selectCells([]);
+    methods.reloadData = function(resetPaging, clearSelection) {
+      // empty selections first if necessary
+      if (methods.selectRows && inArray('row', clearSelection)) methods.selectRows([]);
+      if (methods.selectColumns && inArray('column', clearSelection)) methods.selectColumns([]);
+      if (methods.selectCells && inArray('cell', clearSelection)) methods.selectCells([]);
       table.ajax.reload(null, resetPaging);
     }
 

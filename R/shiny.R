@@ -176,12 +176,22 @@ selectPage = function(proxy, page) {
 }
 
 #' @param resetPaging whether to reset the paging position
+#' @param clearSelection which existing selections to clear: it can be any
+#'   combinations of \code{row}, \code{column}, and \code{cell}, or \code{all}
+#'   for all three, or \code{none} to keep current selections (by default, all
+#'   selections are cleared after the data is reloaded)
 #' @note \code{reloadData()} only works for tables in the server-side processing
-#'   mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}.
+#'   mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}. The
+#'   data to be reloaded (i.e. the one you pass to \code{dataTableAjax()}) must
+#'   have exactly the same number of columns as the previous data object in the
+#'   table.
 #' @rdname proxy
 #' @export
-reloadData = function(proxy, resetPaging = TRUE) {
-  invokeRemote(proxy, 'reloadData', list(resetPaging))
+reloadData = function(
+  proxy, resetPaging = TRUE, clearSelection = c('all', 'none', 'row', 'column', 'cell')
+) {
+  if ('all' %in% clearSelection) clearSelection = c('row', 'column', 'cell')
+  invokeRemote(proxy, 'reloadData', list(resetPaging, clearSelection))
 }
 
 invokeRemote = function(proxy, method, args = list()) {
