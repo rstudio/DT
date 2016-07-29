@@ -194,6 +194,27 @@ reloadData = function(
   invokeRemote(proxy, 'reloadData', list(resetPaging, clearSelection))
 }
 
+#' Replace data in an existing table
+#'
+#' Replace the data object of a table output and avoid regenerating the full
+#' table, in which case the state of the current table will be preserved
+#' (sorting, filtering, and pagination) and applied to the table with new data.
+#' @param proxy a proxy object created by \code{dataTableProxy()}
+#' @param data the new data object to be loaded in the table
+#' @param ... other arguments to be passed to \code{\link{dataTableAjax}()}
+#' @param resetPaging,clearSelection passed to \code{\link{reloadData}()}
+#' @note When you replace the data in an existing table, please make sure the
+#'   new data has the same number of columns as the current data. When you have
+#'   enabled column filters, you should also make sure the attributes of every
+#'   column remain the same, e.g. factor columns should have the same or fewer
+#'   levels, and numeric columns should have the same or smaller range,
+#'   otherwise the filters may never be able to reach certain rows in the data.
+#' @export
+replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'all') {
+  dataTableAjax(proxy$session, data, ..., outputId = proxy$id)
+  reloadData(proxy, resetPaging, clearSelection)
+}
+
 invokeRemote = function(proxy, method, args = list()) {
   if (!inherits(proxy, 'datatableProxy'))
     stop('Invalid proxy argument; table proxy object was expected')
@@ -227,21 +248,6 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #' table option \code{ajax} automatically. If you are familiar with
 #' \pkg{DataTables}' server-side processing, and want to use a custom filter
 #' function, you may call this function to get an Ajax URL.
-#'
-#' Another use case of this function is to replace the data registered for a
-#' table output when you do not want to regenerate the full table, in which case
-#' the state of the current table will be preserved (sorting, filtering, and
-#' pagination) and applied to the table with new data. Be sure to provide the
-#' \code{outputId} argument, which should take the same value as the one you
-#' used in \code{dataTableOutput()}. After you call this function to replace the
-#' data in the shiny session, you may want to use \code{reloadData()} to refresh
-#' the table so you can see the new data. When you replace the data in an
-#' existing table, please make sure the new data has the same number of columns
-#' as the current data. When you have enabled column filters, you should also
-#' make sure the attributes of every column remain the same, e.g. factor columns
-#' should have the same or fewer levels, and numeric columns should have the
-#' same or smaller range, otherwise the filters may never be able to reach
-#' certain rows in the data.
 #' @param session the \code{session} object in the shiny server function
 #'   (\code{function(input, output, session)})
 #' @param data a data object (will be coerced to a data frame internally)

@@ -25,8 +25,7 @@ shinyApp(
     proxy = dataTableProxy('foo')
 
     observe({
-      dataTableAjax(session, loopData(), outputId = 'foo')
-      reloadData(proxy, resetPaging = FALSE)
+      replaceData(proxy, loopData(), resetPaging = FALSE)
     })
   }
 )

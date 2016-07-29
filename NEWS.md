@@ -18,7 +18,7 @@
 
 - Cell selection can be enabled via `datatable(..., selection = list(target = 'cell'))`. See http://rstudio.github.io/DT/shiny.html for more info.
 
-- It is possible to update the data of a table without regenerating the whole table widget with `dataTableAjax()` and the new function `reloadData()` now (#168, #208).
+- It is possible to update the data of a table without regenerating the whole table widget with the new function `replaceData()` now (#168, #208).
 
 - Added a `width` argument to `datatable()` (thanks, @taiyun).
 
