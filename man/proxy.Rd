@@ -8,6 +8,7 @@
 \alias{selectColumns}
 \alias{selectPage}
 \alias{selectRows}
+\alias{updateCaption}
 \title{Manipulate an existing DataTables instance in a Shiny app}
 \usage{
 dataTableProxy(outputId, session = shiny::getDefaultReactiveDomain(), 
@@ -24,6 +25,8 @@ addRow(proxy, data)
 clearSearch(proxy)
 
 selectPage(proxy, page)
+
+updateCaption(proxy, caption)
 
 reloadData(proxy, resetPaging = TRUE, clearSelection = c("all", "none", 
     "row", "column", "cell"))
@@ -51,6 +54,9 @@ names, here \code{data} must also contain the row name as the first
 element)}
 
 \item{page}{a number indicating the page to select}
+
+\item{caption}{a new table caption (see the \code{caption} argument of
+\code{\link{datatable}()})}
 
 \item{resetPaging}{whether to reset the paging position}
 
