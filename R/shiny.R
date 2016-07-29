@@ -180,7 +180,7 @@ selectPage = function(proxy, page) {
 #' @rdname proxy
 #' @export
 updateCaption = function(proxy, caption) {
-  invokeRemote(proxy, 'updateCaption', list(caption_string(caption)))
+  invokeRemote(proxy, 'updateCaption', list(captionString(caption)))
 }
 
 #' @param resetPaging whether to reset the paging position
