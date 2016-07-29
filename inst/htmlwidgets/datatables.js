@@ -569,6 +569,11 @@ HTMLWidgets.widget({
     var methods = {};
     var shinyData = {};
 
+    methods.updateCaption = function(caption) {
+      if (!caption) return;
+      $table.children('caption').replaceWith(caption);
+    }
+
     var changeInput = function(id, data, type) {
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;

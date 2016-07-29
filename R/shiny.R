@@ -175,6 +175,14 @@ selectPage = function(proxy, page) {
   invokeRemote(proxy, 'selectPage', list(page))
 }
 
+#' @param caption a new table caption (see the \code{caption} argument of
+#'   \code{\link{datatable}()})
+#' @rdname proxy
+#' @export
+updateCaption = function(proxy, caption) {
+  invokeRemote(proxy, 'updateCaption', list(caption_string(caption)))
+}
+
 #' @param resetPaging whether to reset the paging position
 #' @param clearSelection which existing selections to clear: it can be any
 #'   combinations of \code{row}, \code{column}, and \code{cell}, or \code{all}
