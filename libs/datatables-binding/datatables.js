@@ -27,7 +27,7 @@ DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, inter
 
 DTWidget.formatString = function(thiz, row, data, col, prefix, suffix) {
   var d = data[col];
-  if (d == null) return;
+  if (d === null) return;
   $(thiz.api().cell(row, col).node()).html(prefix + d + suffix);
 };
 
@@ -838,11 +838,11 @@ HTMLWidgets.widget({
       table.page(page - 1).draw(false);
     }
 
-    methods.reloadData = function(resetPaging) {
-      // empty selections first
-      if (methods.selectRows) methods.selectRows([]);
-      if (methods.selectColumns) methods.selectColumns([]);
-      if (methods.selectCells) methods.selectCells([]);
+    methods.reloadData = function(resetPaging, clearSelection) {
+      // empty selections first if necessary
+      if (methods.selectRows && inArray('row', clearSelection)) methods.selectRows([]);
+      if (methods.selectColumns && inArray('column', clearSelection)) methods.selectColumns([]);
+      if (methods.selectCells && inArray('cell', clearSelection)) methods.selectCells([]);
       table.ajax.reload(null, resetPaging);
     }
 
