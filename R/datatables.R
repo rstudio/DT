@@ -185,10 +185,7 @@ datatable = function(
   # automatically configure options and callback for extensions
   if ('Responsive' %in% extensions) options$responsive = TRUE
 
-  # generate <caption></caption>
-  if (is.character(caption)) caption = tags$caption(caption)
-  caption = as.character(caption)
-  params$caption = if (length(caption)) caption
+  params$caption = caption_string(caption)
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")

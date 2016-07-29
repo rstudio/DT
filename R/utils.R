@@ -25,3 +25,9 @@ in_dir = function(dir, expr) {
 
 existing_files = function(x) x[file.exists(x)]
 
+# generate <caption></caption>
+caption_string = function(caption) {
+  if (is.character(caption)) caption = tags$caption(caption)
+  caption = as.character(caption)
+  if (length(caption)) caption
+}
