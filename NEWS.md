@@ -24,7 +24,7 @@
 
 - Added a `plugins` argument to `datatable()` to support **DataTables** plugins. See http://rstudio.github.io/plugins/ for more information.
 
-- Added a function `dataTableProxy()` to create a proxy object that can be used to manipulate a table instance after it has been rendered in a Shiny app. Currently supported methods include `selectRows()`, `selectColumns()` (#126), and `addRow()` (#129).
+- Added a function `dataTableProxy()` to create a proxy object that can be used to manipulate a table instance after it has been rendered in a Shiny app. Currently supported methods include `selectRows()`, `selectColumns()` (#126), and `addRow()` (#129), etc.
 
 - Added a function `selectCells()` to select table cells.
 
@@ -50,7 +50,7 @@
 
 ## MAJOR CHANGES
 
-- Upgraded the DataTables library to 1.10.11; there have been many changes from 1.10.7 to this version: http://datatables.net/blog/2015-08-13
+- Upgraded the DataTables library to 1.10.12; there have been many changes from 1.10.7 to this version: http://datatables.net/blog/2015-08-13
     - The `extensions` argument of `datatable()` should be a character vector now; previously it can be a list of initialization options for extensions due to the inconsistent ways of initializing DataTables extensions; now the initialization options for all extensions can be set in the `options` argument.
     - The `copySWF()` function has been removed, since the `TableTools` extension has been removed.
     - The `ColVis` extension was removed and replaced but the `colvis` button in the `Buttons` extension.
