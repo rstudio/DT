@@ -70,7 +70,7 @@
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
 #' @references See \url{http://rstudio.github.io/DT} for the full documentation.
-#' @importFrom htmltools tags
+#' @importFrom htmltools tags htmlDependency
 #' @export
 #' @example inst/examples/datatable.R
 datatable = function(

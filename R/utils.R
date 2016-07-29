@@ -25,10 +25,3 @@ in_dir = function(dir, expr) {
 
 existing_files = function(x) x[file.exists(x)]
 
-# a temporary workaround before htmltools >= 0.3.5 is on CRAN
-htmlDependency = function(..., all_files = TRUE) {
-  FUN = htmltools::htmlDependency
-  if (packageVersion('htmltools') >= '0.3.5') {
-    FUN(..., all_files = all_files)
-  } else FUN(...)
-}
