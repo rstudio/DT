@@ -12,23 +12,23 @@ shinyServer(function(input, output, session) {
   proxy = dataTableProxy('foo')
 
   observeEvent(input$select1, {
-    selectRows(proxy, as.numeric(input$rows))
+    proxy %>% selectRows(as.numeric(input$rows))
   })
 
   observeEvent(input$select2, {
-    selectColumns(proxy, input$col)
+    proxy %>% selectColumns(input$col)
   })
 
   observeEvent(input$clear1, {
-    selectRows(proxy, NULL)
+    proxy %>% selectRows(NULL)
   })
 
   observeEvent(input$clear2, {
-    selectColumns(proxy, NULL)
+    proxy %>% selectColumns(NULL)
   })
 
   observeEvent(input$add, {
-    addRow(proxy, iris[sample(nrow(iris), 1), , drop = FALSE])
+    proxy %>% addRow(iris[sample(nrow(iris), 1), , drop = FALSE])
   })
 
   output$info = renderPrint({
