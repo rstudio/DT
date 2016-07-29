@@ -91,6 +91,8 @@
 
 - Clear buttons do not work when column filters are pre-set (thanks, @nutterb, #319).
 
+- Changes in column visibility should trigger changes in the table state, i.e. `input$tableId_state` (thanks, @MikeBadescu, #256).
+
 # CHANGES IN DT VERSION 0.1
 
 - Initial CRAN release.

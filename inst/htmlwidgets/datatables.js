@@ -791,7 +791,7 @@ HTMLWidgets.widget({
     updateTableInfo();
 
     // state info
-    table.on('draw.dt', function() {
+    table.on('draw.dt column-visibility.dt', function() {
       changeInput('state', table.state());
     });
     changeInput('state', table.state());
