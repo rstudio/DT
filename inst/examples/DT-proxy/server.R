@@ -6,7 +6,8 @@ shinyServer(function(input, output, session) {
   # using server = FALSE mainly for addRow(); server = TRUE works for
   # selectRows() and selectColumns()
   output$foo = DT::renderDataTable(
-    iris, server = FALSE, selection = list(target = 'row+column')
+    iris, server = FALSE, selection = list(target = 'row+column'),
+    caption = 'Using a proxy object to manipulate the table'
   )
 
   proxy = dataTableProxy('foo')
@@ -29,6 +30,10 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$add, {
     proxy %>% addRow(iris[sample(nrow(iris), 1), , drop = FALSE])
+  })
+
+  observe({
+    if (input$cap != '') proxy %>% updateCaption(input$cap)
   })
 
   output$info = renderPrint({

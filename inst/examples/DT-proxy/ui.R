@@ -13,7 +13,9 @@ fluidPage(
       actionButton('select2', 'Select Column'),
       actionButton('clear2', 'Clear Columns'),
       hr(),
-      actionButton('add', 'Add Row')
+      actionButton('add', 'Add Row'),
+      hr(),
+      textInput('cap', 'Table Caption')
     ),
     mainPanel(
       DT::dataTableOutput('foo'),
