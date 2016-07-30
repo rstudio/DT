@@ -9,6 +9,7 @@
 \alias{selectPage}
 \alias{selectRows}
 \alias{updateCaption}
+\alias{updateSearch}
 \title{Manipulate an existing DataTables instance in a Shiny app}
 \usage{
 dataTableProxy(outputId, session = shiny::getDefaultReactiveDomain(), 
@@ -27,6 +28,8 @@ clearSearch(proxy)
 selectPage(proxy, page)
 
 updateCaption(proxy, caption)
+
+updateSearch(proxy, keywords = list(global = NULL, columns = NULL))
 
 reloadData(proxy, resetPaging = TRUE, clearSelection = c("all", "none", 
     "row", "column", "cell"))
@@ -57,6 +60,12 @@ element)}
 
 \item{caption}{a new table caption (see the \code{caption} argument of
 \code{\link{datatable}()})}
+
+\item{keywords}{a list of two components: \code{global} is the global search
+keyword of a single character string (ignored if \code{NULL});
+\code{columns} is a character vector of the search keywords for all columns
+(when the table has one column for the row names, this vector of keywords
+should contain one keyword for the row names as well)}
 
 \item{resetPaging}{whether to reset the paging position}
 
