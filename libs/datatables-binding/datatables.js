@@ -288,7 +288,7 @@ HTMLWidgets.widget({
           // an ugly hack to deal with shiny: for some reason, the onBlur event
           // of selectize does not work in shiny
           $x.find('div > div.selectize-input > input').on('blur', function() {
-            $x.hide().trigger('hide'); $input.parent().show();
+            $x.hide().trigger('hide'); $input.parent().show(); $input.trigger('blur');
           });
           filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
@@ -569,6 +569,11 @@ HTMLWidgets.widget({
     var methods = {};
     var shinyData = {};
 
+    methods.updateCaption = function(caption) {
+      if (!caption) return;
+      $table.children('caption').replaceWith(caption);
+    }
+
     var changeInput = function(id, data, type) {
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
@@ -786,7 +791,7 @@ HTMLWidgets.widget({
     updateTableInfo();
 
     // state info
-    table.on('draw.dt', function() {
+    table.on('draw.dt column-visibility.dt', function() {
       changeInput('state', table.state());
     });
     changeInput('state', table.state());
@@ -826,9 +831,22 @@ HTMLWidgets.widget({
       table.row.add(data).draw();
     }
 
-    methods.clearSearch = function() {
-      table.search('');
-      table.columns().search('').draw();
+    methods.updateSearch = function(keywords) {
+      if (keywords.global !== null)
+        $(table.table().container()).find('input[type=search]').first()
+             .val(keywords.global).trigger('input');
+      var columns = keywords.columns;
+      if (!filterRow || columns === null) return;
+      filterRow.toArray().map(function(td, i) {
+        var v = typeof columns === 'string' ? columns : columns[i];
+        if (typeof v === 'undefined') {
+          console.log('The search keyword for column ' + i + ' is undefined')
+          return;
+        }
+        $(td).find('input').first().val(v);
+        table.column(i).search(v);
+      });
+      table.draw();
     }
 
     methods.selectPage = function(page) {
