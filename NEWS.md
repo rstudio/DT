@@ -34,6 +34,8 @@
 
 - Added a function `updateCaption()` to update the table caption only (thanks, @johnpauls, #155).
 
+- Added a function `updateSearch()` to change the search keywords of the global search box and individual column filters (thanks, @fbreitwieser, #262).
+
 - When all values in a numeric column are missing (`NA`), the column filter will be disabled (http://stackoverflow.com/q/31323807/559676).
 
 - Added an argument `dec.mark` to `formatCurrency()` to customize the character for the decimal point (thanks, @frajuegies, #128).

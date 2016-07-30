@@ -831,9 +831,22 @@ HTMLWidgets.widget({
       table.row.add(data).draw();
     }
 
-    methods.clearSearch = function() {
-      table.search('');
-      table.columns().search('').draw();
+    methods.updateSearch = function(keywords) {
+      if (keywords.global !== null)
+        $(table.table().container()).find('input[type=search]').first()
+             .val(keywords.global).trigger('input');
+      var columns = keywords.columns;
+      if (!filterRow || columns === null) return;
+      filterRow.toArray().map(function(td, i) {
+        var v = typeof columns === 'string' ? columns : columns[i];
+        if (typeof v === 'undefined') {
+          console.log('The search keyword for column ' + i + ' is undefined')
+          return;
+        }
+        $(td).find('input').first().val(v);
+        table.column(i).search(v);
+      });
+      table.draw();
     }
 
     methods.selectPage = function(page) {

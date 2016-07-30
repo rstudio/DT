@@ -165,7 +165,7 @@ addRow = function(proxy, data) {
 #' @rdname proxy
 #' @export
 clearSearch = function(proxy) {
-  invokeRemote(proxy, 'clearSearch')
+  updateSearch(proxy, list(global = '', columns = ''))
 }
 
 #' @param page a number indicating the page to select
@@ -181,6 +181,38 @@ selectPage = function(proxy, page) {
 #' @export
 updateCaption = function(proxy, caption) {
   invokeRemote(proxy, 'updateCaption', list(captionString(caption)))
+}
+
+#' @param keywords a list of two components: \code{global} is the global search
+#'   keyword of a single character string (ignored if \code{NULL});
+#'   \code{columns} is a character vector of the search keywords for all columns
+#'   (when the table has one column for the row names, this vector of keywords
+#'   should contain one keyword for the row names as well)
+#' @rdname proxy
+#' @export
+updateSearch = function(proxy, keywords = list(global = NULL, columns = NULL)) {
+  global = keywords$global
+  if (is.null(global)) {
+    keywords['global'] = list(NULL)
+  } else {
+    if (!is.character(global) || length(global) != 1)
+      stop('keywords$global must be a character string')
+  }
+  columns = keywords$columns
+  if (is.null(columns)) {
+    keywords['columns'] = list(NULL)
+  } else {
+    if (is.character(columns)) {
+      if (length(columns) == 0) stop(
+        'The length of keywords$columns must be greater than zero if it is a character vector'
+      )
+    } else if (is.list(columns)) {
+      if (any(sapply(columns, length) > 1)) stop(
+        'keywords$columns should be a list of NULL or character strings'
+      )
+    } else stop('keywords$columns must be either a character vector or a list')
+  }
+  invokeRemote(proxy, 'updateSearch', list(keywords))
 }
 
 #' @param resetPaging whether to reset the paging position
