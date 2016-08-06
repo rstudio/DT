@@ -132,3 +132,9 @@ Sometimes the data behind the table may change, and you do not want to regenerat
 app = system.file('examples', 'DT-reload', package = 'DT')
 shiny::runApp(app)
 ```
+
+# More Examples
+
+Below is a list of miscellaneous examples:
+
+1. [Radio Buttons in Tables](011-radio.html)

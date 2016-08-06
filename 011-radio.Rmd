@@ -1,0 +1,31 @@
+---
+title: "Radio Buttons in Tables"
+output:
+  html_document:
+    includes: null
+---
+
+You can render arbitrary HTML content in the table when you choose not to escape the columns that contain HTML content (`escape = FALSE`). Here we show an example of embedding radio buttons in table cells. First, we prepare the raw HTML content (a radio button is `<input type="radio" />` in HTML):
+
+```{r}
+m = matrix(
+  as.character(1:5), nrow = 12, ncol = 5, byrow = TRUE,
+  dimnames = list(month.abb, LETTERS[1:5])
+)
+for (i in seq_len(nrow(m))) {
+  m[i, ] = sprintf(
+    '<input type="radio" name="%s" value="%s"/>',
+    month.abb[i], m[i, ]
+  )
+}
+m[1:3, 1:2]
+```
+
+After we have got the character matrix of HTML code, we can pass it to `datatable()`:
+
+```{r}
+library(DT)
+datatable(m, escape = FALSE, options = list(dom = 't', paging = FALSE, ordering = FALSE))
+```
+
+Above is just a static table, which may not be useful since you do not have access to the options that users have selected. We can use this table in Shiny, and there are a few more steps to go. See [this live app](https://yihui.shinyapps.io/DT-radio) for the full source code with technical details.
