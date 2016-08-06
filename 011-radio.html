@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Radio Buttons in Tables</title>
+
+<script src="libs/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="include/site.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Radio Buttons in Tables</h1>
+
+</div>
+
+
+<p>You can render arbitrary HTML content in the table when you choose not to escape the columns that contain HTML content (<code>escape = FALSE</code>). Here we show an example of embedding radio buttons in table cells. First, we prepare the raw HTML content (a radio button is <code>&lt;input type=&quot;radio&quot; /&gt;</code> in HTML):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">matrix</span>(
+  <span class="kw">as.character</span>(<span class="dv">1</span>:<span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">12</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>,
+  <span class="dt">dimnames =</span> <span class="kw">list</span>(month.abb, LETTERS[<span class="dv">1</span>:<span class="dv">5</span>])
+)
+for (i in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))) {
+  m[i, ] =<span class="st"> </span><span class="kw">sprintf</span>(
+    <span class="st">&#39;&lt;input type=&quot;radio&quot; name=&quot;%s&quot; value=&quot;%s&quot;/&gt;&#39;</span>,
+    month.abb[i], m[i, ]
+  )
+}
+m[<span class="dv">1</span>:<span class="dv">3</span>, <span class="dv">1</span>:<span class="dv">2</span>]</code></pre></div>
+<pre><code>##     A                                                 
+## Jan &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Jan\&quot; value=\&quot;1\&quot;/&gt;&quot;
+## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;1\&quot;/&gt;&quot;
+## Mar &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Mar\&quot; value=\&quot;1\&quot;/&gt;&quot;
+##     B                                                 
+## Jan &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Jan\&quot; value=\&quot;2\&quot;/&gt;&quot;
+## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;2\&quot;/&gt;&quot;
+## Mar &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Mar\&quot; value=\&quot;2\&quot;/&gt;&quot;</code></pre>
+<p>After we have got the character matrix of HTML code, we can pass it to <code>datatable()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
+<span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>, <span class="dt">paging =</span> <span class="ot">FALSE</span>, <span class="dt">ordering =</span> <span class="ot">FALSE</span>))</code></pre></div>
+<div id="htmlwidget-927ec88a166bf954e46a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-927ec88a166bf954e46a">{
+  "x": {
+    "filter": "none",
+    "data": [
+      ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      ["<input type=\"radio\" name=\"Jan\" value=\"1\"/>", "<input type=\"radio\" name=\"Feb\" value=\"1\"/>", "<input type=\"radio\" name=\"Mar\" value=\"1\"/>", "<input type=\"radio\" name=\"Apr\" value=\"1\"/>", "<input type=\"radio\" name=\"May\" value=\"1\"/>", "<input type=\"radio\" name=\"Jun\" value=\"1\"/>", "<input type=\"radio\" name=\"Jul\" value=\"1\"/>", "<input type=\"radio\" name=\"Aug\" value=\"1\"/>", "<input type=\"radio\" name=\"Sep\" value=\"1\"/>", "<input type=\"radio\" name=\"Oct\" value=\"1\"/>", "<input type=\"radio\" name=\"Nov\" value=\"1\"/>", "<input type=\"radio\" name=\"Dec\" value=\"1\"/>"],
+      ["<input type=\"radio\" name=\"Jan\" value=\"2\"/>", "<input type=\"radio\" name=\"Feb\" value=\"2\"/>", "<input type=\"radio\" name=\"Mar\" value=\"2\"/>", "<input type=\"radio\" name=\"Apr\" value=\"2\"/>", "<input type=\"radio\" name=\"May\" value=\"2\"/>", "<input type=\"radio\" name=\"Jun\" value=\"2\"/>", "<input type=\"radio\" name=\"Jul\" value=\"2\"/>", "<input type=\"radio\" name=\"Aug\" value=\"2\"/>", "<input type=\"radio\" name=\"Sep\" value=\"2\"/>", "<input type=\"radio\" name=\"Oct\" value=\"2\"/>", "<input type=\"radio\" name=\"Nov\" value=\"2\"/>", "<input type=\"radio\" name=\"Dec\" value=\"2\"/>"],
+      ["<input type=\"radio\" name=\"Jan\" value=\"3\"/>", "<input type=\"radio\" name=\"Feb\" value=\"3\"/>", "<input type=\"radio\" name=\"Mar\" value=\"3\"/>", "<input type=\"radio\" name=\"Apr\" value=\"3\"/>", "<input type=\"radio\" name=\"May\" value=\"3\"/>", "<input type=\"radio\" name=\"Jun\" value=\"3\"/>", "<input type=\"radio\" name=\"Jul\" value=\"3\"/>", "<input type=\"radio\" name=\"Aug\" value=\"3\"/>", "<input type=\"radio\" name=\"Sep\" value=\"3\"/>", "<input type=\"radio\" name=\"Oct\" value=\"3\"/>", "<input type=\"radio\" name=\"Nov\" value=\"3\"/>", "<input type=\"radio\" name=\"Dec\" value=\"3\"/>"],
+      ["<input type=\"radio\" name=\"Jan\" value=\"4\"/>", "<input type=\"radio\" name=\"Feb\" value=\"4\"/>", "<input type=\"radio\" name=\"Mar\" value=\"4\"/>", "<input type=\"radio\" name=\"Apr\" value=\"4\"/>", "<input type=\"radio\" name=\"May\" value=\"4\"/>", "<input type=\"radio\" name=\"Jun\" value=\"4\"/>", "<input type=\"radio\" name=\"Jul\" value=\"4\"/>", "<input type=\"radio\" name=\"Aug\" value=\"4\"/>", "<input type=\"radio\" name=\"Sep\" value=\"4\"/>", "<input type=\"radio\" name=\"Oct\" value=\"4\"/>", "<input type=\"radio\" name=\"Nov\" value=\"4\"/>", "<input type=\"radio\" name=\"Dec\" value=\"4\"/>"],
+      ["<input type=\"radio\" name=\"Jan\" value=\"5\"/>", "<input type=\"radio\" name=\"Feb\" value=\"5\"/>", "<input type=\"radio\" name=\"Mar\" value=\"5\"/>", "<input type=\"radio\" name=\"Apr\" value=\"5\"/>", "<input type=\"radio\" name=\"May\" value=\"5\"/>", "<input type=\"radio\" name=\"Jun\" value=\"5\"/>", "<input type=\"radio\" name=\"Jul\" value=\"5\"/>", "<input type=\"radio\" name=\"Aug\" value=\"5\"/>", "<input type=\"radio\" name=\"Sep\" value=\"5\"/>", "<input type=\"radio\" name=\"Oct\" value=\"5\"/>", "<input type=\"radio\" name=\"Nov\" value=\"5\"/>", "<input type=\"radio\" name=\"Dec\" value=\"5\"/>"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>A</th>\n      <th>B</th>\n      <th>C</th>\n      <th>D</th>\n      <th>E</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "dom": "t",
+      "paging": false,
+      "ordering": false,
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
+      "columnDefs": [
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ]
+    }
+  },
+  "evals": [],
+  "jsHooks": []
+}</script>
+<p>Above is just a static table, which may not be useful since you do not have access to the options that users have selected. We can use this table in Shiny, and there are a few more steps to go. See <a href="https://yihui.shinyapps.io/DT-radio">this live app</a> for the full source code with technical details.</p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+
+</script>
+
+
+</body>
+</html>

@@ -98,6 +98,7 @@ h6 {
 }
 </style>
 
+<link rel="stylesheet" href="include/site.css" type="text/css" />
 
 </head>
 
@@ -164,8 +165,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<div id="htmlwidget-b316575cf157472f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b316575cf157472f">{
+<div id="htmlwidget-b316575cf157472f8301" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b316575cf157472f8301">{
   "x": {
     "filter": "none",
     "data": [
@@ -205,8 +206,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<div id="htmlwidget-83013f5e488e9608" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-83013f5e488e9608">{
+<div id="htmlwidget-3f5e488e9608f6a7f9e8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3f5e488e9608f6a7f9e8">{
   "x": {
     "filter": "none",
     "data": [
@@ -248,8 +249,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<div id="htmlwidget-f6a7f9e8cbc86b4b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f6a7f9e8cbc86b4b">{
+<div id="htmlwidget-cbc86b4b37848581b7da" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cbc86b4b37848581b7da">{
   "x": {
     "filter": "none",
     "data": [
@@ -297,8 +298,8 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,
   <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
 )</code></pre></div>
-<div id="htmlwidget-37848581b7da5241" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-37848581b7da5241">{
+<div id="htmlwidget-5241a31e495880dde1f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5241a31e495880dde1f2">{
   "x": {
     "filter": "none",
     "data": [
@@ -342,8 +343,8 @@ brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span cl
 clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) +<span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) %&gt;%
 <span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}
 <span class="kw">datatable</span>(df) %&gt;%<span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</code></pre></div>
-<div id="htmlwidget-a31e495880dde1f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a31e495880dde1f2">{
+<div id="htmlwidget-fa3e0f9670f171d96969" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa3e0f9670f171d96969">{
   "x": {
     "filter": "none",
     "data": [
@@ -384,8 +385,8 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
   <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,
   <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
   <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</code></pre></div>
-<div id="htmlwidget-fa3e0f9670f171d9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fa3e0f9670f171d9">{
+<div id="htmlwidget-84660aad0a6e65a9cd08" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-84660aad0a6e65a9cd08">{
   "x": {
     "filter": "none",
     "data": [
