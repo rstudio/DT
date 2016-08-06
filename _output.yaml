@@ -6,6 +6,7 @@ html_document:
   mathjax: null
   toc_depth: 2
   lib_dir: libs
+  css: include/site.css
   includes:
     in_header: include/in_header.html
     before_body: include/before_body.html
