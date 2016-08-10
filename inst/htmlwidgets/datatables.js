@@ -624,7 +624,7 @@ HTMLWidgets.widget({
       // row, column, or cell selection
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
-          var rows = table.rows('.' + selClass, {search: 'applied'});
+          var rows = table.rows('.' + selClass);
           var idx = rows.indexes().toArray();
           if (!server) return addOne(idx);
           idx = idx.map(function(i) {
