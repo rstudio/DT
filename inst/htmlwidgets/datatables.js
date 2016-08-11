@@ -49,11 +49,11 @@ DTWidget.formatSignif = function(thiz, row, data, col, digits) {
   $(thiz.api().cell(row, col).node()).html(d.toPrecision(digits));
 };
 
-DTWidget.formatDate = function(thiz, row, data, col, method) {
+DTWidget.formatDate = function(thiz, row, data, col, method, params) {
   var d = data[col];
   if (d === null) return;
   d = new Date(d);
-  $(thiz.api().cell(row, col).node()).html(d[method]());
+  $(thiz.api().cell(row, col).node()).html(d[method].apply(d, params));
 };
 
 window.DTWidget = DTWidget;

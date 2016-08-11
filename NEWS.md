@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.3 (unreleased)
 
+## NEW FEATURES
+
+- Added an argument `params` to the `formatDate()` function so you can pass a list of parameters to the specific date conversion method (http://stackoverflow.com/q/38875173/559676).
+
 ## MAJOR CHANGES
 
 - For client-side tables in Shiny, the indices of selected rows (`input$tableId_rows_selected`) will include the rows that are not visible in the current view after filtering is applied. If you want to exclude the indices of such rows, you can take the intersection of `input$tableId_rows_selected` and `input$tableId_rows_all` (the latter is the indices of all rows after filtering is applied).

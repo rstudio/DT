@@ -31,3 +31,8 @@ captionString = function(caption) {
   caption = as.character(caption)
   if (length(caption)) caption
 }
+
+toJSON = function(...) {
+  FUN = getFromNamespace('toJSON', 'htmlwidgets')
+  FUN(...)
+}

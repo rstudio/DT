@@ -26,9 +26,6 @@ formatColumns = function(table, columns, template, ...) {
 #' @param mark the marker after every \code{interval} decimals in the numbers
 #' @param dec.mark a character to indicate the decimal point
 #' @param before whether to place the currency symbol before or after the values
-#' @param method the method(s) to convert a date to string in JavaScript; see
-#'   \code{DT:::DateMethods} for a list of possible methods, and
-#'   \url{http://mzl.la/1xGe99W} for a full reference
 #' @references See \url{http://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
 #' @export
@@ -92,8 +89,15 @@ formatSignif = function(table, columns, digits = 2) {
 
 #' @export
 #' @rdname formatCurrency
-formatDate = function(table, columns, method = 'toDateString') {
-  formatColumns(table, columns, tplDate, method)
+#' @param method the method(s) to convert a date to string in JavaScript; see
+#'   \code{DT:::DateMethods} for a list of possible methods, and
+#'   \url{http://mzl.la/1xGe99W} for a full reference
+#' @param params a list parameters for the specific date conversion method,
+#'   e.g., for the \code{toLocaleDateString()} method, your browser may support
+#'   \code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
+#'   'numeric'))}
+formatDate = function(table, columns, method = 'toDateString', params = NULL) {
+  formatColumns(table, columns, tplDate, method, params)
 }
 
 #' @param valueColumns indices of the columns from which the cell values are
@@ -176,8 +180,9 @@ tplSignif = function(cols, digits, ...) {
   sprintf("DTWidget.formatSignif(this, row, data, %d, %d);", cols, digits)
 }
 
-tplDate = function(cols, method, ...) {
-  sprintf("DTWidget.formatDate(this, row, data, %d, '%s')", cols, method);
+tplDate = function(cols, method, params, ...) {
+  params = if (length(params) > 0) paste(',', toJSON(params)) else ''
+  sprintf("DTWidget.formatDate(this, row, data, %d, '%s'%s);", cols, method, params)
 }
 
 DateMethods = c(
