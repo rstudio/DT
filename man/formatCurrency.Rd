@@ -20,7 +20,7 @@ formatRound(table, columns, digits = 2)
 
 formatSignif(table, columns, digits = 2)
 
-formatDate(table, columns, method = "toDateString")
+formatDate(table, columns, method = "toDateString", params = NULL)
 
 formatStyle(table, columns, valueColumns = columns, target = c("cell", "row"), 
     fontWeight = NULL, color = NULL, backgroundColor = NULL, background = NULL, 
@@ -52,6 +52,11 @@ equivalent to \code{c('V1', 'V2')})}
 \item{method}{the method(s) to convert a date to string in JavaScript; see
 \code{DT:::DateMethods} for a list of possible methods, and
 \url{http://mzl.la/1xGe99W} for a full reference}
+
+\item{params}{a list parameters for the specific date conversion method,
+e.g., for the \code{toLocaleDateString()} method, your browser may support
+\code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
+'numeric'))}}
 
 \item{valueColumns}{indices of the columns from which the cell values are
 obtained; this can be different with the \code{columns} argument, e.g. you
