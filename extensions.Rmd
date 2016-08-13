@@ -16,6 +16,7 @@ Most **DataTables** extensions work on their own, but some may not work well whe
 - These extensions do/may not work in Shiny apps:
     - `Responsive` ([#69](https://github.com/rstudio/DT/issues/69))
     - `KeyTable` ([#132](https://github.com/rstudio/DT/issues/132))
+- The Excel button in the Buttons extension may not appear in Safari ([#343](https://github.com/rstudio/DT/issues/343));
 
 </div>
 </div>
