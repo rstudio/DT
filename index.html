@@ -200,28 +200,27 @@ $(document).ready(function () {
 <hr />
 <p>The R package <strong>DT</strong> provides an R interface to the JavaScript library <a href="http://datatables.net"><strong>DataTables</strong></a>. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and <strong>DataTables</strong> provides filtering, pagination, sorting, and many other features in the tables.</p>
 <p>You may install the stable version from CRAN, or the development version using <code>devtools::install_github('rstudio/DT')</code> if necessary (this website reflects the development version of <strong>DT</strong>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (!<span class="kw">require</span>(<span class="st">&quot;DT&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&#39;DT&#39;</span>)
-<span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.3.1 (2016-06-21)
-## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.11.6 (El Capitan)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if (!require(&quot;DT&quot;)) install.packages(&#39;DT&#39;)</span>
+devtools::<span class="kw">session_info</span>(<span class="st">&#39;DT&#39;</span>)</code></pre></div>
+<pre><code>##  setting  value                       
+##  version  R version 3.3.1 (2016-06-21)
+##  system   x86_64, darwin13.4.0        
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  tz       America/Chicago             
+##  date     2016-08-19                  
 ## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  base     
-## 
-## other attached packages:
-## [1] DT_0.2
-## 
-## loaded via a namespace (and not attached):
-##  [1] htmlwidgets_0.7    magrittr_1.5       formatR_1.4       
-##  [4] tools_3.3.1        htmltools_0.3.5    yaml_2.1.13       
-##  [7] Rcpp_0.12.6        stringi_1.1.1      rmarkdown_1.0.9002
-## [10] knitr_1.13.8       methods_3.3.1      stringr_1.0.0     
-## [13] digest_0.6.10      evaluate_0.9</code></pre>
-<p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> if you want to file bug reports or feature requests, and you may use <a href="http://stackoverflow.com/questions/tagged/r+datatables">StackOverflow</a> or the <a href="https://groups.google.com/forum/#!forum/shiny-discuss">shiny-discuss</a> mailing list to ask questions.</p>
+##  package     * version date       source        
+##  digest        0.6.10  2016-08-02 CRAN (R 3.3.0)
+##  DT          * 0.2     2016-08-09 CRAN (R 3.3.0)
+##  htmltools     0.3.5   2016-03-21 CRAN (R 3.3.0)
+##  htmlwidgets   0.7     2016-08-02 CRAN (R 3.3.0)
+##  jsonlite      1.0     2016-07-01 CRAN (R 3.3.0)
+##  magrittr      1.5     2014-11-22 CRAN (R 3.3.0)
+##  Rcpp          0.12.6  2016-07-19 CRAN (R 3.3.0)
+##  yaml          2.1.13  2014-06-12 CRAN (R 3.3.0)</code></pre>
+<p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> if you want to file bug reports or feature requests, and you may use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> or the <a href="https://groups.google.com/forum/#!forum/shiny-discuss">shiny-discuss</a> mailing list to ask questions.</p>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
