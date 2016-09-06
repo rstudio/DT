@@ -544,7 +544,9 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
-    this.adjustWidth(el);
+    table.on('init', function(e) {
+      this.adjustWidth(el);
+    });
 
      // fillContainer = TRUE behavior
     if (instance.fillContainer) {
