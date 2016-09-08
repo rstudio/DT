@@ -450,7 +450,7 @@ dataTablesFilter = function(data, params) {
     draw = as.integer(q$draw),
     recordsTotal = n,
     recordsFiltered = nrow(data),
-    data = unname(fdata),
+    data = cleanDataFrame(fdata),
     DT_rows_all = iAll,
     DT_rows_current = iCurrent
   )
@@ -495,6 +495,19 @@ filterRange = function(d, string) {
 # treat factors as characters
 maybe_character = function(x) {
   is.character(x) || is.factor(x)
+}
+
+# make sure we have a tidy data frame (no unusual structures in it)
+cleanDataFrame = function(x) {
+  x = unname(x)  # remove column names
+  if (!is.data.frame(x)) return(x)
+  for (j in seq_len(ncol(x))) {
+    xj = x[, j]
+    xj = unname(xj)  # remove names
+    dim(xj) = NULL   # remove dimensions
+    x[, j] = xj
+  }
+  x
 }
 
 fixServerOptions = function(options) {
