@@ -544,8 +544,10 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
+
+    var thiz = this;
     table.on('init', function(e) {
-      this.adjustWidth(el);
+      thiz.adjustWidth(el);
     });
 
      // fillContainer = TRUE behavior
@@ -553,7 +555,6 @@ HTMLWidgets.widget({
 
       // we need to wait just a bit to do this so DT can completely
       // finish laying itself out
-      var thiz = this;
       setTimeout(function() {
 
         // calculate correct height
