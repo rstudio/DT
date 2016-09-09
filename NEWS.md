@@ -12,6 +12,8 @@
 
 - When the DataTables option `language.url` is used, the table cannot be successfully initialized (thanks, @lubomirskirka, #344)
 
+- `styleEqual()` accepts `NA` in the `levels` argument now (thanks, @MalditoBarbudo, #355).
+
 # CHANGES IN DT VERSION 0.2
 
 ## NEW FEATURES

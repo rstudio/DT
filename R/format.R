@@ -205,11 +205,11 @@ tplStyle = function(cols, valueCols, target, styles, ...) {
   switch(
     target,
     cell = sprintf(
-      "var value=data[%s]; if (value!==null) $(this.api().cell(row, %s).node()).css({%s});",
+      "var value=data[%s]; $(this.api().cell(row, %s).node()).css({%s});",
       valueCols, cols, css
     ),
     row = sprintf(
-      "var value=data[%s]; if (value!==null) $(row).css({%s});",
+      "var value=data[%s]; $(row).css({%s});",
       valueCols, css
     ),
     stop('Invalid target!')
@@ -266,9 +266,13 @@ styleEqual = function(levels, values) {
   if (n != length(values))
     stop("length(levels) must be equal to length(values)")
   if (n == 0) return("''")
+  levels2 = levels
+  if (is.character(levels)) levels2 = gsub("'", "\\'", levels)
+  levels2 = sprintf("'%s'", levels2)
+  levels2[is.na(levels)] = 'null'
   js = ''
   for (i in seq_len(n)) {
-    js = paste0(js, sprintf("value == '%s' ? '%s' : ", levels[i], values[i]))
+    js = paste0(js, sprintf("value == %s ? '%s' : ", levels2[i], values[i]))
   }
   JS(paste0(js, "''"))
 }
