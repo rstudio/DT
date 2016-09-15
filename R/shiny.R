@@ -122,7 +122,7 @@ dataTableProxy = function(
     stop('datatableProxy() must be called from the server function of a Shiny app')
 
   structure(
-    list(id = outputId, session = session, deferUntilFlush = deferUntilFlush),
+    list(id = session$ns(outputId), session = session, deferUntilFlush = deferUntilFlush),
     class = 'datatableProxy'
   )
 }

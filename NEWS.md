@@ -14,6 +14,8 @@
 
 - `styleEqual()` accepts `NA` in the `levels` argument now (thanks, @MalditoBarbudo, #355).
 
+- `dataTableProxy()` does not work with Shiny modules (thanks, @fbreitwieser, #357).
+
 # CHANGES IN DT VERSION 0.2
 
 ## NEW FEATURES
