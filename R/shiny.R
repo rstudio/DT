@@ -507,7 +507,7 @@ cleanDataFrame = function(x) {
     xj = c(xj)  # drop class and dimensions
     x[, j] = xj
   }
-  x
+  unname(x)
 }
 
 fixServerOptions = function(options) {
