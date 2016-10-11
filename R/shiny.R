@@ -504,7 +504,8 @@ cleanDataFrame = function(x) {
   for (j in seq_len(ncol(x))) {
     xj = x[, j]
     xj = unname(xj)  # remove names
-    xj = c(xj)  # drop class and dimensions
+    dim(xj) = NULL  # drop dimensions
+    if (is.table(xj)) xj = c(xj)  # drop the table class
     x[, j] = xj
   }
   unname(x)
