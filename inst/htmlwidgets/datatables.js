@@ -547,24 +547,15 @@ HTMLWidgets.widget({
 
     var thiz = this;
     table.on('init', function(e) {
-      thiz.adjustWidth(el);
-    });
-
-     // fillContainer = TRUE behavior
-    if (instance.fillContainer) {
-
-      // we need to wait just a bit to do this so DT can completely
-      // finish laying itself out
-      setTimeout(function() {
-
+      // fillContainer = TRUE behavior
+      if (instance.fillContainer) {
         // calculate correct height
         thiz.fillAvailableHeight(el, $(el).innerHeight());
-
-        // we need to force DT to recalculate column widths
-        // (otherwise all the columns are the same size)
-        table.columns.adjust();
-      }, 200);
-    }
+      }
+      // we need to force DT to recalculate column widths
+      // (otherwise all the columns are the same size)
+      thiz.adjustWidth(el);
+    });
 
     // interaction with shiny
     if (!HTMLWidgets.shinyMode) return;
