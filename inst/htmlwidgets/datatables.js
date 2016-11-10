@@ -7,19 +7,20 @@
 // a global object
 var DTWidget = {};
 
+// 123456666.7890 -> 123,456,666.7890
+var markInterval = function(d, digits, interval, mark, decMark, precision) {
+  x = precision ? d.toPrecision(digits) : d.toFixed(digits);
+  if (!/^-?[\d.]+$/.test(x)) return x;
+  var xv = x.split('.');
+  if (xv.length > 2) return x;  // should have at most one decimal point
+  xv[0] = xv[0].replace(new RegExp('\\B(?=(\\d{' + interval + '})+(?!\\d))', 'g'), mark);
+  return xv.join(decMark);
+};
+
 DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark, before) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  // 123456666.7890 -> 123,456,666.7890
-  var markInterval = function(x, interval, mark) {
-    if (!/^-?[\d.]+$/.test(x)) return x;
-    var xv = x.split('.');
-    if (xv.length > 2) return x;  // should have at most one decimal point
-    xv[0] = xv[0].replace(new RegExp('\\B(?=(\\d{' + interval + '})+(?!\\d))', 'g'), mark);
-    return xv.join(decMark);
-  };
-  d = d.toFixed(digits);
-  var res = markInterval(d, interval, mark);
+  var res = markInterval(d, digits, interval, mark, decMark);
   res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
     res + currency;
   $(thiz.api().cell(row, col).node()).html(res);
@@ -31,22 +32,24 @@ DTWidget.formatString = function(thiz, row, data, col, prefix, suffix) {
   $(thiz.api().cell(row, col).node()).html(prefix + d + suffix);
 };
 
-DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
+DTWidget.formatPercentage = function(thiz, row, data, col, digits, interval, mark, decMark) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html((d * 100).toFixed(digits) + '%');
+  $(thiz.api().cell(row, col).node())
+  .html(markInterval(d * 100, digits, interval, mark, decMark) + '%');
 };
 
-DTWidget.formatRound = function(thiz, row, data, col, digits) {
+DTWidget.formatRound = function(thiz, row, data, col, digits, interval, mark, decMark) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html(d.toFixed(digits));
+  $(thiz.api().cell(row, col).node()).html(markInterval(d, digits, interval, mark, decMark));
 };
 
-DTWidget.formatSignif = function(thiz, row, data, col, digits) {
+DTWidget.formatSignif = function(thiz, row, data, col, digits, interval, mark, decMark) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html(d.toPrecision(digits));
+  $(thiz.api().cell(row, col).node())
+    .html(markInterval(d, digits, interval, mark, decMark, true));
 };
 
 DTWidget.formatDate = function(thiz, row, data, col, method, params) {

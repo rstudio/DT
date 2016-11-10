@@ -71,20 +71,26 @@ formatString = function(table, columns, prefix = '', suffix = '') {
 #' @export
 #' @rdname formatCurrency
 #' @param digits the number of decimal places to round to
-formatPercentage = function(table, columns, digits = 0) {
-  formatColumns(table, columns, tplPercentage, digits)
+formatPercentage = function(
+  table, columns, digits = 0, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+) {
+  formatColumns(table, columns, tplPercentage, digits, interval, mark, dec.mark)
 }
 
 #' @export
 #' @rdname formatCurrency
-formatRound = function(table, columns, digits = 2) {
-  formatColumns(table, columns, tplRound, digits)
+formatRound = function(
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+) {
+  formatColumns(table, columns, tplRound, digits, interval, mark, dec.mark)
 }
 
 #' @export
 #' @rdname formatCurrency
-formatSignif = function(table, columns, digits = 2) {
-  formatColumns(table, columns, tplSignif, digits)
+formatSignif = function(
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+) {
+  formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark)
 }
 
 #' @export
@@ -168,16 +174,25 @@ tplString = function(cols, prefix, suffix, ...) {
   sprintf("DTWidget.formatString(this, row, data, %d, '%s', '%s');", cols, prefix, suffix)
 }
 
-tplPercentage = function(cols, digits, ...) {
-  sprintf("DTWidget.formatPercentage(this, row, data, %d, %s);", cols, digits)
+tplPercentage = function(cols, digits, interval, mark, dec.mark, ...) {
+  sprintf(
+    "DTWidget.formatPercentage(this, row, data, %d, %s, %s, '%s', '%s');",
+    cols, digits, interval, mark, dec.mark
+  )
 }
 
-tplRound = function(cols, digits, ...) {
-  sprintf("DTWidget.formatRound(this, row, data, %d, %d);", cols, digits)
+tplRound = function(cols, digits, interval, mark, dec.mark, ...) {
+  sprintf(
+    "DTWidget.formatRound(this, row, data, %d, %d, %s, '%s', '%s');",
+    cols, digits, interval, mark, dec.mark
+  )
 }
 
-tplSignif = function(cols, digits, ...) {
-  sprintf("DTWidget.formatSignif(this, row, data, %d, %d);", cols, digits)
+tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
+  sprintf(
+    "DTWidget.formatSignif(this, row, data, %d, %d, %d, '%s', '%s');",
+    cols, digits, interval, mark, dec.mark
+  )
 }
 
 tplDate = function(cols, method, params, ...) {
