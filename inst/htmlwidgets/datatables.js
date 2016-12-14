@@ -110,7 +110,7 @@ HTMLWidgets.widget({
     if (data.options.crosstalkOptions.group) {
       maybeInstallCrosstalkPlugins();
       var ctGroup = data.options.crosstalkOptions.group;
-      data.options.crosstalkOptions.filterHandle = crosstalk.filter.createHandle(crosstalk.group(ctGroup));
+      data.options.crosstalkOptions.filterHandle = new crosstalk.FilterHandle(ctGroup);
     }
 
     // If we are in a flexdashboard scroll layout then we:
@@ -254,7 +254,7 @@ HTMLWidgets.widget({
       $table[0].ctfilter = null;
       $table[0].ctselect = null;
     } else {
-      var crosstalkFilter = crosstalk.filter.createHandle(crosstalk.group(data.options.crosstalkOptions.group));
+      var crosstalkFilter = new crosstalk.FilterHandle(data.options.crosstalkOptions.group);
       var key = data.options.crosstalkOptions.key;
       function keysToMatches(keys) {
         if (!keys) {
@@ -301,10 +301,10 @@ HTMLWidgets.widget({
           }
         }
       }
-      var crosstalkSelection = crosstalk.group(data.options.crosstalkOptions.group).var("selection");
+      var crosstalkSelection = new crosstalk.SelectionHandle(data.options.crosstalkOptions.group);
       crosstalkSelection.on("change", applyCrosstalkSelection);
       // TODO: This next line doesn't seem to work when renderDataTable is used
-      applyCrosstalkSelection({value: crosstalkSelection.get()});
+      applyCrosstalkSelection({value: crosstalkSelection.value});
     }
 
     var inArray = function(val, array) {
@@ -689,9 +689,9 @@ HTMLWidgets.widget({
               selectedKeys.push(keys[value[i] - 1]);
             }
           }
-          crosstalk.group(data.options.crosstalkOptions.group)
-            .var("selection")
-            .set(selectedKeys, {sender: el});
+          var ctsel = new crosstalk.SelectionHandle(data.options.crosstalkOptions.group);
+          ctsel.set(selectedKeys, {sender: el});
+          ctsel.close();
         }
       }
     };
