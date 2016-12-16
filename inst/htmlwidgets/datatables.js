@@ -92,7 +92,13 @@ HTMLWidgets.widget({
   type: "output",
   initialize: function(el, width, height) {
     $(el).html('&nbsp;');
-    return { data: null };
+    return {
+      data: null,
+      ctfilterHandle: new crosstalk.FilterHandle(),
+      ctfilterSubscription: null,
+      ctselectHandle: new crosstalk.SelectionHandle(),
+      ctselectSubscription: null
+    };
   },
   renderValue: function(el, data, instance) {
     if (el.offsetWidth === 0 || el.offsetHeight === 0) {
@@ -109,8 +115,8 @@ HTMLWidgets.widget({
 
     if (data.options.crosstalkOptions.group) {
       maybeInstallCrosstalkPlugins();
-      var ctGroup = data.options.crosstalkOptions.group;
-      data.options.crosstalkOptions.filterHandle = new crosstalk.FilterHandle(ctGroup);
+      instance.ctfilterHandle.setGroup(data.options.crosstalkOptions.group);
+      instance.ctselectHandle.setGroup(data.options.crosstalkOptions.group);
     }
 
     // If we are in a flexdashboard scroll layout then we:
@@ -250,11 +256,21 @@ HTMLWidgets.widget({
 
     var table = $table.DataTable(options);
     $el.data('datatable', table);
+
+    // Unregister previous Crosstalk event subscriptions, if they exist
+    if (instance.ctfilterSubscription) {
+      instance.ctfilterHandle.off("change", instance.ctfilterSubscription);
+      instance.ctfilterSubscription = null;
+    }
+    if (instance.ctselectSubscription) {
+      instance.ctselectHandle.off("change", instance.ctselectSubscription);
+      instance.ctselectSubscription = null;
+    }
+
     if (!data.options.crosstalkOptions.group) {
       $table[0].ctfilter = null;
       $table[0].ctselect = null;
     } else {
-      var crosstalkFilter = new crosstalk.FilterHandle(data.options.crosstalkOptions.group);
       var key = data.options.crosstalkOptions.key;
       function keysToMatches(keys) {
         if (!keys) {
@@ -277,11 +293,11 @@ HTMLWidgets.widget({
         $table[0].ctfilter = keysToMatches(e.value);
         table.draw();
       }
-      crosstalkFilter.on("change", applyCrosstalkFilter);
-      applyCrosstalkFilter({value: crosstalkFilter.filteredKeys});
+      instance.ctfilterSubscription = instance.ctfilterHandle.on("change", applyCrosstalkFilter);
+      applyCrosstalkFilter({value: instance.ctfilterHandle.filteredKeys});
 
       function applyCrosstalkSelection(e) {
-        if (e.sender !== el) {
+        if (e.sender !== instance.ctselect) {
           table
             .rows('.' + selClass, {search: 'applied'})
             .nodes()
@@ -291,7 +307,7 @@ HTMLWidgets.widget({
             changeInput('rows_selected', selectedRows(), void 0, true);
         }
 
-        if (e.sender !== el && e.value && e.value.length) {
+        if (e.sender !== instance.ctselect && e.value && e.value.length) {
           $table[0].ctselect = keysToMatches(e.value);
           table.draw();
         } else {
@@ -301,10 +317,9 @@ HTMLWidgets.widget({
           }
         }
       }
-      var crosstalkSelection = new crosstalk.SelectionHandle(data.options.crosstalkOptions.group);
-      crosstalkSelection.on("change", applyCrosstalkSelection);
+      instance.ctselectSubscription = instance.ctselectHandle.on("change", applyCrosstalkSelection);
       // TODO: This next line doesn't seem to work when renderDataTable is used
-      applyCrosstalkSelection({value: crosstalkSelection.value});
+      applyCrosstalkSelection({value: instance.ctselectHandle.value});
     }
 
     var inArray = function(val, array) {
@@ -689,9 +704,7 @@ HTMLWidgets.widget({
               selectedKeys.push(keys[value[i] - 1]);
             }
           }
-          var ctsel = new crosstalk.SelectionHandle(data.options.crosstalkOptions.group);
-          ctsel.set(selectedKeys, {sender: el});
-          ctsel.close();
+          instance.ctselectHandle.set(selectedKeys);
         }
       }
     };
