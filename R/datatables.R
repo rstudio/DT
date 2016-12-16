@@ -91,6 +91,20 @@ datatable = function(
   )
   params = list()
 
+  if (crosstalk::is.SharedData(data)) {
+    crosstalkOptions <- list(
+      key = data$key(),
+      group = data$groupName()
+    )
+    data <- data$data(withSelection = FALSE, withFilter = TRUE, withKey = FALSE)
+  } else {
+    crosstalkOptions <- list(
+      key = NULL,
+      group = NULL
+    )
+  }
+  options$crosstalkOptions <- crosstalkOptions
+
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
     if (is.character(rownames)) rownames  # use custom row names
@@ -229,6 +243,8 @@ datatable = function(
     deps = c(deps, list(pluginDependency('searchHighlight')))
   if (length(plugins))
     deps = c(deps, lapply(plugins, pluginDependency))
+  if (!is.null(crosstalkOptions$group))
+    deps = c(deps, crosstalk::crosstalkLibs())
 
   # force width and height to NULL for fillContainer
   if (isTRUE(fillContainer)) {
