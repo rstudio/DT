@@ -244,16 +244,6 @@ HTMLWidgets.widget({
       };
     }
 
-    var highlightKeys = null;
-    options.rowCallback = function(row, data, index, fullIndex) {
-      var $row = $(row);
-      if (highlightKeys === null) {
-        $row.removeClass("dt-crosstalk-fade");
-      } else {
-        $row.toggleClass("dt-crosstalk-fade", !highlightKeys[key[fullIndex]]);
-      }
-    };
-
     var table = $table.DataTable(options);
     $el.data('datatable', table);
 
