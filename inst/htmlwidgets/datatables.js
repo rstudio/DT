@@ -287,7 +287,7 @@ HTMLWidgets.widget({
       applyCrosstalkFilter({value: instance.ctfilterHandle.filteredKeys});
 
       function applyCrosstalkSelection(e) {
-        if (e.sender !== instance.ctselect) {
+        if (e.sender !== instance.ctselectHandle) {
           table
             .rows('.' + selClass, {search: 'applied'})
             .nodes()
@@ -297,7 +297,7 @@ HTMLWidgets.widget({
             changeInput('rows_selected', selectedRows(), void 0, true);
         }
 
-        if (e.sender !== instance.ctselect && e.value && e.value.length) {
+        if (e.sender !== instance.ctselectHandle && e.value && e.value.length) {
           $table[0].ctselect = keysToMatches(e.value);
           table.draw();
         } else {
