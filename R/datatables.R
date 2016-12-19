@@ -243,8 +243,7 @@ datatable = function(
     deps = c(deps, list(pluginDependency('searchHighlight')))
   if (length(plugins))
     deps = c(deps, lapply(plugins, pluginDependency))
-  if (!is.null(crosstalkOptions$group))
-    deps = c(deps, crosstalk::crosstalkLibs())
+  deps = c(deps, crosstalk::crosstalkLibs())
 
   # force width and height to NULL for fillContainer
   if (isTRUE(fillContainer)) {
