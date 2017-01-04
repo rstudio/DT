@@ -22,8 +22,12 @@
 #'   )
 #' }
 dataTableOutput = function(outputId, width = '100%', height = 'auto') {
-  htmlwidgets::shinyWidgetOutput(
-    outputId, 'datatables', width, height, package = 'DT'
+  htmltools::attachDependencies(
+    htmlwidgets::shinyWidgetOutput(
+      outputId, 'datatables', width, height, package = 'DT'
+    ),
+    crosstalk::crosstalkLibs(),
+    append = TRUE
   )
 }
 
