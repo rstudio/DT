@@ -11,7 +11,7 @@ repos:
   XRAN: http://yihui.name/xran
 
 before_install:
-  - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
+  - "curl -L https://yihui.name/xran/.gitconfig -o ~/.gitconfig"
 
 after_success:
-  - "(wget -q -O - http://yihui.name/xran/r-xran | bash)"
+  - "(curl -L https://yihui.name/xran/r-xran | bash)"
