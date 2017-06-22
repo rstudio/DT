@@ -94,7 +94,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
     widgetFunc(), dataTableOutput, environment(), FALSE
   )
 
-  shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
+  func = shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
     currentSession <<- shinysession
     currentOutputName <<- name
     on.exit({
@@ -104,6 +104,18 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
     renderFunc()
   })
+
+  # This snapshotPreprocess function was added in shiny 1.0.3.9001
+  if (exists("snapshotPreprocess", asNamespace("shiny"))) {
+    func = shiny::snapshotPreprocess(func, function(value) {
+      # Looks for a string like this in the JSON:
+      # "url":"session/2a2b834d90637a7559f3ebaba460ad10/dataobj/table?w=&nonce=aea032f33aedfd0e",
+      # and removes it, so that the value isn't saved in test snapshots.
+      gsub('"ajax"\\s*:\\s*\\{\\s*"url"\\s*:\\s*"[^"]*"\\s*,?', '"ajax":{', value)
+    })
+  }
+
+  func
 }
 
 #' Manipulate an existing DataTables instance in a Shiny app
