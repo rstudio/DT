@@ -410,7 +410,7 @@ filterRow = function(
       if (t != 'disabled') tags$div(
         tags$select(
           multiple = 'multiple', style = 'width: 100%;',
-          `data-options` = jsonlite::toJSON(as.character(d))
+          `data-options` = enc2native(jsonlite::toJSON(as.character(d)))
         ),
         style = 'width: 100%; display: none;'
       )
