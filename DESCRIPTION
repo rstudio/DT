@@ -28,7 +28,10 @@ Imports:
     htmltools (>= 0.3.6),
     htmlwidgets (>= 1.0),
     magrittr,
-    crosstalk
+    crosstalk,
+    promises
+Remotes:
+    rstudio/promises
 Suggests:
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
