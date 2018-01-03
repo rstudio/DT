@@ -113,13 +113,14 @@ HTMLWidgets.widget({
       return;
     }
 
-    if (!data.options.crosstalkOptions) data.options.crosstalkOptions = {
+    var crosstalkOptions = data.crosstalkOptions;
+    if (!crosstalkOptions) crosstalkOptions = {
       'key': null, 'group': null
     };
-    if (data.options.crosstalkOptions.group) {
+    if (crosstalkOptions.group) {
       maybeInstallCrosstalkPlugins();
-      instance.ctfilterHandle.setGroup(data.options.crosstalkOptions.group);
-      instance.ctselectHandle.setGroup(data.options.crosstalkOptions.group);
+      instance.ctfilterHandle.setGroup(crosstalkOptions.group);
+      instance.ctselectHandle.setGroup(crosstalkOptions.group);
     }
 
     // If we are in a flexdashboard scroll layout then we:
@@ -260,11 +261,11 @@ HTMLWidgets.widget({
       instance.ctselectSubscription = null;
     }
 
-    if (!data.options.crosstalkOptions.group) {
+    if (!crosstalkOptions.group) {
       $table[0].ctfilter = null;
       $table[0].ctselect = null;
     } else {
-      var key = data.options.crosstalkOptions.key;
+      var key = crosstalkOptions.key;
       function keysToMatches(keys) {
         if (!keys) {
           return null;
@@ -663,7 +664,7 @@ HTMLWidgets.widget({
     });
 
     // interaction with shiny
-    if (!HTMLWidgets.shinyMode && !data.options.crosstalkOptions.group) return;
+    if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;
 
     var methods = {};
     var shinyData = {};
@@ -686,8 +687,8 @@ HTMLWidgets.widget({
 
       // HACK
       if (event === "rows_selected" && !noCrosstalk) {
-        if (data.options.crosstalkOptions.group) {
-          var keys = data.options.crosstalkOptions.key;
+        if (crosstalkOptions.group) {
+          var keys = crosstalkOptions.key;
           var selectedKeys = null;
           if (value) {
             selectedKeys = [];

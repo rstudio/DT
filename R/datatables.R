@@ -92,7 +92,7 @@ datatable = function(
   params = list()
 
   if (crosstalk::is.SharedData(data)) {
-    options$crosstalkOptions = list(key = data$key(), group = data$groupName())
+    params$crosstalkOptions = list(key = data$key(), group = data$groupName())
     data = data$data(withSelection = FALSE, withFilter = TRUE, withKey = FALSE)
   }
 
@@ -210,7 +210,7 @@ datatable = function(
     callback = if (!missing(callback)) JS('function(table) {', callback, '}')
   )), colnames = cn, rownames = length(rn) > 0)
   # selection parameters in shiny (or crosstalk)
-  if (inShiny() || length(options$crosstalkOptions)) {
+  if (inShiny() || length(params$crosstalkOptions)) {
     if (is.character(selection)) {
       selection = list(mode = match.arg(selection))
     }
