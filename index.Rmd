@@ -10,10 +10,11 @@ You may install the stable version from CRAN, or the development version using `
 
 ```{r message=FALSE}
 # if (!require("DT")) install.packages('DT')
-devtools::session_info('DT')
+library(DT)
+devtools::session_info()
 ```
 
-Please use [Github issues](https://github.com/rstudio/DT/issues) if you want to file bug reports or feature requests, and you may use [StackOverflow](http://stackoverflow.com/questions/tagged/dt) or the [shiny-discuss](https://groups.google.com/forum/#!forum/shiny-discuss) mailing list to ask questions.
+Please use [Github issues](https://github.com/rstudio/DT/issues) to file bug reports or feature requests, and use [StackOverflow](http://stackoverflow.com/questions/tagged/dt) to ask questions.
 
 # Usage
 

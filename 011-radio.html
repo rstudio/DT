@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,11 +19,15 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -131,7 +135,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -156,16 +159,16 @@ $(document).ready(function () {
 
 <p>You can render arbitrary HTML content in the table when you choose not to escape the columns that contain HTML content (<code>escape = FALSE</code>). Here we show an example of embedding radio buttons in table cells. First, we prepare the raw HTML content (a radio button is <code>&lt;input type=&quot;radio&quot; /&gt;</code> in HTML):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">matrix</span>(
-  <span class="kw">as.character</span>(<span class="dv">1</span>:<span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">12</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>,
-  <span class="dt">dimnames =</span> <span class="kw">list</span>(month.abb, LETTERS[<span class="dv">1</span>:<span class="dv">5</span>])
+  <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">12</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>,
+  <span class="dt">dimnames =</span> <span class="kw">list</span>(month.abb, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
 )
-for (i in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))) {
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))) {
   m[i, ] =<span class="st"> </span><span class="kw">sprintf</span>(
     <span class="st">&#39;&lt;input type=&quot;radio&quot; name=&quot;%s&quot; value=&quot;%s&quot;/&gt;&#39;</span>,
     month.abb[i], m[i, ]
   )
 }
-m[<span class="dv">1</span>:<span class="dv">3</span>, <span class="dv">1</span>:<span class="dv">2</span>]</code></pre></div>
+m[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</code></pre></div>
 <pre><code>##     A                                                 
 ## Jan &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Jan\&quot; value=\&quot;1\&quot;/&gt;&quot;
 ## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;1\&quot;/&gt;&quot;
@@ -218,8 +221,11 @@ m[<span class="dv">1</span>:<span class="dv">3</span>, <span class="dv">1</span>
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

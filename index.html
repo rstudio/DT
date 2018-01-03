@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,11 +19,15 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <link href="libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider/jquery.nouislider.min.js"></script>
 <link href="libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
@@ -148,7 +152,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -201,34 +204,55 @@ $(document).ready(function () {
 <p>The R package <strong>DT</strong> provides an R interface to the JavaScript library <a href="http://datatables.net"><strong>DataTables</strong></a>. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and <strong>DataTables</strong> provides filtering, pagination, sorting, and many other features in the tables.</p>
 <p>You may install the stable version from CRAN, or the development version using <code>devtools::install_github('rstudio/DT')</code> if necessary (this website reflects the development version of <strong>DT</strong>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if (!require(&quot;DT&quot;)) install.packages(&#39;DT&#39;)</span>
-devtools::<span class="kw">session_info</span>(<span class="st">&#39;DT&#39;</span>)</code></pre></div>
+<span class="kw">library</span>(DT)
+devtools<span class="op">::</span><span class="kw">session_info</span>()</code></pre></div>
 <pre><code>##  setting  value                       
-##  version  R version 3.3.1 (2016-06-21)
-##  system   x86_64, darwin13.4.0        
+##  version  R version 3.4.3 (2017-11-30)
+##  system   x86_64, darwin15.6.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/Chicago             
-##  date     2016-08-19                  
+##  date     2018-01-03                  
 ## 
-##  package     * version date       source        
-##  digest        0.6.10  2016-08-02 CRAN (R 3.3.0)
-##  DT          * 0.2     2016-08-09 CRAN (R 3.3.0)
-##  htmltools     0.3.5   2016-03-21 CRAN (R 3.3.0)
-##  htmlwidgets   0.7     2016-08-02 CRAN (R 3.3.0)
-##  jsonlite      1.0     2016-07-01 CRAN (R 3.3.0)
-##  magrittr      1.5     2014-11-22 CRAN (R 3.3.0)
-##  Rcpp          0.12.6  2016-07-19 CRAN (R 3.3.0)
-##  yaml          2.1.13  2014-06-12 CRAN (R 3.3.0)</code></pre>
-<p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> if you want to file bug reports or feature requests, and you may use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> or the <a href="https://groups.google.com/forum/#!forum/shiny-discuss">shiny-discuss</a> mailing list to ask questions.</p>
+##  package     * version date       source                            
+##  backports     1.1.2   2017-12-13 CRAN (R 3.4.3)                    
+##  base        * 3.4.3   2017-12-07 local                             
+##  compiler      3.4.3   2017-12-07 local                             
+##  datasets    * 3.4.3   2017-12-07 local                             
+##  devtools      1.13.4  2017-11-09 CRAN (R 3.4.2)                    
+##  digest        0.6.13  2017-12-14 CRAN (R 3.4.3)                    
+##  DT          * 0.2.15  2018-01-03 local                             
+##  evaluate      0.10.1  2017-06-24 CRAN (R 3.4.1)                    
+##  graphics    * 3.4.3   2017-12-07 local                             
+##  grDevices   * 3.4.3   2017-12-07 local                             
+##  htmltools     0.3.6   2017-04-28 CRAN (R 3.4.0)                    
+##  htmlwidgets   0.9     2017-07-10 CRAN (R 3.4.1)                    
+##  knitr         1.18.4  2018-01-03 Github (yihui/knitr@0a9a502)      
+##  magrittr      1.5     2014-11-22 CRAN (R 3.4.0)                    
+##  memoise       1.1.0   2017-04-21 CRAN (R 3.4.0)                    
+##  methods       3.4.3   2017-12-07 local                             
+##  Rcpp          0.12.14 2017-11-23 CRAN (R 3.4.2)                    
+##  rmarkdown     1.8.5   2018-01-03 Github (rstudio/rmarkdown@561b812)
+##  rprojroot     1.3-1   2017-12-18 CRAN (R 3.4.3)                    
+##  stats       * 3.4.3   2017-12-07 local                             
+##  stringi       1.1.6   2017-11-17 CRAN (R 3.4.2)                    
+##  stringr       1.2.0   2017-02-18 CRAN (R 3.4.0)                    
+##  tools         3.4.3   2017-12-07 local                             
+##  utils       * 3.4.3   2017-12-07 local                             
+##  withr         2.1.1   2017-12-19 CRAN (R 3.4.3)                    
+##  yaml          2.1.16  2017-12-12 CRAN (R 3.4.3)</code></pre>
+<p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> to file bug reports or feature requests, and use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> to ask questions.</p>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>, <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), 
-    rownames, colnames, container, <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, 
-        <span class="st">&quot;top&quot;</span>), <span class="dt">escape =</span> <span class="ot">TRUE</span>, <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">width =</span> <span class="ot">NULL</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, 
-    <span class="dt">elementId =</span> <span class="ot">NULL</span>, <span class="dt">fillContainer =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.fillContainer&quot;</span>, <span class="ot">NULL</span>), <span class="dt">autoHideNavigation =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.autoHideNavigation&quot;</span>, 
-        <span class="ot">NULL</span>), <span class="dt">selection =</span> <span class="kw">c</span>(<span class="st">&quot;multiple&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="dt">extensions =</span> <span class="kw">list</span>(), 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>,
+    <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), rownames, colnames, container,
+    <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;top&quot;</span>), <span class="dt">escape =</span> <span class="ot">TRUE</span>,
+    <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">width =</span> <span class="ot">NULL</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, <span class="dt">elementId =</span> <span class="ot">NULL</span>,
+    <span class="dt">fillContainer =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.fillContainer&quot;</span>, <span class="ot">NULL</span>),
+    <span class="dt">autoHideNavigation =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.autoHideNavigation&quot;</span>, <span class="ot">NULL</span>),
+    <span class="dt">selection =</span> <span class="kw">c</span>(<span class="st">&quot;multiple&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="dt">extensions =</span> <span class="kw">list</span>(),
     <span class="dt">plugins =</span> <span class="ot">NULL</span>)</code></pre></div>
 <p>Here is a “hello world” example with zero configuration:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
@@ -309,9 +333,9 @@ devtools::<span class="kw">session_info</span>(<span class="st">&#39;DT&#39;</sp
 <div id="styling" class="section level2">
 <h2><span class="header-section-number">2.2</span> Styling</h2>
 <p>Currently, <strong>DT</strong> only supports the Bootstrap style besides the default style. You can use the argument <code>style = 'bootstrap'</code> to enable the Bootstrap style, and adjust the table classes accordingly using <a href="http://getbootstrap.com/css/#tables">Bootstrap table class names</a>, such as <code>table-stripe</code> and <code>table-hover</code>. Actually, <strong>DT</strong> will automatically adjust the class names even if you provided the DataTables class names such as <code>stripe</code> and <code>hover</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT:::<span class="kw">DT2BSClass</span>(<span class="st">&#39;display&#39;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="st">&#39;display&#39;</span>)
 ## [1] &quot;table table-striped table-hover&quot;
-DT:::<span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="st">&#39;compact&#39;</span>, <span class="st">&#39;cell-border&#39;</span>))
+DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="st">&#39;compact&#39;</span>, <span class="st">&#39;cell-border&#39;</span>))
 ## [1] &quot;table table-condensed table-bordered&quot;</code></pre></div>
 <p>Note you can only use one style for all tables on one page. Please see <a href="005-bootstrap.html">this separate page</a> for examples using the Bootstrap style.</p>
 </div>
@@ -584,7 +608,7 @@ Influence of Row Names on Column Indices in JavaScript
 <h2><span class="header-section-number">2.5</span> Custom Table Container</h2>
 <p>The <code>container</code> argument allows you to provide a different table container to hold the table cells. By default, the container is generated from the column names. Below is an example of a custom table header:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table container</span>
-sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<span class="kw">table</span>(
+sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class="kw">withTags</span>(<span class="kw">table</span>(
   <span class="dt">class =</span> <span class="st">&#39;display&#39;</span>,
   <span class="kw">thead</span>(
     <span class="kw">tr</span>(
@@ -615,7 +639,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 &lt;/table&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use rownames = FALSE here because we did not generate a cell for row names in</span>
 <span class="co"># the header, and the header only contains five columns</span>
-<span class="kw">datatable</span>(iris[<span class="dv">1</span>:<span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>:<span class="dv">4</span>)], <span class="dt">container =</span> sketch, <span class="dt">rownames =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw">datatable</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)], <span class="dt">container =</span> sketch, <span class="dt">rownames =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div id="htmlwidget-2865ff85215eaa474969" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2865ff85215eaa474969">{
   "x": {
@@ -646,7 +670,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 }</script>
 <p>You can also add a footer to the table container, and here is an example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table with both header and footer</span>
-sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<span class="kw">table</span>(
+sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class="kw">withTags</span>(<span class="kw">table</span>(
   <span class="kw">tableHeader</span>(iris),
   <span class="kw">tableFooter</span>(iris)
 ))
@@ -750,9 +774,9 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># display the caption at the bottom, and &lt;em&gt; the caption</span>
 <span class="kw">datatable</span>(
   <span class="kw">head</span>(iris),
-  <span class="dt">caption =</span> htmltools::tags$<span class="kw">caption</span>(
+  <span class="dt">caption =</span> htmltools<span class="op">::</span>tags<span class="op">$</span><span class="kw">caption</span>(
     <span class="dt">style =</span> <span class="st">&#39;caption-side: bottom; text-align: center;&#39;</span>,
-    <span class="st">&#39;Table 2: &#39;</span>, htmltools::<span class="kw">em</span>(<span class="st">&#39;This is a simple caption for the table.&#39;</span>)
+    <span class="st">&#39;Table 2: &#39;</span>, htmltools<span class="op">::</span><span class="kw">em</span>(<span class="st">&#39;This is a simple caption for the table.&#39;</span>)
   )
 )</code></pre></div>
 <div id="htmlwidget-3f5e488e9608f6a7f9e8" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -792,7 +816,7 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <div id="column-filters" class="section level2">
 <h2><span class="header-section-number">2.7</span> Column Filters</h2>
 <p><strong>DataTables</strong> does not provide column filters by default. There is only a global filter (the search box on the top-right). We added a <code>filter</code> argument in <code>datatable()</code> to automatically generate column filters. By default, the filters are not shown since <code>filter = 'none'</code>. You can enable these filters by <code>filter = 'top'</code> or <code>'bottom'</code>, depending on whether you want to put the filters on the top or bottom of the table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">51</span>:<span class="dv">60</span>, <span class="dv">101</span>:<span class="dv">110</span>), ]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">110</span>), ]
 <span class="kw">datatable</span>(iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">autoWidth =</span> <span class="ot">TRUE</span>
 ))</code></pre></div>
@@ -847,8 +871,8 @@ sketch =<span class="st"> </span>htmltools::<span class="kw">withTags</span>(<sp
 <p>Below is a simple example to demonstrate filters for character, date, and time columns:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d =<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">names =</span> <span class="kw">rownames</span>(mtcars),
-  <span class="dt">date =</span> <span class="kw">as.Date</span>(<span class="st">&#39;2015-03-23&#39;</span>) +<span class="st"> </span><span class="dv">1</span>:<span class="dv">32</span>,
-  <span class="dt">time =</span> <span class="kw">as.POSIXct</span>(<span class="st">&#39;2015-03-23 12:00:00&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;UTC&#39;</span>) +<span class="st"> </span>(<span class="dv">1</span>:<span class="dv">32</span>) *<span class="st"> </span><span class="dv">5000</span>,
+  <span class="dt">date =</span> <span class="kw">as.Date</span>(<span class="st">&#39;2015-03-23&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">32</span>,
+  <span class="dt">time =</span> <span class="kw">as.POSIXct</span>(<span class="st">&#39;2015-03-23 12:00:00&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;UTC&#39;</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">32</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5000</span>,
   <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>
 )
 <span class="kw">str</span>(d)
@@ -1023,8 +1047,11 @@ $(document).ready(function () {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

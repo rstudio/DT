@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,11 +19,15 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -144,7 +148,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -450,7 +453,7 @@ $(document).ready(function () {
 <div id="column-rendering" class="section level2">
 <h2><span class="header-section-number">4.4</span> Column Rendering</h2>
 <p>We can define a custom rendering function for particular columns in the option <code>columnDefs</code>. For example, we abbreviate character strings that are wider than 6 characters using the first 6 characters plus an ellipsis (…), and the full character string will be displayed as a tooltip when you mouse over the cell<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris[<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">20</span>, <span class="dv">51</span>:<span class="dv">60</span>, <span class="dv">101</span>:<span class="dv">120</span>), ], <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">120</span>), ], <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(
   <span class="dt">targets =</span> <span class="dv">5</span>,
   <span class="dt">render =</span> <span class="kw">JS</span>(
     <span class="st">&quot;function(data, type, row, meta) {&quot;</span>,
@@ -582,8 +585,11 @@ $(document).ready(function () {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

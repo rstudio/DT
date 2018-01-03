@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,11 +19,15 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -144,7 +148,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -199,7 +202,7 @@ $(document).ready(function () {
 <h1><span class="header-section-number">1</span> A Shiny Example</h1>
 <p>If you have used <strong>DataTables</strong> in <strong>shiny</strong> before, you might know that <strong>shiny</strong> uses the server-side processing model for <strong>DataTables</strong>, which basically means the data is processed through R, and R will return the JSON data to the client.</p>
 <p>Server-side processing in Shiny is enabled by the <code>DT::renderDataTable</code> parameter <code>server = TRUE</code>; it is enabled by default. There is an example in the <strong>DT</strong> package, which you can run by</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shiny::<span class="kw">runApp</span>(<span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-shiny&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shiny<span class="op">::</span><span class="kw">runApp</span>(<span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-shiny&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>))</code></pre></div>
 <p>Below is the source code of the example app:</p>
 <div id="ui.r" class="section level2">
 <h2><span class="header-section-number">1.1</span> ui.R</h2>
@@ -210,13 +213,13 @@ $(document).ready(function () {
   <span class="kw">h1</span>(<span class="st">&#39;A Table Using Client-side Processing&#39;</span>),
   <span class="kw">fluidRow</span>(
     <span class="kw">column</span>(<span class="dv">2</span>),
-    <span class="kw">column</span>(<span class="dv">8</span>, DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_a&#39;</span>)),
+    <span class="kw">column</span>(<span class="dv">8</span>, DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_a&#39;</span>)),
     <span class="kw">column</span>(<span class="dv">2</span>)
   ),
   <span class="kw">h1</span>(<span class="st">&#39;A Table Using Server-side Processing&#39;</span>),
   <span class="kw">fluidRow</span>(
     <span class="kw">column</span>(<span class="dv">2</span>),
-    <span class="kw">column</span>(<span class="dv">8</span>, DT::<span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_b&#39;</span>)),
+    <span class="kw">column</span>(<span class="dv">8</span>, DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_b&#39;</span>)),
     <span class="kw">column</span>(<span class="dv">2</span>)
   )
 ))</code></pre></div>
@@ -226,9 +229,9 @@ $(document).ready(function () {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 <span class="kw">library</span>(DT)
 
-<span class="kw">shinyServer</span>(function(input, output, session) {
-  output$tbl_a =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>)
-  output$tbl_b =<span class="st"> </span>DT::<span class="kw">renderDataTable</span>(iris)
+<span class="kw">shinyServer</span>(<span class="cf">function</span>(input, output, session) {
+  output<span class="op">$</span>tbl_a =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>)
+  output<span class="op">$</span>tbl_b =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(iris)
 })</code></pre></div>
 </div>
 </div>
@@ -301,8 +304,11 @@ $(document).ready(function () {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,7 +19,9 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -27,6 +29,8 @@
 <link href="libs/dt-plugin-searchhighlight/dataTables.searchHighlight.css" rel="stylesheet" />
 <script src="libs/dt-plugin-searchhighlight/dataTables.searchHighlight.min.js"></script>
 <script src="libs/dt-plugin-searchhighlight/jquery.highlight.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <link href="libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider/jquery.nouislider.min.js"></script>
 <link href="libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
@@ -138,7 +142,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -163,8 +166,8 @@ $(document).ready(function () {
 
 <p>You can use the option <code>searchHighlight = TRUE</code> to enable search result highlighting. This feature was introduced in this DataTables <a href="http://datatables.net/blog/2014-10-22">blog post</a>. The implementation there did not consider the possibility of searching individual columns, and we have enhanced this feature in <strong>DT</strong>. Here are some examples:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-mtcars2 =<span class="st"> </span><span class="kw">head</span>(mtcars[, <span class="dv">1</span>:<span class="dv">5</span>], <span class="dv">20</span>)
-mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2)
+mtcars2 =<span class="st"> </span><span class="kw">head</span>(mtcars[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dv">20</span>)
+mtcars2<span class="op">$</span>model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2)
 <span class="kw">rownames</span>(mtcars2) =<span class="st"> </span><span class="ot">NULL</span>
 <span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))
 <span class="co"># global search</span>
@@ -258,8 +261,11 @@ mtcars2$model =<span class="st"> </span><span class="kw">rownames</span>(mtcars2
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

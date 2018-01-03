@@ -7,19 +7,20 @@
 // a global object
 var DTWidget = {};
 
+// 123456666.7890 -> 123,456,666.7890
+var markInterval = function(d, digits, interval, mark, decMark, precision) {
+  x = precision ? d.toPrecision(digits) : d.toFixed(digits);
+  if (!/^-?[\d.]+$/.test(x)) return x;
+  var xv = x.split('.');
+  if (xv.length > 2) return x;  // should have at most one decimal point
+  xv[0] = xv[0].replace(new RegExp('\\B(?=(\\d{' + interval + '})+(?!\\d))', 'g'), mark);
+  return xv.join(decMark);
+};
+
 DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark, before) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  // 123456666.7890 -> 123,456,666.7890
-  var markInterval = function(x, interval, mark) {
-    if (!/^-?[\d.]+$/.test(x)) return x;
-    var xv = x.split('.');
-    if (xv.length > 2) return x;  // should have at most one decimal point
-    xv[0] = xv[0].replace(new RegExp('\\B(?=(\\d{' + interval + '})+(?!\\d))', 'g'), mark);
-    return xv.join(decMark);
-  };
-  d = d.toFixed(digits);
-  var res = markInterval(d, interval, mark);
+  var res = markInterval(d, digits, interval, mark, decMark);
   res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
     res + currency;
   $(thiz.api().cell(row, col).node()).html(res);
@@ -31,29 +32,31 @@ DTWidget.formatString = function(thiz, row, data, col, prefix, suffix) {
   $(thiz.api().cell(row, col).node()).html(prefix + d + suffix);
 };
 
-DTWidget.formatPercentage = function(thiz, row, data, col, digits) {
+DTWidget.formatPercentage = function(thiz, row, data, col, digits, interval, mark, decMark) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html((d * 100).toFixed(digits) + '%');
+  $(thiz.api().cell(row, col).node())
+  .html(markInterval(d * 100, digits, interval, mark, decMark) + '%');
 };
 
-DTWidget.formatRound = function(thiz, row, data, col, digits) {
+DTWidget.formatRound = function(thiz, row, data, col, digits, interval, mark, decMark) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html(d.toFixed(digits));
+  $(thiz.api().cell(row, col).node()).html(markInterval(d, digits, interval, mark, decMark));
 };
 
-DTWidget.formatSignif = function(thiz, row, data, col, digits) {
+DTWidget.formatSignif = function(thiz, row, data, col, digits, interval, mark, decMark) {
   var d = parseFloat(data[col]);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html(d.toPrecision(digits));
+  $(thiz.api().cell(row, col).node())
+    .html(markInterval(d, digits, interval, mark, decMark, true));
 };
 
-DTWidget.formatDate = function(thiz, row, data, col, method) {
+DTWidget.formatDate = function(thiz, row, data, col, method, params) {
   var d = data[col];
   if (d === null) return;
   d = new Date(d);
-  $(thiz.api().cell(row, col).node()).html(d[method]());
+  $(thiz.api().cell(row, col).node()).html(d[method].apply(d, params));
 };
 
 window.DTWidget = DTWidget;
@@ -62,12 +65,40 @@ var transposeArray2D = function(a) {
   return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
 };
 
+var crosstalkPluginsInstalled = false;
+
+function maybeInstallCrosstalkPlugins() {
+  if (crosstalkPluginsInstalled)
+    return;
+  crosstalkPluginsInstalled = true;
+
+  $.fn.dataTable.ext.afnFiltering.push(
+    function(oSettings, aData, iDataIndex) {
+      var ctfilter = oSettings.nTable.ctfilter;
+      if (ctfilter && !ctfilter[iDataIndex])
+        return false;
+
+      var ctselect = oSettings.nTable.ctselect;
+      if (ctselect && !ctselect[iDataIndex])
+        return false;
+
+      return true;
+    }
+  );
+}
+
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
   initialize: function(el, width, height) {
     $(el).html('&nbsp;');
-    return { data: null };
+    return {
+      data: null,
+      ctfilterHandle: new crosstalk.FilterHandle(),
+      ctfilterSubscription: null,
+      ctselectHandle: new crosstalk.SelectionHandle(),
+      ctselectSubscription: null
+    };
   },
   renderValue: function(el, data, instance) {
     if (el.offsetWidth === 0 || el.offsetHeight === 0) {
@@ -80,6 +111,15 @@ HTMLWidgets.widget({
 
     if (data === null) {
       return;
+    }
+
+    if (!data.options.crosstalkOptions) data.options.crosstalkOptions = {
+      'key': null, 'group': null
+    };
+    if (data.options.crosstalkOptions.group) {
+      maybeInstallCrosstalkPlugins();
+      instance.ctfilterHandle.setGroup(data.options.crosstalkOptions.group);
+      instance.ctselectHandle.setGroup(data.options.crosstalkOptions.group);
     }
 
     // If we are in a flexdashboard scroll layout then we:
@@ -209,6 +249,71 @@ HTMLWidgets.widget({
 
     var table = $table.DataTable(options);
     $el.data('datatable', table);
+
+    // Unregister previous Crosstalk event subscriptions, if they exist
+    if (instance.ctfilterSubscription) {
+      instance.ctfilterHandle.off("change", instance.ctfilterSubscription);
+      instance.ctfilterSubscription = null;
+    }
+    if (instance.ctselectSubscription) {
+      instance.ctselectHandle.off("change", instance.ctselectSubscription);
+      instance.ctselectSubscription = null;
+    }
+
+    if (!data.options.crosstalkOptions.group) {
+      $table[0].ctfilter = null;
+      $table[0].ctselect = null;
+    } else {
+      var key = data.options.crosstalkOptions.key;
+      function keysToMatches(keys) {
+        if (!keys) {
+          return null;
+        } else {
+          var selectedKeys = {};
+          for (var i = 0; i < keys.length; i++) {
+            selectedKeys[keys[i]] = true;
+          }
+          var matches = {};
+          for (var j = 0; j < key.length; j++) {
+            if (selectedKeys[key[j]])
+              matches[j] = true;
+          }
+          return matches;
+        }
+      }
+
+      function applyCrosstalkFilter(e) {
+        $table[0].ctfilter = keysToMatches(e.value);
+        table.draw();
+      }
+      instance.ctfilterSubscription = instance.ctfilterHandle.on("change", applyCrosstalkFilter);
+      applyCrosstalkFilter({value: instance.ctfilterHandle.filteredKeys});
+
+      function applyCrosstalkSelection(e) {
+        if (e.sender !== instance.ctselectHandle) {
+          table
+            .rows('.' + selClass, {search: 'applied'})
+            .nodes()
+            .to$()
+            .removeClass(selClass);
+          if (selectedRows)
+            changeInput('rows_selected', selectedRows(), void 0, true);
+        }
+
+        if (e.sender !== instance.ctselectHandle && e.value && e.value.length) {
+          $table[0].ctselect = keysToMatches(e.value);
+          table.draw();
+        } else {
+          if ($table[0].ctselect) {
+            $table[0].ctselect = null;
+            table.draw();
+          }
+        }
+      }
+      instance.ctselectSubscription = instance.ctselectHandle.on("change", applyCrosstalkSelection);
+      // TODO: This next line doesn't seem to work when renderDataTable is used
+      applyCrosstalkSelection({value: instance.ctselectHandle.value});
+    }
 
     var inArray = function(val, array) {
       return $.inArray(val, $.makeArray(array)) > -1;
@@ -544,27 +649,21 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
-    this.adjustWidth(el);
 
-     // fillContainer = TRUE behavior
-    if (instance.fillContainer) {
-
-      // we need to wait just a bit to do this so DT can completely
-      // finish laying itself out
-      var thiz = this;
-      setTimeout(function() {
-
+    var thiz = this;
+    table.on('init', function(e) {
+      // fillContainer = TRUE behavior
+      if (instance.fillContainer) {
         // calculate correct height
         thiz.fillAvailableHeight(el, $(el).innerHeight());
-
-        // we need to force DT to recalculate column widths
-        // (otherwise all the columns are the same size)
-        table.columns.adjust();
-      }, 200);
-    }
+      }
+      // we need to force DT to recalculate column widths
+      // (otherwise all the columns are the same size)
+      thiz.adjustWidth(el);
+    });
 
     // interaction with shiny
-    if (!HTMLWidgets.shinyMode) return;
+    if (!HTMLWidgets.shinyMode && !data.options.crosstalkOptions.group) return;
 
     var methods = {};
     var shinyData = {};
@@ -574,14 +673,33 @@ HTMLWidgets.widget({
       $table.children('caption').replaceWith(caption);
     }
 
-    var changeInput = function(id, data, type) {
+    var changeInput = function(id, value, type, noCrosstalk) {
+      var event = id;
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
-      // do not update if the new data is the same as old data
-      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(data))
+      // do not update if the new value is the same as old value
+      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
-      shinyData[id] = JSON.stringify(data);
-      Shiny.onInputChange(id, data);
+      shinyData[id] = JSON.stringify(value);
+      if (HTMLWidgets.shinyMode)
+        Shiny.onInputChange(id, value);
+
+      // HACK
+      if (event === "rows_selected" && !noCrosstalk) {
+        if (data.options.crosstalkOptions.group) {
+          var keys = data.options.crosstalkOptions.key;
+          var selectedKeys = null;
+          if (value) {
+            selectedKeys = [];
+            for (var i = 0; i < value.length; i++) {
+              // The value array's contents use 1-based row numbers, so we must
+              // convert to 0-based before indexing into the keys array.
+              selectedKeys.push(keys[value[i] - 1]);
+            }
+          }
+          instance.ctselectHandle.set(selectedKeys);
+        }
+      }
     };
 
     var addOne = function(x) {
@@ -624,7 +742,7 @@ HTMLWidgets.widget({
       // row, column, or cell selection
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
-          var rows = table.rows('.' + selClass, {search: 'applied'});
+          var rows = table.rows('.' + selClass);
           var idx = rows.indexes().toArray();
           if (!server) return addOne(idx);
           idx = idx.map(function(i) {

@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,11 +19,15 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -144,7 +148,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -200,8 +203,8 @@ $(document).ready(function () {
 <p>You can use the functions <code>format*()</code> to format the table columns as currency, percentages, or round numbers. Here are some examples:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 m =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="kw">runif</span>(<span class="dv">20</span>), <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))
-m[, <span class="dv">1</span>:<span class="dv">3</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">1</span>:<span class="dv">3</span>])
-m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">4</span>:<span class="dv">5</span>], <span class="dv">7</span>)
+m[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])
+m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>], <span class="dv">7</span>)
 <span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">head</span>(LETTERS, <span class="kw">ncol</span>(m))
 <span class="kw">head</span>(m)</code></pre></div>
 <pre><code>##            A        B        C         D         E
@@ -212,7 +215,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 ## [5,]  229288  -525039  1307962 0.3694889  99.31199
 ## [6,] 1815065 -1586693 -1023109 0.9842192 101.02557</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format the columns A and C as currency, and D as percentages</span>
-<span class="kw">datatable</span>(m) %&gt;%<span class="st"> </span><span class="kw">formatCurrency</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) %&gt;%<span class="st"> </span><span class="kw">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</code></pre></div>
+<span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</code></pre></div>
 <div id="htmlwidget-d64fb543987b4390e9e6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-d64fb543987b4390e9e6">{
   "x": {
@@ -235,14 +238,14 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nDTWidget.formatPercentage(this, row, data, 3, 2);\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.', true);\n}"
+      "rowCallback": "function(row, data) {\nDTWidget.formatPercentage(this, row, data, 3, 2, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.', true);\n}"
     }
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span>
-<span class="kw">datatable</span>(m) %&gt;%<span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="dt">digits =</span> <span class="dv">0</span>) %&gt;%<span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre></div>
+<span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="dt">digits =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre></div>
 <div id="htmlwidget-4652fc9eef7768a82792" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4652fc9eef7768a82792">{
   "x": {
@@ -265,7 +268,7 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nDTWidget.formatRound(this, row, data, 4, 3);\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.', true);\n}"
+      "rowCallback": "function(row, data) {\nDTWidget.formatRound(this, row, data, 4, 3, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.', true);\n}"
     }
   },
   "evals": ["options.rowCallback"],
@@ -274,27 +277,27 @@ m[, <span class="dv">4</span>:<span class="dv">5</span>] =<span class="st"> </sp
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 <p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-07-23 22:05:21&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;EST&#39;</span>)
-(<span class="dt">x =</span> x +<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
+(<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
 ##  [1] &quot;2015-07-23 22:05:22 EST&quot; &quot;2015-07-25 04:57:13 EST&quot;
 ##  [3] &quot;2015-07-26 11:49:04 EST&quot; &quot;2015-07-27 18:40:55 EST&quot;
 ##  [5] &quot;2015-07-29 01:32:46 EST&quot; &quot;2015-07-30 08:24:37 EST&quot;
 ##  [7] &quot;2015-07-31 15:16:28 EST&quot; &quot;2015-08-01 22:08:19 EST&quot;
 ##  [9] &quot;2015-08-03 05:00:10 EST&quot; &quot;2015-08-04 11:52:01 EST&quot;
-DT:::DateMethods
+DT<span class="op">:::</span>DateMethods
 ## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;
 ## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          
 ## [7] &quot;toTimeString&quot;       &quot;toUTCString&quot;
 <span class="co"># use m = DT:::DateMethods below to see the output of all methods</span>
 m =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;toDateString&#39;</span>, <span class="st">&#39;toLocaleDateString&#39;</span>, <span class="st">&#39;toLocaleString&#39;</span>, <span class="st">&#39;toUTCString&#39;</span>)
-d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, function(.) x), m))
+d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, <span class="cf">function</span>(.) x), m))
 <span class="kw">str</span>(d)
 ## &#39;data.frame&#39;:    10 obs. of  4 variables:
 ##  $ toDateString      : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
 ##  $ toLocaleDateString: POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
 ##  $ toLocaleString    : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
 ##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
-<span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) %&gt;%
-<span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span>:<span class="kw">ncol</span>(d), m)</code></pre></div>
+<span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(d), m)</code></pre></div>
 <div id="htmlwidget-3df6998367e15d492b2c" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3df6998367e15d492b2c">{
   "x": {
@@ -331,7 +334,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 <div id="style-table-cells" class="section level1">
 <h1><span class="header-section-number">2</span> Style Table Cells</h1>
 <p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. We have picked a few commonly used CSS properties as the arguments of <code>formatStyle()</code>, such as <code>color</code> and <code>fontWeight</code>. You can pass arbitrary CSS properties to <code>formatStyle()</code>. Here is a quick example to show the syntax:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</code></pre></div>
 <div id="htmlwidget-7b4037ac0cb35a68d2eb" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7b4037ac0cb35a68d2eb">{
@@ -362,7 +365,7 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
+      "rowCallback": "function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':'bold','color':'red','background-color':'orange'});\n}"
     }
   },
   "evals": ["options.rowCallback"],
@@ -377,25 +380,25 @@ CSS Property Names
 </div>
 </div>
 <p>The above example did not take the cell values into consideration. All styles are applied to all cells unconditionally: the font color is red, the background color is yellow, and the font weight is bold. That may not be useful in practice. <strong>DT</strong> has provided a few helper functions to apply conditional styles to cells, such as <code>styleInterval()</code>, <code>styleEqual()</code>, and <code>styleColorBar()</code>. Please read the documentation in R for the usage of these functions. We show a comprehensive example below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>, <span class="dt">fontWeight =</span> <span class="kw">styleInterval</span>(<span class="dv">5</span>, <span class="kw">c</span>(<span class="st">&#39;normal&#39;</span>, <span class="st">&#39;bold&#39;</span>))) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>, <span class="dt">fontWeight =</span> <span class="kw">styleInterval</span>(<span class="dv">5</span>, <span class="kw">c</span>(<span class="st">&#39;normal&#39;</span>, <span class="st">&#39;bold&#39;</span>))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatStyle</span>(
     <span class="st">&#39;Sepal.Width&#39;</span>,
     <span class="dt">color =</span> <span class="kw">styleInterval</span>(<span class="kw">c</span>(<span class="fl">3.4</span>, <span class="fl">3.8</span>), <span class="kw">c</span>(<span class="st">&#39;white&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;red&#39;</span>)),
     <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-  ) %&gt;%
+  ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatStyle</span>(
     <span class="st">&#39;Petal.Length&#39;</span>,
-    <span class="dt">background =</span> <span class="kw">styleColorBar</span>(iris$Petal.Length, <span class="st">&#39;steelblue&#39;</span>),
+    <span class="dt">background =</span> <span class="kw">styleColorBar</span>(iris<span class="op">$</span>Petal.Length, <span class="st">&#39;steelblue&#39;</span>),
     <span class="dt">backgroundSize =</span> <span class="st">&#39;100% 90%&#39;</span>,
     <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
     <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>
-  ) %&gt;%
+  ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatStyle</span>(
     <span class="st">&#39;Species&#39;</span>,
     <span class="dt">transform =</span> <span class="st">&#39;rotateX(45deg) rotateY(20deg) rotateZ(30deg)&#39;</span>,
     <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(
-      <span class="kw">unique</span>(iris$Species), <span class="kw">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)
+      <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="kw">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)
     )
   )</code></pre></div>
 <div id="htmlwidget-48f6baaf0d657a8fb2ea" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -425,7 +428,7 @@ CSS Property Names
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar value=data[5]; if (value!==null) $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; if (value!==null) $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; if (value!==null) $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; if (value!==null) $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
+      "rowCallback": "function(row, data) {\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':value <= 5 ? 'normal' : 'bold'});\n}"
     }
   },
   "evals": ["options.rowCallback"],
@@ -468,7 +471,7 @@ CSS Property Names
   &lt;/tr&gt;
 &lt;/tfoot&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(htmltools)
-tags$<span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <span class="kw">tableFooter</span>(iris))</code></pre></div>
+tags<span class="op">$</span><span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <span class="kw">tableFooter</span>(iris))</code></pre></div>
 <pre><code>&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -532,8 +535,11 @@ $(document).ready(function () {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

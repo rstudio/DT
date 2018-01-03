@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,11 +19,15 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -131,7 +135,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -157,7 +160,7 @@ $(document).ready(function () {
 <p>You can show extra information in the child of a row. The example below was adapted <a href="http://datatables.net/examples/api/row_details.html">an example</a> on the DataTables website. Unfortunately, you have to write a fair amount of JavaScript in this case.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
 <span class="kw">datatable</span>(
-  <span class="kw">cbind</span>(<span class="st">&#39; &#39;</span> =<span class="st"> &#39;&amp;oplus;&#39;</span>, mtcars), <span class="dt">escape =</span> -<span class="dv">2</span>,
+  <span class="kw">cbind</span>(<span class="st">&#39; &#39;</span> =<span class="st"> &#39;&amp;oplus;&#39;</span>, mtcars), <span class="dt">escape =</span> <span class="op">-</span><span class="dv">2</span>,
   <span class="dt">options =</span> <span class="kw">list</span>(
     <span class="dt">columnDefs =</span> <span class="kw">list</span>(
       <span class="kw">list</span>(<span class="dt">visible =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>)),
@@ -239,8 +242,11 @@ $(document).ready(function () {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

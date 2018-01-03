@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -19,7 +19,9 @@
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding/datatables.js"></script>
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -28,6 +30,8 @@
 <script src="libs/nouislider/jquery.nouislider.min.js"></script>
 <link href="libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize/selectize.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -135,7 +139,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -160,8 +163,8 @@ $(document).ready(function () {
 
 <p>By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option <code>search = list(regex = TRUE)</code>, and perform case-sensitive searching by <code>list(search = caseInsensitive = FALSE)</code> (the two options are orthogonal).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-mtcars2 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">9</span>)]
-mtcars2$am =<span class="st"> </span><span class="kw">factor</span>(mtcars$am, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;automatic&#39;</span>, <span class="st">&#39;manual&#39;</span>))
+mtcars2 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">9</span>)]
+mtcars2<span class="op">$</span>am =<span class="st"> </span><span class="kw">factor</span>(mtcars<span class="op">$</span>am, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;automatic&#39;</span>, <span class="st">&#39;manual&#39;</span>))
 <span class="co"># search for Ma or Me</span>
 <span class="kw">datatable</span>(
   mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),
@@ -278,8 +281,11 @@ mtcars2$am =<span class="st"> </span><span class="kw">factor</span>(mtcars$am, <
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 
