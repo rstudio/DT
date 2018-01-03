@@ -36,3 +36,9 @@ toJSON = function(...) {
   FUN = getFromNamespace('toJSON', 'htmlwidgets')
   FUN(...)
 }
+
+native_encode = function(x) {
+  if (.Platform$OS.type == 'unix') return(x)
+  x2 = enc2native(x)
+  if (identical(enc2utf8(x2), x)) x2 else x
+}
