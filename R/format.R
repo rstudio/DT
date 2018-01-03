@@ -265,7 +265,7 @@ styleInterval = function(cuts, values) {
   values = sprintf("'%s'", values)
   if (n == 0) return(values)
   if (!all(cuts == sort(cuts))) stop("'cuts' must be sorted increasingly")
-  js = ''
+  js = "isNaN(parseFloat(value)) ? '' : "  # missing or non-numeric values in data
   for (i in seq_len(n)) {
     js = paste0(js, sprintf('value <= %s ? %s : ', cuts[i], values[i]))
   }
