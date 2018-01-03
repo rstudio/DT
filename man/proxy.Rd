@@ -83,7 +83,10 @@ rows/columns, or add rows.
 \note{
 \code{addRow()} only works for client-side tables. If you want to use
   it in a Shiny app, make sure to use \code{renderDataTable(..., server =
-  FALSE)}.
+  FALSE)}. Also note that the column filters (if used) of the table will not
+  be automatically updated when a new row is added, e.g., the range of the
+  slider of a column will stay the same even if you have added a value
+  outside the range of the original data column.
 
 \code{reloadData()} only works for tables in the server-side processing
   mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}. The

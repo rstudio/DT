@@ -132,7 +132,10 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 #'   should be held until after the next time all of the outputs are updated
 #' @note \code{addRow()} only works for client-side tables. If you want to use
 #'   it in a Shiny app, make sure to use \code{renderDataTable(..., server =
-#'   FALSE)}.
+#'   FALSE)}. Also note that the column filters (if used) of the table will not
+#'   be automatically updated when a new row is added, e.g., the range of the
+#'   slider of a column will stay the same even if you have added a value
+#'   outside the range of the original data column.
 #' @references \url{http://rstudio.github.io/DT/shiny.html}
 #' @rdname proxy
 #' @export
