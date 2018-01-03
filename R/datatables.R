@@ -92,18 +92,9 @@ datatable = function(
   params = list()
 
   if (crosstalk::is.SharedData(data)) {
-    crosstalkOptions <- list(
-      key = data$key(),
-      group = data$groupName()
-    )
-    data <- data$data(withSelection = FALSE, withFilter = TRUE, withKey = FALSE)
-  } else {
-    crosstalkOptions <- list(
-      key = NULL,
-      group = NULL
-    )
+    options$crosstalkOptions = list(key = data$key(), group = data$groupName())
+    data = data$data(withSelection = FALSE, withFilter = TRUE, withKey = FALSE)
   }
-  options$crosstalkOptions <- crosstalkOptions
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {

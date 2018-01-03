@@ -113,6 +113,9 @@ HTMLWidgets.widget({
       return;
     }
 
+    if (!data.options.crosstalkOptions) data.options.crosstalkOptions = {
+      'key': null, 'group': null
+    };
     if (data.options.crosstalkOptions.group) {
       maybeInstallCrosstalkPlugins();
       instance.ctfilterHandle.setGroup(data.options.crosstalkOptions.group);
