@@ -30,8 +30,10 @@ keep_min = function(dir = '.') {
 in_dir = DT:::in_dir
 
 setwd(file.path(sprintf('DataTables-%s', ver), 'media'))
-lapply(list.dirs('..'), keep_min)
-lapply(list.files('..', '[.]css$', recursive = TRUE, full.names = TRUE), encode_img)
+invisible({
+  lapply(list.dirs('..'), keep_min)
+  lapply(list.files('..', '[.]css$', recursive = TRUE, full.names = TRUE), encode_img)
+})
 unlink('css/jquery.dataTables_themeroller.css')
 unlink('js/jquery.js')
 
@@ -56,7 +58,7 @@ extPath = dt_path('..', 'datatables-extensions')
 unlink(extPath, recursive = TRUE)
 
 # only keep css/ and js/ (plus swf/ for Buttons)
-lapply(list.files(), function(ext) {
+invisible(lapply(list.files(), function(ext) {
   dirs = file.path(ext, c('css', 'js', if (ext == 'Buttons') 'swf'))
   allf = list.files(ext, all.files = TRUE, full.names = TRUE, no.. = TRUE)
   unlink(allf[!(file_test('-d', allf) & (allf %in% dirs))], recursive = TRUE)
@@ -72,7 +74,7 @@ lapply(list.files(), function(ext) {
   allf = grep('[.](css|js|swf)$', allf, value = TRUE, invert = TRUE)
   if (length(allf)) warning('These files may not be needed: ', paste(allf, collapse = ', '))
   NULL
-})
+}))
 
 file.rename('../extensions', '../datatables-extensions')
 file.copy('../datatables-extensions', dt_path('..'), overwrite = TRUE, recursive = TRUE)
