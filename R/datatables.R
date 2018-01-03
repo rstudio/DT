@@ -209,8 +209,8 @@ datatable = function(
     data = data, container = as.character(container), options = options,
     callback = if (!missing(callback)) JS('function(table) {', callback, '}')
   )), colnames = cn, rownames = length(rn) > 0)
-  # selection parameters in shiny
-  if (inShiny()) {
+  # selection parameters in shiny (or crosstalk)
+  if (inShiny() || length(options$crosstalkOptions)) {
     if (is.character(selection)) {
       selection = list(mode = match.arg(selection))
     }
