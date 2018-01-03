@@ -17,7 +17,7 @@ window.initializeCodeFolding = function(show) {
   var currentIndex = 1;
 
   // select all R code blocks
-  var rCodeBlocks = $('pre.r');
+  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan');
   rCodeBlocks.each(function() {
 
     // create a collapsable div to wrap the code in
@@ -36,9 +36,8 @@ window.initializeCodeFolding = function(show) {
     showCodeButton
         .attr('data-toggle', 'collapse')
         .attr('data-target', '#' + id)
-        .attr('aria-expanded', true)
-        .attr('aria-controls', id)
-        .css('margin-bottom', '4px');
+        .attr('aria-expanded', show)
+        .attr('aria-controls', id);
 
     var buttonRow = $('<div class="row"></div>');
     var buttonCol = $('<div class="col-md-12"></div>');
