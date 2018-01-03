@@ -5,4 +5,4 @@
 #' @import stats utils
 NULL
 
-DataTablesVersion = '1.10.12'
+DataTablesVersion = '1.10.16'
