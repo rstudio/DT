@@ -55,6 +55,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
   exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
   widgetFunc = function() {
+    opts = options(DT.datatable.shiny = TRUE); on.exit(options(opts), add = TRUE)
     instance = exprFunc()
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
       instance = datatable(instance, ...)
