@@ -17,6 +17,7 @@ Most **DataTables** extensions work on their own, but some may not work well whe
     - `ColReorder` does not work with column filters ([#160](https://github.com/rstudio/DT/issues/160)) or formatting functions ([#250](https://github.com/rstudio/DT/issues/250)).
     - `KeyTable` ([#132](https://github.com/rstudio/DT/issues/132))
     - `Responsive` ([#69](https://github.com/rstudio/DT/issues/69))
+    - `Scroller` does not work with column selection ([#283](https://github.com/rstudio/DT/issues/283)).
 - The Excel button in the Buttons extension may not appear in Safari ([#343](https://github.com/rstudio/DT/issues/343));
 
 </div>
