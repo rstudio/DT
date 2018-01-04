@@ -55,7 +55,15 @@ DTWidget.formatSignif = function(thiz, row, data, col, digits, interval, mark, d
 DTWidget.formatDate = function(thiz, row, data, col, method, params) {
   var d = data[col];
   if (d === null) return;
-  d = new Date(d);
+  // (new Date('2015-10-28')).toDateString() may return 2015-10-27 because the
+  // actual time created could be like 'Tue Oct 27 2015 19:00:00 GMT-0500 (CDT)',
+  // i.e. the date-only string is treated as UTC time instead of local time
+  if (method === 'toDateString' && /^\d{4,}\D\d{2}\D\d{2}$/.test(d)) {
+    d = d.split(/\D/);
+    d = new Date(d[0], d[1] - 1, d[2]);
+  } else {
+    d = new Date(d);
+  }
   $(thiz.api().cell(row, col).node()).html(d[method].apply(d, params));
 };
 
