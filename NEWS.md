@@ -24,6 +24,8 @@
 
 - `dataTableProxy()` does not work with Shiny modules (thanks, @fbreitwieser, #357).
 
+- `formatDate()` may display dates off by one day (thanks, @jdthorpe, #198).
+
 # CHANGES IN DT VERSION 0.2
 
 ## NEW FEATURES
