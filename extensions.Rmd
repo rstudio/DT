@@ -171,6 +171,12 @@ datatable(m, extensions = 'Scroller', options = list(
 
 You can also save the data as JSON in a file and load it via the `ajax` option. See a live example in Shiny [here](https://yihui.shinyapps.io/DT-scroller/).
 
+# Select
+
+The `Select` extension has not been tested by the author of **DT**. You will be on your own if you decide to use this extension. However, see [#305](https://github.com/rstudio/DT/issues/305) for an example of using Shift/Ctrl + Click for selecting multiple rows.
+
+**DT** has its own implementation of row/column/cell selections in Shiny, which is very different from the `Select` extension. In particular, the `Select` extension is unlikely to work in the server-side processing mode. On the other hand, **DT**'s implementation does not allow multiple selections via the Shift/Ctrl keys at the moment.
+
 # TableTools
 
 The `TableTools` extension has been removed from **DT**. Please use the `Buttons` extension instead.

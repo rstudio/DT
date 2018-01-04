@@ -854,8 +854,13 @@ m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =<
 }</script>
 <p>You can also save the data as JSON in a file and load it via the <code>ajax</code> option. See a live example in Shiny <a href="https://yihui.shinyapps.io/DT-scroller/">here</a>.</p>
 </div>
+<div id="select" class="section level1">
+<h1><span class="header-section-number">11</span> Select</h1>
+<p>The <code>Select</code> extension has not been tested by the author of <strong>DT</strong>. You will be on your own if you decide to use this extension. However, see <a href="https://github.com/rstudio/DT/issues/305">#305</a> for an example of using Shift/Ctrl + Click for selecting multiple rows.</p>
+<p><strong>DT</strong> has its own implementation of row/column/cell selections in Shiny, which is very different from the <code>Select</code> extension. In particular, the <code>Select</code> extension is unlikely to work in the server-side processing mode. On the other hand, <strong>DT</strong>’s implementation does not allow multiple selections via the Shift/Ctrl keys at the moment.</p>
+</div>
 <div id="tabletools" class="section level1">
-<h1><span class="header-section-number">11</span> TableTools</h1>
+<h1><span class="header-section-number">12</span> TableTools</h1>
 <p>The <code>TableTools</code> extension has been removed from <strong>DT</strong>. Please use the <code>Buttons</code> extension instead.</p>
 </div>
 
