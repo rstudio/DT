@@ -158,8 +158,7 @@ datatable = function(
   if (style != 'default') params$style = style
 
   # add class for fillContainer if necessary
-  if (isTRUE(fillContainer))
-    class = paste(class, 'fill-container');
+  if (isTRUE(fillContainer)) class = paste(class, 'fill-container')
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
   filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
