@@ -2,6 +2,8 @@
 
 ## NEW FEATURES
 
+- Added functions `DTOutput()` and `renderDT()` as aliases of `dataTableOutput()` and `renderDataTable()`, respectively. This is because the latter often collide with functions of the same names in **shiny**. You are recommended to use `DTOutput()` and `renderDT()` in Shiny apps (unless you always use the `DT::` qualifier).
+
 - Added an argument `params` to the `formatDate()` function so you can pass a list of parameters to the specific date conversion method (http://stackoverflow.com/q/38875173/559676).
 
 - The arguments `interval`, `mark`, and `dec.mark` also work for functions `formatPercentage()`, `formatRound()`, and `formatSignif()` now (thanks, @paulofelipe, #128).

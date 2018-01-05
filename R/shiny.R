@@ -12,10 +12,11 @@
 #' @examples # !formatR
 #' if (interactive()) {
 #'   library(shiny)
+#'   library(DT)
 #'   shinyApp(
-#'     ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
+#'     ui = fluidPage(fluidRow(column(12, DTOutput('tbl')))),
 #'     server = function(input, output) {
-#'       output$tbl = DT::renderDataTable(
+#'       output$tbl = renderDT(
 #'         iris, options = list(lengthChange = FALSE)
 #'       )
 #'     }
@@ -30,6 +31,10 @@ dataTableOutput = function(outputId, width = '100%', height = 'auto') {
     append = TRUE
   )
 }
+
+#' @export
+#' @rdname dataTableOutput
+DTOutput = dataTableOutput
 
 #' @export
 #' @rdname dataTableOutput
@@ -118,6 +123,10 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
   func
 }
+
+#' @export
+#' @rdname dataTableOutput
+renderDT = renderDataTable
 
 #' Manipulate an existing DataTables instance in a Shiny app
 #'

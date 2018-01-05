@@ -2,12 +2,18 @@
 % Please edit documentation in R/shiny.R
 \name{dataTableOutput}
 \alias{dataTableOutput}
+\alias{DTOutput}
 \alias{renderDataTable}
+\alias{renderDT}
 \title{Helper functions for using DT in Shiny}
 \usage{
 dataTableOutput(outputId, width = "100\%", height = "auto")
 
+DTOutput(outputId, width = "100\%", height = "auto")
+
 renderDataTable(expr, server = TRUE, env = parent.frame(), quoted = FALSE, ...)
+
+renderDT(expr, server = TRUE, env = parent.frame(), quoted = FALSE, ...)
 }
 \arguments{
 \item{outputId}{output variable to read the table from}
@@ -44,10 +50,11 @@ table.
 \examples{
 if (interactive()) {
   library(shiny)
+  library(DT)
   shinyApp(
-    ui = fluidPage(fluidRow(column(12, DT::dataTableOutput('tbl')))),
+    ui = fluidPage(fluidRow(column(12, DTOutput('tbl')))),
     server = function(input, output) {
-      output$tbl = DT::renderDataTable(
+      output$tbl = renderDT(
         iris, options = list(lengthChange = FALSE)
       )
     }
