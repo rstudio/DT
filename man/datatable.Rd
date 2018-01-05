@@ -90,10 +90,10 @@ and columns (click on the footer to select columns), or \code{'cell'} to
 select cells}
 
 \item{extensions}{a character vector of the names of the DataTables
-extensions (\url{http://datatables.net/extensions/index})}
+extensions (\url{https://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
-(\url{http://rstudio.github.io/DT/plugins.html})}
+(\url{https://rstudio.github.io/DT/plugins.html})}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
@@ -131,5 +131,5 @@ datatable(data.frame(x = Sys.Date()))
 datatable(data.frame(x = Sys.time()))
 }
 \references{
-See \url{http://rstudio.github.io/DT} for the full documentation.
+See \url{https://rstudio.github.io/DT} for the full documentation.
 }

@@ -118,6 +118,6 @@ datatable(iris) \%>\%
   )
 }
 \references{
-See \url{http://rstudio.github.io/DT/functions.html} for detailed
+See \url{https://rstudio.github.io/DT/functions.html} for detailed
   documentation and examples.
 }

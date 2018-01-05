@@ -7,7 +7,7 @@
 #' @inheritParams shiny::dataTableOutput
 #' @param width the width of the table container
 #' @param height the height of the table container
-#' @references \url{http://rstudio.github.io/DT/shiny.html}
+#' @references \url{https://rstudio.github.io/DT/shiny.html}
 #' @export
 #' @examples # !formatR
 #' if (interactive()) {
@@ -136,7 +136,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 #'   be automatically updated when a new row is added, e.g., the range of the
 #'   slider of a column will stay the same even if you have added a value
 #'   outside the range of the original data column.
-#' @references \url{http://rstudio.github.io/DT/shiny.html}
+#' @references \url{https://rstudio.github.io/DT/shiny.html}
 #' @rdname proxy
 #' @export
 dataTableProxy = function(
@@ -327,7 +327,7 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #'   filtered table result according to the DataTables Ajax request
 #' @param outputId the output ID of the table (the same ID passed to
 #'   \code{dataTableOutput()}; if missing, a random string)
-#' @references \url{http://rstudio.github.io/DT/server.html}
+#' @references \url{https://rstudio.github.io/DT/server.html}
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
 #' @export

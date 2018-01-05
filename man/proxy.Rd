@@ -95,5 +95,5 @@ rows/columns, or add rows.
   table.
 }
 \references{
-\url{http://rstudio.github.io/DT/shiny.html}
+\url{https://rstudio.github.io/DT/shiny.html}
 }

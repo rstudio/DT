@@ -68,5 +68,5 @@ if (interactive()) DTApp(iris)
 if (interactive()) DTApp(iris, filter = 'top')
 }
 \references{
-\url{http://rstudio.github.io/DT/server.html}
+\url{https://rstudio.github.io/DT/server.html}
 }

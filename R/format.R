@@ -26,7 +26,7 @@ formatColumns = function(table, columns, template, ...) {
 #' @param mark the marker after every \code{interval} decimals in the numbers
 #' @param dec.mark a character to indicate the decimal point
 #' @param before whether to place the currency symbol before or after the values
-#' @references See \url{http://rstudio.github.io/DT/functions.html} for detailed
+#' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
 #' @export
 #' @examples # !formatR

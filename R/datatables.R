@@ -63,13 +63,13 @@
 #'   and columns (click on the footer to select columns), or \code{'cell'} to
 #'   select cells
 #' @param extensions a character vector of the names of the DataTables
-#'   extensions (\url{http://datatables.net/extensions/index})
+#'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
-#'   (\url{http://rstudio.github.io/DT/plugins.html})
+#'   (\url{https://rstudio.github.io/DT/plugins.html})
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
-#' @references See \url{http://rstudio.github.io/DT} for the full documentation.
+#' @references See \url{https://rstudio.github.io/DT} for the full documentation.
 #' @importFrom htmltools tags htmlDependency
 #' @export
 #' @example inst/examples/datatable.R
@@ -255,7 +255,7 @@ datatable = function(
       if (object.size(data) > 1.5e6 && getOption('DT.warn.size', TRUE))
         warning(
           'It seems your data is too big for client-side DataTables. You may ',
-          'consider server-side processing: http://rstudio.github.io/DT/server.html'
+          'consider server-side processing: https://rstudio.github.io/DT/server.html'
         )
 
       data = escapeData(data, escape, colnames)
