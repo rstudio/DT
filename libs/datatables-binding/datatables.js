@@ -256,6 +256,11 @@ HTMLWidgets.widget({
       };
     }
 
+    var thiz = this;
+    if (instance.fillContainer) $table.on('init.dt', function(e) {
+      thiz.fillAvailableHeight(el, $(el).innerHeight());
+    });
+
     var table = $table.DataTable(options);
     $el.data('datatable', table);
 
@@ -658,18 +663,6 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
-
-    var thiz = this;
-    table.on('init', function(e) {
-      // fillContainer = TRUE behavior
-      if (instance.fillContainer) {
-        // calculate correct height
-        thiz.fillAvailableHeight(el, $(el).innerHeight());
-      }
-      // we need to force DT to recalculate column widths
-      // (otherwise all the columns are the same size)
-      thiz.adjustWidth(el);
-    });
 
     // interaction with shiny
     if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;
