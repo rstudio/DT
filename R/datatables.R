@@ -125,9 +125,15 @@ datatable = function(
   }
 
   # align numeric columns to the right
-  if (length(numc)) options = appendColumnDefs(
-    options, list(className = 'dt-right', targets = numc - 1)
-  )
+  if (length(numc)) {
+    # if the `className` of the column has already been defined by the user,
+    # we should not touch it.
+    defined_cols <- classNameDefinedColumns(options)
+    undefined_numc <- (numc - 1)[!(numc - 1) %in% defined_cols]
+    if (length(undefined_numc)) options = appendColumnDefs(
+      options, list(className = 'dt-right', targets = undefined_numc)
+    )
+  }
 
   # make sure the table is _not_ ordered by default (change the DataTables default)
   if (is.null(options[['order']])) options$order = list()
@@ -274,6 +280,17 @@ appendColumnDefs = function(options, def) {
   options$columnDefs = defs
   options
 }
+
+classNameDefinedColumns = function(options) {
+  defs = options[['columnDefs']]
+  if (is.null(defs) || length(defs) == 0L) return(integer())
+  colDefinedTgts <- function(init, x) {
+    if (!is.null(x[['className']])) return(c(init, x[['targets']]))
+    init
+  }
+  unique(Reduce(colDefinedTgts, defs, integer()))
+}
+
 
 # convert character indices to numeric
 convertIdx = function(i, names, n = length(names), invert = FALSE) {
