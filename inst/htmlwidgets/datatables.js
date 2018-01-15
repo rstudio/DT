@@ -747,28 +747,28 @@ HTMLWidgets.widget({
       // If user filter the table again between the start click and the end click, the behavior
       // would be undefined, but it should not be a problem.
       var shiftSelRows = function (start, end) {
-    		var indexes = table.rows({ search: 'applied' }).indexes();
-    		// if start is larger than end, we need to swap
-    		if (indexes.indexOf(start) > indexes.indexOf(end)) {
-    			var tmp = end;
-    			end = start;
-    			start = tmp;
-    		}
+        var indexes = table.rows({ search: 'applied' }).indexes();
+        // if start is larger than end, we need to swap
+        if (indexes.indexOf(start) > indexes.indexOf(end)) {
+          var tmp = end;
+          end = start;
+          start = tmp;
+        }
 
-    		// i >= start && i <= end is not the right solution, because row reorder will change the
-    		// indexes order.
-    		var flag = false;
-    		return indexes.filter(function (i) {
-    			if (i === start) {
-    				flag = true;
-    			}
-    			if (i === end) {
-    				flag = false;
-    				return true;
-    			}
-    			return flag;
-    		});
-    	};
+        // i >= start && i <= end is not the right solution, because row reorder will change the
+        // indexes order.
+        var flag = false;
+        return indexes.filter(function (i) {
+          if (i === start) {
+            flag = true;
+          }
+          if (i === end) {
+            flag = false;
+            return true;
+          }
+          return flag;
+        });
+      };
 
 
       // row, column, or cell selection
@@ -788,17 +788,17 @@ HTMLWidgets.widget({
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
             if (window.event.shiftKey && lastClickedRow !== undefined) {
-          		var rows = shiftSelRows(lastClickedRow, thisRow.index());
-          		// select or de-select depends on the last clicked row's status
-          		var flagSel = !$this.hasClass(selClass);
-          		rows.each(function(value, index) {
-          		  var row = table.row(value).nodes().to$();
-          		  var flagRowSel = row.hasClass(selClass);
-          		  if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
-          		    row.toggleClass(selClass);
-          		  }
-          		});
-          		e.preventDefault();
+              var rows = shiftSelRows(lastClickedRow, thisRow.index());
+              // select or de-select depends on the last clicked row's status
+              var flagSel = !$this.hasClass(selClass);
+              rows.each(function(value, index) {
+                var row = table.row(value).nodes().to$();
+                var flagRowSel = row.hasClass(selClass);
+                if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
+                  row.toggleClass(selClass);
+                }
+              });
+              e.preventDefault();
             } else {
               $this.toggleClass(selClass);
             }
