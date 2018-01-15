@@ -772,7 +772,7 @@ HTMLWidgets.widget({
 
 
       // row, column, or cell selection
-      var lastClickedRow = 0;
+      var lastClickedRow;
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
           var rows = table.rows('.' + selClass);
@@ -787,7 +787,7 @@ HTMLWidgets.widget({
         table.on('click.dt', 'tbody tr', function() {
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
-            if (window.event.shiftKey) {
+            if (window.event.shiftKey && lastClickedRow !== undefined) {
           		var rows = shiftSelRows(lastClickedRow, thisRow.index());
           		// select or de-select depends on the last clicked row's status
           		var flagSel = !$this.hasClass(selClass);
