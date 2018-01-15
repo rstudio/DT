@@ -784,7 +784,7 @@ HTMLWidgets.widget({
           selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
           return selected1;
         }
-        table.on('click.dt', 'tbody tr', function() {
+        table.on('mousedown.dt', 'tbody tr', function(e) {
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
             if (window.event.shiftKey && lastClickedRow !== undefined) {
@@ -798,6 +798,7 @@ HTMLWidgets.widget({
           		    row.toggleClass(selClass);
           		  }
           		});
+          		e.preventDefault();
             } else {
               $this.toggleClass(selClass);
             }
