@@ -127,9 +127,8 @@ datatable = function(
   # align numeric columns to the right
   if (length(numc)) {
     # if the `className` of the column has already been defined by the user,
-    # we should not touch it.
-    defined_cols <- classNameDefinedColumns(options)
-    undefined_numc <- (numc - 1)[!(numc - 1) %in% defined_cols]
+    # we should not touch it
+    undefined_numc = setdiff(numc - 1, classNameDefinedColumns(options))
     if (length(undefined_numc)) options = appendColumnDefs(
       options, list(className = 'dt-right', targets = undefined_numc)
     )
@@ -283,12 +282,12 @@ appendColumnDefs = function(options, def) {
 
 classNameDefinedColumns = function(options) {
   defs = options[['columnDefs']]
-  if (is.null(defs) || length(defs) == 0L) return(integer())
-  colDefinedTgts <- function(init, x) {
-    if (!is.null(x[['className']])) return(c(init, x[['targets']]))
-    init
+  cols = integer()
+  for (def in defs) {
+    if (!is.null(def[['className']]) && is.numeric(col <- def[['targets']]))
+      cols = c(cols, col)
   }
-  unique(Reduce(colDefinedTgts, defs, integer()))
+  unique(cols)
 }
 
 

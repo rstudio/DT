@@ -1,12 +1,13 @@
 Package: DT
 Type: Package
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.2.20
+Version: 0.2.21
 Date: 2016-08-08
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
     person("Joe", "Cheng", role = "ctb"),
     person("JJ", "Allaire", role = "ctb"),
+    person("Xianying", "Tan", role = "ctb"),
     person("jQuery contributors", role = c("ctb", "cph"), comment = "jQuery in htmlwidgets/lib"),
     person("SpryMedia Limited", role = c("ctb", "cph"), comment = "DataTables in htmlwidgets/lib"),
     person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
