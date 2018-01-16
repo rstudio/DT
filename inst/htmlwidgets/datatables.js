@@ -98,6 +98,7 @@ function maybeInstallCrosstalkPlugins() {
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
+  renderOnNullValue: true,
   initialize: function(el, width, height) {
     $(el).html('&nbsp;');
     return {
@@ -118,6 +119,9 @@ HTMLWidgets.widget({
     $el.empty();
 
     if (data === null) {
+      // clear previous Shiny inputs (if any)
+      for (var i in instance.clearInputs) instance.clearInputs[i]();
+      instance.clearInputs = {};
       return;
     }
 
@@ -675,6 +679,9 @@ HTMLWidgets.widget({
       $table.children('caption').replaceWith(caption);
     }
 
+    // register clear functions to remove input values when the table is removed
+    instance.clearInputs = {};
+
     var changeInput = function(id, value, type, noCrosstalk) {
       var event = id;
       id = el.id + '_' + id;
@@ -683,8 +690,12 @@ HTMLWidgets.widget({
       if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
       shinyData[id] = JSON.stringify(value);
-      if (HTMLWidgets.shinyMode)
+      if (HTMLWidgets.shinyMode) {
         Shiny.onInputChange(id, value);
+        if (!instance.clearInputs[id]) instance.clearInputs[id] = function() {
+          Shiny.onInputChange(id, null);
+        }
+      }
 
       // HACK
       if (event === "rows_selected" && !noCrosstalk) {
