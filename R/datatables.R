@@ -114,8 +114,11 @@ datatable = function(
     data = as.data.frame(data)
     numc = unname(which(vapply(data, is.numeric, logical(1))))
   } else {
-    if (!is.matrix(data))
-      stop("'data' must be either a matrix or a data frame")
+    if (!is.matrix(data)) stop(
+      "'data' must be either a matrix or a data frame, and cannot be ",
+      paste(class(data), collapse = ', '),
+      ' (you may need to coerce it to matrix or data frame)'
+    )
     numc = if (is.numeric(data)) seq_len(ncol(data))
     data = as.data.frame(data)
   }
