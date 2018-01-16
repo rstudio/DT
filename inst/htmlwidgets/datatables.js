@@ -654,7 +654,7 @@ HTMLWidgets.widget({
       .on('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth', highlight)
       .on('destroy', function() {
         // remove event handler
-        table.off( 'draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth' );
+        table.off('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth');
       });
 
       // initial highlight for state saved conditions and initial states
