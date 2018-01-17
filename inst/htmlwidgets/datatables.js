@@ -757,7 +757,7 @@ HTMLWidgets.widget({
       // directly. Instead, we need this function to find out the rows between the two clicks.
       // If user filter the table again between the start click and the end click, the behavior
       // would be undefined, but it should not be a problem.
-      var shiftSelRows = function (start, end) {
+      var shiftSelRowsClient = function(start, end) {
         var indexes = table.rows({ search: 'applied' }).indexes();
         // if start is larger than end, we need to swap
         if (indexes.indexOf(start) > indexes.indexOf(end)) {
@@ -779,13 +779,33 @@ HTMLWidgets.widget({
           }
           return flag;
         });
-      };
+      }
 
+      var shiftSelRowsIndexServer = function(start, end) {
+        start = DT_rows_all.indexOf(start); // server's index starts from 1
+        end = DT_rows_all.indexOf(end);
+        // if start is larger than end, we need to swap
+        if (start > end) {
+          var tmp = end;
+          end = start;
+          start = tmp;
+        }
+        return DT_rows_all.slice(start, end + 1)
+      }
+
+      var serverRowIndex = function(clientRowIndex) {
+        return server ? DT_rows_current[clientRowIndex] : clientRowIndex + 1;
+      }
+
+      var flagServerShiftSel = function() {
+        return server && (selMode === 'multiple') && window.event.shiftKey && (lastClickedRow !== undefined);
+      };
 
       // row, column, or cell selection
       var lastClickedRow;
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
+          if (flagServerShiftSel()) return selected1;
           var rows = table.rows('.' + selClass);
           var idx = rows.indexes().toArray();
           if (!server) return addOne(idx);
@@ -799,16 +819,40 @@ HTMLWidgets.widget({
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
             if (window.event.shiftKey && lastClickedRow !== undefined) {
-              var rows = shiftSelRows(lastClickedRow, thisRow.index());
               // select or de-select depends on the last clicked row's status
               var flagSel = !$this.hasClass(selClass);
-              rows.each(function(value, index) {
-                var row = table.row(value).nodes().to$();
-                var flagRowSel = row.hasClass(selClass);
-                if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
-                  row.toggleClass(selClass);
+              crtClickedRow = serverRowIndex(thisRow.index());
+              if (server) {
+                var rowsIndex = shiftSelRowsIndexServer(lastClickedRow, crtClickedRow);
+                // update current page's selClass
+                rowsIndex.map(function(i) {
+                  var rowIndex = DT_rows_current.indexOf(i);
+                  if (rowIndex >= 0) {
+                    var row = table.row(rowIndex).nodes().to$();
+                    var flagRowSel = row.hasClass(selClass);
+                    if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
+                      row.toggleClass(selClass);
+                    }
+                  }
+                });
+                // update selected1
+                if (flagSel) {
+                  selected1 = unique(selected1.concat(rowsIndex));
+                } else {
+                  selected1 = selected1.filter(function(index) {
+                    return $.inArray(index, rowsIndex) < 0;
+                  });
                 }
-              });
+              } else {
+                var rows = shiftSelRowsClient(lastClickedRow - 1, crtClickedRow - 1); // js starts from 0
+                rows.each(function(value, index) {
+                  var row = table.row(value).nodes().to$();
+                  var flagRowSel = row.hasClass(selClass);
+                  if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
+                    row.toggleClass(selClass);
+                  }
+                });
+              }
               e.preventDefault();
             } else {
               $this.toggleClass(selClass);
@@ -821,15 +865,14 @@ HTMLWidgets.widget({
               $this.addClass(selClass);
             }
           }
-          if (server && !$this.hasClass(selClass)) {
+          if (server && !$this.hasClass(selClass) && !flagServerShiftSel()) {
             var id = DT_rows_current[thisRow.index()];
             // remove id from selected1 since its class .selected has been removed
             selected1.splice($.inArray(id, selected1), 1);
           }
           changeInput('rows_selected', selectedRows());
-          changeInput('row_last_clicked', server ?
-                      DT_rows_current[thisRow.index()] : thisRow.index() + 1);
-          lastClickedRow = thisRow.index();
+          changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
+          lastClickedRow = serverRowIndex(thisRow.index());
         });
         changeInput('rows_selected', selected1);
         var selectRows = function() {
