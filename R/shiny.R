@@ -154,10 +154,10 @@ dataTableProxy = function(
   if (is.null(session))
     stop('datatableProxy() must be called from the server function of a Shiny app')
 
-  structure(
-    list(id = session$ns(outputId), session = session, deferUntilFlush = deferUntilFlush),
-    class = 'datatableProxy'
-  )
+  structure(list(
+    id = session$ns(outputId), rawId = outputId, session = session,
+    deferUntilFlush = deferUntilFlush
+  ), class = 'datatableProxy')
 }
 
 #' @param proxy a proxy object returned by \code{dataTableProxy()}
@@ -286,7 +286,7 @@ reloadData = function(
 #'   otherwise the filters may never be able to reach certain rows in the data.
 #' @export
 replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'all') {
-  dataTableAjax(proxy$session, data, ..., outputId = proxy$id)
+  dataTableAjax(proxy$session, data, ..., outputId = proxy$rawId)
   reloadData(proxy, resetPaging, clearSelection)
 }
 

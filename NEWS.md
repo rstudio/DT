@@ -28,6 +28,8 @@
 
 - `dataTableProxy()` does not work with Shiny modules (thanks, @fbreitwieser, #357).
 
+- `replaceData()` does not work with Shiny modules (thanks, @ykeuter, @ssayols, @fbreitwieser, @carlganz, #359).
+
 - `formatDate()` may display dates off by one day (thanks, @jdthorpe, #198).
 
 - When a table is destroyed, all Shiny input values associated with the table should be emptied (thanks, @dracodoc, #457).
