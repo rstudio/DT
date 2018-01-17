@@ -70,7 +70,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
     # in the server mode, we should not store the full data in JSON
     if (server && !is.null(instance[['x']])) {
-      if (!is.null(instance$x$options$crosstalkOptions$group)) {
+      if (!is.null(instance$x$crosstalkOptions$group)) {
         stop("Crosstalk only works with DT client mode: DT::renderDataTable({...}, server=FALSE)")
       }
 
