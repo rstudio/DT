@@ -668,6 +668,29 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
+    // double click to edit the cell
+    table.on('dblclick.dt', 'tbody td', function() {
+      var $input = $('<input type="text">');
+      var $this = $(this), value = table.cell(this).data(), html = $this.html();
+      $input.val(value);
+      $this.empty().append($input);
+      $input.css('width', '100%').focus().on('change', function() {
+        var valueNew = $input.val();
+        if (valueNew != value) {
+          table.cell($this).data(valueNew);
+          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
+          // for server-side processing, users have to call replaceData() to update the table
+          if (!server) table.draw(false);
+        } else {
+          $this.html(html);
+        }
+        $input.remove();
+      }).on('blur', function() {
+        $input.remove();
+        $this.html(html);
+      });
+    });
+
     // interaction with shiny
     if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;
 
@@ -997,27 +1020,6 @@ HTMLWidgets.widget({
     // do not trigger table selection when clicking on links unless they have classes
     table.on('click.dt', 'tbody td a', function(e) {
       if (this.className === '') e.stopPropagation();
-    });
-
-    // double click to edit the cell
-    table.on('dblclick.dt', 'tbody td', function() {
-      var $input = $('<input type="text">');
-      var $this = $(this), value = table.cell(this).data(), html = $this.html();
-      $input.val(value);
-      $this.empty().append($input);
-      $input.css('width', '100%').focus().on('change', function() {
-        var valueNew = $input.val();
-        if (valueNew != value) {
-          table.cell($this).data(valueNew);
-          changeInput('cell_edit', cellInfo($this));
-          // for server-side processing, redraw must happen **after** we update
-          // data via session$registerDataObj(); how to hold the redraw then??
-          table.draw(false);
-        } else {
-          $this.html(html);
-        }
-        $input.remove();
-      });
     });
 
     methods.addRow = function(data, rowname) {
