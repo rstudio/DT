@@ -765,6 +765,7 @@ HTMLWidgets.widget({
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
       var selected = data.selection.selected, selected1, selected2;
+      // selected1: row indices; selected2: column indices
       if (selected === null) {
         selected1 = selected2 = [];
       } else if (selTarget === 'row') {
