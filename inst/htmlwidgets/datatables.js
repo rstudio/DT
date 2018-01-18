@@ -668,28 +668,30 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
+    if (data.editable) {
     // double click to edit the cell
     table.on('dblclick.dt', 'tbody td', function() {
-      var $input = $('<input type="text">');
-      var $this = $(this), value = table.cell(this).data(), html = $this.html();
-      $input.val(value);
-      $this.empty().append($input);
-      $input.css('width', '100%').focus().on('change', function() {
-        var valueNew = $input.val();
-        if (valueNew != value) {
-          table.cell($this).data(valueNew);
-          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
-          // for server-side processing, users have to call replaceData() to update the table
-          if (!server) table.draw(false);
-        } else {
+        var $input = $('<input type="text">');
+        var $this = $(this), value = table.cell(this).data(), html = $this.html();
+        $input.val(value);
+        $this.empty().append($input);
+        $input.css('width', '100%').focus().on('change', function() {
+          var valueNew = $input.val();
+          if (valueNew != value) {
+            table.cell($this).data(valueNew);
+            if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
+            // for server-side processing, users have to call replaceData() to update the table
+            if (!server) table.draw(false);
+          } else {
+            $this.html(html);
+          }
+          $input.remove();
+        }).on('blur', function() {
+          $input.remove();
           $this.html(html);
-        }
-        $input.remove();
-      }).on('blur', function() {
-        $input.remove();
-        $this.html(html);
+        });
       });
-    });
+    }
 
     // interaction with shiny
     if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;

@@ -66,6 +66,7 @@
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
 #'   (\url{https://rstudio.github.io/DT/plugins.html})
+#' @param editable \code{TRUE} to enable table editor.
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
@@ -79,7 +80,8 @@ datatable = function(
   escape = TRUE, style = 'default', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
-  selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL
+  selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
+  editable = FALSE
 ) {
 
   # yes, we all hate it
@@ -197,6 +199,8 @@ datatable = function(
   if ('Responsive' %in% extensions) options$responsive = TRUE
 
   params$caption = captionString(caption)
+
+  params$editable = editable
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
