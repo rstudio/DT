@@ -814,7 +814,7 @@ HTMLWidgets.widget({
             if (e.shiftKey && lastClickedRow !== undefined) {
               // select or de-select depends on the last clicked row's status
               var flagSel = !$this.hasClass(selClass);
-              crtClickedRow = serverRowIndex(thisRow.index());
+              var crtClickedRow = serverRowIndex(thisRow.index());
               if (server) {
                 var rowsIndex = shiftSelRowsIndex(lastClickedRow, crtClickedRow);
                 // update current page's selClass
