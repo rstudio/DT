@@ -795,15 +795,10 @@ HTMLWidgets.widget({
         return server ? DT_rows_current[clientRowIndex] : clientRowIndex + 1;
       }
 
-      var flagServerShiftSel = function() {
-        return server && (selMode === 'multiple') && window.event.shiftKey && (lastClickedRow !== undefined);
-      };
-
       // row, column, or cell selection
       var lastClickedRow;
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
-          if (flagServerShiftSel()) return selected1;
           var rows = table.rows('.' + selClass);
           var idx = rows.indexes().toArray();
           if (!server) return addOne(idx);
@@ -863,7 +858,7 @@ HTMLWidgets.widget({
               $this.addClass(selClass);
             }
           }
-          if (server && !$this.hasClass(selClass) && !flagServerShiftSel()) {
+          if (server && !$this.hasClass(selClass)) {
             var id = DT_rows_current[thisRow.index()];
             // remove id from selected1 since its class .selected has been removed
             selected1.splice($.inArray(id, selected1), 1);
