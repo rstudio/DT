@@ -2,6 +2,8 @@
 
 ## NEW FEATURES
 
+- It is possible to double-click to edit values in table cells now. See https://github.com/rstudio/DT/pull/480 for examples.
+
 - Added functions `DTOutput()` and `renderDT()` as aliases of `dataTableOutput()` and `renderDataTable()`, respectively. This is because the latter often collide with functions of the same names in **shiny**. You are recommended to use `DTOutput()` and `renderDT()` in Shiny apps (unless you always use the `DT::` qualifier).
 
 - Added an argument `params` to the `formatDate()` function so you can pass a list of parameters to the specific date conversion method (http://stackoverflow.com/q/38875173/559676).
