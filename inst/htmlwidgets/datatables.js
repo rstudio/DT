@@ -857,7 +857,7 @@ HTMLWidgets.widget({
           if (server && !$this.hasClass(selClass)) {
             var id = DT_rows_current[thisRow.index()];
             // remove id from selected1 since its class .selected has been removed
-            selected1.splice($.inArray(id, selected1), 1);
+            if (inArray(id, selected1)) selected1.splice($.inArray(id, selected1), 1);
           }
           changeInput('rows_selected', selectedRows());
           changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
