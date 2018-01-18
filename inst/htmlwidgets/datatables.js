@@ -822,10 +822,8 @@ HTMLWidgets.widget({
                   var rowIndex = DT_rows_current.indexOf(i);
                   if (rowIndex >= 0) {
                     var row = table.row(rowIndex).nodes().to$();
-                    var flagRowSel = row.hasClass(selClass);
-                    if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
-                      row.toggleClass(selClass);
-                    }
+                    var flagRowSel = !row.hasClass(selClass);
+                    if (flagSel === flagRowSel) row.toggleClass(selClass);
                   }
                 });
                 // update selected1
@@ -833,17 +831,15 @@ HTMLWidgets.widget({
                   selected1 = unique(selected1.concat(rowsIndex));
                 } else {
                   selected1 = selected1.filter(function(index) {
-                    return $.inArray(index, rowsIndex) < 0;
+                    return !inArray(index, rowsIndex);
                   });
                 }
               } else {
                 // js starts from 0
                 shiftSelRowsIndex(lastClickedRow - 1, crtClickedRow - 1).map(function(value) {
                   var row = table.row(value).nodes().to$();
-                  var flagRowSel = row.hasClass(selClass);
-                  if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
-                    row.toggleClass(selClass);
-                  }
+                  var flagRowSel = !row.hasClass(selClass);
+                  if (flagSel === flagRowSel) row.toggleClass(selClass);
                 });
               }
               e.preventDefault();
