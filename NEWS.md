@@ -12,7 +12,7 @@
 
 - Added the `RowGroup` extension (thanks, @ecortens, #466 #442).
 
-- Support using `Shift + Click` to select multiple rows (thanks, @shrektan, #475 #305).
+- Support using `Shift + Click` to select multiple rows (thanks, @shrektan, #475 #305 #481).
 
 ## MAJOR CHANGES
 

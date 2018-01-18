@@ -781,40 +781,14 @@ HTMLWidgets.widget({
       // directly. Instead, we need this function to find out the rows between the two clicks.
       // If user filter the table again between the start click and the end click, the behavior
       // would be undefined, but it should not be a problem.
-      var shiftSelRowsClient = function(start, end) {
-        var indexes = table.rows({ search: 'applied' }).indexes();
-        // if start is larger than end, we need to swap
-        if (indexes.indexOf(start) > indexes.indexOf(end)) {
-          var tmp = end;
-          end = start;
-          start = tmp;
-        }
-
-        // i >= start && i <= end is not the right solution, because row reorder will change the
-        // indexes order.
-        var flag = false;
-        return indexes.filter(function (i) {
-          if (i === start) {
-            flag = true;
-          }
-          if (i === end) {
-            flag = false;
-            return true;
-          }
-          return flag;
-        });
-      }
-
-      var shiftSelRowsIndexServer = function(start, end) {
-        start = DT_rows_all.indexOf(start); // server's index starts from 1
-        end = DT_rows_all.indexOf(end);
+      var shiftSelRowsIndex = function(start, end) {
+        var indexes = server ? DT_rows_all : table.rows({ search: 'applied' }).indexes().toArray();
+        start = indexes.indexOf(start); end = indexes.indexOf(end);
         // if start is larger than end, we need to swap
         if (start > end) {
-          var tmp = end;
-          end = start;
-          start = tmp;
+          var tmp = end; end = start; start = tmp;
         }
-        return DT_rows_all.slice(start, end + 1)
+        return indexes.slice(start, end + 1);
       }
 
       var serverRowIndex = function(clientRowIndex) {
@@ -847,7 +821,7 @@ HTMLWidgets.widget({
               var flagSel = !$this.hasClass(selClass);
               crtClickedRow = serverRowIndex(thisRow.index());
               if (server) {
-                var rowsIndex = shiftSelRowsIndexServer(lastClickedRow, crtClickedRow);
+                var rowsIndex = shiftSelRowsIndex(lastClickedRow, crtClickedRow);
                 // update current page's selClass
                 rowsIndex.map(function(i) {
                   var rowIndex = DT_rows_current.indexOf(i);
@@ -868,8 +842,8 @@ HTMLWidgets.widget({
                   });
                 }
               } else {
-                var rows = shiftSelRowsClient(lastClickedRow - 1, crtClickedRow - 1); // js starts from 0
-                rows.each(function(value, index) {
+                var rows = shiftSelRowsIndex(lastClickedRow - 1, crtClickedRow - 1); // js starts from 0
+                rows.map(function(value) {
                   var row = table.row(value).nodes().to$();
                   var flagRowSel = row.hasClass(selClass);
                   if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
