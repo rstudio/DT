@@ -668,6 +668,29 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
+    // double click to edit the cell
+    table.on('dblclick.dt', 'tbody td', function() {
+      var $input = $('<input type="text">');
+      var $this = $(this), value = table.cell(this).data(), html = $this.html();
+      $input.val(value);
+      $this.empty().append($input);
+      $input.css('width', '100%').focus().on('change', function() {
+        var valueNew = $input.val();
+        if (valueNew != value) {
+          table.cell($this).data(valueNew);
+          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
+          // for server-side processing, users have to call replaceData() to update the table
+          if (!server) table.draw(false);
+        } else {
+          $this.html(html);
+        }
+        $input.remove();
+      }).on('blur', function() {
+        $input.remove();
+        $this.html(html);
+      });
+    });
+
     // interaction with shiny
     if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;
 
@@ -983,11 +1006,14 @@ HTMLWidgets.widget({
     table.on('draw.dt', updateSearchInfo);
     updateSearchInfo();
 
+    var cellInfo = function(thiz) {
+      var info = tweakCellIndex(table.cell(thiz));
+      info.value = table.cell(thiz).data();
+      return info;
+    }
     // the current cell clicked on
     table.on('click.dt', 'tbody td', function() {
-      var info = tweakCellIndex(table.cell(this));
-      info.value = table.cell(this).data();
-      changeInput('cell_clicked', info);
+      changeInput('cell_clicked', cellInfo(this));
     })
     changeInput('cell_clicked', {});
 
