@@ -837,8 +837,8 @@ HTMLWidgets.widget({
                   });
                 }
               } else {
-                var rows = shiftSelRowsIndex(lastClickedRow - 1, crtClickedRow - 1); // js starts from 0
-                rows.map(function(value) {
+                // js starts from 0
+                shiftSelRowsIndex(lastClickedRow - 1, crtClickedRow - 1).map(function(value) {
                   var row = table.row(value).nodes().to$();
                   var flagRowSel = row.hasClass(selClass);
                   if ((flagSel && !flagRowSel) || (!flagSel && flagRowSel)) {
