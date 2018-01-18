@@ -811,7 +811,7 @@ HTMLWidgets.widget({
         table.on('mousedown.dt', 'tbody tr', function(e) {
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
-            if (window.event.shiftKey && lastClickedRow !== undefined) {
+            if (e.shiftKey && lastClickedRow !== undefined) {
               // select or de-select depends on the last clicked row's status
               var flagSel = !$this.hasClass(selClass);
               crtClickedRow = serverRowIndex(thisRow.index());
