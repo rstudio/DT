@@ -98,6 +98,7 @@ function maybeInstallCrosstalkPlugins() {
 HTMLWidgets.widget({
   name: "datatables",
   type: "output",
+  renderOnNullValue: true,
   initialize: function(el, width, height) {
     $(el).html('&nbsp;');
     return {
@@ -118,6 +119,9 @@ HTMLWidgets.widget({
     $el.empty();
 
     if (data === null) {
+      // clear previous Shiny inputs (if any)
+      for (var i in instance.clearInputs) instance.clearInputs[i]();
+      instance.clearInputs = {};
       return;
     }
 
@@ -654,7 +658,7 @@ HTMLWidgets.widget({
       .on('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth', highlight)
       .on('destroy', function() {
         // remove event handler
-        table.off( 'draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth' );
+        table.off('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth');
       });
 
       // initial highlight for state saved conditions and initial states
@@ -663,6 +667,29 @@ HTMLWidgets.widget({
 
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
+
+    // double click to edit the cell
+    if (data.editable) table.on('dblclick.dt', 'tbody td', function() {
+      var $input = $('<input type="text">');
+      var $this = $(this), value = table.cell(this).data(), html = $this.html();
+      $input.val(value);
+      $this.empty().append($input);
+      $input.css('width', '100%').focus().on('change', function() {
+        var valueNew = $input.val();
+        if (valueNew != value) {
+          table.cell($this).data(valueNew);
+          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
+          // for server-side processing, users have to call replaceData() to update the table
+          if (!server) table.draw(false);
+        } else {
+          $this.html(html);
+        }
+        $input.remove();
+      }).on('blur', function() {
+        $input.remove();
+        $this.html(html);
+      });
+    });
 
     // interaction with shiny
     if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;
@@ -675,6 +702,9 @@ HTMLWidgets.widget({
       $table.children('caption').replaceWith(caption);
     }
 
+    // register clear functions to remove input values when the table is removed
+    instance.clearInputs = {};
+
     var changeInput = function(id, value, type, noCrosstalk) {
       var event = id;
       id = el.id + '_' + id;
@@ -683,8 +713,12 @@ HTMLWidgets.widget({
       if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
       shinyData[id] = JSON.stringify(value);
-      if (HTMLWidgets.shinyMode)
+      if (HTMLWidgets.shinyMode) {
         Shiny.onInputChange(id, value);
+        if (!instance.clearInputs[id]) instance.clearInputs[id] = function() {
+          Shiny.onInputChange(id, null);
+        }
+      }
 
       // HACK
       if (event === "rows_selected" && !noCrosstalk) {
@@ -731,6 +765,7 @@ HTMLWidgets.widget({
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
       var selected = data.selection.selected, selected1, selected2;
+      // selected1: row indices; selected2: column indices
       if (selected === null) {
         selected1 = selected2 = [];
       } else if (selTarget === 'row') {
@@ -741,7 +776,27 @@ HTMLWidgets.widget({
         selected1 = $.makeArray(selected.rows);
         selected2 = $.makeArray(selected.cols);
       }
+
+      // After users reorder the rows or filter the table, we cannot use the table index
+      // directly. Instead, we need this function to find out the rows between the two clicks.
+      // If user filter the table again between the start click and the end click, the behavior
+      // would be undefined, but it should not be a problem.
+      var shiftSelRowsIndex = function(start, end) {
+        var indexes = server ? DT_rows_all : table.rows({ search: 'applied' }).indexes().toArray();
+        start = indexes.indexOf(start); end = indexes.indexOf(end);
+        // if start is larger than end, we need to swap
+        if (start > end) {
+          var tmp = end; end = start; start = tmp;
+        }
+        return indexes.slice(start, end + 1);
+      }
+
+      var serverRowIndex = function(clientRowIndex) {
+        return server ? DT_rows_current[clientRowIndex] : clientRowIndex + 1;
+      }
+
       // row, column, or cell selection
+      var lastClickedRow;
       if (inArray(selTarget, ['row', 'row+column'])) {
         var selectedRows = function() {
           var rows = table.rows('.' + selClass);
@@ -753,10 +808,44 @@ HTMLWidgets.widget({
           selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
           return selected1;
         }
-        table.on('click.dt', 'tbody tr', function() {
+        table.on('mousedown.dt', 'tbody tr', function(e) {
           var $this = $(this), thisRow = table.row(this);
           if (selMode === 'multiple') {
-            $this.toggleClass(selClass);
+            if (e.shiftKey && lastClickedRow !== undefined) {
+              // select or de-select depends on the last clicked row's status
+              var flagSel = !$this.hasClass(selClass);
+              var crtClickedRow = serverRowIndex(thisRow.index());
+              if (server) {
+                var rowsIndex = shiftSelRowsIndex(lastClickedRow, crtClickedRow);
+                // update current page's selClass
+                rowsIndex.map(function(i) {
+                  var rowIndex = DT_rows_current.indexOf(i);
+                  if (rowIndex >= 0) {
+                    var row = table.row(rowIndex).nodes().to$();
+                    var flagRowSel = !row.hasClass(selClass);
+                    if (flagSel === flagRowSel) row.toggleClass(selClass);
+                  }
+                });
+                // update selected1
+                if (flagSel) {
+                  selected1 = unique(selected1.concat(rowsIndex));
+                } else {
+                  selected1 = selected1.filter(function(index) {
+                    return !inArray(index, rowsIndex);
+                  });
+                }
+              } else {
+                // js starts from 0
+                shiftSelRowsIndex(lastClickedRow - 1, crtClickedRow - 1).map(function(value) {
+                  var row = table.row(value).nodes().to$();
+                  var flagRowSel = !row.hasClass(selClass);
+                  if (flagSel === flagRowSel) row.toggleClass(selClass);
+                });
+              }
+              e.preventDefault();
+            } else {
+              $this.toggleClass(selClass);
+            }
           } else {
             if ($this.hasClass(selClass)) {
               $this.removeClass(selClass);
@@ -768,11 +857,11 @@ HTMLWidgets.widget({
           if (server && !$this.hasClass(selClass)) {
             var id = DT_rows_current[thisRow.index()];
             // remove id from selected1 since its class .selected has been removed
-            selected1.splice($.inArray(id, selected1), 1);
+            if (inArray(id, selected1)) selected1.splice($.inArray(id, selected1), 1);
           }
           changeInput('rows_selected', selectedRows());
-          changeInput('row_last_clicked', server ?
-                      DT_rows_current[thisRow.index()] : thisRow.index() + 1);
+          changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
+          lastClickedRow = serverRowIndex(thisRow.index());
         });
         changeInput('rows_selected', selected1);
         var selectRows = function() {
@@ -926,11 +1015,14 @@ HTMLWidgets.widget({
     table.on('draw.dt', updateSearchInfo);
     updateSearchInfo();
 
+    var cellInfo = function(thiz) {
+      var info = tweakCellIndex(table.cell(thiz));
+      info.value = table.cell(thiz).data();
+      return info;
+    }
     // the current cell clicked on
     table.on('click.dt', 'tbody td', function() {
-      var info = tweakCellIndex(table.cell(this));
-      info.value = table.cell(this).data();
-      changeInput('cell_clicked', info);
+      changeInput('cell_clicked', cellInfo(this));
     })
     changeInput('cell_clicked', {});
 
