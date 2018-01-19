@@ -10,7 +10,7 @@ datatable(data, options = list(), class = "display", callback = JS("return table
     height = NULL, elementId = NULL, fillContainer = getOption("DT.fillContainer", 
         NULL), autoHideNavigation = getOption("DT.autoHideNavigation", 
         NULL), selection = c("multiple", "single", "none"), extensions = list(), 
-    plugins = NULL)
+    plugins = NULL, editable = FALSE)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -94,6 +94,8 @@ extensions (\url{https://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
 (\url{https://rstudio.github.io/DT/plugins.html})}
+
+\item{editable}{\code{TRUE} to enable table editor.}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
