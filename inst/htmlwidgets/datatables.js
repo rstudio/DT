@@ -669,7 +669,7 @@ HTMLWidgets.widget({
     if (typeof data.callback === 'function') data.callback(table);
 
     // double click to edit the cell
-    table.on('dblclick.dt', 'tbody td', function() {
+    if (data.editable) table.on('dblclick.dt', 'tbody td', function() {
       var $input = $('<input type="text">');
       var $this = $(this), value = table.cell(this).data(), html = $this.html();
       $input.val(value);
