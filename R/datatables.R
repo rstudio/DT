@@ -200,7 +200,7 @@ datatable = function(
 
   params$caption = captionString(caption)
 
-  params$editable = editable
+  if (editable) params$editable = editable
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
