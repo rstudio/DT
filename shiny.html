@@ -200,33 +200,34 @@ $(document).ready(function () {
 <p>You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page.</p>
 <div id="a-minimal-example" class="section level1">
 <h1><span class="header-section-number">1</span> A Minimal Example</h1>
-<p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>dataTableOutput()</code> and <code>renderDataTable()</code> in the <strong>DT</strong> namespace (instead of <strong>shiny</strong>):</p>
+<p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>DTOutput()</code> and <code>renderDT()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">library</span>(DT)
 <span class="kw">shinyApp</span>(
-  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
+  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw">DTOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    output<span class="op">$</span>tbl =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(
+    output<span class="op">$</span>tbl =<span class="st"> </span><span class="kw">renderDT</span>(
       iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">lengthChange =</span> <span class="ot">FALSE</span>)
     )
   }
 )</code></pre></div>
-<p><strong>Important:</strong> Be sure to use the <code>DT::</code> prefix when calling <code>dataTableOutput</code> and <code>renderDataTable</code> so that the <strong>DT</strong> versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions. If you make sure to <code>library(DT)</code> <em>after</em> <code>library(shiny)</code>, normally the <strong>DT</strong> versions should just override the <strong>shiny</strong> versions if you do not use the <code>DT::</code> prefix (when in doubt, use this prefix, until we completely remove these functions from <strong>shiny</strong>).</p>
+<p>Note that in <strong>DT</strong>, <code>DTOutput()</code> is an alias of <code>dataTableOutput()</code>, and <code>renderDT()</code> is an alias of <code>renderDataTable()</code>. You are recommended to use <code>DTOutput()</code> and <code>renderDT()</code> to avoid possible collisions with functions of the same names in <strong>shiny</strong> (<code>shiny::dataTableOutput()</code> and <code>shiny::renderDataTable()</code>).</p>
 <p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note you should use <code>JS()</code> instead of <code>I()</code> to write literal JavaScript code in options.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-shiny<span class="op">::</span><span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
+<span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">pageLength =</span> <span class="dv">5</span>,
   <span class="dt">initComplete =</span> <span class="kw">I</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
 ))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-DT<span class="op">::</span><span class="kw">renderDataTable</span>(
+<span class="kw">renderDT</span>(
   iris, <span class="dt">options =</span> <span class="kw">list</span>(
     <span class="dt">pageLength =</span> <span class="dv">5</span>,
     <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
   )
 )</code></pre></div>
-<p>The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways; the default is server-side processing, but you can switch to client-side by calling <code>DT::renderDataTable</code> with a <code>server = FALSE</code> argument. When the data object is relatively large, do not use <code>server = FALSE</code>, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.</p>
-<p>The first argument of <code>DT::renderDataTable()</code> can be either a data object or a table widget returned by <code>datatable()</code>. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">renderDataTable</span>({
+<p>The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways; the default is server-side processing, but you can switch to client-side by calling <code>DT::renderDT()</code> with a <code>server = FALSE</code> argument. When the data object is relatively large, do not use <code>server = FALSE</code>, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.</p>
+<p>The first argument of <code>DT::renderDT()</code> can be either a data object or a table widget returned by <code>datatable()</code>. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">renderDT</span>({
   <span class="kw">datatable</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(
     <span class="st">&#39;Sepal.Width&#39;</span>,
     <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
@@ -235,7 +236,7 @@ DT<span class="op">::</span><span class="kw">renderDataTable</span>(
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
-<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>tableId</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>dataTableOutput()</code>). You need to replace <code>tableId</code> with the actual id of the table in your own app.</p>
+<p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>tableId</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>DTOutput()</code>). You need to replace <code>tableId</code> with the actual id of the table in your own app.</p>
 <div id="selecting-rowscolumnscells" class="section level2">
 <h2><span class="header-section-number">2.1</span> Selecting Rows/Columns/Cells</h2>
 <p>You may select rows, columns, or cells in the table, and obtain the indices of the selected objects. See <a href="https://yihui.shinyapps.io/DT-selection">this Shiny app</a> for a comprehensive example (you can find its source code under <code>system.file('examples', 'DT-selection', package = 'DT')</code>).</p>

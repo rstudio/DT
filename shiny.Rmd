@@ -8,27 +8,28 @@ You can render a table widget in shiny, and obtain some information about its cu
 
 # A Minimal Example
 
-Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions `dataTableOutput()` and `renderDataTable()` in the **DT** namespace (instead of **shiny**):
+Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions `DTOutput()` and `renderDT()`:
 
 ```{r eval=FALSE}
 library(shiny)
+library(DT)
 shinyApp(
-  ui = fluidPage(DT::dataTableOutput('tbl')),
+  ui = fluidPage(DTOutput('tbl')),
   server = function(input, output) {
-    output$tbl = DT::renderDataTable(
+    output$tbl = renderDT(
       iris, options = list(lengthChange = FALSE)
     )
   }
 )
 ```
 
-**Important:** Be sure to use the `DT::` prefix when calling `dataTableOutput` and `renderDataTable` so that the **DT** versions of these functions are guaranteed to be called, instead of the deprecated Shiny versions. If you make sure to `library(DT)` _after_ `library(shiny)`, normally the **DT** versions should just override the **shiny** versions if you do not use the `DT::` prefix (when in doubt, use this prefix, until we completely remove these functions from **shiny**).
+Note that in **DT**, `DTOutput()` is an alias of `dataTableOutput()`, and `renderDT()` is an alias of `renderDataTable()`. You are recommended to use `DTOutput()` and `renderDT()` to avoid possible collisions with functions of the same names in **shiny** (`shiny::dataTableOutput()` and `shiny::renderDataTable()`).
 
 If you have used the `renderDataTable()` function in **shiny** before, please note you should use `JS()` instead of `I()` to write literal JavaScript code in options.
 
 ```{r eval=FALSE}
 library(shiny)
-shiny::renderDataTable(iris, options = list(
+renderDataTable(iris, options = list(
   pageLength = 5,
   initComplete = I('function(setting, json) { alert("done"); }')
 ))
@@ -36,7 +37,7 @@ shiny::renderDataTable(iris, options = list(
 
 ```{r eval=FALSE}
 library(DT)
-DT::renderDataTable(
+renderDT(
   iris, options = list(
     pageLength = 5,
     initComplete = JS('function(setting, json) { alert("done"); }')
@@ -44,12 +45,12 @@ DT::renderDataTable(
 )
 ```
 
-The `renderDataTable()` function in **shiny** uses [server-side processing](server.html) and it has no client-side support. **DT** supports both ways; the default is server-side processing, but you can switch to client-side by calling `DT::renderDataTable` with a `server = FALSE` argument. When the data object is relatively large, do not use `server = FALSE`, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
+The `renderDataTable()` function in **shiny** uses [server-side processing](server.html) and it has no client-side support. **DT** supports both ways; the default is server-side processing, but you can switch to client-side by calling `DT::renderDT()` with a `server = FALSE` argument. When the data object is relatively large, do not use `server = FALSE`, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.
 
-The first argument of `DT::renderDataTable()` can be either a data object or a table widget returned by `datatable()`. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:
+The first argument of `DT::renderDT()` can be either a data object or a table widget returned by `datatable()`. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:
 
 ```{r eval=FALSE}
-DT::renderDataTable({
+DT::renderDT({
   datatable(iris) %>% formatStyle(
     'Sepal.Width',
     backgroundColor = styleInterval(3.4, c('gray', 'yellow'))
@@ -59,7 +60,7 @@ DT::renderDataTable({
 
 # Interaction with Shiny
 
-There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `tableId` to denote the output id of the table (i.e. the `outputId` in `dataTableOutput()`). You need to replace `tableId` with the actual id of the table in your own app.
+There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use `tableId` to denote the output id of the table (i.e. the `outputId` in `DTOutput()`). You need to replace `tableId` with the actual id of the table in your own app.
 
 ## Selecting Rows/Columns/Cells
 
