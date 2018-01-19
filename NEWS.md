@@ -16,6 +16,8 @@
 
 ## MAJOR CHANGES
 
+- Searching in the server-side processing mode has enabled the "smart" mode by default (https://datatables.net/reference/option/search.smart). Previously this only works in the client-side processing mode. If you want to disable the smart filtering, you can set the initialization options in `datatable()` (e.g., `options = list(search = list(smart = FALSE))`). The smart filtering means spaces in the global search keyword in the table will have a special meaning: each returned record in the table should match _all_ of the words separated by spaces (thanks, @carlganz, #453; @keshavramaswamy, #391).
+
 - For client-side tables in Shiny, the indices of selected rows (`input$tableId_rows_selected`) will include the rows that are not visible in the current view after filtering is applied. If you want to exclude the indices of such rows, you can take the intersection of `input$tableId_rows_selected` and `input$tableId_rows_all` (the latter is the indices of all rows after filtering is applied).
 
 ## MINOR CHANGES

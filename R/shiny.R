@@ -401,17 +401,28 @@ dataTablesFilter = function(data, params) {
   ))
 
   # global searching
-  i = logical(n)
   # for some reason, q$search might be NULL, leading to error `if (logical(0))`
-  if (isTRUE(q$search[['value']] != '')) for (j in seq_len(ncol(data))) {
-    if (q$columns[[j]][['searchable']] != 'true') next
-    i0 = grep2(
-      q$search[['value']], as.character(data[, j]),
-      fixed = q$search[['regex']] == 'false', ignore.case = ci
-    )
-    i[i0] = TRUE
-  } else i = !i
-  i = which(i)
+  if (length(v <- q$search[['value']]) > 0) {
+    if (!identical(q$search[['smart']], 'false')) {
+      v = unlist(strsplit(gsub('^\\s+|\\s+$', '', v), '\\s+'))
+    }
+  }
+  if (length(v) == 0) v = ''
+  m = if ((nv <- length(v)) > 1) array(FALSE, c(dim(data), nv)) else logical(n)
+  # TODO: this searching method may not be efficient and need optimization
+  i = if (!identical(v, '')) {
+    for (j in seq_len(ncol(data))) {
+      if (q$columns[[j]][['searchable']] != 'true') next
+      for (k in seq_len(nv)) {
+        i0 = grep2(
+          v[k], as.character(data[, j]), fixed = q$search[['regex']] == 'false',
+          ignore.case = ci
+        )
+        if (nv > 1) m[i0, j, k] = TRUE else m[i0] = TRUE
+      }
+    }
+    which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
+  } else seq_len(n)
 
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
@@ -492,7 +503,7 @@ dataTablesFilter = function(data, params) {
 }
 
 # when both ignore.case and fixed are TRUE, we use grep(ignore.case = FALSE,
-# fixed = TRUE) to do lower-case matching of pattern on x
+# fixed = TRUE) to do lower-case matching of pattern on x; assume value = FALSE
 grep2 = function(pattern, x, ignore.case = FALSE, fixed = FALSE, ...) {
   if (fixed && ignore.case) {
     pattern = tolower(pattern)
@@ -562,6 +573,10 @@ fixServerOptions = function(options) {
     sprintf(
       'd.search.caseInsensitive = %s;',
       tolower(!isFALSE(options[['search']]$caseInsensitive))
+    ),
+    sprintf(
+      'd.search.smart = %s;',
+      tolower(!isFALSE(options[['search']]$smart))
     ),
     sprintf('d.escape = %s;', attr(options, 'escapeIdx', exact = TRUE)),
     'var encodeAmp = function(x) { x.value = x.value.replace(/&/g, "%26"); }',
