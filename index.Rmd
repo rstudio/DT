@@ -53,6 +53,14 @@ DT:::DT2BSClass(c('compact', 'cell-border'))
 
 Note you can only use one style for all tables on one page. Please see [this separate page](005-bootstrap.html) for examples using the Bootstrap style.
 
+## Table Editing
+
+You can enable table editing using the argument `editable = TRUE`. Then you will be able to double-click a cell to edit its value. It works in both client-side and [server-side processing](server.html) modes. Below is a client-side example (also see [a Shiny example](https://yihui.shinyapps.io/DT-edit/) with server-side processing):
+
+```{r}
+DT::datatable(head(iris), editable = TRUE)
+```
+
 ## Display Row Names
 
 If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument `rownames = FALSE`, and you can also change row names by providing a different character vector to `rownames`.
