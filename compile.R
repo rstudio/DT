@@ -5,6 +5,7 @@ library(DT)
 o = rmarkdown::render(commandArgs(TRUE), quiet = TRUE)
 x = gsub('\\u003c', '<', readLines(o), fixed = TRUE)
 x = gsub('<\\\\(/[a-z1-6]+>)', '<\\1', x)
+x = blogdown:::clean_widget_html(x)
 writeLines(x, o)
 unlink(list.files('.', '[.]map$', recursive = TRUE))
 unlink(c(

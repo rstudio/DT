@@ -216,8 +216,8 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
 ## [6,] 1815065 -1586693 -1023109 0.9842192 101.02557</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format the columns A and C as currency, and D as percentages</span>
 <span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</code></pre></div>
-<div id="htmlwidget-d64fb543987b4390e9e6" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d64fb543987b4390e9e6">{
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
     "data": [
@@ -246,8 +246,8 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
 }</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span>
 <span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="dt">digits =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre></div>
-<div id="htmlwidget-4652fc9eef7768a82792" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4652fc9eef7768a82792">{
+<div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
     "data": [
@@ -298,8 +298,8 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 ##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
 <span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(d), m)</code></pre></div>
-<div id="htmlwidget-3df6998367e15d492b2c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3df6998367e15d492b2c">{
+<div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{
   "x": {
     "filter": "none",
     "data": [
@@ -336,8 +336,8 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 <p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. We have picked a few commonly used CSS properties as the arguments of <code>formatStyle()</code>, such as <code>color</code> and <code>fontWeight</code>. You can pass arbitrary CSS properties to <code>formatStyle()</code>. Here is a quick example to show the syntax:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</code></pre></div>
-<div id="htmlwidget-7b4037ac0cb35a68d2eb" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7b4037ac0cb35a68d2eb">{
+<div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4">{
   "x": {
     "filter": "none",
     "data": [
@@ -401,8 +401,8 @@ CSS Property Names
       <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="kw">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)
     )
   )</code></pre></div>
-<div id="htmlwidget-48f6baaf0d657a8fb2ea" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-48f6baaf0d657a8fb2ea">{
+<div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5">{
   "x": {
     "filter": "none",
     "data": [
