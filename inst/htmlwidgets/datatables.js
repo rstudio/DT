@@ -672,9 +672,11 @@ HTMLWidgets.widget({
     if (data.editable) table.on('dblclick.dt', 'tbody td', function() {
       var $input = $('<input type="text">');
       var $this = $(this), value = table.cell(this).data(), html = $this.html();
+      var changed = false;
       $input.val(value);
       $this.empty().append($input);
       $input.css('width', '100%').focus().on('change', function() {
+        changed = true;
         var valueNew = $input.val();
         if (valueNew != value) {
           table.cell($this).data(valueNew);
@@ -686,8 +688,7 @@ HTMLWidgets.widget({
         }
         $input.remove();
       }).on('blur', function() {
-        $input.remove();
-        $this.html(html);
+        if (!changed) $input.trigger('change');
       });
     });
 
