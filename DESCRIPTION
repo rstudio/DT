@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.3
+Version: 0.3.1
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
     person("Joe", "Cheng", role = "ctb"),
@@ -24,7 +24,7 @@ BugReports: https://github.com/rstudio/DT/issues
 License: GPL-3 | file LICENSE
 Imports:
     htmltools (>= 0.3.6),
-    htmlwidgets (>= 0.6),
+    htmlwidgets (>= 1.0),
     magrittr,
     crosstalk
 Suggests:
