@@ -1057,7 +1057,14 @@ HTMLWidgets.widget({
           return;
         }
         $(td).find('input').first().val(v);
-        table.column(i).search(v);
+
+        var regex = false, ci = true;
+        if (options.search) {
+          regex = options.search.regex,
+          ci = options.search.caseInsensitive !== false;
+        }
+
+        table.column(i).search(v, regex, !regex, ci);
       });
       table.draw();
     }
