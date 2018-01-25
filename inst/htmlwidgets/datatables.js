@@ -345,6 +345,16 @@ HTMLWidgets.widget({
       return server ? x.replace(/%/g, '%25').replace(/\+/g, '%2B') : x;
     };
 
+    // search the i-th column
+    var searchColumn = function(i, value) {
+      var regex = false, ci = true;
+      if (options.search) {
+        regex = options.search.regex,
+        ci = options.search.caseInsensitive !== false;
+      }
+      return table.column(i).search(encode_plus(value), regex, !regex, ci);
+    };
+
     if (data.filter !== 'none') {
 
       filterRow.each(function(i, td) {
@@ -417,12 +427,7 @@ HTMLWidgets.widget({
           filter.next('div').css('margin-bottom', 'auto');
         } else if (type === 'character') {
           var fun = function() {
-            var regex = false, ci = true;
-            if (options.search) {
-              regex = options.search.regex,
-              ci = options.search.caseInsensitive !== false;
-            }
-            table.column(i).search(encode_plus($input.val()), regex, !regex, ci).draw();
+            searchColumn(i, $input.val()).draw();
           };
           if (server) {
             fun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
@@ -579,7 +584,7 @@ HTMLWidgets.widget({
         // processing
         if (server) {
           // if a search string has been pre-set, search now
-          if (searchCol) table.column(i).search(encode_plus(searchCol)).draw();
+          if (searchCol) searchColumn(i, searchCol).draw();
           return;
         }
 
@@ -1058,14 +1063,7 @@ HTMLWidgets.widget({
           return;
         }
         $(td).find('input').first().val(v);
-
-        var regex = false, ci = true;
-        if (options.search) {
-          regex = options.search.regex,
-          ci = options.search.caseInsensitive !== false;
-        }
-
-        table.column(i).search(v, regex, !regex, ci);
+        searchColumn(i, v);
       });
       table.draw();
     }
