@@ -7,6 +7,7 @@ Authors@R: c(
     person("Joe", "Cheng", role = "ctb"),
     person("JJ", "Allaire", role = "ctb"),
     person("Xianying", "Tan", role = "ctb"),
+    person("Maximilian", "Girlich", role = "ctb"),
     person("jQuery contributors", role = c("ctb", "cph"), comment = "jQuery in htmlwidgets/lib"),
     person("SpryMedia Limited", role = c("ctb", "cph"), comment = "DataTables in htmlwidgets/lib"),
     person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
