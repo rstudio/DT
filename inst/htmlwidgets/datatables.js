@@ -119,6 +119,7 @@ HTMLWidgets.widget({
     $el.empty();
 
     if (data === null) {
+      $el.append('&nbsp;');
       // clear previous Shiny inputs (if any)
       for (var i in instance.clearInputs) instance.clearInputs[i]();
       instance.clearInputs = {};

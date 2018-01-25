@@ -1,3 +1,9 @@
+# CHANGES IN DT VERSION 0.4 (unreleased)
+
+## BUG FIXES
+
+- A table will never appear again after `renderDT(NULL)` once (thanks, @jcheng5, #488).
+
 # CHANGES IN DT VERSION 0.3
 
 ## NEW FEATURES
