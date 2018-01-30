@@ -1,4 +1,4 @@
-# CHANGES IN DT VERSION 0.4 (unreleased)
+# CHANGES IN DT VERSION 0.4
 
 ## BUG FIXES
 
