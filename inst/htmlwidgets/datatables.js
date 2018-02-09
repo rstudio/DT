@@ -322,7 +322,7 @@ HTMLWidgets.widget({
         if (e.sender !== instance.ctselectHandle && e.value && e.value.length) {
           var ctOpts = crosstalk.var("plotlyCrosstalkOpts").get() || {};
           if (ctOpts.persistent === true) {
-           $table[0].ctselect = [].concat($table[0].ctselect, keysToMatches(e.value));
+            $table[0].ctselect = [].concat($table[0].ctselect, keysToMatches(e.value));
           } else {
             $table[0].ctselect = keysToMatches(e.value);
           }
