@@ -1,3 +1,9 @@
+# CHANGES IN DT VERSION 0.5
+
+## BUG FIXES
+
+- `styleInterval()` and `styleEqual()` now generates the correct callback for `Date` and `Datetime` values. (thanks, @shrektan, #500, #495)
+
 # CHANGES IN DT VERSION 0.4
 
 ## BUG FIXES
