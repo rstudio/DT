@@ -231,6 +231,17 @@ tplStyle = function(cols, valueCols, target, styles, ...) {
   )
 }
 
+jsValues = function(x) {
+  if (inherits(x, c("POSIXt", "POSIXct", "POSIXlt"))) {
+    sprintf("'%s'", format(x, "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"))
+  } else if (inherits(x, "Date")) {
+    sprintf("'%s'", format(x, "%Y-%m-%d"))
+  } else {
+    x
+  }
+}
+
+
 #' Conditional CSS styles
 #'
 #' A few helper functions for the \code{\link{formatStyle}()} function to
@@ -267,7 +278,7 @@ styleInterval = function(cuts, values) {
   if (!all(cuts == sort(cuts))) stop("'cuts' must be sorted increasingly")
   js = "isNaN(parseFloat(value)) ? '' : "  # missing or non-numeric values in data
   for (i in seq_len(n)) {
-    js = paste0(js, sprintf('value <= %s ? %s : ', cuts[i], values[i]))
+    js = paste0(js, sprintf('value <= %s ? %s : ', jsValues(cuts[i]), values[i]))
   }
   JS(paste0(js, values[n + 1]))
 }
@@ -283,7 +294,7 @@ styleEqual = function(levels, values) {
   if (n == 0) return("''")
   levels2 = levels
   if (is.character(levels)) levels2 = gsub("'", "\\'", levels)
-  levels2 = sprintf("'%s'", levels2)
+  if (is.Date(levels2)) levels2 = jsValues(levels2) else levels2 = sprintf("'%s'", levels2)
   levels2[is.na(levels)] = 'null'
   js = ''
   for (i in seq_len(n)) {
