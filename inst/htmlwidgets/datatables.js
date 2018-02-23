@@ -682,29 +682,94 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
-    // double click to edit the cell
-    if (data.editable) table.on('dblclick.dt', 'tbody td', function() {
-      var $input = $('<input type="text">');
-      var $this = $(this), value = table.cell(this).data(), html = $this.html();
-      var changed = false;
-      $input.val(value);
-      $this.empty().append($input);
-      $input.css('width', '100%').focus().on('change', function() {
-        changed = true;
-        var valueNew = $input.val();
-        if (valueNew != value) {
-          table.cell($this).data(valueNew);
-          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
-          // for server-side processing, users have to call replaceData() to update the table
-          if (!server) table.draw(false);
-        } else {
-          $this.html(html);
+    // editor is enabled
+    if (table.init().editable) {
+      var editorNextCell = null; // declare variable for next cell to be acivated by the tab key
+      var options = table.init(); // load table options
+      for (var key in options.editType) {
+        $(table.column(key).header()).attr("data-editortype", options.editType[key]).attr("data-editoroptions", JSON.stringify(options.editAttribs[key])); // set column editor attributes
+      }
+      
+      // double click to edit the cell
+      table.on('dblclick.dt', 'tbody td', function() {
+        if (table.column(this).header().hasAttribute('data-editortype')) { // cell is marked as editable
+          var $this = $(this), value = table.cell(this).data(), html = $this.html();
+          var changed = false;
+          if (table.column(this).header().getAttribute('data-editortype') == 'text') { // cell shall display a textinput
+            var $input = $('<input type="text">');
+            $input.val(value);
+            $input.attr("placeholder", JSON.parse(table.column(this).header().getAttribute("data-editoroptions")).placeholder);
+          } else if (table.column(this).header().getAttribute('data-editortype') == 'select') { // cell shall display a selectinput
+            var $input = $('<select>');
+            $(JSON.parse(table.column(this).header().getAttribute("data-editoroptions")).options).each(function(index, val) {
+              $option = $("<option>").attr('value', val).text(val);
+              if (val == value) $option.attr('selected','selected');
+              $input.append($option);
+            });
+          }
+          $this.empty().append($input);
+          $input.css('width', '100%').focus().on('change', function() {
+            changed = true;
+            var valueNew = $input.val();
+            if (valueNew != value) {
+              table.cell($this).data(valueNew);
+              if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
+              // for server-side processing, users have to call replaceData() to update the table
+              if (!server) table.draw(false);
+            } else {
+              $this.html(html);
+            }
+            $input.remove();
+          }).on('blur', function() {
+            if (!changed) $input.trigger('change');
+          }).on('keydown', function(ev) {
+            if (ev.keyCode == 13) { // enter
+              if (!changed) $input.trigger('change');
+            } else if (ev.keyCode == 27) { //escape
+              $this.html(html);
+            } else if (ev.keyCode == 9) { //tab
+              if (!changed) $input.trigger('change');
+              // find next editable column
+              var column = table.column($this).header();
+              do {
+                column = column.nextSibling;
+              }
+              while (column !== null && !column.hasAttribute("data-editortype"));
+              if (column === null) { // a editable column was not found after the current column, search before the current column
+                column = table.column(0).header();
+                while (!column.hasAttribute("data-editortype"))
+                  column = column.nextSibling;
+              }
+              var nextColNumber = $(column).parent().children().index(column); // calculate the index of the next editable column
+
+              if (nextColNumber > table.cell($this).index().column) { // next column is in same line
+                ev.preventDefault();
+                $(table.cell(table.cell($this).index().row, nextColNumber).node()).dblclick(); // activate editor in next cell
+                if (HTMLWidgets.shinyMode) editorNextCell = [table.cell($this).index().row, nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+              } else { // next column is in the following row
+                // find next row in the current ordering, pagination and search
+                var rows = table.rows({order: "current", page: "current", search: "applied"}).indexes();
+                var i = 0;
+                while (i < rows.length && rows[i] != table.cell($this).index().row)
+                  i++;
+                if (i < (rows.length - 1)) {
+                  ev.preventDefault();
+                  $(table.cell(rows[i+1], nextColNumber).node()).dblclick(); // activate editor in next cell
+                  if (HTMLWidgets.shinyMode) editorNextCell = [rows[i+1], nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+                }
+              }
+            }
+          });
         }
-        $input.remove();
-      }).on('blur', function() {
-        if (!changed) $input.trigger('change');
       });
-    });
+      
+      table.on('draw.dt', function (e, settings) {
+        if (typeof(editorNextCell) !== 'undefined' && editorNextCell !== null) { // table was redrawn due to an edited cell applied by pressing the tab key
+          $(table.cell(editorNextCell[0], editorNextCell[1]).node()).dblclick(); // activate editor in next cell
+          editorNextCell = null;
+        }
+      })  
+    }
 
     // interaction with shiny
     if (!HTMLWidgets.shinyMode && !crosstalkOptions.group) return;

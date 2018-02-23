@@ -8,3 +8,6 @@ large.txt
 inst/examples/random.R
 .*.Rnb.cached
 revdep/
+inst/.DS_Store
+.DS_Store
+inst/examples/DT-edit/app.R
