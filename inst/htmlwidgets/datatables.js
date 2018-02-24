@@ -688,7 +688,10 @@ HTMLWidgets.widget({
       var options = table.init(); // load table options
       if ('editType' in options) {
         for (var key in options.editType) {
-          $(table.column(key).header()).attr('data-editortype', options.editType[key]).attr('data-editoroptions', JSON.stringify(options.editAttribs[key])); // set column editor attributes
+          colIndex = parseInt(key);
+          if (table.column(0).header().innerHTML == ' ')
+            colIndex = colIndex + 1;
+          $(table.column(colIndex).header()).attr('data-editortype', options.editType[key]).attr('data-editoroptions', JSON.stringify(options.editAttribs[key])); // set column editor attributes
         }
       } else {
         table.columns().every(function() {
