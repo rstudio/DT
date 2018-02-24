@@ -683,11 +683,18 @@ HTMLWidgets.widget({
     if (typeof data.callback === 'function') data.callback(table);
 
     // editor is enabled
-    if (table.init().editable) {
+    if (data.editable) {
       var editorNextCell = null; // declare variable for next cell to be acivated by the tab key
       var options = table.init(); // load table options
-      for (var key in options.editType) {
-        $(table.column(key).header()).attr("data-editortype", options.editType[key]).attr("data-editoroptions", JSON.stringify(options.editAttribs[key])); // set column editor attributes
+      if ('editType' in options) {
+        for (var key in options.editType) {
+          $(table.column(key).header()).attr('data-editortype', options.editType[key]).attr('data-editoroptions', JSON.stringify(options.editAttribs[key])); // set column editor attributes
+        }
+      } else {
+        table.columns().every(function() {
+          if (this.header().innerHTML != ' ')
+            $(this.header()).attr('data-editortype', 'text').attr('data-editoroptions', JSON.stringify({placeholder: ''})); // set column editor attributes
+        });
       }
       
       // double click to edit the cell
