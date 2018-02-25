@@ -696,7 +696,7 @@ HTMLWidgets.widget({
       } else {
         table.columns().every(function() {
           if (this.header().innerHTML != ' ')
-            $(this.header()).attr('data-editortype', 'text').attr('data-editoroptions', JSON.stringify({placeholder: ''})); // set column editor attributes
+            $(this.header()).attr('data-editortype', 'text').attr('data-editoroptions', JSON.stringify({placeholder: this.header().innerHTML})); // set column editor attributes
         });
       }
       
@@ -708,11 +708,11 @@ HTMLWidgets.widget({
           if (table.column(this).header().getAttribute('data-editortype') == 'text') { // cell shall display a textinput
             var $input = $('<input type="text">');
             $input.val(value);
-            $input.attr("placeholder", JSON.parse(table.column(this).header().getAttribute("data-editoroptions")).placeholder);
+            $input.attr('placeholder', JSON.parse(table.column(this).header().getAttribute('data-editoroptions')).placeholder);
           } else if (table.column(this).header().getAttribute('data-editortype') == 'select') { // cell shall display a selectinput
             var $input = $('<select>');
-            $(JSON.parse(table.column(this).header().getAttribute("data-editoroptions")).options).each(function(index, val) {
-              $option = $("<option>").attr('value', val).text(val);
+            $(JSON.parse(table.column(this).header().getAttribute('data-editoroptions')).options).each(function(index, val) {
+              $option = $('<option>').attr('value', val).text(val);
               if (val == value) $option.attr('selected','selected');
               $input.append($option);
             });
@@ -744,10 +744,10 @@ HTMLWidgets.widget({
               do {
                 column = column.nextSibling;
               }
-              while (column !== null && !column.hasAttribute("data-editortype"));
+              while (column !== null && !column.hasAttribute('data-editortype'));
               if (column === null) { // a editable column was not found after the current column, search before the current column
                 column = table.column(0).header();
-                while (!column.hasAttribute("data-editortype"))
+                while (!column.hasAttribute('data-editortype'))
                   column = column.nextSibling;
               }
               var nextColNumber = $(column).parent().children().index(column); // calculate the index of the next editable column
@@ -758,7 +758,7 @@ HTMLWidgets.widget({
                 if (HTMLWidgets.shinyMode) editorNextCell = [table.cell($this).index().row, nextColNumber]; // save next cell to be clicked after a possible table reload by the server
               } else { // next column is in the following row
                 // find next row in the current ordering, pagination and search
-                var rows = table.rows({order: "current", page: "current", search: "applied"}).indexes();
+                var rows = table.rows({order: 'current', page: 'current', search: 'applied'}).indexes();
                 var i = 0;
                 while (i < rows.length && rows[i] != table.cell($this).index().row)
                   i++;
