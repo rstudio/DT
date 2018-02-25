@@ -132,7 +132,7 @@ datatable = function(
   if (length(numc)) {
     # if the `className` of the column has already been defined by the user,
     # we should not touch it
-    undefined_numc = setdiff(numc - 1, classNameDefinedColumns(options))
+    undefined_numc = setdiff(numc - 1, classNameDefinedColumns(options, ncol(data)))
     if (length(undefined_numc)) options = appendColumnDefs(
       options, list(className = 'dt-right', targets = undefined_numc)
     )
@@ -286,12 +286,21 @@ appendColumnDefs = function(options, def) {
   options
 }
 
-classNameDefinedColumns = function(options) {
+classNameDefinedColumns = function(options, ncol) {
   defs = options[['columnDefs']]
   cols = integer()
   for (def in defs) {
-    if (!is.null(def[['className']]) && is.numeric(col <- def[['targets']]))
-      cols = c(cols, col)
+    if (!is.null(def[['className']])) {
+      col = def[['targets']]
+      if (is.numeric(col)) {
+        col[col < 0] = col[col < 0] + ncol
+      } else if ("_all" %in% col) {
+        col = seq_len(ncol)
+      } else {
+        col = integer()
+      }
+    }
+    cols = c(cols, col)
   }
   unique(cols)
 }
