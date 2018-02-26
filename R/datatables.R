@@ -295,7 +295,7 @@ classNameDefinedColumns = function(options, ncol) {
       if (is.numeric(col)) {
         col[col < 0] = col[col < 0] + ncol
       } else if ("_all" %in% col) {
-        col = seq_len(ncol)
+        col = seq_len(ncol) - 1
       } else {
         col = integer()
       }
