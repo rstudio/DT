@@ -2,9 +2,11 @@
 
 ## BUG FIXES
 
-- `styleInterval()` and `styleEqual()` now generates the correct callback for `Date` and `Datetime` values. (thanks, @shrektan, #500, #495)
+- `styleInterval()` and `styleEqual()` now generates the correct callback for `Date` and `Datetime` values. (thanks, @shrektan, #500, #495).
 
 - The `dt-right` class will no longer be added to numeric headers unexpectedly (thanks, @shrektan @carlganz @vnijs, #514 #512 #511 #476).
+
+- The printing values of `NA` and `Inf` can be controlled by `getOption('htmlwidgets.TOJSON_ARGS')` in the server-side processing mode now. (thanks, @shrektan, #513).
 
 # CHANGES IN DT VERSION 0.4
 

@@ -379,7 +379,9 @@ sessionDataURL = function(session, data, id, filter) {
     res = tryCatch(filter(data, params), error = function(e) {
       list(error = as.character(e))
     })
-    httpResponse(200, 'application/json', enc2utf8(toJSON(res, dataframe = 'rows')))
+
+    jsonArgs = c(list(x = res, dataframe = 'rows'), getOption('htmlwidgets.TOJSON_ARGS'))
+    httpResponse(200, 'application/json', enc2utf8(do.call(toJSON, jsonArgs)))
   }
 
   session$registerDataObj(id, data, filterFun)
