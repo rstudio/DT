@@ -1,10 +1,4 @@
 .Rproj.user
 .Rhistory
 .RData
-tools/DataTables*
-tools/Plugins
-rsconnect/
-large.txt
-inst/examples/random.R
-.*.Rnb.cached
-revdep/
+.DS_Store

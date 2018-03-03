@@ -738,34 +738,66 @@ HTMLWidgets.widget({
             } else if (ev.keyCode == 27) { //escape
               $this.html(html);
             } else if (ev.keyCode == 9) { //tab
-              if (!changed) $input.trigger('change');
-              // find next editable column
-              var column = table.column($this).header();
-              do {
-                column = column.nextSibling;
-              }
-              while (column !== null && !column.hasAttribute('data-editortype'));
-              if (column === null) { // a editable column was not found after the current column, search before the current column
-                column = table.column(0).header();
-                while (!column.hasAttribute('data-editortype'))
-                  column = column.nextSibling;
-              }
-              var nextColNumber = $(column).parent().children().index(column); // calculate the index of the next editable column
-
-              if (nextColNumber > table.cell($this).index().column) { // next column is in same line
-                ev.preventDefault();
-                $(table.cell(table.cell($this).index().row, nextColNumber).node()).dblclick(); // activate editor in next cell
-                if (HTMLWidgets.shinyMode) editorNextCell = [table.cell($this).index().row, nextColNumber]; // save next cell to be clicked after a possible table reload by the server
-              } else { // next column is in the following row
-                // find next row in the current ordering, pagination and search
-                var rows = table.rows({order: 'current', page: 'current', search: 'applied'}).indexes();
-                var i = 0;
-                while (i < rows.length && rows[i] != table.cell($this).index().row)
-                  i++;
-                if (i < (rows.length - 1)) {
+            if (!changed) $input.trigger('change');
+              if (ev.shiftKey) {
+                // find previous editable column
+                var column = table.column($this).header();
+                do {
+                  column = column.previousSibling;
+                }
+                while (column !== null && !column.hasAttribute('data-editortype'));
+                if (column === null) { // a editable column was not found before the current column, search after the current column
+                  column = table.column($this).header().parentElement.lastChild;
+                  while (!column.hasAttribute('data-editortype'))
+                    column = column.previousSibling;
+                }
+                var nextColNumber = $(column).parent().children().index(column); // calculate the index of the previous editable column
+  
+                if (nextColNumber < table.cell($this).index().column) { // next column is in same line
                   ev.preventDefault();
-                  $(table.cell(rows[i+1], nextColNumber).node()).dblclick(); // activate editor in next cell
-                  if (HTMLWidgets.shinyMode) editorNextCell = [rows[i+1], nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+                  $(table.cell(table.cell($this).index().row, nextColNumber).node()).dblclick(); // activate editor in next cell
+                  if (HTMLWidgets.shinyMode) editorNextCell = [table.cell($this).index().row, nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+                } else { // next column is in the previous row
+                  // find previous row in the current ordering, pagination and search
+                  var rows = table.rows({order: 'current', page: 'current', search: 'applied'}).indexes();
+                  var i = 0;
+                  while (i < rows.length && rows[i] != table.cell($this).index().row)
+                    i++;
+                  if (i > 0) {
+                    ev.preventDefault();
+                    $(table.cell(rows[i-1], nextColNumber).node()).dblclick(); // activate editor in next cell
+                    if (HTMLWidgets.shinyMode) editorNextCell = [rows[i-1], nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+                  }
+                }
+              } else {
+                // find next editable column
+                var column = table.column($this).header();
+                do {
+                  column = column.nextSibling;
+                }
+                while (column !== null && !column.hasAttribute('data-editortype'));
+                if (column === null) { // a editable column was not found after the current column, search before the current column
+                  column = table.column(0).header();
+                  while (!column.hasAttribute('data-editortype'))
+                    column = column.nextSibling;
+                }
+                var nextColNumber = $(column).parent().children().index(column); // calculate the index of the next editable column
+  
+                if (nextColNumber > table.cell($this).index().column) { // next column is in same line
+                  ev.preventDefault();
+                  $(table.cell(table.cell($this).index().row, nextColNumber).node()).dblclick(); // activate editor in next cell
+                  if (HTMLWidgets.shinyMode) editorNextCell = [table.cell($this).index().row, nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+                } else { // next column is in the following row
+                  // find next row in the current ordering, pagination and search
+                  var rows = table.rows({order: 'current', page: 'current', search: 'applied'}).indexes();
+                  var i = 0;
+                  while (i < rows.length && rows[i] != table.cell($this).index().row)
+                    i++;
+                  if (i < (rows.length - 1)) {
+                    ev.preventDefault();
+                    $(table.cell(rows[i+1], nextColNumber).node()).dblclick(); // activate editor in next cell
+                    if (HTMLWidgets.shinyMode) editorNextCell = [rows[i+1], nextColNumber]; // save next cell to be clicked after a possible table reload by the server
+                  }
                 }
               }
             }
