@@ -236,6 +236,8 @@ jsValues = function(x) {
     sprintf("'%s'", format(x, "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"))
   } else if (inherits(x, "Date")) {
     sprintf("'%s'", format(x, "%Y-%m-%d"))
+  } else if (is.numeric(x)) {
+    sprintf("%f", x)
   } else {
     x
   }
@@ -294,7 +296,7 @@ styleEqual = function(levels, values) {
   if (n == 0) return("''")
   levels2 = levels
   if (is.character(levels)) levels2 = gsub("'", "\\'", levels)
-  if (is.Date(levels2)) levels2 = jsValues(levels2) else levels2 = sprintf("'%s'", levels2)
+  levels2 = if (is.Date(levels2) || is.numeric(levels2)) jsValues(levels2) else sprintf("'%s'", levels2)
   levels2[is.na(levels)] = 'null'
   js = ''
   for (i in seq_len(n)) {
@@ -318,7 +320,7 @@ styleColorBar = function(data, color, angle=90) {
   rg = range(data, na.rm = TRUE, finite = TRUE)
   r1 = rg[1]; r2 = rg[2]; r = r2 - r1
   JS(sprintf(
-    "isNaN(parseFloat(value)) || value <= %s ? '' : 'linear-gradient(%sdeg, transparent ' + (%s - value)/%s * 100 + '%%, %s ' + (%s - value)/%s * 100 + '%%)'",
+    "isNaN(parseFloat(value)) || value <= %f ? '' : 'linear-gradient(%fdeg, transparent ' + (%f - value)/%f * 100 + '%%, %s ' + (%f - value)/%f * 100 + '%%)'",
     r1, angle, r2, r, color, r2, r
   ))
 }
