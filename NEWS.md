@@ -8,6 +8,8 @@
 
 - The printing values of `NA` and `Inf` can be controlled by `getOption('htmlwidgets.TOJSON_ARGS')` in the server-side processing mode now. (thanks, @shrektan, #513).
 
+- `styleEqual()`, `styleInterval()` and `styleColorBar()` now generate correct javascript values when `options(OutDec = ',')`. (thanks, @shrektan @mteixido, #516 #515)
+
 # CHANGES IN DT VERSION 0.4
 
 ## BUG FIXES
