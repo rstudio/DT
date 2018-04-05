@@ -525,6 +525,13 @@ HTMLWidgets.widget({
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
+            var fmt = undefined;
+            if ('filterDateFmt' in options) {
+              fmt = options.filterDateFmt[i];
+            }
+            if (fmt !== undefined) {
+              return x[fmt.method].apply(x, fmt.params);
+            }
             if (type === 'date') {
               var pad0 = function(x) {
                 return ('0' + x).substr(-2, 2);

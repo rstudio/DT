@@ -10,6 +10,10 @@
 
 - `styleEqual()`, `styleInterval()` and `styleColorBar()` now generate correct javascript values when `options(OutDec = ',')`. (thanks, @shrektan @mteixido, #516 #515)
 
+## NEW FEATURES
+
+- The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content. (thanks, @shrektan, #522 #241)
+
 # CHANGES IN DT VERSION 0.4
 
 ## BUG FIXES

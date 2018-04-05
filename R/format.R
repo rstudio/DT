@@ -103,6 +103,21 @@ formatSignif = function(
 #'   \code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
 #'   'numeric'))}
 formatDate = function(table, columns, method = 'toDateString', params = NULL) {
+  x = table$x
+  if (x$filter != 'none') {
+    if (inherits(columns, 'formula')) columns = all.vars(columns)
+    colnames = base::attr(x, 'colnames', exact = TRUE)
+    rownames = base::attr(x, 'rownames', exact = TRUE)
+    if (is.null(params)) params = list()
+    cols = as.character(name2int(columns, colnames, rownames))
+    if (is.null(x$options$filterDateFmt)) x$options$filterDateFmt = list()
+    for (col in cols) x$options$filterDateFmt[[col]] = list(
+      method = method, params = toJSON(params)
+    )
+    table$x = x
+  }
+  # the code above is used to ensure the date(time) filter displays the same format or
+  # timezone as the column value
   formatColumns(table, columns, tplDate, method, params)
 }
 
