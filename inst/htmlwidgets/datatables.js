@@ -520,7 +520,7 @@ HTMLWidgets.widget({
               filter.val(v);
             }
           });
-          var formatDate = function(d) {
+          var formatDate = function(d, toServer) {
             d = scaleBack(d, scale);
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
@@ -529,7 +529,7 @@ HTMLWidgets.widget({
             if ('filterDateFmt' in options) {
               fmt = options.filterDateFmt[i];
             }
-            if (fmt !== undefined) {
+            if (!toServer && fmt !== undefined) {
               return x[fmt.method].apply(x, fmt.params);
             }
             if (type === 'date') {
@@ -568,7 +568,7 @@ HTMLWidgets.widget({
             }
             r1  = t1; r2 = t2;
           })();
-          $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
+          $span1.text(formatDate(r1, false)); $span2.text(formatDate(r2, false));
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
@@ -583,6 +583,8 @@ HTMLWidgets.widget({
             $span1.text(v1); $span2.text(v2);
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
+              v1 = formatDate(val[0], true); v2 = formatDate(val[1], true);
+              ival = v1 + ' ... ' + v2;
               table.column(i).search($td.data('filter') ? ival : '').draw();
               return;
             }
