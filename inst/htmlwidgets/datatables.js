@@ -520,18 +520,14 @@ HTMLWidgets.widget({
               filter.val(v);
             }
           });
-          var formatDate = function(d, toServer) {
+          var formatDate = function(d, isoFmt = false) {
             d = scaleBack(d, scale);
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
             var fmt = undefined;
-            if ('filterDateFmt' in options) {
-              fmt = options.filterDateFmt[i];
-            }
-            if (!toServer && fmt !== undefined) {
-              return x[fmt.method].apply(x, fmt.params);
-            }
+            if ('filterDateFmt' in options) fmt = options.filterDateFmt[i];
+            if (!isoFmt && fmt !== undefined) return x[fmt.method].apply(x, fmt.params);
             if (type === 'date') {
               var pad0 = function(x) {
                 return ('0' + x).substr(-2, 2);
@@ -568,23 +564,22 @@ HTMLWidgets.widget({
             }
             r1  = t1; r2 = t2;
           })();
-          $span1.text(formatDate(r1, false)); $span2.text(formatDate(r2, false));
+          $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
             $td.data('filter', val[0] > r1 || val[1] < r2);
-            var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
+            var ival;
             if ($td.data('filter')) {
-              ival = v1 + ' ... ' + v2;
+              ival = formatDate(val[0], true) + ' ... ' + formatDate(val[1], true);
               $input.attr('title', ival).val(ival).trigger('input');
             } else {
               $input.attr('title', '').val('');
             }
-            $span1.text(v1); $span2.text(v2);
+            $span1.text(formatDate(val[0])); $span2.text(formatDate(val[1]));
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
-              v1 = formatDate(val[0], true); v2 = formatDate(val[1], true);
-              ival = v1 + ' ... ' + v2;
+              ival = formatDate(val[0], true) + ' ... ' + formatDate(val[1], true);
               table.column(i).search($td.data('filter') ? ival : '').draw();
               return;
             }
