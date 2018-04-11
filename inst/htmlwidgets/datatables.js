@@ -563,7 +563,7 @@ HTMLWidgets.widget({
             }
             r1  = t1; r2 = t2;
           })();
-          $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
+          $span1.text(formatDate(r1, false)); $span2.text(formatDate(r2, false));
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
