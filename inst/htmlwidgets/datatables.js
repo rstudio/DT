@@ -520,14 +520,13 @@ HTMLWidgets.widget({
               filter.val(v);
             }
           });
-          var formatDate = function(d, isoFmt = false) {
+          var formatDate = function(d, isoFmt) {
             d = scaleBack(d, scale);
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
-            var fmt = undefined;
-            if ('filterDateFmt' in options) fmt = options.filterDateFmt[i];
-            if (!isoFmt && fmt !== undefined) return x[fmt.method].apply(x, fmt.params);
+            var fmt = ('filterDateFmt' in data) ? data.filterDateFmt[i] : undefined;
+            if (fmt !== undefined && isoFmt === false) return x[fmt.method].apply(x, fmt.params);
             if (type === 'date') {
               var pad0 = function(x) {
                 return ('0' + x).substr(-2, 2);
@@ -569,17 +568,16 @@ HTMLWidgets.widget({
             var val = filter.val();
             // turn off filter if in full range
             $td.data('filter', val[0] > r1 || val[1] < r2);
-            var ival;
+            var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
             if ($td.data('filter')) {
-              ival = formatDate(val[0], true) + ' ... ' + formatDate(val[1], true);
+              ival = v1 + ' ... ' + v2;
               $input.attr('title', ival).val(ival).trigger('input');
             } else {
               $input.attr('title', '').val('');
             }
-            $span1.text(formatDate(val[0])); $span2.text(formatDate(val[1]));
+            $span1.text(formatDate(val[0], false)); $span2.text(formatDate(val[1], false));
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
-              ival = formatDate(val[0], true) + ' ... ' + formatDate(val[1], true);
               table.column(i).search($td.data('filter') ? ival : '').draw();
               return;
             }
