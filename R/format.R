@@ -111,7 +111,7 @@ formatDate = function(table, columns, method = 'toDateString', params = NULL) {
     if (is.null(params)) params = list()
     cols = as.character(name2int(columns, colnames, rownames))
     x$filterDateFmt = as.list(x$filterDateFmt)
-    for (col in cols) x$options$filterDateFmt[[col]] = list(
+    for (col in cols) x$filterDateFmt[[col]] = list(
       method = method, params = toJSON(params)
     )
     table$x = x
