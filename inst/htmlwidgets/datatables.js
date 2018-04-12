@@ -563,7 +563,10 @@ HTMLWidgets.widget({
             }
             r1  = t1; r2 = t2;
           })();
-          $span1.text(formatDate(r1, false)); $span2.text(formatDate(r2, false));
+          var updateSliderText = function(v1, v2) {
+            $span1.text(formatDate(v1, false)); $span2.text(formatDate(v2, false));
+          };
+          updateSliderText(r1, r2);
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
@@ -575,7 +578,7 @@ HTMLWidgets.widget({
             } else {
               $input.attr('title', '').val('');
             }
-            $span1.text(formatDate(val[0], false)); $span2.text(formatDate(val[1], false));
+            updateSliderText(val[0], val[1]);
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
               table.column(i).search($td.data('filter') ? ival : '').draw();
