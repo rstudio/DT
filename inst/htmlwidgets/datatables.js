@@ -520,11 +520,13 @@ HTMLWidgets.widget({
               filter.val(v);
             }
           });
-          var formatDate = function(d) {
+          var formatDate = function(d, isoFmt) {
             d = scaleBack(d, scale);
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
+            var fmt = ('filterDateFmt' in data) ? data.filterDateFmt[i] : undefined;
+            if (fmt !== undefined && isoFmt === false) return x[fmt.method].apply(x, fmt.params);
             if (type === 'date') {
               var pad0 = function(x) {
                 return ('0' + x).substr(-2, 2);
@@ -561,7 +563,10 @@ HTMLWidgets.widget({
             }
             r1  = t1; r2 = t2;
           })();
-          $span1.text(formatDate(r1)); $span2.text(formatDate(r2));
+          var updateSliderText = function(v1, v2) {
+            $span1.text(formatDate(v1, false)); $span2.text(formatDate(v2, false));
+          };
+          updateSliderText(r1, r2);
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
@@ -573,7 +578,7 @@ HTMLWidgets.widget({
             } else {
               $input.attr('title', '').val('');
             }
-            $span1.text(v1); $span2.text(v2);
+            updateSliderText(val[0], val[1]);
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
               table.column(i).search($td.data('filter') ? ival : '').draw();
