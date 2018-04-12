@@ -109,7 +109,7 @@ formatDate = function(table, columns, method = 'toDateString', params = NULL) {
     colnames = base::attr(x, 'colnames', exact = TRUE)
     rownames = base::attr(x, 'rownames', exact = TRUE)
     if (is.null(params)) params = list()
-    cols = as.character(name2int(columns, colnames, rownames))
+    cols = sprintf("%d", name2int(columns, colnames, rownames))
     x$filterDateFmt = as.list(x$filterDateFmt)
     for (col in cols) x$filterDateFmt[[col]] = list(
       method = method, params = toJSON(params)
