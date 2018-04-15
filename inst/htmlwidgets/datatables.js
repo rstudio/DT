@@ -1095,6 +1095,10 @@ HTMLWidgets.widget({
       $(table.columns(show).visible(true));
     }
 
+    methods.colReorder = function(order, origOrder) {
+      $(table.colReorder.order(order, origOrder));
+    }
+
     methods.selectPage = function(page) {
       if (table.page.info().pages < page || page < 1) {
         throw 'Selected page is out of range';

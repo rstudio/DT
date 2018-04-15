@@ -13,6 +13,7 @@
 \alias{updateSearch}
 \alias{showCols}
 \alias{hideCols}
+\alias{colReorder}
 \alias{reloadData}
 \title{Manipulate an existing DataTables instance in a Shiny app}
 \usage{
@@ -40,6 +41,8 @@ updateSearch(proxy, keywords = list(global = NULL, columns = NULL))
 showCols(proxy, show, reset = FALSE)
 
 hideCols(proxy, hide, reset = FALSE)
+
+colReorder(proxy, order, origOrder = FALSE)
 
 reloadData(proxy, resetPaging = TRUE, clearSelection = c("all", "none", 
     "row", "column", "cell"))
@@ -83,6 +86,15 @@ should contain one keyword for the row names as well)}
 \item{reset}{if \code{TRUE}, will only show/hide the columns indicated.}
 
 \item{hide}{a vector of column positions to hide}
+
+\item{order}{A numeric vector of column positions, starting from 0, and including
+the row.names as a column, if they are include. Must contain a value
+for all columns, regardless of whether they are visible or not. Also for
+column reordering to work, the datatable must have extension 'ColReorder'
+set as well as option 'colReordoer' set to TRUE).}
+
+\item{origOrder}{Whether column reordering should be relative to the original
+order (the default is to compare to current order)}
 
 \item{resetPaging}{whether to reset the paging position}
 

@@ -272,6 +272,19 @@ hideCols = function(proxy, hide, reset = FALSE) {
   invokeRemote(proxy, 'hideCols', list(hide, reset))
 }
 
+#' @param order A numeric vector of column positions, starting from 0, and including
+#' the row.names as a column, if they are include. Must contain a value
+#' for all columns, regardless of whether they are visible or not. Also for
+#' column reordering to work, the datatable must have extension 'ColReorder'
+#' set as well as option 'colReordoer' set to TRUE).
+#' @param origOrder Whether column reordering should be relative to the original
+#' order (the default is to compare to current order)
+#' @rdname proxy
+#' @export
+colReorder = function(proxy, order, origOrder = FALSE) {
+  invokeRemote(proxy, 'colReorder', list(order, origOrder))
+}
+
 
 #' @param resetPaging whether to reset the paging position
 #' @param clearSelection which existing selections to clear: it can be any
