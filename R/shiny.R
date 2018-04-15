@@ -176,6 +176,12 @@ selectColumns = function(proxy, selected) {
   invokeRemote(proxy, 'selectColumns', list(I_null(selected)))
 }
 
+#' @rdname proxy
+#' @export
+hideColumns = function(proxy, selected) {
+  invokeRemote(proxy, 'hideColumns', list(I_null(selected)))
+}
+
 I_null = function(x) if (is.null(x)) list() else x
 
 #' @rdname proxy
@@ -249,6 +255,23 @@ updateSearch = function(proxy, keywords = list(global = NULL, columns = NULL)) {
   }
   invokeRemote(proxy, 'updateSearch', list(keywords))
 }
+
+#' @param show a vector of column positions to show (the indexing starts at
+#' 0, but if row.names are visible, they are the first column).
+#' @rdname proxy
+#' @export
+showCols = function(proxy, show, reset = FALSE) {
+  invokeRemote(proxy, 'showCols', list(show, reset))
+}
+
+#' @param hide a vector of column positions to hide
+#' @param reset if \code{TRUE}, will only show/hide the columns indicated.
+#' @rdname proxy
+#' @export
+hideCols = function(proxy, hide, reset = FALSE) {
+  invokeRemote(proxy, 'hideCols', list(hide, reset))
+}
+
 
 #' @param resetPaging whether to reset the paging position
 #' @param clearSelection which existing selections to clear: it can be any

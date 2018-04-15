@@ -4,12 +4,15 @@
 \alias{dataTableProxy}
 \alias{selectRows}
 \alias{selectColumns}
+\alias{hideColumns}
 \alias{selectCells}
 \alias{addRow}
 \alias{clearSearch}
 \alias{selectPage}
 \alias{updateCaption}
 \alias{updateSearch}
+\alias{showCols}
+\alias{hideCols}
 \alias{reloadData}
 \title{Manipulate an existing DataTables instance in a Shiny app}
 \usage{
@@ -19,6 +22,8 @@ dataTableProxy(outputId, session = shiny::getDefaultReactiveDomain(),
 selectRows(proxy, selected)
 
 selectColumns(proxy, selected)
+
+hideColumns(proxy, selected)
 
 selectCells(proxy, selected)
 
@@ -31,6 +36,10 @@ selectPage(proxy, page)
 updateCaption(proxy, caption)
 
 updateSearch(proxy, keywords = list(global = NULL, columns = NULL))
+
+showCols(proxy, show, reset = FALSE)
+
+hideCols(proxy, hide, reset = FALSE)
 
 reloadData(proxy, resetPaging = TRUE, clearSelection = c("all", "none", 
     "row", "column", "cell"))
@@ -67,6 +76,13 @@ keyword of a single character string (ignored if \code{NULL});
 \code{columns} is a character vector of the search keywords for all columns
 (when the table has one column for the row names, this vector of keywords
 should contain one keyword for the row names as well)}
+
+\item{show}{a vector of column positions to show (the indexing starts at
+0, but if row.names are visible, they are the first column).}
+
+\item{reset}{if \code{TRUE}, will only show/hide the columns indicated.}
+
+\item{hide}{a vector of column positions to hide}
 
 \item{resetPaging}{whether to reset the paging position}
 

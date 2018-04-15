@@ -36,6 +36,22 @@ shinyServer(function(input, output, session) {
     if (input$cap != '') proxy %>% updateCaption(input$cap)
   })
 
+  observe({
+    if (input$hide1) proxy %>% DT:::hideCols(3, TRUE)
+  })
+  observe({
+    if (input$show1) proxy %>% DT:::showCols(1, TRUE)
+  })
+  observe({
+    if (input$hide2) proxy %>% DT:::hideCols(c(1, 2))
+  })
+  observe({
+    if (input$show2) proxy %>% DT:::showCols(c(1, 2))
+  })
+  observe({
+    if (input$resetVis) proxy %>% DT:::hideCols(NULL, TRUE)
+  })
+
   output$info = renderPrint({
     list(rows = input$foo_rows_selected, columns = input$foo_columns_selected)
   })
