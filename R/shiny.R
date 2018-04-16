@@ -167,13 +167,13 @@ dataTableProxy = function(
 #' @rdname proxy
 #' @export
 selectRows = function(proxy, selected) {
-  invokeRemote(proxy, 'selectRows', list(I_null(selected)))
+  invokeRemote(proxy, 'selectRows', list(I_null(as.integer(selected))))
 }
 
 #' @rdname proxy
 #' @export
 selectColumns = function(proxy, selected) {
-  invokeRemote(proxy, 'selectColumns', list(I_null(selected)))
+  invokeRemote(proxy, 'selectColumns', list(I_null(as.integer(selected))))
 }
 
 I_null = function(x) if (is.null(x)) list() else x
