@@ -10,7 +10,7 @@
 
 - `styleEqual()`, `styleInterval()` and `styleColorBar()` now generate correct javascript values when `options(OutDec = ',')`. (thanks, @shrektan @mteixido, #516 #515)
 
-- fix a bug that `selectRows()` and `selectColumns()` behaves erratically for scalar inputs or character inputs. (thanks, @shrektan #528)
+- Fixed a bug that `selectRows()` and `selectColumns()` behave erratically for scalar inputs or character inputs (thanks, @shrektan #528).
 
 ## NEW FEATURES
 
