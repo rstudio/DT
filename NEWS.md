@@ -12,6 +12,8 @@
 
 - Fixed a bug that `selectRows()` and `selectColumns()` behave erratically for scalar inputs or character inputs (thanks, @shrektan #528).
 
+- The server-side processing mode now supports data with sub-`data.frame` in its columns. (thanks, @shrektan, #530 #525)
+
 ## NEW FEATURES
 
 - The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content if `formatDate()` is applied on these columns (thanks, @shrektan, #522 #241).
