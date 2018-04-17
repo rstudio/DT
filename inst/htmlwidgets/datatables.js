@@ -904,7 +904,7 @@ HTMLWidgets.widget({
         // server-side tables, we have to *real* row indices are in `selected1`
         if (server) table.on('draw.dt', selectRows);
         methods.selectRows = function(selected) {
-          selected1 = selected ? $.isArray(selected) ? selected : [selected] : [];
+          selected1 = $.makeArray(selected);
           selectRows();
           changeInput('rows_selected', selected1);
         }
@@ -938,7 +938,7 @@ HTMLWidgets.widget({
         selectCols();  // in case users have specified pre-selected columns
         if (server) table.on('draw.dt', selectCols);
         methods.selectColumns = function(selected) {
-          selected2 = selected ? $.isArray(selected) ? selected : [selected] : [];
+          selected2 = $.makeArray(selected);
           selectCols();
           changeInput('columns_selected', selected2);
         }
