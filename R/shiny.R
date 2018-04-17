@@ -176,12 +176,6 @@ selectColumns = function(proxy, selected) {
   invokeRemote(proxy, 'selectColumns', list(I_null(selected)))
 }
 
-#' @rdname proxy
-#' @export
-hideColumns = function(proxy, selected) {
-  invokeRemote(proxy, 'hideColumns', list(I_null(selected)))
-}
-
 I_null = function(x) if (is.null(x)) list() else x
 
 #' @rdname proxy

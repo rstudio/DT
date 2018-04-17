@@ -4,7 +4,6 @@
 \alias{dataTableProxy}
 \alias{selectRows}
 \alias{selectColumns}
-\alias{hideColumns}
 \alias{selectCells}
 \alias{addRow}
 \alias{clearSearch}
@@ -23,8 +22,6 @@ dataTableProxy(outputId, session = shiny::getDefaultReactiveDomain(),
 selectRows(proxy, selected)
 
 selectColumns(proxy, selected)
-
-hideColumns(proxy, selected)
 
 selectCells(proxy, selected)
 
