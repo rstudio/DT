@@ -39,22 +39,22 @@ shinyServer(function(input, output, session) {
   })
 
   observe({
-    if (input$hide1) proxy %>% DT::hideCols(3, TRUE)
+    if (input$hide1) proxy %>% hideCols(3, TRUE)
   })
   observe({
-    if (input$show1) proxy %>% DT::showCols(1, TRUE)
+    if (input$show1) proxy %>% showCols(1, TRUE)
   })
   observe({
-    if (input$hide2) proxy %>% DT::hideCols(c(1, 2))
+    if (input$hide2) proxy %>% hideCols(c(1, 2))
   })
   observe({
-    if (input$show2) proxy %>% DT::showCols(c(1, 2))
+    if (input$show2) proxy %>% showCols(c(1, 2))
   })
   observe({
-    if (input$resetVis) proxy %>% DT::hideCols(NULL, TRUE)
+    if (input$resetVis) proxy %>% hideCols(NULL, TRUE)
   })
   observe({
-    if (input$reverse) proxy %>% DT::colReorder(5:0)
+    if (input$reverse) proxy %>% colReorder(5:0)
   })
 
   output$info = renderPrint({
