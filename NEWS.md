@@ -8,9 +8,11 @@
 
 - The printing values of `NA` and `Inf` can be controlled by `getOption('htmlwidgets.TOJSON_ARGS')` in the server-side processing mode now. (thanks, @shrektan, #513).
 
-- `styleEqual()`, `styleInterval()` and `styleColorBar()` now generate correct javascript values when `options(OutDec = ',')`. (thanks, @shrektan @mteixido, #516 #515)
+- `styleEqual()`, `styleInterval()` and `styleColorBar()` now generate correct javascript values when `options(OutDec = ',')` (thanks, @shrektan @mteixido, #516 #515).
 
 - Fixed a bug that `selectRows()` and `selectColumns()` behave erratically for scalar inputs or character inputs (thanks, @shrektan #528).
+
+- The server-side processing mode now supports data with nested `data.frame`s in its columns (thanks, @shrektan, #530 #525).
 
 ## NEW FEATURES
 
