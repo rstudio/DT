@@ -554,7 +554,7 @@ cleanDataFrame = function(x) {
     xj = unname(xj)  # remove names
     dim(xj) = NULL  # drop dimensions
     if (is.table(xj)) xj = c(xj)  # drop the table class
-    x[, j] = xj
+    x[[j]] = xj
   }
   unname(x)
 }
