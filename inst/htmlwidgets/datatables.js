@@ -1082,16 +1082,12 @@ HTMLWidgets.widget({
     }
 
     methods.hideCols = function(hide, reset) {
-      if (reset) {
-        table.columns().visible(true, false)
-      }
+      if (reset) table.columns().visible(true, false);
       table.columns(hide).visible(false);
     }
 
     methods.showCols = function(show, reset) {
-      if (reset) {
-        table.columns().visible(false, false)
-      }
+      if (reset) table.columns().visible(false, false);
       table.columns(show).visible(true);
     }
 
