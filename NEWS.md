@@ -14,7 +14,7 @@
 
 - The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content if `formatDate()` is applied on these columns (thanks, @shrektan, #522 #241).
 
-- You can now show and hide columns from shiny using `showCols()` and `hideCols()`, and reorder the the display of columns using `colReorder()` (thanks, @gergness #527)
+- You can now show and hide columns from shiny using `showCols()` and `hideCols()`, and reorder the the display of columns using `colReorder()` (thanks, @gergness, #527).
 
 # CHANGES IN DT VERSION 0.4
 
