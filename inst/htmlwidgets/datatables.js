@@ -613,22 +613,28 @@ HTMLWidgets.widget({
           if (typeof filter === 'undefined' || !$td.data('filter')) return true;
 
           var r = filter.val(), v, r0, r1;
+          var i_data = function(i) {
+            try { var order = table.colReorder.order(); } catch (error) { return i; }
+            for (k = 0; k < order.length; ++k) if (order[k] === i) return k;
+            return i;
+          }
+          v = data[i_data(i)];
           if (type === 'number' || type === 'integer') {
-            v = parseFloat(data[i]);
+            v = parseFloat(v);
             // how to handle NaN? currently exclude these rows
             if (isNaN(v)) return(false);
             r0 = parseFloat(scaleBack(r[0], scale))
             r1 = parseFloat(scaleBack(r[1], scale));
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'date' || type === 'time') {
-            v = new Date(data[i]);
+            v = new Date(v);
             r0 = new Date(r[0] / scale); r1 = new Date(r[1] / scale);
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'factor') {
-            if (r.length === 0 || inArray(data[i], r)) return true;
+            if (r.length === 0 || inArray(v, r)) return true;
           } else if (type === 'logical') {
             if (r.length === 0) return true;
-            if (inArray(data[i] === '' ? 'na' : data[i], r)) return true;
+            if (inArray(v === '' ? 'na' : v, r)) return true;
           }
           return false;
         };
