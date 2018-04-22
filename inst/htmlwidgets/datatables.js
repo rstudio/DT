@@ -257,7 +257,17 @@ HTMLWidgets.widget({
       options.ajax.dataSrc = function(json) {
         DT_rows_all = $.makeArray(json.DT_rows_all);
         DT_rows_current = $.makeArray(json.DT_rows_current);
-        return json.data;
+        var data = json.data, table = $table.DataTable(), flag = true, order, tmp;
+        try { order = table.colReorder.order(); } catch (error) { return data; }
+        for (i = 0; i < order.length; ++i) if (order[i] !== i) flag = false;
+        if (flag) return data;
+        for (i = 0; i < data.length; ++i) {
+          tmp = data[i].slice();
+          for (j = 0; j < order.length; ++j) {
+            data[i][j] = tmp[order[j]];
+          }
+        }
+        return data;
       };
     }
 
