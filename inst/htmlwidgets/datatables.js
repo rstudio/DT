@@ -1097,6 +1097,20 @@ HTMLWidgets.widget({
       table.draw();
     }
 
+    methods.hideCols = function(hide, reset) {
+      if (reset) table.columns().visible(true, false);
+      table.columns(hide).visible(false);
+    }
+
+    methods.showCols = function(show, reset) {
+      if (reset) table.columns().visible(false, false);
+      table.columns(show).visible(true);
+    }
+
+    methods.colReorder = function(order, origOrder) {
+      table.colReorder.order(order, origOrder);
+    }
+
     methods.selectPage = function(page) {
       if (table.page.info().pages < page || page < 1) {
         throw 'Selected page is out of range';
