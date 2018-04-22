@@ -257,15 +257,14 @@ HTMLWidgets.widget({
       options.ajax.dataSrc = function(json) {
         DT_rows_all = $.makeArray(json.DT_rows_all);
         DT_rows_current = $.makeArray(json.DT_rows_current);
-        var data = json.data, table = $table.DataTable(), flag = true, order, tmp;
-        try { order = table.colReorder.order(); } catch (error) { return data; }
+        var data = json.data;
+        if (!colReorderEnabled()) return data;
+        var table = $table.DataTable(), order = table.colReorder.order(), flag = true, tmp;
         for (i = 0; i < order.length; ++i) if (order[i] !== i) flag = false;
         if (flag) return data;
         for (i = 0; i < data.length; ++i) {
           tmp = data[i].slice();
-          for (j = 0; j < order.length; ++j) {
-            data[i][j] = tmp[order[j]];
-          }
+          for (j = 0; j < order.length; ++j) data[i][j] = tmp[order[j]];
         }
         return data;
       };
@@ -275,7 +274,11 @@ HTMLWidgets.widget({
     if (instance.fillContainer) $table.on('init.dt', function(e) {
       thiz.fillAvailableHeight(el, $(el).innerHeight());
     });
-
+    // If the page contains serveral datatables and one of which enables colReorder,
+    // the table.colReorder.order() function will exist but throws error when called.
+    // So it seems like the only way to know if colReorder is enabled or not is to
+    // check the options.
+    var colReorderEnabled = function() { return "colReorder" in options; };
     var table = $table.DataTable(options);
     $el.data('datatable', table);
 
@@ -624,9 +627,10 @@ HTMLWidgets.widget({
 
           var r = filter.val(), v, r0, r1;
           var i_data = function(i) {
-            try { var order = table.colReorder.order(); } catch (error) { return i; }
+            if (!colReorderEnabled()) return i;
+            var order = table.colReorder.order();
             for (k = 0; k < order.length; ++k) if (order[k] === i) return k;
-            return i;
+            return i; // in theory it will never be here...
           }
           v = data[i_data(i)];
           if (type === 'number' || type === 'integer') {
