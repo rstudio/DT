@@ -259,12 +259,12 @@ HTMLWidgets.widget({
         DT_rows_current = $.makeArray(json.DT_rows_current);
         var data = json.data;
         if (!colReorderEnabled()) return data;
-        var table = $table.DataTable(), order = table.colReorder.order(), flag = true, tmp;
+        var table = $table.DataTable(), order = table.colReorder.order(), flag = true, row;
         for (i = 0; i < order.length; ++i) if (order[i] !== i) flag = false;
         if (flag) return data;
         for (i = 0; i < data.length; ++i) {
-          tmp = data[i].slice();
-          for (j = 0; j < order.length; ++j) data[i][j] = tmp[order[j]];
+          row = data[i].slice();
+          for (j = 0; j < order.length; ++j) data[i][j] = row[order[j]];
         }
         return data;
       };
