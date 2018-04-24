@@ -14,7 +14,7 @@
 
 - The server-side processing mode now supports data with nested `data.frame`s in its columns (thanks, @shrektan, #530 #525).
 
-- The `colReorder` extention now works with the column filters and the server-side processing mode. (thanks @shrektan, #532 #531 #160)
+- The `colReorder` extention now works with the column filters and the server-side processing mode (thanks @shrektan, #532 #531 #160).
 
 ## NEW FEATURES
 
