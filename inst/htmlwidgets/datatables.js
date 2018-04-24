@@ -259,7 +259,7 @@ HTMLWidgets.widget({
         DT_rows_current = $.makeArray(json.DT_rows_current);
         var data = json.data;
         if (!colReorderEnabled()) return data;
-        var table = $table.DataTable(), order = table.colReorder.order(), flag = true, row;
+        var table = $table.DataTable(), order = table.colReorder.order(), flag = true, i, j, row;
         for (i = 0; i < order.length; ++i) if (order[i] !== i) flag = false;
         if (flag) return data;
         for (i = 0; i < data.length; ++i) {
@@ -628,7 +628,7 @@ HTMLWidgets.widget({
           var r = filter.val(), v, r0, r1;
           var i_data = function(i) {
             if (!colReorderEnabled()) return i;
-            var order = table.colReorder.order();
+            var order = table.colReorder.order(), k;
             for (k = 0; k < order.length; ++k) if (order[k] === i) return k;
             return i; // in theory it will never be here...
           }
