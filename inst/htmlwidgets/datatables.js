@@ -257,7 +257,16 @@ HTMLWidgets.widget({
       options.ajax.dataSrc = function(json) {
         DT_rows_all = $.makeArray(json.DT_rows_all);
         DT_rows_current = $.makeArray(json.DT_rows_current);
-        return json.data;
+        var data = json.data;
+        if (!colReorderEnabled()) return data;
+        var table = $table.DataTable(), order = table.colReorder.order(), flag = true, i, j, row;
+        for (i = 0; i < order.length; ++i) if (order[i] !== i) flag = false;
+        if (flag) return data;
+        for (i = 0; i < data.length; ++i) {
+          row = data[i].slice();
+          for (j = 0; j < order.length; ++j) data[i][j] = row[order[j]];
+        }
+        return data;
       };
     }
 
@@ -265,7 +274,11 @@ HTMLWidgets.widget({
     if (instance.fillContainer) $table.on('init.dt', function(e) {
       thiz.fillAvailableHeight(el, $(el).innerHeight());
     });
-
+    // If the page contains serveral datatables and one of which enables colReorder,
+    // the table.colReorder.order() function will exist but throws error when called.
+    // So it seems like the only way to know if colReorder is enabled or not is to
+    // check the options.
+    var colReorderEnabled = function() { return "colReorder" in options; };
     var table = $table.DataTable(options);
     $el.data('datatable', table);
 
@@ -613,22 +626,29 @@ HTMLWidgets.widget({
           if (typeof filter === 'undefined' || !$td.data('filter')) return true;
 
           var r = filter.val(), v, r0, r1;
+          var i_data = function(i) {
+            if (!colReorderEnabled()) return i;
+            var order = table.colReorder.order(), k;
+            for (k = 0; k < order.length; ++k) if (order[k] === i) return k;
+            return i; // in theory it will never be here...
+          }
+          v = data[i_data(i)];
           if (type === 'number' || type === 'integer') {
-            v = parseFloat(data[i]);
+            v = parseFloat(v);
             // how to handle NaN? currently exclude these rows
             if (isNaN(v)) return(false);
             r0 = parseFloat(scaleBack(r[0], scale))
             r1 = parseFloat(scaleBack(r[1], scale));
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'date' || type === 'time') {
-            v = new Date(data[i]);
+            v = new Date(v);
             r0 = new Date(r[0] / scale); r1 = new Date(r[1] / scale);
             if (v >= r0 && v <= r1) return true;
           } else if (type === 'factor') {
-            if (r.length === 0 || inArray(data[i], r)) return true;
+            if (r.length === 0 || inArray(v, r)) return true;
           } else if (type === 'logical') {
             if (r.length === 0) return true;
-            if (inArray(data[i] === '' ? 'na' : data[i], r)) return true;
+            if (inArray(v === '' ? 'na' : v, r)) return true;
           }
           return false;
         };

@@ -14,6 +14,8 @@
 
 - The server-side processing mode now supports data with nested `data.frame`s in its columns (thanks, @shrektan, #530 #525).
 
+- The `colReorder` extention now works with the column filters and the server-side processing mode (thanks @shrektan, #532 #531 #160).
+
 ## NEW FEATURES
 
 - The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content if `formatDate()` is applied on these columns (thanks, @shrektan, #522 #241).
