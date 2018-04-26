@@ -45,41 +45,68 @@ p code {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 <style type="text/css">
   pre:not([class]) {
@@ -208,10 +235,10 @@ $(document).ready(function () {
 <li>The option <code>autoWidth</code> is set to <code>FALSE</code> by default, so that <strong>DataTables</strong> does not calculate and put hard-coded width values on the table columns;
 <ul>
 <li><p>One <a href="https://github.com/rstudio/DT/issues/29">known issue</a> with <code>autoWidth = FALSE</code> is that the <code>width</code> option for columns will not work, so if you want to configure widths for columns, you have to use <code>autoWidth = TRUE</code>, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(..., <span class="dt">options =</span> <span class="kw">list</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(..., <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">autoWidth =</span> <span class="ot">TRUE</span>,
   <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">width =</span> <span class="st">&#39;200px&#39;</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)))
-))</code></pre></div></li>
+))</code></pre></li>
 </ul></li>
 <li>When using the <a href="server.html">server-side processing</a> mode, the option <code>processing = TRUE</code> is set as the default to show the processing indicator (<strong>DataTables</strong>’ default is always <code>FALSE</code>);</li>
 <li>The option <code>searchDelay</code> is set to <code>1000</code> (1 second) by default;</li>
@@ -219,12 +246,12 @@ $(document).ready(function () {
 </div>
 <div id="initialization-options" class="section level1">
 <h1><span class="header-section-number">2</span> Initialization Options</h1>
-<p>We can pass initialization options to <code>datatable()</code> via the <code>options</code> argument. For example, we center the 5th column in the table below<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and customize the length menu:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">options =</span> <span class="kw">list</span>(
+<p>We can pass initialization options to <code>datatable()</code> via the <code>options</code> argument. For example, we center the 5th column in the table below<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and customize the length menu:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">className =</span> <span class="st">&#39;dt-center&#39;</span>, <span class="dt">targets =</span> <span class="dv">5</span>)),
   <span class="dt">pageLength =</span> <span class="dv">5</span>,
   <span class="dt">lengthMenu =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)
-))</code></pre></div>
+))</code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -264,26 +291,26 @@ $(document).ready(function () {
   "jsHooks": []
 }</script>
 <p>The target column index is 5 but we actually centered the 6th column: the first column is row names, and the rest of columns are the <code>iris</code> data. The JavaScript index of the 6th column is 5. See the section “<a href="./#display-row-names">Display Row Names</a>” for more details.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># when rownames = FALSE, use 4 as the index of the Species column</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># when rownames = FALSE, use 4 as the index of the Species column</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">rownames =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">className =</span> <span class="st">&#39;dt-center&#39;</span>, <span class="dt">targets =</span> <span class="dv">4</span>)),
   <span class="dt">pageLength =</span> <span class="dv">5</span>,
   <span class="dt">lengthMenu =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)
-))</code></pre></div>
+))</code></pre>
 </div>
 <div id="global-options" class="section level1">
 <h1><span class="header-section-number">3</span> Global Options</h1>
 <p>When there are some options that you want to set for multiple tables produced from the same R session, you can use the global option named <code>DT.options</code>. For example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">language =</span> <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;Filter:&#39;</span>)))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">language =</span> <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;Filter:&#39;</span>)))</code></pre>
 </div>
 <div id="examples-of-datatables-options" class="section level1">
 <h1><span class="header-section-number">4</span> Examples of DataTables Options</h1>
 <div id="sorting" class="section level2">
 <h2><span class="header-section-number">4.1</span> Sorting</h2>
 <p>We can use the <code>order</code> option to specify how we want to order the rows. For example, we sort the table by columns 2 (ascending) and 4 (descending):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars, <span class="dv">30</span>), <span class="dt">options =</span> <span class="kw">list</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars, <span class="dv">30</span>), <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dv">2</span>, <span class="st">&#39;asc&#39;</span>), <span class="kw">list</span>(<span class="dv">4</span>, <span class="st">&#39;desc&#39;</span>))
-))</code></pre></div>
+))</code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
@@ -335,8 +362,8 @@ $(document).ready(function () {
 <div id="dom-elements" class="section level2">
 <h2><span class="header-section-number">4.2</span> DOM Elements</h2>
 <p>By default, the table has these DOM elements: the length menu, the search box, the table, the information summary, and the pagination control. You can choose to display a subset of these elements using the <a href="http://datatables.net/reference/option/dom"><code>dom</code></a> option. Here are some examples:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># only display the table, and nothing else</span>
-<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># only display the table, and nothing else</span>
+<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
@@ -370,8 +397,8 @@ $(document).ready(function () {
   "evals": [],
   "jsHooks": []
 }</script>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the filtering box and the table</span>
-<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;ft&#39;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the filtering box and the table</span>
+<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;ft&#39;</span>))</code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
@@ -409,12 +436,12 @@ $(document).ready(function () {
 <div id="callbacks-in-options" class="section level2">
 <h2><span class="header-section-number">4.3</span> Callbacks in Options</h2>
 <p>We can also customize the callbacks in <strong>DataTables</strong> options. For example, we use the <code>initComplete</code> callback function in <code>options</code> to change the background color of the table header to black after the initialization:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">options =</span> <span class="kw">list</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">initComplete =</span> <span class="kw">JS</span>(
     <span class="st">&quot;function(settings, json) {&quot;</span>,
     <span class="st">&quot;$(this.api().table().header()).css({&#39;background-color&#39;: &#39;#000&#39;, &#39;color&#39;: &#39;#fff&#39;});&quot;</span>,
     <span class="st">&quot;}&quot;</span>)
-))</code></pre></div>
+))</code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
@@ -452,15 +479,15 @@ $(document).ready(function () {
 </div>
 <div id="column-rendering" class="section level2">
 <h2><span class="header-section-number">4.4</span> Column Rendering</h2>
-<p>We can define a custom rendering function for particular columns in the option <code>columnDefs</code>. For example, we abbreviate character strings that are wider than 6 characters using the first 6 characters plus an ellipsis (…), and the full character string will be displayed as a tooltip when you mouse over the cell<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">120</span>), ], <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(
+<p>We can define a custom rendering function for particular columns in the option <code>columnDefs</code>. For example, we abbreviate character strings that are wider than 6 characters using the first 6 characters plus an ellipsis (…), and the full character string will be displayed as a tooltip when you mouse over the cell<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">120</span>), ], <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(
   <span class="dt">targets =</span> <span class="dv">5</span>,
   <span class="dt">render =</span> <span class="kw">JS</span>(
     <span class="st">&quot;function(data, type, row, meta) {&quot;</span>,
     <span class="st">&quot;return type === &#39;display&#39; &amp;&amp; data.length &gt; 6 ?&quot;</span>,
     <span class="st">&quot;&#39;&lt;span title=</span><span class="ch">\&quot;</span><span class="st">&#39; + data + &#39;</span><span class="ch">\&quot;</span><span class="st">&gt;&#39; + data.substr(0, 6) + &#39;...&lt;/span&gt;&#39; : data;&quot;</span>,
     <span class="st">&quot;}&quot;</span>)
-))), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(3).draw(false);&#39;</span>))</code></pre></div>
+))), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(3).draw(false);&#39;</span>))</code></pre>
 <div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {
@@ -503,14 +530,14 @@ $(document).ready(function () {
 <div id="row-rendering" class="section level2">
 <h2><span class="header-section-number">4.5</span> Row Rendering</h2>
 <p>Similarly, we can define how to render data in the rows using the <code>rowCallback</code> option. In the following example, we display some big numbers, format the 3rd column as currency, and order by this column:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>)), <span class="dv">20</span>))
+<pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>)), <span class="dv">20</span>))
 <span class="kw">datatable</span>(m, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">rowCallback =</span> <span class="kw">JS</span>(
     <span class="st">&quot;function(row, data) {&quot;</span>,
     <span class="st">&quot;var num = &#39;$&#39; + data[3].toString().replace(/</span><span class="ch">\\</span><span class="st">B(?=(</span><span class="ch">\\</span><span class="st">d{3})+(?!</span><span class="ch">\\</span><span class="st">d))/g, &#39;,&#39;);&quot;</span>,
     <span class="st">&quot;$(&#39;td:eq(3)&#39;, row).html(num);&quot;</span>,
     <span class="st">&quot;}&quot;</span>)
-), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;table.order([3, &#39;asc&#39;]).draw();&quot;</span>))</code></pre></div>
+), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;table.order([3, &#39;asc&#39;]).draw();&quot;</span>))</code></pre>
 <div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7">{
   "x": {
@@ -562,8 +589,8 @@ $(document).ready(function () {
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To know more about <code>columnDefs</code> and <code>className</code>, see <a href="http://datatables.net/reference/option/columns.className">this reference page</a>.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>See the documentation for <a href="http://datatables.net/reference/option/columns.render">columns.render</a>.<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>To know more about <code>columnDefs</code> and <code>className</code>, see <a href="http://datatables.net/reference/option/columns.className">this reference page</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>See the documentation for <a href="http://datatables.net/reference/option/columns.render">columns.render</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
