@@ -16,7 +16,7 @@ Most **DataTables** extensions work on their own, but some may not work well whe
 - The `FixedColumns` extension does not work well with row selection: when you select rows in the fixed columns, the rows in other columns won't be selected, and vice ([#275](https://github.com/rstudio/DT/issues/275), [#395](https://github.com/rstudio/DT/issues/395), [#439](https://github.com/rstudio/DT/issues/439));
 - The `FixedHeader` extension does not work in tabsets ([#389](https://github.com/rstudio/DT/issues/389));
 - These extensions do/may not work in Shiny apps:
-    - `ColReorder` will fail when you interact with the table, e.g., when you change the page ([#345](https://github.com/rstudio/DT/issues/345)), use column filters ([#160](https://github.com/rstudio/DT/issues/160)), or formatting functions ([#250](https://github.com/rstudio/DT/issues/250)).
+    - `ColReorder` will fail when you use formatting functions ([#250](https://github.com/rstudio/DT/issues/250)).
     - `KeyTable` ([#132](https://github.com/rstudio/DT/issues/132))
     - `Responsive` ([#69](https://github.com/rstudio/DT/issues/69))
     - `Scroller` does not work with column selection ([#283](https://github.com/rstudio/DT/issues/283)).
