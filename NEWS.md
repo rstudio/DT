@@ -6,7 +6,7 @@
 
 - The `dt-right` class will no longer be added to numeric headers unexpectedly (thanks, @shrektan @carlganz @vnijs, #514 #512 #511 #476).
 
-- The printing values of `NA` and `Inf` can be controlled by `getOption('htmlwidgets.TOJSON_ARGS')` in the server-side processing mode now. (thanks, @shrektan, #513).
+- The printing values of `NA` and `Inf` can be controlled by `getOption('DT.TOJSON_ARGS')` in the server-side processing mode now. (thanks, @shrektan, #536 #513).
 
 - `styleEqual()`, `styleInterval()` and `styleColorBar()` now generate correct javascript values when `options(OutDec = ',')` (thanks, @shrektan @mteixido, #516 #515).
 
