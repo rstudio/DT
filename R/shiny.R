@@ -410,7 +410,8 @@ sessionDataURL = function(session, data, id, filter) {
       list(error = as.character(e))
     })
 
-    jsonArgs = c(list(x = res, dataframe = 'rows'), getOption('DT.TOJSON_ARGS'))
+    jsonArgs = c(list(x = res, dataframe = 'rows'),
+                 getOption('DT.TOJSON_ARGS', getOption('htmlwidgets.TOJSON_ARGS')))
     httpResponse(200, 'application/json', enc2utf8(do.call(toJSON, jsonArgs)))
   }
 
