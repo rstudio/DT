@@ -92,7 +92,7 @@ datatable = function(
     if (is.function(options)) options() else options
   )
   params = list()
-  attr(params, "TOJSON_ARGS") <- getOption("DT.TOJSON_ARGS")
+  attr(params, "TOJSON_ARGS") = getOption("DT.TOJSON_ARGS")
 
   if (crosstalk::is.SharedData(data)) {
     params$crosstalkOptions = list(key = data$key(), group = data$groupName())
