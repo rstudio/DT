@@ -1,5 +1,13 @@
 # CHANGES IN DT VERSION 0.5
 
+## NEW FEATURES
+
+- Added the Shiny async support (thanks, @jcheng5, #549; @alexturcan, #543).
+
+- The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content if `formatDate()` is applied on these columns (thanks, @shrektan, #522 #241).
+
+- You can now show and hide columns from shiny using `showCols()` and `hideCols()`, and reorder the the display of columns using `colReorder()` (thanks, @gergness, #527).
+
 ## BUG FIXES
 
 - `styleInterval()` and `styleEqual()` now generates the correct callback for `Date` and `Datetime` values. (thanks, @shrektan, #500, #495).
@@ -19,12 +27,6 @@
 - Fix the bug that `formatDate()` may display dates off by one day when method = "toLocaleDateString" (thanks, @shrektan @DevMui, #539 #538).
 
 - `coerceValue()` no longer throws warnings for class `charactor` (thanks, @shrektan, #541 #542).
-
-## NEW FEATURES
-
-- The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content if `formatDate()` is applied on these columns (thanks, @shrektan, #522 #241).
-
-- You can now show and hide columns from shiny using `showCols()` and `hideCols()`, and reorder the the display of columns using `colReorder()` (thanks, @gergness, #527).
 
 # CHANGES IN DT VERSION 0.4
 

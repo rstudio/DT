@@ -130,11 +130,11 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 #' @rdname dataTableOutput
 renderDT = renderDataTable
 
-getAll <- function(x, env) {
+getAll = function(x, env) {
   as.list(mget(x, env, ifnotfound = rep(list(NULL), times = length(x))))
 }
 
-setAll <- function(lst, env) {
+setAll = function(lst, env) {
   mapply(names(lst), lst, FUN = function(name, val) {
     assign(name, val, env)
   })
@@ -146,15 +146,15 @@ setAll <- function(lst, env) {
 # domain. This is used to pass the Shiny output name from where we
 # know it (in the function(shinysession, name, ...) {...}) to where
 # we don't know it, but need it (processWidget).
-tempVarsPromiseDomain <- function(env, ...) {
+tempVarsPromiseDomain = function(env, ...) {
   force(env)
-  vars <- list(...)
+  vars = list(...)
 
   promises::new_promise_domain(
     wrapOnFulfilled = function(onFulfilled) {
       # force(onFulfilled)
       function(...) {
-        old <- getAll(names(vars), env)
+        old = getAll(names(vars), env)
         setAll(vars, env)
         on.exit({
           setAll(old, env)
@@ -166,7 +166,7 @@ tempVarsPromiseDomain <- function(env, ...) {
     wrapOnRejected = function(onRejected) {
       # force(onRejected)
       function(...) {
-        old <- getAll(names(vars), env)
+        old = getAll(names(vars), env)
         setAll(vars, env)
         on.exit({
           setAll(old, env)
@@ -176,7 +176,7 @@ tempVarsPromiseDomain <- function(env, ...) {
       }
     },
     wrapSync = function(expr) {
-      old <- getAll(names(vars), env)
+      old = getAll(names(vars), env)
       setAll(vars, env)
       on.exit({
         setAll(old, env)
