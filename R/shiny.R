@@ -55,13 +55,20 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
   # TODO: this can be simplified after this htmlwidgets PR is merged
   # https://github.com/ramnathv/htmlwidgets/pull/122
-  currentSession = NULL
-  currentOutputName = NULL
+  outputNameEnv = new.env(parent = emptyenv())
+  outputNameEnv[["outputName"]] = NULL
 
   exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
   widgetFunc = function() {
     opts = options(DT.datatable.shiny = TRUE); on.exit(options(opts), add = TRUE)
     instance = exprFunc()
+    if (promises::is.promising(instance)) {
+      promises::then(instance, processWidget)
+    } else {
+      processWidget(instance)
+    }
+  }
+  processWidget = function(instance) {
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
       instance = datatable(instance, ...)
     } else if (length(list(...)) != 0) {
@@ -87,7 +94,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
       }
 
       if (is.null(options[['ajax']][['url']])) {
-        url = sessionDataURL(currentSession, origData, currentOutputName, dataTablesFilter)
+        url = sessionDataURL(shiny::getDefaultReactiveDomain(), origData, outputNameEnv[["outputName"]], dataTablesFilter)
         options$ajax$url = url
       }
       instance$x$options = fixServerOptions(options)
@@ -101,14 +108,9 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
   )
 
   func = shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
-    currentSession <<- shinysession
-    currentOutputName <<- name
-    on.exit({
-      currentSession <<- NULL
-      currentOutputName <<- NULL
-    }, add = TRUE)
+    domain = tempVarsPromiseDomain(outputNameEnv, outputName = name)
 
-    renderFunc()
+    promises::with_promise_domain(domain, renderFunc())
   })
 
   # This snapshotPreprocessOutput function was added in shiny 1.0.3.9002
@@ -127,6 +129,63 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 #' @export
 #' @rdname dataTableOutput
 renderDT = renderDataTable
+
+getAll <- function(x, env) {
+  as.list(mget(x, env, ifnotfound = rep(list(NULL), times = length(x))))
+}
+
+setAll <- function(lst, env) {
+  mapply(names(lst), lst, FUN = function(name, val) {
+    assign(name, val, env)
+  })
+  invisible()
+}
+
+# This promise domain is needed to set/unset temporary variables in
+# a specific environment anytime a promise handler is invoked in the
+# domain. This is used to pass the Shiny output name from where we
+# know it (in the function(shinysession, name, ...) {...}) to where
+# we don't know it, but need it (processWidget).
+tempVarsPromiseDomain <- function(env, ...) {
+  force(env)
+  vars <- list(...)
+
+  promises::new_promise_domain(
+    wrapOnFulfilled = function(onFulfilled) {
+      # force(onFulfilled)
+      function(...) {
+        old <- getAll(names(vars), env)
+        setAll(vars, env)
+        on.exit({
+          setAll(old, env)
+        }, add = TRUE)
+
+        onFulfilled(...)
+      }
+    },
+    wrapOnRejected = function(onRejected) {
+      # force(onRejected)
+      function(...) {
+        old <- getAll(names(vars), env)
+        setAll(vars, env)
+        on.exit({
+          setAll(old, env)
+        }, add = TRUE)
+
+        onRejected(...)
+      }
+    },
+    wrapSync = function(expr) {
+      old <- getAll(names(vars), env)
+      setAll(vars, env)
+      on.exit({
+        setAll(old, env)
+      }, add = TRUE)
+
+      force(expr)
+    }
+  )
+}
 
 #' Manipulate an existing DataTables instance in a Shiny app
 #'
