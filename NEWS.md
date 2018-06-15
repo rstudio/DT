@@ -18,6 +18,8 @@
 
 - Fix the bug that `formatDate()` may display dates off by one day when method = "toLocaleDateString" (thanks, @shrektan @DevMui, #539 #538).
 
+- Fix the bug that in IE11, the scroll bar of the filter will disappear when you try to click it (thanks, @shrektan, #557 #556).
+
 ## NEW FEATURES
 
 - The filters of `Date` or `Datetime` columns now display the same format and timezone as the column content if `formatDate()` is applied on these columns (thanks, @shrektan, #522 #241).
