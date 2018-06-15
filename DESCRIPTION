@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.4.11
+Version: 0.4.13
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
     person("Joe", "Cheng", role = "ctb"),
@@ -28,7 +28,8 @@ Imports:
     htmltools (>= 0.3.6),
     htmlwidgets (>= 1.0),
     magrittr,
-    crosstalk
+    crosstalk,
+    promises
 Suggests:
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),

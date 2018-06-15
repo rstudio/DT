@@ -72,6 +72,7 @@ classes = function(x) paste(class(x), collapse = ', ')
 coerceValue = function(val, old) {
   if (is.integer(old)) return(as.integer(val))
   if (is.numeric(old)) return(as.numeric(val))
+  if (is.character(old)) return(as.character(val))
   if (inherits(old, 'Date')) return(as.Date(val))
   if (inherits(old, c('POSIXlt', 'POSIXct'))) {
     val = strptime(val, '%Y-%m-%dT%H:%M:%SZ', tz = 'UTC')
