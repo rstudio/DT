@@ -302,12 +302,15 @@ styleInterval = function(cuts, values) {
 
 #' @param levels a character vector of data values to be mapped (one-to-one) to
 #'   CSS values
+#' @param default a string used as the the default CSS value for values other than levels
 #' @export
 #' @rdname styleInterval
-styleEqual = function(levels, values) {
+styleEqual = function(levels, values, default = "") {
   n = length(levels)
   if (n != length(values))
     stop("length(levels) must be equal to length(values)")
+  if (!is.character(default) || length(default) != 1)
+    stop("default must be a string")
   if (n == 0) return("''")
   levels2 = levels
   if (is.character(levels)) levels2 = gsub("'", "\\'", levels)
@@ -317,7 +320,7 @@ styleEqual = function(levels, values) {
   for (i in seq_len(n)) {
     js = paste0(js, sprintf("value == %s ? '%s' : ", levels2[i], values[i]))
   }
-  JS(paste0(js, "''"))
+  JS(paste0(js, sprintf("'%s'", default)))
 }
 
 #' @param data a numeric vector whose range will be used for scaling the
