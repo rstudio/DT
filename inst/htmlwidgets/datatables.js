@@ -440,9 +440,7 @@ HTMLWidgets.widget({
             }
           });
           if (searchCol) filter[0].selectize.setValue(JSON.parse(searchCol));
-          // an ugly hack to deal with shiny: for some reason, the onBlur event
-          // of selectize does not work in shiny
-          $x.find('div > div.selectize-input > input').on('blur', function() {
+          filter[0].selectize.on('blur', function() {
             $x.hide().trigger('hide'); $input.parent().show(); $input.trigger('blur');
           });
           filter.next('div').css('margin-bottom', 'auto');

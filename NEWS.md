@@ -26,7 +26,10 @@
 
 - Fix the bug that `formatDate()` may display dates off by one day when method = "toLocaleDateString" (thanks, @shrektan @DevMui, #539 #538).
 
+- Fix the bug that in IE11, the scroll bar of the filter will disappear when you try to click it (thanks, @shrektan, #557 #556).
+
 - `coerceValue()` no longer throws warnings for class `charactor` (thanks, @shrektan, #541 #542).
+
 
 # CHANGES IN DT VERSION 0.4
 
