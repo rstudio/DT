@@ -10,6 +10,8 @@
 
 - You can now set the default CSS value in `styleEqual()` by using the newe param `default` (thanks, @shrektan, #558, #546).
 
+- The js callbacks generated from the `format*()` functions will be executed in sequential order. `formatString()` will change the cells based on the existing content rather than the raw data (thanks, @shrektan, #576).
+
 ## BUG FIXES
 
 - `styleInterval()` and `styleEqual()` now generates the correct callback for `Date` and `Datetime` values. (thanks, @shrektan, #500, #495).

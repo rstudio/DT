@@ -173,7 +173,7 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   }
   i = name2int(name, names, rownames)
   JS(append(
-    js, after = 1,
+    js, after = length(js) - 1,
     template(i, ..., names, rownames)
   ))
 }
