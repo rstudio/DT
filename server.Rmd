@@ -47,7 +47,7 @@ employee = data.frame(
 datatable(employee, rownames = FALSE, options = list(
   ajax = list(
     serverSide = TRUE, processing = TRUE,
-    url = 'http://datatables.net/examples/server_side/scripts/jsonp.php',
+    url = 'https://datatables.net/examples/server_side/scripts/jsonp.php',
     dataType = 'jsonp'
   )
 ))
