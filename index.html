@@ -55,7 +55,6 @@ a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
@@ -111,6 +110,8 @@ code span.st { color: #4e9a06; } /* String */
 code span.va { color: #000000; } /* Variable */
 code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+
 </style>
 <style type="text/css">
   pre:not([class]) {
@@ -169,6 +170,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -179,14 +183,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -234,41 +298,41 @@ $(document).ready(function () {
 <span class="kw">library</span>(DT)
 devtools<span class="op">::</span><span class="kw">session_info</span>()</code></pre>
 <pre><code>##  setting  value                       
-##  version  R version 3.5.0 (2018-04-23)
+##  version  R version 3.5.1 (2018-07-02)
 ##  system   x86_64, darwin15.6.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/Chicago             
-##  date     2018-04-26                  
+##  date     2018-08-08                  
 ## 
-##  package     * version date       source                     
-##  backports     1.1.2   2017-12-13 CRAN (R 3.5.0)             
-##  base        * 3.5.0   2018-04-24 local                      
-##  compiler      3.5.0   2018-04-24 local                      
-##  datasets    * 3.5.0   2018-04-24 local                      
-##  devtools      1.13.5  2018-02-18 CRAN (R 3.5.0)             
-##  digest        0.6.15  2018-01-28 CRAN (R 3.5.0)             
-##  DT          * 0.4.9   2018-04-26 Github (rstudio/DT@fce32f8)
-##  evaluate      0.10.1  2017-06-24 CRAN (R 3.5.0)             
-##  graphics    * 3.5.0   2018-04-24 local                      
-##  grDevices   * 3.5.0   2018-04-24 local                      
-##  htmltools     0.3.6   2017-04-28 CRAN (R 3.5.0)             
-##  htmlwidgets   1.2     2018-04-19 CRAN (R 3.5.0)             
-##  knitr         1.20    2018-02-20 CRAN (R 3.5.0)             
-##  magrittr      1.5     2014-11-22 CRAN (R 3.5.0)             
-##  memoise       1.1.0   2017-04-21 CRAN (R 3.5.0)             
-##  methods     * 3.5.0   2018-04-24 local                      
-##  Rcpp          0.12.16 2018-03-13 CRAN (R 3.5.0)             
-##  rmarkdown     1.9     2018-03-01 CRAN (R 3.5.0)             
-##  rprojroot     1.3-2   2018-01-03 CRAN (R 3.5.0)             
-##  stats       * 3.5.0   2018-04-24 local                      
-##  stringi       1.1.7   2018-03-12 CRAN (R 3.5.0)             
-##  stringr       1.3.0   2018-02-19 CRAN (R 3.5.0)             
-##  tools         3.5.0   2018-04-24 local                      
-##  utils       * 3.5.0   2018-04-24 local                      
-##  withr         2.1.2   2018-03-15 CRAN (R 3.5.0)             
-##  yaml          2.1.18  2018-03-08 CRAN (R 3.5.0)</code></pre>
+##  package     * version date       source                               
+##  base        * 3.5.1   2018-07-05 local                                
+##  compiler      3.5.1   2018-07-05 local                                
+##  datasets    * 3.5.1   2018-07-05 local                                
+##  devtools      1.13.6  2018-06-27 CRAN (R 3.5.0)                       
+##  digest        0.6.15  2018-01-28 CRAN (R 3.5.0)                       
+##  DT          * 0.4.16  2018-08-02 local                                
+##  evaluate      0.11    2018-07-17 CRAN (R 3.5.1)                       
+##  graphics    * 3.5.1   2018-07-05 local                                
+##  grDevices   * 3.5.1   2018-07-05 local                                
+##  htmldeps      0.1.1   2018-08-01 Github (rstudio/htmldeps@c1023e0)    
+##  htmltools     0.3.6   2017-04-28 cran (@0.3.6)                        
+##  htmlwidgets   1.2.1   2018-08-08 Github (ramnathv/htmlwidgets@29ca4f7)
+##  knitr         1.20.9  2018-08-07 local                                
+##  magrittr      1.5     2014-11-22 cran (@1.5)                          
+##  memoise       1.1.0   2017-04-21 CRAN (R 3.5.0)                       
+##  methods     * 3.5.1   2018-07-05 local                                
+##  Rcpp          0.12.18 2018-07-23 CRAN (R 3.5.0)                       
+##  rmarkdown     1.10.10 2018-08-07 local                                
+##  stats       * 3.5.1   2018-07-05 local                                
+##  stringi       1.2.4   2018-07-20 CRAN (R 3.5.0)                       
+##  stringr       1.3.1   2018-05-10 cran (@1.3.1)                        
+##  tools         3.5.1   2018-07-05 local                                
+##  utils       * 3.5.1   2018-07-05 local                                
+##  withr         2.1.2   2018-03-15 CRAN (R 3.5.0)                       
+##  xfun          0.3.6   2018-08-07 local                                
+##  yaml          2.2.0   2018-07-25 CRAN (R 3.5.1)</code></pre>
 <p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> to file bug reports or feature requests, and use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> to ask questions.</p>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>

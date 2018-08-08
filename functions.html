@@ -51,7 +51,6 @@ a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
@@ -107,6 +106,8 @@ code span.st { color: #4e9a06; } /* String */
 code span.va { color: #000000; } /* Variable */
 code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+
 </style>
 <style type="text/css">
   pre:not([class]) {
@@ -165,6 +166,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -175,14 +179,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -265,7 +329,7 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nDTWidget.formatPercentage(this, row, data, 3, 2, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.', true);\n}"
+      "rowCallback": "function(row, data) {\nDTWidget.formatCurrency(this, row, data, 0, '$', 2, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 2, '$', 2, 3, ',', '.', true);\nDTWidget.formatPercentage(this, row, data, 3, 2, 3, ',', '.');\n}"
     }
   },
   "evals": ["options.rowCallback"],
@@ -295,7 +359,7 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nDTWidget.formatRound(this, row, data, 4, 3, 3, ',', '.');\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.', true);\n}"
+      "rowCallback": "function(row, data) {\nDTWidget.formatCurrency(this, row, data, 0, '€', 0, 3, ',', '.', true);\nDTWidget.formatCurrency(this, row, data, 1, '€', 0, 3, ',', '.', true);\nDTWidget.formatRound(this, row, data, 4, 3, 3, ',', '.');\n}"
     }
   },
   "evals": ["options.rowCallback"],
@@ -455,7 +519,7 @@ CSS Property Names
       "order": [],
       "autoWidth": false,
       "orderClasses": false,
-      "rowCallback": "function(row, data) {\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1.000000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (6.900000 - value)/5.900000 * 100 + '%, steelblue ' + (6.900000 - value)/5.900000 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':isNaN(parseFloat(value)) ? '' : value <= 3.400000 ? 'white' : value <= 3.800000 ? 'blue' : 'red','background-color':isNaN(parseFloat(value)) ? '' : value <= 3.400000 ? 'gray' : 'yellow'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':isNaN(parseFloat(value)) ? '' : value <= 5.000000 ? 'normal' : 'bold'});\n}"
+      "rowCallback": "function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':isNaN(parseFloat(value)) ? '' : value <= 5.000000 ? 'normal' : 'bold'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':isNaN(parseFloat(value)) ? '' : value <= 3.400000 ? 'white' : value <= 3.800000 ? 'blue' : 'red','background-color':isNaN(parseFloat(value)) ? '' : value <= 3.400000 ? 'gray' : 'yellow'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1.000000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (6.900000 - value)/5.900000 * 100 + '%, steelblue ' + (6.900000 - value)/5.900000 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\n}"
     }
   },
   "evals": ["options.rowCallback"],
