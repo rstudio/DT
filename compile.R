@@ -13,7 +13,6 @@ unlink(c(
   'libs/bootstrap/js/npm.js', 'libs/bootstrap/js/bootstrap.js',
   'libs/bootstrap/css/bootstrap.css', 'libs/bootstrap/css/bootstrap.min.css',
   'libs/bootstrap/css/bootstrap-theme.css', 'libs/bootstrap/css/bootstrap-theme.min.css',
-  'libs/datatables-binding/datatables.yaml',
   sprintf(
     'libs/bootstrap/css/%s.min.css',
     c('cerulean', 'cosmo', 'journal', 'lumen', 'paper', 'readable', 'sandstone', 'simplex', 'spacelab', 'united', 'yeti')
