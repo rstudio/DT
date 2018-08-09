@@ -9,7 +9,7 @@ for (f in list.files('.', '[.]html$')) {
   fragmentize = function(html, r_match, r_remove, path, tag) {
     m = gregexpr(r_match, html)
     regmatches(html, m) = lapply(regmatches(html, m), function(x) {
-      x = gsub(r_remove, '', x)
+      x = trimws(gsub(r_remove, '', x))
       z = character(length(x))
       i = match(x, collection)
       for (j in seq_along(x)) {
