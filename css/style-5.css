@@ -1,4 +1,3 @@
-
 .main-container {
   max-width: 940px;
   margin-left: auto;
@@ -21,4 +20,3 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
-

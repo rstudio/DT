@@ -1,5 +1,3 @@
-
-  pre:not([class]) {
+pre:not([class]) {
     background-color: white;
   }
-
