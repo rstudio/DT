@@ -13,6 +13,9 @@ html: $(HTML_FILES)
 %.html: %.md
 	Rscript compile.R "$<"
 
+site:
+	Rscript site.R
+
 .PHONY: clean
 clean:
 	$(RM) -r libs $(HTML_FILES)
