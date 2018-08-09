@@ -85,7 +85,7 @@ app = system.file('examples', 'DT-rows', package = 'DT')
 shiny::runApp(app)
 ```
 
-[![Row selection in DataTables](http://i.imgur.com/jBxAm4F.png)](https://yihui.shinyapps.io/DT-rows/)
+[![Row selection in DataTables](https://i.imgur.com/jBxAm4F.png)](https://yihui.shinyapps.io/DT-rows/)
 
 You can also obtain the index of the last clicked row via `input$tableId_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
 
@@ -121,7 +121,7 @@ app = system.file('examples', 'DT-info', package = 'DT')
 shiny::runApp(app)
 ```
 
-[![DataTables information in shiny](http://i.imgur.com/iLJNC60.png)](https://yihui.shinyapps.io/DT-info/)
+[![DataTables information in shiny](https://i.imgur.com/iLJNC60.png)](https://yihui.shinyapps.io/DT-info/)
 
 ## Manipulate An Existing DataTables Instance
 
