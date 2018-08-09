@@ -1,3 +1,13 @@
 h1 .header-section-number::after {
   content: ".";
 }
+/* padding for bootstrap navbar */
+body {
+  padding-top: 70px;
+}
+p code {
+  white-space: inherit;
+}
+.panel-heading {
+  text-align: center;
+}
