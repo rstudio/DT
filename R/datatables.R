@@ -233,6 +233,8 @@ datatable = function(
       selection$selected = match(selection$selected, rn)
     }
     params$selection = selection
+  } else {
+    params$selection = list(mode = 'none', selected = NULL, target = 'row')
   }
 
   deps = list(DTDependency(style))
