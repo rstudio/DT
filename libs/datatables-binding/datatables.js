@@ -168,6 +168,9 @@ HTMLWidgets.widget({
     if (data.class) $table.addClass(data.class);
     if (data.caption) $table.prepend(data.caption);
 
+    if (!data.selection) data.selection = {
+      mode: 'none', selected: null, target: 'row'
+    };
     if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
         data.selection.target === 'row+column') {
       if ($table.children('tfoot').length === 0) {
