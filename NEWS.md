@@ -34,7 +34,7 @@
 
 - `coerceValue()` no longer throws warnings for class `charactor` (thanks, @shrektan, #541 #542).
 
-- Fix the bug that using DT as a htmlwidget inside UI throws an error (thanks, @shrektan, #584 #583).
+- Fix the bug that using DT as a htmlwidget inside UI throws an error (thanks, @shrektan, #583).
 
 # CHANGES IN DT VERSION 0.4
 
