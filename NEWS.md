@@ -36,6 +36,8 @@
 
 - Fix the bug that using DT as a htmlwidget inside UI throws an error (thanks, @shrektan, #583).
 
+- The RowReorder extension now works (thanks, @shrektan, #595 #592).
+
 # CHANGES IN DT VERSION 0.4
 
 ## BUG FIXES
