@@ -65,7 +65,8 @@
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
-#'   (\url{https://rstudio.github.io/DT/plugins.html})
+#'   (\url{https://rstudio.github.io/DT/plugins.html}).  Note that only those
+#'   plugins supported by the \code{DT} package can be used here.
 #' @param editable \code{TRUE} to enable table editor.
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
@@ -614,6 +615,9 @@ DT2BSClass = function(class) {
 
 pluginDependency = function(plugin) {
   d = depPath('datatables-plugins', plugin)
+  if (!dir.exists(d)) {
+    warning("Could not find plugin '", plugin, "'.  See https://rstudio.github.io/DT/plugins.html for a list of supported plugins.")
+  }
   htmlDependency(
     paste0('dt-plugin-', tolower(plugin)), DataTablesVersion, src = d,
     script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
