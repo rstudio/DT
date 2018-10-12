@@ -96,4 +96,9 @@ file.copy(
   dt_path('..', 'datatables-plugins', 'natural'), overwrite = TRUE
 )
 
+file.copy(
+  c('dataRender/ellipsis.js'),
+  dt_path('..', 'datatables-plugins', 'ellipsis'), overwrite = TRUE
+)
+
 setwd(owd)
