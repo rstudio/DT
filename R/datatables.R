@@ -615,9 +615,10 @@ DT2BSClass = function(class) {
 
 pluginDependency = function(plugin) {
   d = depPath('datatables-plugins', plugin)
-  if (!dir.exists(d)) {
-    warning("Could not find plugin '", plugin, "'.  See https://rstudio.github.io/DT/plugins.html for a list of supported plugins.")
-  }
+  if (!dir.exists(d)) warning(
+    "Could not find plugin '", plugin, "'.  ',
+    'See https://rstudio.github.io/DT/plugins.html for a list of supported plugins."
+  )
   htmlDependency(
     paste0('dt-plugin-', tolower(plugin)), DataTablesVersion, src = d,
     script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
