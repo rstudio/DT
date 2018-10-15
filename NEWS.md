@@ -12,6 +12,8 @@
 
 - The js callbacks generated from the `format*()` functions will be executed in sequential order. `formatString()` will change the cells based on the existing content rather than the raw data (thanks, @shrektan, #576).
 
+- Added the datatable plugin `ellipsis` (thanks, @jarauh, #603).
+
 ## BUG FIXES
 
 - `styleInterval()` and `styleEqual()` now generates the correct callback for `Date` and `Datetime` values. (thanks, @shrektan, #500, #495).

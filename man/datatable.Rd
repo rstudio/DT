@@ -93,7 +93,8 @@ select cells}
 extensions (\url{https://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
-(\url{https://rstudio.github.io/DT/plugins.html})}
+(\url{https://rstudio.github.io/DT/plugins.html}).  Note that only those
+plugins supported by the \code{DT} package can be used here.}
 
 \item{editable}{\code{TRUE} to enable table editor.}
 }
