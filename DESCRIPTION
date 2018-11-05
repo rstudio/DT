@@ -27,7 +27,7 @@ BugReports: https://github.com/rstudio/DT/issues
 License: GPL-3 | file LICENSE
 Imports:
     htmltools (>= 0.3.6),
-    htmlwidgets (>= 1.0),
+    htmlwidgets (>= 1.3),
     magrittr,
     crosstalk,
     promises
@@ -38,5 +38,4 @@ Suggests:
     shiny (>= 0.12.1)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
-Remotes: ramnathv/htmlwidgets
 Encoding: UTF-8
