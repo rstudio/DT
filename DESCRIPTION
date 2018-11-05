@@ -1,12 +1,12 @@
 Package: DT
 Type: Package
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.4.20
+Version: 0.5
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
-    person("Joe", "Cheng", role = "ctb"),
+    person("Joe", "Cheng", role = "aut"),
+    person("Xianying", "Tan", role = "aut"),
     person("JJ", "Allaire", role = "ctb"),
-    person("Xianying", "Tan", role = "ctb"),
     person("Maximilian", "Girlich", role = "ctb"),
     person("Greg", "Freedman Ellis", role = "ctb"),
     person("Johannes", "Rauh", role = "ctb"),
