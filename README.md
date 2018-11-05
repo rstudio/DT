@@ -14,7 +14,7 @@ You may install the stable version from CRAN, or the development version using *
 install.packages('DT')
 
 # or the development version if necessary
-devtools::install_github('rstudio/DT')
+remotes::install_github('rstudio/DT')
 
 # then try DT::datatable(iris) as a hello world example
 ```
