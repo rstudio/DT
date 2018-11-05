@@ -39,6 +39,13 @@ toJSON = function(...) {
   FUN(...)
 }
 
+# I don't want txt to be treated as a file path in DT; it is always a string, so
+# I use this length() == 2 hack to force jsonlite::fromJSON() to treat it as
+# string (the second empty element doesn't matter)
+fromJSON = function(txt, ...) {
+  jsonlite::fromJSON(c(txt, ''), ...)
+}
+
 native_encode = function(x) {
   if (.Platform$OS.type == 'unix') return(x)
   x2 = enc2native(x)

@@ -527,9 +527,9 @@ dataTablesFilter = function(data, params) {
     ij = if (is.numeric(dj) || is.Date(dj)) {
       which(filterRange(dj, k))
     } else if (is.factor(dj)) {
-      which(dj %in% jsonlite::fromJSON(k))
+      which(dj %in% fromJSON(k))
     } else if (is.logical(dj)) {
-      which(dj %in% as.logical(jsonlite::fromJSON(k)))
+      which(dj %in% as.logical(fromJSON(k)))
     } else {
       grep2(k, as.character(dj), fixed = col[['search']][['regex']] == 'false',
             ignore.case = ci)
