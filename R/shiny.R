@@ -443,7 +443,7 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
   data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
 
-  sessionDataURL(session, data, outputId, filter)
+  sessionDataURL(session, data, session$ns(outputId), filter)
 }
 
 sessionDataURL = function(session, data, id, filter) {
