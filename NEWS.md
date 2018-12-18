@@ -1,5 +1,6 @@
 # CHANGES IN DT VERSION 0.6
 
+## Fix issue where `replaceData()` didn't work when used in Shiny modules. (Thanks, @donarus, #628, #626)
 
 # CHANGES IN DT VERSION 0.5
 
