@@ -55,8 +55,21 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
 
   # TODO: this can be simplified after this htmlwidgets PR is merged
   # https://github.com/ramnathv/htmlwidgets/pull/122
-  outputNameEnv = new.env(parent = emptyenv())
-  outputNameEnv[["outputName"]] = NULL
+  outputInfoEnv = new.env(parent = emptyenv())
+  outputInfoEnv[["outputName"]] = NULL
+  # jcheng 2018-12-17:
+  # It's important to save the session, not just the outputName. It turns
+  # out that if the datatable is defined in a module, the outputName is
+  # the fully qualified name, and session is the top-level session (that
+  # is, the outputName and session that is passed to the render function).
+  # That's a fine combination, or alternatively it'd be fine if the name
+  # was unqualified and the session was module-specific. But during my
+  # commit to add async support, I broke this pairing, and used the (fully
+  # qualified) outputName from the render function, and the session from
+  # getDefaultReactiveDomain() (which is module specific), and this combo
+  # is no good--you end up with the module prefix included twice in the
+  # ajax URL. See issue #626 for the repro.
+  outputInfoEnv[["session"]] = NULL
 
   exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
   widgetFunc = function() {
@@ -94,7 +107,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
       }
 
       if (is.null(options[['ajax']][['url']])) {
-        url = sessionDataURL(shiny::getDefaultReactiveDomain(), origData, outputNameEnv[["outputName"]], dataTablesFilter)
+        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], dataTablesFilter)
         options$ajax$url = url
       }
       instance$x$options = fixServerOptions(options)
@@ -108,7 +121,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
   )
 
   func = shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
-    domain = tempVarsPromiseDomain(outputNameEnv, outputName = name)
+    domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
 
     promises::with_promise_domain(domain, renderFunc())
   })
