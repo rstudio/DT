@@ -1,6 +1,12 @@
 # CHANGES IN DT VERSION 0.6
 
-## Fix issue where `replaceData()` didn't work when used in Shiny modules. (Thanks, @donarus, #628, #626)
+## NEW FEATURES
+
+- Added a `filterFunc` argument to `DT::renderDT()` (thanks, @galachad, #638).
+
+## BUG FIXES
+
+- Fix issue where `replaceData()` didn't work when used in Shiny modules. (Thanks, @donarus, #628, #626)
 
 # CHANGES IN DT VERSION 0.5
 

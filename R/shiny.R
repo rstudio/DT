@@ -47,13 +47,14 @@ DTOutput = dataTableOutput
 #'   \code{FALSE}, then the entire data frame is sent to the browser at once.
 #'   Highly recommended for medium to large data frames, which can cause
 #'   browsers to slow down or crash.
-#' @param filter (for expert use only) define the custom filter function for more
-#'   information check \code{\link{dataTableAjax}()}
+#' @param filterFunc (for expert use only) passed to the \codd{filter} argument
+#'   of \code{\link{dataTableAjax}()}
 #' @param ... ignored when \code{expr} returns a table widget, and passed as
 #'   additional arguments to \code{datatable()} when \code{expr} returns a data
 #'   object
 renderDataTable = function(
-    expr, server = TRUE, env = parent.frame(), quoted = FALSE, filter = dataTablesFilter, ...
+    expr, server = TRUE, env = parent.frame(), quoted = FALSE,
+    filterFunc = dataTablesFilter, ...
   ) {
   if (!quoted) expr = substitute(expr)
 
@@ -111,7 +112,7 @@ renderDataTable = function(
       }
 
       if (is.null(options[['ajax']][['url']])) {
-        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], filter)
+        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], filterFunc)
         options$ajax$url = url
       }
       instance$x$options = fixServerOptions(options)
