@@ -50,7 +50,9 @@ DTOutput = dataTableOutput
 #' @param ... ignored when \code{expr} returns a table widget, and passed as
 #'   additional arguments to \code{datatable()} when \code{expr} returns a data
 #'   object
-renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = FALSE, ...) {
+renderDataTable = function(
+    expr, server = TRUE, env = parent.frame(), quoted = FALSE, filter = dataTablesFilter, ...
+  ) {
   if (!quoted) expr = substitute(expr)
 
   # TODO: this can be simplified after this htmlwidgets PR is merged
@@ -107,7 +109,7 @@ renderDataTable = function(expr, server = TRUE, env = parent.frame(), quoted = F
       }
 
       if (is.null(options[['ajax']][['url']])) {
-        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], dataTablesFilter)
+        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], filter)
         options$ajax$url = url
       }
       instance$x$options = fixServerOptions(options)
