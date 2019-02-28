@@ -47,7 +47,7 @@ DTOutput = dataTableOutput
 #'   \code{FALSE}, then the entire data frame is sent to the browser at once.
 #'   Highly recommended for medium to large data frames, which can cause
 #'   browsers to slow down or crash.
-#' @param filterFunc (for expert use only) passed to the \codd{filter} argument
+#' @param filterFunc (for expert use only) passed to the \code{filter} argument
 #'   of \code{\link{dataTableAjax}()}
 #' @param ... ignored when \code{expr} returns a table widget, and passed as
 #'   additional arguments to \code{datatable()} when \code{expr} returns a data

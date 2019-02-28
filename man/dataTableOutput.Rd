@@ -39,7 +39,7 @@ browsers to slow down or crash.}
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
 
-\item{filterFunc}{(for expert use only) passed to the \codd{filter} argument
+\item{filterFunc}{(for expert use only) passed to the \code{filter} argument
 of \code{\link{dataTableAjax}()}}
 
 \item{...}{ignored when \code{expr} returns a table widget, and passed as
