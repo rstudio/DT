@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- Added a `filterFunc` argument to `DT::renderDT()` (thanks, @galachad, #638).
+- Added a `funcFilter` argument to `DT::renderDT()` (thanks, @galachad, #638).
 
 ## BUG FIXES
 

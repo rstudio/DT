@@ -12,10 +12,10 @@ dataTableOutput(outputId, width = "100\%", height = "auto")
 DTOutput(outputId, width = "100\%", height = "auto")
 
 renderDataTable(expr, server = TRUE, env = parent.frame(), quoted = FALSE, 
-    filterFunc = dataTablesFilter, ...)
+    funcFilter = dataTablesFilter, ...)
 
 renderDT(expr, server = TRUE, env = parent.frame(), quoted = FALSE, 
-    filterFunc = dataTablesFilter, ...)
+    funcFilter = dataTablesFilter, ...)
 }
 \arguments{
 \item{outputId}{output variable to read the table from}
@@ -39,7 +39,7 @@ browsers to slow down or crash.}
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
 
-\item{filterFunc}{(for expert use only) passed to the \code{filter} argument
+\item{funcFilter}{(for expert use only) passed to the \code{filter} argument
 of \code{\link{dataTableAjax}()}}
 
 \item{...}{ignored when \code{expr} returns a table widget, and passed as
