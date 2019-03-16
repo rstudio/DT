@@ -153,9 +153,11 @@ The `RowReorder` extension allows you to drag and reorder a certain row in the t
 ```{r}
 datatable(
   iris2, colnames = c(ID = 1), extensions = 'RowReorder',
-  options = list(rowReorder = TRUE)
+  options = list(rowReorder = TRUE, order = list(c(0 , 'asc')))
 )
 ```
+
+In order to make `RowReorder` work, there must be at least one sorted column in the table, which can be initialized by `options = list(order = list(c(0 , 'asc')))`.
 
 # Scroller
 
