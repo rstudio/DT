@@ -721,7 +721,7 @@ HTMLWidgets.widget({
         var valueNew = $input.val();
         if (valueNew != value) {
           table.cell($this).data(valueNew);
-          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
+          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this), null, null, {priority: "event"});
           // for server-side processing, users have to call replaceData() to update the table
           if (!server) table.draw(false);
         } else {
@@ -747,18 +747,18 @@ HTMLWidgets.widget({
     // register clear functions to remove input values when the table is removed
     instance.clearInputs = {};
 
-    var changeInput = function(id, value, type, noCrosstalk) {
+    var changeInput = function(id, value, type, noCrosstalk, opts) {
       var event = id;
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
       // do not update if the new value is the same as old value
-      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
+      if (event !== 'cell_edit' && shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
       shinyData[id] = JSON.stringify(value);
       if (HTMLWidgets.shinyMode) {
-        Shiny.onInputChange(id, value);
+        Shiny.setInputValue(id, value, opts);
         if (!instance.clearInputs[id]) instance.clearInputs[id] = function() {
-          Shiny.onInputChange(id, null);
+          Shiny.setInputValue(id, null);
         }
       }
 
