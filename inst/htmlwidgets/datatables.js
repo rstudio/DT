@@ -9,8 +9,8 @@ var DTWidget = {};
 
 // 123456666.7890 -> 123,456,666.7890
 var markInterval = function(d, digits, interval, mark, decMark, precision, exponential) {
+  if(exponential) x = exponential ? d.toExponential(digits) : d.toFixed(digits);
   x = precision ? d.toPrecision(digits) : d.toFixed(digits);
-  x = exponential ? d.toExponential(digits) : d.toFixed(digits);
   if (!/^-?[\d.]+$/.test(x)) return x;
   var xv = x.split('.');
   if (xv.length > 2) return x;  // should have at most one decimal point
