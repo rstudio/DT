@@ -216,7 +216,7 @@ tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
   )
 }
 
-tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
+tplExp = function(cols, digits, interval, mark, dec.mark, ...) {
   sprintf(
     "DTWidget.formatExp(this, row, data, %d, %d, %d, '%s', '%s');",
     cols, digits, interval, mark, dec.mark
