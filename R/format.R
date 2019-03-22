@@ -93,6 +93,12 @@ formatSignif = function(
   formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark)
 }
 
+formatExp = function(
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+) {
+  formatColumns(table, columns, tplExp, digits, interval, mark, dec.mark)
+}
+
 #' @export
 #' @rdname formatCurrency
 #' @param method the method(s) to convert a date to string in JavaScript; see
@@ -210,6 +216,12 @@ tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
   )
 }
 
+tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
+  sprintf(
+    "DTWidget.formatExp(this, row, data, %d, %d, %d, '%s', '%s');",
+    cols, digits, interval, mark, dec.mark
+  )
+}
 tplDate = function(cols, method, params, ...) {
   params = if (length(params) > 0) paste(',', toJSON(params)) else ''
   sprintf("DTWidget.formatDate(this, row, data, %d, '%s'%s);", cols, method, params)
