@@ -44,6 +44,9 @@ formatColumns = function(table, columns, template, ...) {
 #' # render vapor pressure with only two significant figures.
 #' datatable(pressure) %>% formatSignif('pressure',2)
 #'
+#' # render vapor pressure with only two 2-decimal digits in exponential format.
+#' datatable(pressure) %>% formatExp('pressure',2)
+#'
 #' # apply CSS styles to columns
 #' datatable(iris) %>%
 #'   formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('bold', 'weight'))) %>%
@@ -93,6 +96,9 @@ formatSignif = function(
   formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark)
 }
 
+
+#' @export
+#' @rdname formatCurrency
 formatExp = function(
   table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
 ) {
