@@ -26,7 +26,7 @@ shinyApp(
       i = info$row
       j = info$col
       v = info$value
-      d2[i, j] <<- DT::coerceValue(v, d2[i, j])
+      d2[i, j] <<- DT::coerceValue(v, d2[i, j, drop = TRUE])
       replaceData(proxy2, d2, resetPaging = FALSE)  # important
     })
 
@@ -38,7 +38,7 @@ shinyApp(
       i = info$row
       j = info$col + 1  # column index offset by 1
       v = info$value
-      d3[i, j] <<- DT::coerceValue(v, d3[i, j])
+      d3[i, j] <<- DT::coerceValue(v, d3[i, j, drop = TRUE])
       replaceData(proxy3, d3, resetPaging = FALSE, rownames = FALSE)
     })
   }
