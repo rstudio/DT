@@ -141,6 +141,12 @@ renderDataTable = function(
     })
   }
 
+  shiny::registerInputHandler('DT.cellInfo', function(val, ...) {
+    opts = options(stringsAsFactors = FALSE); on.exit(options(opts), add = TRUE)
+    val = lapply(val, as.data.frame)
+    do.call(rbind, val)
+  }, TRUE)
+
   func
 }
 

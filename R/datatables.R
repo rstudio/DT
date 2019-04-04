@@ -67,11 +67,16 @@
 #' @param plugins a character vector of the names of DataTables plug-ins
 #'   (\url{https://rstudio.github.io/DT/plugins.html}).  Note that only those
 #'   plugins supported by the \code{DT} package can be used here.
-#' @param editable \code{TRUE} to enable table editor.
+#' @param editable \code{FALSE} to disable the table editor, or \code{TRUE} (or
+#'   \code{"cell"}) to enable editing a single cell. Alternatively, you can set
+#'   it to \code{"row"} to be able to edit a row, or \code{"column"} to edit a
+#'   column, or \code{"all"} to edit all cells on the current page of the table.
+#'   In all modes, start editing by doubleclicking on a cell.
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
-#' @references See \url{https://rstudio.github.io/DT} for the full documentation.
+#' @references See \url{https://rstudio.github.io/DT} for the full
+#'   documentation.
 #' @importFrom htmltools tags htmlDependency
 #' @export
 #' @example inst/examples/datatable.R
@@ -202,7 +207,8 @@ datatable = function(
 
   params$caption = captionString(caption)
 
-  if (editable) params$editable = editable
+  if (isTRUE(editable)) editable = 'cell'
+  if (is.character(editable)) params$editable = editable
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")

@@ -2,6 +2,8 @@
 
 ## NEW FEATURES
 
+- The table editor has been enhanced: now the `editable` argument of `datatable()` can take four possible values, `cell` (or `TRUE` for backward compatibility), `row`, `column`, or `all`, which means you can edit a single cell a time, or a whole row or column, or all cells in the table. To trigger the editor, doubleclick on any cell. To submit the edit, hit `Ctrl + Enter` when multiple cells are being edited. See https://github.com/rstudio/DT/tree/master/inst/examples/DT-edit for comprehensive examples (thanks, @LukasK13 #509 and @mgirlich #493).
+
 - Added a `funcFilter` argument to `DT::renderDT()` (thanks, @galachad, #638).
 
 ## BUG FIXES
