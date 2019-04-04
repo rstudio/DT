@@ -87,12 +87,15 @@ coerceValue = function(val, old) {
     return(as.POSIXct(val))
   }
   if (is.factor(old)) {
-    if (val %in% levels(old)) return(val)
+    i = val %in% levels(old)
+    if (all(i)) return(val)
     warning(
-      'New value ', val, ' not in the original factor levels: ',
-      paste(levels(old), collapse = ', ')
+      'New value(s) "', paste(val[!i], collapse = ', '),
+      '" not in the original factor levels: "',
+      paste(levels(old), collapse = ', '), '"; will be coerced to NA.'
     )
-    return(NA)
+    val[!i] = NA
+    return(val)
   }
   warning('The data type is not supported: ', classes(old))
   val
