@@ -1,45 +1,94 @@
 library(shiny)
 library(DT)
+
+dt_output = function(title, id) {
+  fluidRow(column(
+    12, h1(paste0('Table ', sub('.*?([0-9]+)$', '\\1', id), ': ', title)),
+    hr(), DTOutput(id)
+  ))
+}
+render_dt = function(data, editable = 'cell', server = TRUE, ...) {
+  renderDT(data, selection = 'none', server = server, editable = editable, ...)
+}
+
 shinyApp(
   ui = fluidPage(
     title = 'Double-click to edit table cells',
-    fluidRow(column(12, h1('Client-side processing'), hr(), DTOutput('x1'))),
-    fluidRow(column(12, h1('Server-side processing'), hr(), DTOutput('x2'))),
-    fluidRow(column(12, h1('Server-side processing (no row names)'), hr(), DTOutput('x3')))
+
+    dt_output('client-side processing (editable = "cell")', 'x1'),
+    dt_output('client-side processing (editable = "row")', 'x2'),
+    dt_output('client-side processing (editable = "column")', 'x3'),
+    dt_output('client-side processing (editable = "all")', 'x4'),
+
+    dt_output('server-side processing (editable = "cell")', 'x5'),
+    dt_output('server-side processing (editable = "row")', 'x6'),
+    dt_output('server-side processing (editable = "column")', 'x7'),
+    dt_output('server-side processing (editable = "all")', 'x8'),
+
+    dt_output('server-side processing (no row names)', 'x9')
   ),
+
   server = function(input, output, session) {
     d1 = iris
     d1$Date = Sys.time() + seq_len(nrow(d1))
-    d2 = d3 = d1
+    d9 = d8 = d7 = d6 = d5 = d4 = d3 = d2 = d1
 
     options(DT.options = list(pageLength = 5))
 
-    output$x1 = renderDT(d1, selection = 'none', server = FALSE, editable = TRUE)
-    output$x2 = renderDT(d2, selection = 'none', editable = TRUE)
-    output$x3 = renderDT(d3, selection = 'none', rownames = FALSE, editable = TRUE)
+    # client-side processing
+    output$x1 = render_dt(d1, 'cell', FALSE)
+    output$x2 = render_dt(d2, 'row', FALSE)
+    output$x3 = render_dt(d3, 'column', FALSE)
+    output$x4 = render_dt(d4, 'all', FALSE)
 
-    proxy2 = dataTableProxy('x2')
+    observe(str(input$x1_cell_edit))
+    observe(str(input$x2_cell_edit))
+    observe(str(input$x3_cell_edit))
+    observe(str(input$x4_cell_edit))
 
-    observeEvent(input$x2_cell_edit, {
-      info = input$x2_cell_edit
-      str(info)
-      i = info$row
-      j = info$col
-      v = info$value
-      d2[i, j] <<- DT::coerceValue(v, d2[i, j, drop = TRUE])
-      replaceData(proxy2, d2, resetPaging = FALSE)  # important
+    # server-side processing
+    output$x5 = render_dt(d5, 'cell')
+    output$x6 = render_dt(d6, 'row')
+    output$x7 = render_dt(d7, 'column')
+    output$x8 = render_dt(d8, 'all')
+
+    output$x9 = render_dt(d9, 'cell', rownames = FALSE)
+
+    # edit a single cell
+    proxy5 = dataTableProxy('x5')
+    observeEvent(input$x5_cell_edit, {
+      info = input$x5_cell_edit
+      str(info)  # check what info looks like (a data frame of 3 columns)
+      d5 <<- editData(d5, info)
+      replaceData(proxy5, d5, resetPaging = FALSE)  # important
     })
 
-    proxy3 = dataTableProxy('x3')
+    # edit a row
+    proxy6 = dataTableProxy('x6')
+    observeEvent(input$x6_cell_edit, {
+      d6 <<- editData(d6, input$x6_cell_edit)
+      replaceData(proxy6, d6, resetPaging = FALSE)  # important
+    })
 
-    observeEvent(input$x3_cell_edit, {
-      info = input$x3_cell_edit
-      str(info)
-      i = info$row
-      j = info$col + 1  # column index offset by 1
-      v = info$value
-      d3[i, j] <<- DT::coerceValue(v, d3[i, j, drop = TRUE])
-      replaceData(proxy3, d3, resetPaging = FALSE, rownames = FALSE)
+    # edit a column
+    proxy7 = dataTableProxy('x7')
+    observeEvent(input$x7_cell_edit, {
+      d7 <<- editData(d7, input$x7_cell_edit)
+      replaceData(proxy7, d7, resetPaging = FALSE)  # important
+    })
+
+    # edit all cells
+    proxy8 = dataTableProxy('x8')
+    observeEvent(input$x8_cell_edit, {
+      d8 <<- editData(d8, input$x8_cell_edit)
+      replaceData(proxy8, d8, resetPaging = FALSE)  # important
+    })
+
+    # when the table doesn't contain row names
+    proxy9 = dataTableProxy('x9')
+    observeEvent(input$x9_cell_edit, {
+      d9 <<- editData(d9, input$x9_cell_edit, rownames = FALSE)
+      replaceData(proxy9, d9, resetPaging = FALSE, rownames = FALSE)
     })
   }
 )
