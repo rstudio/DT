@@ -100,3 +100,29 @@ coerceValue = function(val, old) {
   warning('The data type is not supported: ', classes(old))
   val
 }
+
+#' Edit a data object using the information from the editor in a DataTable
+#'
+#' When editing cells in a DataTable in a Shiny app, we know the row/column
+#' indices and values of the cells that were edited. With these information, we
+#' can update the data object behind the DataTable accordingly.
+#' @param data The original data object used in the DataTable.
+#' @param info The information about the edited cells. It should be obtained
+#'   from \code{input$tableId_cell_edit} from Shiny, and is a data frame
+#'   containing columns \code{row}, \code{column}, and \code{value}.
+#' @param rownames Whether row names are displayed in the table.
+#' @return The updated data object.
+#' @export
+editData = function(data, info, rownames = TRUE) {
+  for (r in split(info, info$col)) {
+    i = r$row; j = r$col + !rownames; v = r$value
+    j = j[1]
+    # the 0-th column is the row names in this case
+    if (j == 0) {
+      rownames(data)[i] = v
+    } else {
+      data[i, j] = DT::coerceValue(v, data[i, j, drop = TRUE])
+    }
+  }
+  data
+}
