@@ -737,7 +737,10 @@ HTMLWidgets.widget({
           var $cell = $(cell), html = $cell.html();
           var _cell = table.cell(cell), value = _cell.data();
           var $input = $('<input type="text">'), changed = false;
-          if (!immediate) $cell.data('input', $input).data('html', html);
+          if (!immediate) {
+            $cell.data('input', $input).data('html', html)
+                 .attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
+          }
           $input.val(value);
           $cell.empty().append($input);
           if (cell === current) $input.focus();
