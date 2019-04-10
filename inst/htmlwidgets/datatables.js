@@ -710,7 +710,16 @@ HTMLWidgets.widget({
     if (typeof data.callback === 'function') data.callback(table);
 
     // double click to edit the cell, row, column, or all cells
-    if (data.editable) table.on('dblclick.dt', 'tbody td', function(e) {
+    var editableSelector = 'tbody td';
+    if(Array.isArray(data.editable)) {
+      editableSelector = 'tbody td:nth-child(' + data.editable[0] + ')';
+      for (var i = 1; i < data.editable.length; i++) {
+        editableSelector += ', tbody td:nth-child(' + data.editable[i] + ')';
+      }
+      data.editable = 'cell';
+    }
+
+    if (data.editable) table.on('dblclick.dt', editableSelector, function(e) {
       // only bring up the editor when the cell itself is dbclicked, and ignore
       // other dbclick events bubbled up (e.g. from the <input>)
       if (e.target !== this) return;
