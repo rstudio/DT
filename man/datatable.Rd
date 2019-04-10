@@ -4,13 +4,14 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, options = list(), class = "display", callback = JS("return table;"), 
-    rownames, colnames, container, caption = NULL, filter = c("none", 
-        "bottom", "top"), escape = TRUE, style = "default", width = NULL, 
-    height = NULL, elementId = NULL, fillContainer = getOption("DT.fillContainer", 
-        NULL), autoHideNavigation = getOption("DT.autoHideNavigation", 
-        NULL), selection = c("multiple", "single", "none"), extensions = list(), 
-    plugins = NULL, editable = FALSE)
+datatable(data, options = list(), class = "display",
+  callback = JS("return table;"), rownames, colnames, container,
+  caption = NULL, filter = c("none", "bottom", "top"), escape = TRUE,
+  style = "default", width = NULL, height = NULL, elementId = NULL,
+  fillContainer = getOption("DT.fillContainer", NULL),
+  autoHideNavigation = getOption("DT.autoHideNavigation", NULL),
+  selection = c("multiple", "single", "none"), extensions = list(),
+  plugins = NULL, editable = FALSE)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -99,7 +100,9 @@ plugins supported by the \code{DT} package can be used here.}
 \item{editable}{\code{FALSE} to disable the table editor, or \code{TRUE} (or
 \code{"cell"}) to enable editing a single cell. Alternatively, you can set
 it to \code{"row"} to be able to edit a row, or \code{"column"} to edit a
-column, or \code{"all"} to edit all cells on the current page of the table.
+column, or \code{"all"} to edit all cells on the current page of the table. 
+Additionally, you can specify a vector e.g. \code{"c(1,2)"} of column numbers 
+that should be editable.
 In all modes, start editing by doubleclicking on a cell.}
 }
 \description{
