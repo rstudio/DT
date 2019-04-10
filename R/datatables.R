@@ -70,7 +70,9 @@
 #' @param editable \code{FALSE} to disable the table editor, or \code{TRUE} (or
 #'   \code{"cell"}) to enable editing a single cell. Alternatively, you can set
 #'   it to \code{"row"} to be able to edit a row, or \code{"column"} to edit a
-#'   column, or \code{"all"} to edit all cells on the current page of the table.
+#'   column, or \code{"all"} to edit all cells on the current page of the table. 
+#'   Additionally, you can specify a vector e.g. \code{"c(1,2)"} of column numbers 
+#'   that should be editable.
 #'   In all modes, start editing by doubleclicking on a cell.
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
