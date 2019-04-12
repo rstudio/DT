@@ -210,8 +210,7 @@ datatable = function(
   params$caption = captionString(caption)
 
   if (isTRUE(editable)) editable = 'cell'
-  if (is.character(editable)) params$editable = editable
-  if (is.numeric(editable)) params$editable = jsonlite::toJSON(editable)
+  if (!isFALSE(editable)) params$editable = editable
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
