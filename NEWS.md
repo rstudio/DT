@@ -8,7 +8,7 @@
 
 ## BUG FIXES
 
-- Fix issue where `replaceData()` didn't work when used in Shiny modules. (Thanks, @donarus, #628, #626)
+- Fix issue where `replaceData()` didn't work when used in Shiny modules (thanks, @donarus, #628, #626).
 
 - The javascript event `cell_edit` now always triggers a reactive event on the R side. Since `cell_edit` will only be triggered when the value shown on the table has been changed so it's almost always what user expects (thanks, @shrektan @stelmath, #647 #645).
 
