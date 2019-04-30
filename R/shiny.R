@@ -213,7 +213,7 @@ tempVarsPromiseDomain = function(env, ...) {
 
 #' Manipulate an existing DataTables instance in a Shiny app
 #'
-#' The function \code{datatableProxy()} creates a proxy object that can be used
+#' The function \code{dataTableProxy()} creates a proxy object that can be used
 #' to manipulate an existing DataTables instance in a Shiny app, e.g. select
 #' rows/columns, or add rows.
 #' @param outputId the id of the table to be manipulated (the same id as the one
@@ -235,12 +235,12 @@ dataTableProxy = function(
   outputId, session = shiny::getDefaultReactiveDomain(), deferUntilFlush = TRUE
 ) {
   if (is.null(session))
-    stop('datatableProxy() must be called from the server function of a Shiny app')
+    stop('dataTableProxy() must be called from the server function of a Shiny app')
 
   structure(list(
     id = session$ns(outputId), rawId = outputId, session = session,
     deferUntilFlush = deferUntilFlush
-  ), class = 'datatableProxy')
+  ), class = 'dataTableProxy')
 }
 
 #' @param proxy a proxy object returned by \code{dataTableProxy()}
@@ -404,7 +404,7 @@ replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'a
 }
 
 invokeRemote = function(proxy, method, args = list()) {
-  if (!inherits(proxy, 'datatableProxy'))
+  if (!inherits(proxy, 'dataTableProxy'))
     stop('Invalid proxy argument; table proxy object was expected')
 
   msg = list(id = proxy$id, call = list(method = method, args = args))

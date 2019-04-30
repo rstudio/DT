@@ -101,7 +101,7 @@ for all three, or \code{none} to keep current selections (by default, all
 selections are cleared after the data is reloaded)}
 }
 \description{
-The function \code{datatableProxy()} creates a proxy object that can be used
+The function \code{dataTableProxy()} creates a proxy object that can be used
 to manipulate an existing DataTables instance in a Shiny app, e.g. select
 rows/columns, or add rows.
 }
