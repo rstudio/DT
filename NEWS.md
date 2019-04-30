@@ -4,6 +4,8 @@
 
 - The table editor has been enhanced: now the `editable` argument of `datatable()` can take four possible values, `cell` (or `TRUE` for backward compatibility), `row`, `column`, or `all`, which means you can edit a single cell a time, or a whole row or column, or all cells in the table. To trigger the editor, doubleclick on any cell. To submit the edit, hit `Ctrl + Enter` when multiple cells are being edited, or hit `Esc` to cancel the edit. See https://github.com/rstudio/DT/tree/master/inst/examples/DT-edit for comprehensive examples (thanks, @LukasK13 #509 and @mgirlich #493).
 
+- Editing can be disabled on specified columns now: pass a list of the form `list(target = TARGET, disable = list(columns = INDICES))` to the `editable` argument of `datatable()`, where `TARGET` can be `'cell'`, `'row'`, `'column'`, or `'all'`, and `INDICES` is an integer vector of column indices (thanks, @opremicSebastian #657, @l-ts #550).
+
 - Added a `funcFilter` argument to `DT::renderDT()` (thanks, @galachad, #638).
 
 ## BUG FIXES

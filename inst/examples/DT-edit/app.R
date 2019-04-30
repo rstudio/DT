@@ -25,13 +25,14 @@ shinyApp(
     dt_output('server-side processing (editable = "column")', 'x7'),
     dt_output('server-side processing (editable = "all")', 'x8'),
 
-    dt_output('server-side processing (no row names)', 'x9')
+    dt_output('server-side processing (no row names)', 'x9'),
+    dt_output('edit rows but disable certain columns (editable = list(target = "row", disable = list(columns = c(2, 4, 5))))', 'x10')
   ),
 
   server = function(input, output, session) {
     d1 = iris
     d1$Date = Sys.time() + seq_len(nrow(d1))
-    d9 = d8 = d7 = d6 = d5 = d4 = d3 = d2 = d1
+    d10 = d9 = d8 = d7 = d6 = d5 = d4 = d3 = d2 = d1
 
     options(DT.options = list(pageLength = 5))
 
@@ -53,6 +54,7 @@ shinyApp(
     output$x8 = render_dt(d8, 'all')
 
     output$x9 = render_dt(d9, 'cell', rownames = FALSE)
+    output$x10 = render_dt(d10, list(target = 'row', disable = list(columns = c(2, 4, 5))))
 
     # edit a single cell
     proxy5 = dataTableProxy('x5')
@@ -90,5 +92,13 @@ shinyApp(
       d9 <<- editData(d9, input$x9_cell_edit, rownames = FALSE)
       replaceData(proxy9, d9, resetPaging = FALSE, rownames = FALSE)
     })
+
+    # edit rows but disable columns 2, 4, 5
+    proxy10 = dataTableProxy('x10')
+    observeEvent(input$x10_cell_edit, {
+      d10 <<- editData(d10, input$x10_cell_edit)
+      replaceData(proxy10, d10, resetPaging = FALSE)  # important
+    })
+
   }
 )

@@ -715,7 +715,7 @@ HTMLWidgets.widget({
       // other dbclick events bubbled up (e.g. from the <input>)
       if (e.target !== this) return;
       var target = [], immediate = false;
-      switch (data.editable) {
+      switch (data.editable.target) {
         case 'cell':
           target = [this];
           immediate = true;  // edit will take effect immediately
@@ -732,6 +732,7 @@ HTMLWidgets.widget({
         default:
           throw 'The editable parameter must be "cell", "row", "column", or "all"';
       }
+      var disableCols = data.editable.disable ? data.editable.disable.columns : null;
       for (var i = 0; i < target.length; i++) {
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
@@ -742,6 +743,9 @@ HTMLWidgets.widget({
                  .attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
+          if (disableCols && inArray(_cell.index().column, disableCols)) {
+            $input.attr('readonly', '').css('filter', 'invert(25%)');
+          }
           $cell.empty().append($input);
           if (cell === current) $input.focus();
           $input.css('width', '100%');
