@@ -111,9 +111,14 @@ coerceValue = function(val, old) {
 #'   from \code{input$tableId_cell_edit} from Shiny, and is a data frame
 #'   containing columns \code{row}, \code{column}, and \code{value}.
 #' @param rownames Whether row names are displayed in the table.
+#' @param proxy,resetPaging,... (Optional) If \code{proxy} is provided, it must
+#'   be either a character string of the output ID of the table or a proxy
+#'   object created from \code{\link{dataTableProxy}()}, and the rest of
+#'   arguments are passed to \code{\link{replaceData}()} to update the data in a
+#'   DataTable instance in a Shiny app.
 #' @return The updated data object.
 #' @export
-editData = function(data, info, rownames = TRUE) {
+editData = function(data, info, proxy = NULL, rownames = TRUE, resetPaging = FALSE, ...) {
   for (r in split(info, info$col)) {
     i = r$row; j = r$col + !rownames; v = r$value
     j = j[1]
@@ -123,6 +128,10 @@ editData = function(data, info, rownames = TRUE) {
     } else {
       data[i, j] = DT::coerceValue(v, data[i, j, drop = TRUE])
     }
+  }
+  if (is.character(proxy)) proxy = dataTableProxy(proxy)
+  if (inherits(proxy, 'dataTableProxy')) {
+    replaceData(proxy, data, resetPaging = resetPaging, rownames = rownames, ...)
   }
   data
 }

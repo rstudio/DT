@@ -63,41 +63,32 @@ shinyApp(
       str(info)  # check what info looks like (a data frame of 3 columns)
       d5 <<- editData(d5, info)
       replaceData(proxy5, d5, resetPaging = FALSE)  # important
+      # the above steps can be merged into a single editData() call; see examples below
     })
 
     # edit a row
-    proxy6 = dataTableProxy('x6')
     observeEvent(input$x6_cell_edit, {
-      d6 <<- editData(d6, input$x6_cell_edit)
-      replaceData(proxy6, d6, resetPaging = FALSE)  # important
+      d6 <<- editData(d6, input$x6_cell_edit, 'x6')
     })
 
     # edit a column
-    proxy7 = dataTableProxy('x7')
     observeEvent(input$x7_cell_edit, {
-      d7 <<- editData(d7, input$x7_cell_edit)
-      replaceData(proxy7, d7, resetPaging = FALSE)  # important
+      d7 <<- editData(d7, input$x7_cell_edit, 'x7')
     })
 
     # edit all cells
-    proxy8 = dataTableProxy('x8')
     observeEvent(input$x8_cell_edit, {
-      d8 <<- editData(d8, input$x8_cell_edit)
-      replaceData(proxy8, d8, resetPaging = FALSE)  # important
+      d8 <<- editData(d8, input$x8_cell_edit, 'x8')
     })
 
     # when the table doesn't contain row names
-    proxy9 = dataTableProxy('x9')
     observeEvent(input$x9_cell_edit, {
-      d9 <<- editData(d9, input$x9_cell_edit, rownames = FALSE)
-      replaceData(proxy9, d9, resetPaging = FALSE, rownames = FALSE)
+      d9 <<- editData(d9, input$x9_cell_edit, 'x9', rownames = FALSE)
     })
 
     # edit rows but disable columns 2, 4, 5
-    proxy10 = dataTableProxy('x10')
     observeEvent(input$x10_cell_edit, {
-      d10 <<- editData(d10, input$x10_cell_edit)
-      replaceData(proxy10, d10, resetPaging = FALSE)  # important
+      d10 <<- editData(d10, input$x10_cell_edit, 'x10')
     })
 
   }

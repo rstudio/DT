@@ -4,7 +4,7 @@
 \alias{editData}
 \title{Edit a data object using the information from the editor in a DataTable}
 \usage{
-editData(data, info, rownames = TRUE)
+editData(data, info, proxy = NULL, rownames = TRUE, resetPaging = FALSE, ...)
 }
 \arguments{
 \item{data}{The original data object used in the DataTable.}
@@ -12,6 +12,12 @@ editData(data, info, rownames = TRUE)
 \item{info}{The information about the edited cells. It should be obtained
 from \code{input$tableId_cell_edit} from Shiny, and is a data frame
 containing columns \code{row}, \code{column}, and \code{value}.}
+
+\item{proxy, resetPaging, ...}{(Optional) If \code{proxy} is provided, it must
+be either a character string of the output ID of the table or a proxy
+object created from \code{\link{dataTableProxy}()}, and the rest of
+arguments are passed to \code{\link{replaceData}()} to update the data in a
+DataTable instance in a Shiny app.}
 
 \item{rownames}{Whether row names are displayed in the table.}
 }
