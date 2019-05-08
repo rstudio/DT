@@ -3,4 +3,4 @@
 ^tools
 ^\.travis\.yml$
 ^inst/examples/random\.R$
-^revdep$
+^\.github$
