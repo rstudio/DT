@@ -4,3 +4,4 @@
 ^\.travis\.yml$
 ^inst/examples/random\.R$
 ^\.github$
+^NEWS.md$
