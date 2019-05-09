@@ -32,7 +32,7 @@ for (f in list.files('.', '[.]html$')) {
     'css/style-%s.css', '<link rel="stylesheet" href="%s" type="text/css" />'
   )
   html = fragmentize(
-    html, '<script>[^<]+</script>', '^<script>|</script>$',
+    html, '<script>.+?</script>', '^<script>|</script>$',
     'js/script-%s.js', '<script src="%s"></script>'
   )
 
