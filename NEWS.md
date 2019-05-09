@@ -1,6 +1,8 @@
 # CHANGES IN DT VERSION 0.7
 
+## BUG FIXES
 
+- Bulk table editing doesn't work for the client-side processing mode without Shiny (e.g. a DataTable on a static HTML page).
 
 # CHANGES IN DT VERSION 0.6
 

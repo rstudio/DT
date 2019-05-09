@@ -787,7 +787,7 @@ HTMLWidgets.widget({
               for (var i = 0; i < target.length; i++) {
                 cell = target[i]; $cell = $(cell); _cell = table.cell(cell);
                 _cell.data($cell.data('input').val());
-                cellData.push(cellInfo(cell));
+                HTMLWidgets.shinyMode && cellData.push(cellInfo(cell));
                 removeInput($cell, false);
               }
               if (HTMLWidgets.shinyMode) {
