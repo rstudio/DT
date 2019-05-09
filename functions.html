@@ -33,6 +33,7 @@
 
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
+<script src="js/script-7.js"></script>
 <link rel="stylesheet" href="css/style-3.css" type="text/css" />
 
 
@@ -40,24 +41,29 @@
 
 <link rel="stylesheet" href="include/site.css" type="text/css" />
 
-</head>
 
-<body>
 
 <link rel="stylesheet" href="css/style-5.css" type="text/css" />
 
 
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
 
 <link rel="stylesheet" href="css/style-6.css" type="text/css" />
 
-<script src="js/script-7.js"></script>
+<script src="js/script-8.js"></script>
 
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -179,24 +185,24 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
 <p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-07-23 22:05:21&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;EST&#39;</span>)
 (<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
-##  [1] &quot;2015-07-23 22:05:22 EST&quot; &quot;2015-07-25 04:57:13 EST&quot;
-##  [3] &quot;2015-07-26 11:49:04 EST&quot; &quot;2015-07-27 18:40:55 EST&quot;
-##  [5] &quot;2015-07-29 01:32:46 EST&quot; &quot;2015-07-30 08:24:37 EST&quot;
-##  [7] &quot;2015-07-31 15:16:28 EST&quot; &quot;2015-08-01 22:08:19 EST&quot;
-##  [9] &quot;2015-08-03 05:00:10 EST&quot; &quot;2015-08-04 11:52:01 EST&quot;
+<span class="co">##  [1] &quot;2015-07-23 22:05:22 EST&quot; &quot;2015-07-25 04:57:13 EST&quot;</span>
+<span class="co">##  [3] &quot;2015-07-26 11:49:04 EST&quot; &quot;2015-07-27 18:40:55 EST&quot;</span>
+<span class="co">##  [5] &quot;2015-07-29 01:32:46 EST&quot; &quot;2015-07-30 08:24:37 EST&quot;</span>
+<span class="co">##  [7] &quot;2015-07-31 15:16:28 EST&quot; &quot;2015-08-01 22:08:19 EST&quot;</span>
+<span class="co">##  [9] &quot;2015-08-03 05:00:10 EST&quot; &quot;2015-08-04 11:52:01 EST&quot;</span>
 DT<span class="op">:::</span>DateMethods
-## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;
-## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          
-## [7] &quot;toTimeString&quot;       &quot;toUTCString&quot;
+<span class="co">## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;</span>
+<span class="co">## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          </span>
+<span class="co">## [7] &quot;toTimeString&quot;       &quot;toUTCString&quot;</span>
 <span class="co"># use m = DT:::DateMethods below to see the output of all methods</span>
 m =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;toDateString&#39;</span>, <span class="st">&#39;toLocaleDateString&#39;</span>, <span class="st">&#39;toLocaleString&#39;</span>, <span class="st">&#39;toUTCString&#39;</span>)
 d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, <span class="cf">function</span>(.) x), m))
 <span class="kw">str</span>(d)
-## &#39;data.frame&#39;:    10 obs. of  4 variables:
-##  $ toDateString      : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
-##  $ toLocaleDateString: POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
-##  $ toLocaleString    : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
-##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...
+<span class="co">## &#39;data.frame&#39;:    10 obs. of  4 variables:</span>
+<span class="co">##  $ toDateString      : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
+<span class="co">##  $ toLocaleDateString: POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
+<span class="co">##  $ toLocaleString    : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
+<span class="co">##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
 <span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(d), m)</code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -418,13 +424,13 @@ tags<span class="op">$</span><span class="kw">table</span>(<span class="kw">tabl
 </ol>
 </div>
 
-<script src="js/script-9.js"></script>
+<script src="js/script-10.js"></script>
 
 
 
 </div>
 
-<script src="js/script-8.js"></script>
+<script src="js/script-9.js"></script>
 
 
 </body>

@@ -709,28 +709,95 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
-    // double click to edit the cell
-    if (data.editable) table.on('dblclick.dt', 'tbody td', function() {
-      var $input = $('<input type="text">');
-      var $this = $(this), value = table.cell(this).data(), html = $this.html();
-      var changed = false;
-      $input.val(value);
-      $this.empty().append($input);
-      $input.css('width', '100%').focus().on('change', function() {
-        changed = true;
-        var valueNew = $input.val();
-        if (valueNew != value) {
-          table.cell($this).data(valueNew);
-          if (HTMLWidgets.shinyMode) changeInput('cell_edit', cellInfo($this));
-          // for server-side processing, users have to call replaceData() to update the table
-          if (!server) table.draw(false);
-        } else {
-          $this.html(html);
-        }
-        $input.remove();
-      }).on('blur', function() {
-        if (!changed) $input.trigger('change');
-      });
+    // double click to edit the cell, row, column, or all cells
+    if (data.editable) table.on('dblclick.dt', 'tbody td', function(e) {
+      // only bring up the editor when the cell itself is dbclicked, and ignore
+      // other dbclick events bubbled up (e.g. from the <input>)
+      if (e.target !== this) return;
+      var target = [], immediate = false;
+      switch (data.editable.target) {
+        case 'cell':
+          target = [this];
+          immediate = true;  // edit will take effect immediately
+          break;
+        case 'row':
+          target = table.cells(table.cell(this).index().row, '*').nodes();
+          break;
+        case 'column':
+          target = table.cells('*', table.cell(this).index().column).nodes();
+          break;
+        case 'all':
+          target = table.cells().nodes();
+          break;
+        default:
+          throw 'The editable parameter must be "cell", "row", "column", or "all"';
+      }
+      var disableCols = data.editable.disable ? data.editable.disable.columns : null;
+      for (var i = 0; i < target.length; i++) {
+        (function(cell, current) {
+          var $cell = $(cell), html = $cell.html();
+          var _cell = table.cell(cell), value = _cell.data();
+          var $input = $('<input type="text">'), changed = false;
+          if (!immediate) {
+            $cell.data('input', $input).data('html', html)
+                 .attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
+          }
+          $input.val(value);
+          if (disableCols && inArray(_cell.index().column, disableCols)) {
+            $input.attr('readonly', '').css('filter', 'invert(25%)');
+          }
+          $cell.empty().append($input);
+          if (cell === current) $input.focus();
+          $input.css('width', '100%');
+
+          if (immediate) $input.on('change', function() {
+            changed = true;
+            var valueNew = $input.val();
+            if (valueNew != value) {
+              _cell.data(valueNew);
+              if (HTMLWidgets.shinyMode) {
+                changeInput('cell_edit', [cellInfo(cell)], 'DT.cellInfo', null, {priority: "event"});
+              }
+              // for server-side processing, users have to call replaceData() to update the table
+              if (!server) table.draw(false);
+            } else {
+              $cell.html(html);
+            }
+            $input.remove();
+          }).on('blur', function() {
+            if (!changed) $input.trigger('change');
+          }).on('keyup', function(e) {
+            // hit Escape to cancel editing
+            if (e.keyCode === 27) $input.trigger('blur');
+          });
+
+          // bulk edit (row, column, or all)
+          if (!immediate) $input.on('keyup', function(e) {
+            var removeInput = function($cell, restore) {
+              $cell.data('input').remove();
+              if (restore) $cell.html($cell.data('html'));
+            }
+            if (e.keyCode === 27) {
+              for (var i = 0; i < target.length; i++) {
+                removeInput($(target[i]), true);
+              }
+            } else if (e.keyCode === 13 && e.ctrlKey) {
+              // Ctrl + Enter
+              var cell, $cell, _cell, cellData = [];
+              for (var i = 0; i < target.length; i++) {
+                cell = target[i]; $cell = $(cell); _cell = table.cell(cell);
+                _cell.data($cell.data('input').val());
+                cellData.push(cellInfo(cell));
+                removeInput($cell, false);
+              }
+              if (HTMLWidgets.shinyMode) {
+                changeInput('cell_edit', cellData, 'DT.cellInfo', null, {priority: "event"});
+              }
+              if (!server) table.draw(false);
+            }
+          });
+        })(target[i], this);
+      }
     });
 
     // interaction with shiny
@@ -747,18 +814,18 @@ HTMLWidgets.widget({
     // register clear functions to remove input values when the table is removed
     instance.clearInputs = {};
 
-    var changeInput = function(id, value, type, noCrosstalk) {
+    var changeInput = function(id, value, type, noCrosstalk, opts) {
       var event = id;
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
       // do not update if the new value is the same as old value
-      if (shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
+      if (event !== 'cell_edit' && shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
       shinyData[id] = JSON.stringify(value);
       if (HTMLWidgets.shinyMode) {
-        Shiny.onInputChange(id, value);
+        Shiny.setInputValue(id, value, opts);
         if (!instance.clearInputs[id]) instance.clearInputs[id] = function() {
-          Shiny.onInputChange(id, null);
+          Shiny.setInputValue(id, null);
         }
       }
 
