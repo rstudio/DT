@@ -85,7 +85,7 @@ app = system.file('examples', 'DT-rows', package = 'DT')
 shiny::runApp(app)
 ```
 
-[![Row selection in DataTables](https://i.imgur.com/jBxAm4F.png)](https://yihui.shinyapps.io/DT-rows/)
+[![Row selection in DataTables](https://user-images.githubusercontent.com/163582/57483253-07898c00-726c-11e9-88e9-e084ff0dfcd0.png)](https://yihui.shinyapps.io/DT-rows/)
 
 You can also obtain the index of the last clicked row via `input$tableId_row_last_clicked` (it may be `NULL` initially and when the table is redrawn).
 
@@ -121,7 +121,7 @@ app = system.file('examples', 'DT-info', package = 'DT')
 shiny::runApp(app)
 ```
 
-[![DataTables information in shiny](https://i.imgur.com/iLJNC60.png)](https://yihui.shinyapps.io/DT-info/)
+[![DataTables information in shiny](https://user-images.githubusercontent.com/163582/57483283-17a16b80-726c-11e9-82a7-9fc52c7565c3.png)](https://yihui.shinyapps.io/DT-info/)
 
 ## Manipulate An Existing DataTables Instance
 
@@ -133,6 +133,12 @@ Sometimes the data behind the table may change, and you do not want to regenerat
 app = system.file('examples', 'DT-reload', package = 'DT')
 shiny::runApp(app)
 ```
+
+## Edit Tables
+
+You can edit a table via the `editable` argument of `datatable()`. After you finish editing, you can obtain the row/column indices and the new values of the cells that were edited via `input$tableId_cell_info`. See [this Shiny app](https://yihui.shinyapps.io/DT-edit/) for more concrete examples.
+
+[![Edit DT tables](https://user-images.githubusercontent.com/163582/55591093-47ec6c00-56fa-11e9-8b59-a8da9c13dccc.png)](https://yihui.shinyapps.io/DT-edit/)
 
 # More Examples
 

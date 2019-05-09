@@ -187,7 +187,7 @@
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
 app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
-<p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="https://i.imgur.com/jBxAm4F.png" alt="Row selection in DataTables" /></a></p>
+<p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="https://user-images.githubusercontent.com/163582/57483253-07898c00-726c-11e9-88e9-e084ff0dfcd0.png" alt="Row selection in DataTables" /></a></p>
 <p>You can also obtain the index of the last clicked row via <code>input$tableId_row_last_clicked</code> (it may be <code>NULL</code> initially and when the table is redrawn).</p>
 </div>
 <div id="column-selection" class="section level3">
@@ -218,7 +218,7 @@ shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-info/">This example</a> shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.</p>
 <pre class="sourceCode r"><code class="sourceCode r">app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-info&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
-<p><a href="https://yihui.shinyapps.io/DT-info/"><img src="https://i.imgur.com/iLJNC60.png" alt="DataTables information in shiny" /></a></p>
+<p><a href="https://yihui.shinyapps.io/DT-info/"><img src="https://user-images.githubusercontent.com/163582/57483283-17a16b80-726c-11e9-82a7-9fc52c7565c3.png" alt="DataTables information in shiny" /></a></p>
 </div>
 <div id="manipulate-an-existing-datatables-instance" class="section level2">
 <h2><span class="header-section-number">2.3</span> Manipulate An Existing DataTables Instance</h2>
@@ -226,6 +226,11 @@ shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
 <p>Sometimes the data behind the table may change, and you do not want to regenerate the whole table, but only want to replace the data values. The state of the table (sorting, filtering, and pagination) can be preserved after you replace the data with <code>replaceData()</code>. Here is a short example:</p>
 <pre class="sourceCode r"><code class="sourceCode r">app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-reload&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
 shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
+</div>
+<div id="edit-tables" class="section level2">
+<h2><span class="header-section-number">2.4</span> Edit Tables</h2>
+<p>You can edit a table via the <code>editable</code> argument of <code>datatable()</code>. After you finish editing, you can obtain the row/column indices and the new values of the cells that were edited via <code>input$tableId_cell_info</code>. See <a href="https://yihui.shinyapps.io/DT-edit/">this Shiny app</a> for more concrete examples.</p>
+<p><a href="https://yihui.shinyapps.io/DT-edit/"><img src="https://user-images.githubusercontent.com/163582/55591093-47ec6c00-56fa-11e9-8b59-a8da9c13dccc.png" alt="Edit DT tables" /></a></p>
 </div>
 </div>
 <div id="more-examples" class="section level1">
