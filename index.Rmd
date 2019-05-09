@@ -6,12 +6,11 @@ title: 'DT: An R interface to the DataTables library'
 
 The R package **DT** provides an R interface to the JavaScript library [**DataTables**](http://datatables.net). R data objects (matrices or data frames) can be displayed as tables on HTML pages, and **DataTables** provides filtering, pagination, sorting, and many other features in the tables.
 
-You may install the stable version from CRAN, or the development version using `devtools::install_github('rstudio/DT')` if necessary (this website reflects the development version of **DT**):
+You may install the stable version from CRAN, or the development version using `remotes::install_github('rstudio/DT')` if necessary (this website reflects the development version of **DT**):
 
 ```{r message=FALSE}
 # if (!require("DT")) install.packages('DT')
-library(DT)
-devtools::session_info()
+xfun::session_info('DT')
 ```
 
 Please use [Github issues](https://github.com/rstudio/DT/issues) to file bug reports or feature requests, and use [StackOverflow](http://stackoverflow.com/questions/tagged/dt) to ask questions.
@@ -55,10 +54,13 @@ Note you can only use one style for all tables on one page. Please see [this sep
 
 ## Table Editing
 
-You can enable table editing using the argument `editable = TRUE`. Then you will be able to double-click a cell to edit its value. It works in both client-side and [server-side processing](server.html) modes. Below is a client-side example (also see [a Shiny example](https://yihui.shinyapps.io/DT-edit/) with server-side processing):
+You can enable table editing using the argument `editable` (see `?DT::datatable` for its possible values). Then you will be able to double-click a cell to edit its value. It works in both client-side and [server-side processing](server.html) modes. Below are two client-side examples (also see [a Shiny example](https://yihui.shinyapps.io/DT-edit/) with server-side processing):
 
 ```{r}
-DT::datatable(head(iris), editable = TRUE)
+DT::datatable(head(iris), editable = 'cell')
+DT::datatable(head(iris), editable = list(
+  target = 'row', disable = list(columns = c(1, 3, 4))
+))
 ```
 
 ## Display Row Names

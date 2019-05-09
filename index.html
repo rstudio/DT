@@ -109,63 +109,35 @@
 
 <hr />
 <p>The R package <strong>DT</strong> provides an R interface to the JavaScript library <a href="http://datatables.net"><strong>DataTables</strong></a>. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and <strong>DataTables</strong> provides filtering, pagination, sorting, and many other features in the tables.</p>
-<p>You may install the stable version from CRAN, or the development version using <code>devtools::install_github('rstudio/DT')</code> if necessary (this website reflects the development version of <strong>DT</strong>):</p>
+<p>You may install the stable version from CRAN, or the development version using <code>remotes::install_github('rstudio/DT')</code> if necessary (this website reflects the development version of <strong>DT</strong>):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if (!require(&quot;DT&quot;)) install.packages(&#39;DT&#39;)</span>
-<span class="kw">library</span>(DT)
-devtools<span class="op">::</span><span class="kw">session_info</span>()</code></pre>
-<pre><code>## ─ Session info ──────────────────────────────────────────────────────────
-##  setting  value                       
-##  version  R version 3.6.0 (2019-04-26)
-##  os       macOS Mojave 10.14.4        
-##  system   x86_64, darwin15.6.0        
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  ctype    en_US.UTF-8                 
-##  tz       America/Chicago             
-##  date     2019-05-09                  
+xfun<span class="op">::</span><span class="kw">session_info</span>(<span class="st">&#39;DT&#39;</span>)</code></pre>
+<pre><code>## R version 3.6.0 (2019-04-26)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Mojave 10.14.4
 ## 
-## ─ Packages ──────────────────────────────────────────────────────────────
-##  package     * version date       lib source        
-##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.5.3)
-##  backports     1.1.4   2019-04-10 [1] CRAN (R 3.5.3)
-##  callr         3.2.0   2019-03-15 [1] CRAN (R 3.5.3)
-##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.5.3)
-##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.5.0)
-##  desc          1.2.0   2018-05-01 [1] CRAN (R 3.5.0)
-##  devtools      2.0.2   2019-04-08 [1] CRAN (R 3.5.3)
-##  digest        0.6.18  2018-10-10 [1] CRAN (R 3.5.0)
-##  DT          * 0.6     2019-05-09 [1] CRAN (R 3.6.0)
-##  evaluate      0.13    2019-02-12 [1] CRAN (R 3.5.2)
-##  fs            1.3.1   2019-05-06 [1] CRAN (R 3.6.0)
-##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.5.2)
-##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.5.0)
-##  htmlwidgets   1.3     2018-09-30 [1] CRAN (R 3.5.1)
-##  knitr         1.22    2019-03-08 [1] CRAN (R 3.6.0)
-##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.5.0)
-##  memoise       1.1.0   2017-04-21 [1] CRAN (R 3.5.0)
-##  pkgbuild      1.0.3   2019-03-20 [1] CRAN (R 3.5.3)
-##  pkgload       1.0.2   2018-10-29 [1] CRAN (R 3.5.0)
-##  prettyunits   1.0.2   2015-07-13 [1] CRAN (R 3.5.0)
-##  processx      3.3.1   2019-05-08 [1] CRAN (R 3.6.0)
-##  ps            1.3.0   2018-12-21 [1] CRAN (R 3.5.0)
-##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.5.2)
-##  Rcpp          1.0.1   2019-03-17 [1] CRAN (R 3.5.3)
-##  remotes       2.0.4   2019-04-10 [1] CRAN (R 3.5.3)
-##  rlang         0.3.4   2019-04-07 [1] CRAN (R 3.5.2)
-##  rmarkdown     1.12.6  2019-05-09 [1] local         
-##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.5.0)
-##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.5.1)
-##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.5.2)
-##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.5.2)
-##  testthat      2.1.1   2019-04-23 [1] CRAN (R 3.6.0)
-##  usethis       1.5.0   2019-04-07 [1] CRAN (R 3.5.2)
-##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.5.0)
-##  xfun          0.6     2019-04-02 [1] CRAN (R 3.5.3)
-##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.5.1)
+## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
 ## 
-## [1] /Users/yihui/R
-## [2] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+## Package version:
+##   assertthat_0.2.1   BH_1.69.0.1        cli_1.1.0         
+##   colorspace_1.4.1   crayon_1.3.4       crosstalk_1.0.0   
+##   digest_0.6.18      DT_0.6.1           fansi_0.4.0       
+##   ggplot2_3.1.1      glue_1.3.1         graphics_3.6.0    
+##   grDevices_3.6.0    grid_3.6.0         gtable_0.3.0      
+##   htmltools_0.3.6    htmlwidgets_1.3    httpuv_1.5.1      
+##   jsonlite_1.6       labeling_0.3       later_0.8.0       
+##   lattice_0.20.38    lazyeval_0.2.2     magrittr_1.5      
+##   MASS_7.3.51.4      Matrix_1.2.17      methods_3.6.0     
+##   mgcv_1.8.28        mime_0.6           munsell_0.5.0     
+##   nlme_3.1.139       pillar_1.3.1       pkgconfig_2.0.2   
+##   plyr_1.8.4         promises_1.0.1     R6_2.4.0          
+##   RColorBrewer_1.1.2 Rcpp_1.0.1         reshape2_1.4.3    
+##   rlang_0.3.4        scales_1.0.0       shiny_1.3.2       
+##   sourcetools_0.1.7  splines_3.6.0      stats_3.6.0       
+##   stringi_1.4.3      stringr_1.4.0      tibble_2.1.1      
+##   tools_3.6.0        utf8_1.1.4         utils_3.6.0       
+##   viridisLite_0.3.0  withr_2.1.2        xtable_1.8.4      
+##   yaml_2.2.0</code></pre>
 <p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> to file bug reports or feature requests, and use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> to ask questions.</p>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
@@ -265,8 +237,8 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
 </div>
 <div id="table-editing" class="section level2">
 <h2><span class="header-section-number">2.3</span> Table Editing</h2>
-<p>You can enable table editing using the argument <code>editable = TRUE</code>. Then you will be able to double-click a cell to edit its value. It works in both client-side and <a href="server.html">server-side processing</a> modes. Below is a client-side example (also see <a href="https://yihui.shinyapps.io/DT-edit/">a Shiny example</a> with server-side processing):</p>
-<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="ot">TRUE</span>)</code></pre>
+<p>You can enable table editing using the argument <code>editable</code> (see <code>?DT::datatable</code> for its possible values). Then you will be able to double-click a cell to edit its value. It works in both client-side and <a href="server.html">server-side processing</a> modes. Below are two client-side examples (also see <a href="https://yihui.shinyapps.io/DT-edit/">a Shiny example</a> with server-side processing):</p>
+<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="st">&#39;cell&#39;</span>)</code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
@@ -305,13 +277,54 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
   "evals": [],
   "jsHooks": []
 }</script>
+<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="kw">list</span>(
+  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>, <span class="dt">disable =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>))
+))</code></pre>
+<div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4">{
+  "x": {
+    "filter": "none",
+    "editable": {
+      "target": "row",
+      "disable": {
+        "columns": [1, 3, 4]
+      }
+    },
+    "data": [
+      ["1", "2", "3", "4", "5", "6"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
+    }
+  },
+  "evals": [],
+  "jsHooks": []
+}</script>
 </div>
 <div id="display-row-names" class="section level2">
 <h2><span class="header-section-number">2.4</span> Display Row Names</h2>
 <p>If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument <code>rownames = FALSE</code>, and you can also change row names by providing a different character vector to <code>rownames</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars))</code></pre>
-<div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4">{
+<div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5">{
   "x": {
     "filter": "none",
     "data": [
@@ -349,8 +362,8 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="ot">FALSE</span>)  <span class="co"># no row names</span></code></pre>
-<div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5">{
+<div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6">{
   "x": {
     "filter": "none",
     "data": [
@@ -383,8 +396,8 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="kw">head</span>(LETTERS))  <span class="co"># new row names</span></code></pre>
-<div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6">{
+<div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7">{
   "x": {
     "filter": "none",
     "data": [
@@ -440,8 +453,8 @@ Influence of Row Names on Column Indices in JavaScript
 <p>By default, <code>datatable()</code> shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># colnames(iris) is a character vector of length 5, and we replace it</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Here&#39;</span>, <span class="st">&#39;Are&#39;</span>, <span class="st">&#39;Some&#39;</span>, <span class="st">&#39;New&#39;</span>, <span class="st">&#39;Names&#39;</span>))</code></pre>
-<div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7">{
+<div id="htmlwidget-8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8">{
   "x": {
     "filter": "none",
     "data": [
@@ -474,8 +487,8 @@ Influence of Row Names on Column Indices in JavaScript
 }</script>
 <p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;A Better Name&#39;</span> =<span class="st"> &#39;Sepal.Width&#39;</span>))</code></pre>
-<div id="htmlwidget-8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8">{
+<div id="htmlwidget-9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9">{
   "x": {
     "filter": "none",
     "data": [
@@ -507,8 +520,8 @@ Influence of Row Names on Column Indices in JavaScript
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Another Better Name&#39;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> =<span class="st"> </span><span class="dv">4</span>))</code></pre>
-<div id="htmlwidget-9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9">{
+<div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-10">{
   "x": {
     "filter": "none",
     "data": [
@@ -542,8 +555,8 @@ Influence of Row Names on Column Indices in JavaScript
 <p>When you display row names of the data, its column name will be a white space by default. That is why you cannot see its column name. You can certainly choose to use a column name for rownames as well, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the first column name to &#39;ID&#39;</span>
 <span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;ID&#39;</span> =<span class="st"> </span><span class="dv">1</span>))</code></pre>
-<div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-10">{
+<div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-11">{
   "x": {
     "filter": "none",
     "data": [
@@ -607,8 +620,8 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use rownames = FALSE here because we did not generate a cell for row names in</span>
 <span class="co"># the header, and the header only contains five columns</span>
 <span class="kw">datatable</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)], <span class="dt">container =</span> sketch, <span class="dt">rownames =</span> <span class="ot">FALSE</span>)</code></pre>
-<div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-11">{
+<div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-12">{
   "x": {
     "filter": "none",
     "class": "display",
@@ -666,8 +679,8 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
   <span class="kw">head</span>(iris, <span class="dv">10</span>),
   <span class="dt">container =</span> sketch, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>), <span class="dt">rownames =</span> <span class="ot">FALSE</span>
 )</code></pre>
-<div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-12">{
+<div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-13">{
   "x": {
     "filter": "none",
     "class": "display",
@@ -705,8 +718,8 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
   <span class="kw">head</span>(iris),
   <span class="dt">caption =</span> <span class="st">&#39;Table 1: This is a simple caption for the table.&#39;</span>
 )</code></pre>
-<div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-13">{
+<div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-14">{
   "x": {
     "filter": "none",
     "caption": "<caption>Table 1: This is a simple caption for the table.</caption>",
@@ -746,8 +759,8 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
     <span class="st">&#39;Table 2: &#39;</span>, htmltools<span class="op">::</span><span class="kw">em</span>(<span class="st">&#39;This is a simple caption for the table.&#39;</span>)
   )
 )</code></pre>
-<div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-14">{
+<div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-15">{
   "x": {
     "filter": "none",
     "caption": "<caption style=\"caption-side: bottom; text-align: center;\">\n  Table 2: \n  <em>This is a simple caption for the table.</em>\n</caption>",
@@ -787,8 +800,8 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
 <span class="kw">datatable</span>(iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
   <span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">autoWidth =</span> <span class="ot">TRUE</span>
 ))</code></pre>
-<div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-15">{
+<div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16">{
   "x": {
     "filter": "top",
     "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4.4\" data-max=\"7.6\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.3\" data-max=\"3.9\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"6.6\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.1\" data-max=\"2.5\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;setosa&quot;,&quot;versicolor&quot;,&quot;virginica&quot;]\"></select>\n    </div>\n  </td>\n</tr>",
@@ -848,8 +861,8 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
 <span class="co">##  $ date : Date, format: &quot;2015-03-24&quot; &quot;2015-03-25&quot; ...</span>
 <span class="co">##  $ time : POSIXct, format: &quot;2015-03-23 13:23:20&quot; &quot;2015-03-23 14:46:40&quot; ...</span>
 <span class="kw">datatable</span>(d, <span class="dt">filter =</span> <span class="st">&#39;bottom&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))</code></pre>
-<div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-16">{
+<div id="htmlwidget-17" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-17">{
   "x": {
     "filter": "bottom",
     "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n  </td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1427155200000\" data-max=\"1429833600000\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"time\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.427117e+12\" data-max=\"1.427272e+12\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n</tr>",
@@ -891,8 +904,8 @@ Known Issues of Column Filters
 <h2><span class="header-section-number">2.9</span> The <code>callback</code> argument</h2>
 <p>The argument <code>callback</code> takes the body of a JavaScript function that will be applied to the <strong>DataTables</strong> object after initialization. Below is an example to show the next page after the table is initialized<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">30</span>), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(&quot;next&quot;).draw(false);&#39;</span>))</code></pre>
-<div id="htmlwidget-17" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-17">{
+<div id="htmlwidget-18" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-18">{
   "x": {
     "filter": "none",
     "data": [
@@ -943,8 +956,8 @@ Known Issues of Column Filters
 ), <span class="dv">2</span>)
 <span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;&lt;span style=&quot;color:red&quot;&gt;Column 1&lt;/span&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Column 2&lt;/em&gt;&#39;</span>)
 <span class="kw">datatable</span>(m)  <span class="co"># escape = TRUE by default</span></code></pre>
-<div id="htmlwidget-18" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-18">{
+<div id="htmlwidget-19" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-19">{
   "x": {
     "filter": "none",
     "data": [
@@ -962,8 +975,8 @@ Known Issues of Column Filters
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>)</code></pre>
-<div id="htmlwidget-19" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-19">{
+<div id="htmlwidget-20" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-20">{
   "x": {
     "filter": "none",
     "data": [
