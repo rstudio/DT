@@ -8,6 +8,7 @@ x = gsub('<\\\\(/[a-z1-6]+>)', '<\\1', x)
 x = blogdown:::clean_widget_html(x)
 x = bookdown:::clean_pandoc2_highlight_tags(x)
 x = x[x != 'pre.sourceCode { margin: 0; }']
+x = gsub('^(<style type="text/css")( data-origin="pandoc")(>)$', '\\1\\3', x)
 writeLines(x, o)
 unlink(list.files('.', '[.]map$', recursive = TRUE))
 unlink(c(
