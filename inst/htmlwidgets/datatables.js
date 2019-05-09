@@ -739,8 +739,8 @@ HTMLWidgets.widget({
           var _cell = table.cell(cell), value = _cell.data();
           var $input = $('<input type="text">'), changed = false;
           if (!immediate) {
-            $cell.data('input', $input).data('html', html)
-                 .attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
+            $cell.data('input', $input).data('html', html);
+            $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
           if (disableCols && inArray(_cell.index().column, disableCols)) {
