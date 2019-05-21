@@ -57,6 +57,7 @@ formatCurrency = function(
 ) {
   currency = gsub("'", "\\\\'", currency)
   mark = gsub("'", "\\\\'", mark)
+  dec.mark = gsub("'", "\\\\'", dec.mark)
   formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark, before)
 }
 
@@ -74,6 +75,8 @@ formatString = function(table, columns, prefix = '', suffix = '') {
 formatPercentage = function(
   table, columns, digits = 0, interval = 3, mark = ',', dec.mark = getOption('OutDec')
 ) {
+  mark = gsub("'", "\\\\'", mark)
+  dec.mark = gsub("'", "\\\\'", dec.mark)
   formatColumns(table, columns, tplPercentage, digits, interval, mark, dec.mark)
 }
 
@@ -82,6 +85,8 @@ formatPercentage = function(
 formatRound = function(
   table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
 ) {
+  mark = gsub("'", "\\\\'", mark)
+  dec.mark = gsub("'", "\\\\'", dec.mark)
   formatColumns(table, columns, tplRound, digits, interval, mark, dec.mark)
 }
 
@@ -90,6 +95,8 @@ formatRound = function(
 formatSignif = function(
   table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
 ) {
+  mark = gsub("'", "\\\\'", mark)
+  dec.mark = gsub("'", "\\\\'", dec.mark)
   formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark)
 }
 
