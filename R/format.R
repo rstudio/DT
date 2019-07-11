@@ -180,39 +180,43 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
 
 tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, before, ...) {
   sprintf(
-    "DTWidget.formatCurrency(this, row, data, %d, '%s', %d, %d, '%s', '%s', %s);",
-    cols, currency, digits, interval, mark, dec.mark, if (before) 'true' else 'false'
+    "DTWidget.formatCurrency(this, row, data, %d, %s, %d, %d, %s, %s, %s);",
+    cols, jsValues(currency), digits, interval, jsValues(mark), jsValues(dec.mark),
+    jsValues(isTRUE(before))
   )
 }
 
 tplString = function(cols, prefix, suffix, ...) {
-  sprintf("DTWidget.formatString(this, row, data, %d, '%s', '%s');", cols, prefix, suffix)
+  sprintf(
+    "DTWidget.formatString(this, row, data, %d, %s, %s);",
+    cols, jsValues(prefix), jsValues(suffix)
+  )
 }
 
 tplPercentage = function(cols, digits, interval, mark, dec.mark, ...) {
   sprintf(
-    "DTWidget.formatPercentage(this, row, data, %d, %s, %s, '%s', '%s');",
-    cols, digits, interval, mark, dec.mark
+    "DTWidget.formatPercentage(this, row, data, %d, %d, %d, %s, %s);",
+    cols, digits, interval, jsValues(mark), jsValues(dec.mark)
   )
 }
 
 tplRound = function(cols, digits, interval, mark, dec.mark, ...) {
   sprintf(
-    "DTWidget.formatRound(this, row, data, %d, %d, %s, '%s', '%s');",
-    cols, digits, interval, mark, dec.mark
+    "DTWidget.formatRound(this, row, data, %d, %d, %d, %s, %s);",
+    cols, digits, interval, jsValues(mark), jsValues(dec.mark)
   )
 }
 
 tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
   sprintf(
-    "DTWidget.formatSignif(this, row, data, %d, %d, %d, '%s', '%s');",
-    cols, digits, interval, mark, dec.mark
+    "DTWidget.formatSignif(this, row, data, %d, %d, %d, %s, %s);",
+    cols, digits, interval, jsValues(mark), jsValues(dec.mark)
   )
 }
 
 tplDate = function(cols, method, params, ...) {
   params = if (length(params) > 0) paste(',', toJSON(params)) else ''
-  sprintf("DTWidget.formatDate(this, row, data, %d, '%s'%s);", cols, method, params)
+  sprintf("DTWidget.formatDate(this, row, data, %d, %s%s);", cols, jsValues(method), params)
 }
 
 DateMethods = c(
@@ -248,14 +252,13 @@ tplStyle = function(cols, valueCols, target, styles, ...) {
 
 jsValues = function(x) {
   if (inherits(x, c("POSIXt", "POSIXct", "POSIXlt"))) {
-    sprintf("'%s'", format(x, "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"))
+    x = format(x, "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
   } else if (inherits(x, "Date")) {
-    sprintf("'%s'", format(x, "%Y-%m-%d"))
-  } else if (is.numeric(x)) {
-    sprintf("%f", x)
-  } else {
-    x
+    x = format(x, "%Y-%m-%d")
   }
+  sapply(x, function(v) {
+    jsonlite::toJSON(jsonlite::unbox(v))
+  }, simplify = TRUE, USE.NAMES = FALSE)
 }
 
 
@@ -290,12 +293,13 @@ styleInterval = function(cuts, values) {
   n = length(cuts)
   if (n != length(values) - 1)
     stop("length(cuts) must be equal to length(values) - 1")
-  values = sprintf("'%s'", values)
+  values = jsValues(values)
   if (n == 0) return(values)
   if (!all(cuts == sort(cuts))) stop("'cuts' must be sorted increasingly")
   js = "isNaN(parseFloat(value)) ? '' : "  # missing or non-numeric values in data
+  cuts = jsValues(cuts)
   for (i in seq_len(n)) {
-    js = paste0(js, sprintf('value <= %s ? %s : ', jsValues(cuts[i]), values[i]))
+    js = paste0(js, sprintf('value <= %s ? %s : ', cuts[i], values[i]))
   }
   JS(paste0(js, values[n + 1]))
 }
@@ -312,15 +316,13 @@ styleEqual = function(levels, values, default = "") {
   if (!is.character(default) || length(default) != 1)
     stop("default must be a string")
   if (n == 0) return("''")
-  levels2 = levels
-  if (is.character(levels)) levels2 = gsub("'", "\\'", levels)
-  levels2 = if (is.Date(levels2) || is.numeric(levels2)) jsValues(levels2) else sprintf("'%s'", levels2)
-  levels2[is.na(levels)] = 'null'
+  levels = jsValues(levels)
+  values = jsValues(values)
   js = ''
   for (i in seq_len(n)) {
-    js = paste0(js, sprintf("value == %s ? '%s' : ", levels2[i], values[i]))
+    js = paste0(js, sprintf("value == %s ? %s : ", levels[i], values[i]))
   }
-  JS(paste0(js, sprintf("'%s'", default)))
+  JS(paste0(js, sprintf("%s", jsValues(default))))
 }
 
 #' @param data a numeric vector whose range will be used for scaling the
