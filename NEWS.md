@@ -28,6 +28,8 @@
 
 - Fix the issue that the server-side search option doesn't handle exotic encoding correctly, because after httpuv v1.5.0, `shiny::parseQueryString()` always assumes the input is an UTF-8 encoded string (thanks, @shrektan @phileas-condemine, #656).
 
+- Fix the issue that when params contain the single quote character, it may result in incorrect javascript codes due to failing to escape the single quote (thanks, @shrektan #683 #666).
+
 # CHANGES IN DT VERSION 0.5
 
 ## NEW FEATURES
