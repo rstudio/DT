@@ -102,6 +102,13 @@ datatable = function(
     getOption('DT.options', list()),
     if (is.function(options)) options() else options
   )
+
+  # https://github.com/rstudio/DT/issues/658
+  # must provide a list to options$buttons.
+  # otherwise, scalar string doesn't work expectedly.
+  if (is.character(options[['buttons']]))
+    options[['buttons']] = as.list(options[['buttons']])
+
   params = list()
   attr(params, "TOJSON_ARGS") = getOption("DT.TOJSON_ARGS")
 
