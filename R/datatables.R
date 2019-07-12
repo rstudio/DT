@@ -104,9 +104,17 @@ datatable = function(
   )
 
   # https://github.com/rstudio/DT/issues/658
-  # must provide a list to options$buttons.
-  # otherwise, scalar string doesn't work expectedly.
-  options[['buttons']] = as.list(options[['buttons']])
+  # https://datatables.net/reference/option/buttons says options$buttons accept
+  # a character vector, a boolean or an object
+  # But a scalar string or a boolean will display all the default buttons without
+  # correct dependencies.
+  btnConfig = options[['buttons']]
+  if (is.logical(btnConfig)) {
+    # $.fn.dataTable.Buttons.defaults
+    btnDefaults = c('copy', 'excel', 'csv', 'pdf', 'print')
+    btnConfig = if (isTRUE(btnConfig)) btnDefaults else character()
+  }
+  options[['buttons']] = as.list(btnConfig)
 
   params = list()
   attr(params, "TOJSON_ARGS") = getOption("DT.TOJSON_ARGS")
@@ -578,7 +586,7 @@ listButtons = function(options) {
       return(if (extend != 'collection') extend else listButtons(cfg))
     }
   })))
-  stop('Options for DataTables extensions must be either a character vector or a list')
+  stop('Options for DataTables extensions must be a boolean, a character vector or a list')
 }
 
 extraDepData = list(
