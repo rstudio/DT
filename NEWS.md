@@ -1,6 +1,8 @@
 # CHANGES IN DT VERSION 0.8
 
+## BUG FIXES
 
+- `options$buttons` now works as expected when providing a scalar string or a boolean value (thanks, @shrektan, #685 #658).
 
 # CHANGES IN DT VERSION 0.7
 
