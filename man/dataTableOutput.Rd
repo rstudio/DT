@@ -43,7 +43,7 @@ is useful if you want to save an expression in a variable.}
 of \code{\link{dataTableAjax}()}}
 
 \item{...}{ignored when \code{expr} returns a table widget, and passed as
-additional arguments to \code{datatable()} when \code{expr} returns a data
+additional arguments to \code{\link{datatable}()} when \code{expr} returns a data
 object}
 }
 \description{
