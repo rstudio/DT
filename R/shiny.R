@@ -50,7 +50,7 @@ DTOutput = dataTableOutput
 #' @param funcFilter (for expert use only) passed to the \code{filter} argument
 #'   of \code{\link{dataTableAjax}()}
 #' @param ... ignored when \code{expr} returns a table widget, and passed as
-#'   additional arguments to \code{datatable()} when \code{expr} returns a data
+#'   additional arguments to \code{\link{datatable}()} when \code{expr} returns a data
 #'   object
 renderDataTable = function(
     expr, server = TRUE, env = parent.frame(), quoted = FALSE,
