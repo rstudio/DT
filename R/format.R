@@ -320,7 +320,7 @@ styleEqual = function(levels, values, default = "") {
   for (i in seq_len(n)) {
     js = paste0(js, sprintf("value == %s ? %s : ", levels[i], values[i]))
   }
-  JS(paste0(js, sprintf("%s", jsValues(default))))
+  JS(paste0(js, jsValues(default)))
 }
 
 #' @param data a numeric vector whose range will be used for scaling the
