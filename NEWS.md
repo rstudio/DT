@@ -4,6 +4,8 @@
 
 - For `datatable()`, `options$buttons` now works as expected when providing a scalar string or a boolean value (thanks, @shrektan, #685 #658).
 
+- Fix the issue that when params contain the single quote character, it may result in incorrect javascript codes due to failing to escape the single quote (thanks, @shrektan #683 #666).
+
 # CHANGES IN DT VERSION 0.7
 
 ## BUG FIXES
@@ -27,8 +29,6 @@
 - The JavaScript event `cell_edit` now always triggers a reactive event on the R side. Since `cell_edit` will only be triggered when the value shown on the table has been changed so it's almost always what user expects (thanks, @shrektan @stelmath, #647 #645).
 
 - Fix the issue that the server-side search option doesn't handle exotic encoding correctly, because after httpuv v1.5.0, `shiny::parseQueryString()` always assumes the input is an UTF-8 encoded string (thanks, @shrektan @phileas-condemine, #656).
-
-- Fix the issue that when params contain the single quote character, it may result in incorrect javascript codes due to failing to escape the single quote (thanks, @shrektan #683 #666).
 
 # CHANGES IN DT VERSION 0.5
 
