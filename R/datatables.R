@@ -104,6 +104,12 @@ datatable = function(
     getOption('DT.options', list()),
     if (is.function(options)) options() else options
   )
+
+  # make sure the options will be a JS array when it is a character vector (of
+  # length 1): https://github.com/rstudio/DT/issues/658
+  if (is.character(btnOpts <- options[['buttons']]))
+    options[['buttons']] = as.list(btnOpts)
+
   params = list()
   attr(params, "TOJSON_ARGS") = getOption("DT.TOJSON_ARGS")
 
@@ -540,6 +546,8 @@ extDependency = function(extension, style, options) {
   buttonDeps = NULL
   if (extension == 'Buttons') {
     buttons = listButtons(options)
+    if (is.logical(buttons))
+      buttons = if (buttons) c('copy', 'excel', 'csv', 'pdf', 'print')
     buttonDeps = extraDependency(
       c(if ('excel' %in% buttons) 'jszip', if ('pdf' %in% buttons) 'pdfmake'),
       extension, 'js'
@@ -565,8 +573,7 @@ extDependency = function(extension, style, options) {
 # whether a button was configured in the options
 listButtons = function(options) {
   config = options[['buttons']]
-  if (is.null(config)) return()
-  if (is.character(config)) return(config)
+  if (is.null(config) || is.character(config) || is.logical(config)) return(config)
   if (is.list(config)) return(unlist(lapply(config, function(cfg) {
     if (is.character(cfg)) return(cfg)
     if (is.list(cfg)) {
@@ -574,7 +581,7 @@ listButtons = function(options) {
       return(if (extend != 'collection') extend else listButtons(cfg))
     }
   })))
-  stop('Options for DataTables extensions must be either a character vector or a list')
+  stop('Options for DataTables extensions must be a boolean, a character vector or a list')
 }
 
 extraDepData = list(
