@@ -182,7 +182,7 @@ tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, before,
   sprintf(
     "DTWidget.formatCurrency(this, row, data, %d, %s, %d, %d, %s, %s, %s);",
     cols, jsValues(currency), digits, interval, jsValues(mark), jsValues(dec.mark),
-    jsValues(isTRUE(before))
+    jsValues(before)
   )
 }
 
