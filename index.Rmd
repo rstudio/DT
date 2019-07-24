@@ -263,3 +263,10 @@ colnames(m) = c('V1', 'V2')
 datatable(m, escape = 'V1')
 ```
 
+Please be cautious when using row names with numeric column indices. Since the row names will become the first column in the display, you should increase the column indices by one, e.g.,
+
+```{r eval=FALSE}
+rownames(m) = seq_len(nrow(m))
+datatable(m, escape = 1 + 1)  # escape the first column 
+```
+
