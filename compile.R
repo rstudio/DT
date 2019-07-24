@@ -1,12 +1,21 @@
 set.seed(0102)
 options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE), htmltools.dir.version = FALSE)
 Sys.setenv(R_KNITR_OPTIONS = 'knitr.chunk.tidy=FALSE')
+
+# remove the <div> tags around <pre>, and clean up <a> on all lines
+clean_pandoc2_highlight_tags = function(x) {
+  x = gsub('(</code></pre>)</div>', '\\1', x)
+  x = gsub('<div class="sourceCode"[^>]+>(<pre)', '\\1', x)
+  x = gsub('<a class="sourceLine"[^>]+>(.*)</a>', '\\1', x)
+  x
+}
+
 library(DT)
 o = rmarkdown::render(commandArgs(TRUE), quiet = TRUE)
 x = gsub('\\u003c', '<', readLines(o), fixed = TRUE)
 x = gsub('<\\\\(/[a-z1-6]+>)', '<\\1', x)
 x = blogdown:::clean_widget_html(x)
-x = bookdown:::clean_pandoc2_highlight_tags(x)
+x = clean_pandoc2_highlight_tags(x)
 x = x[x != 'pre.sourceCode { margin: 0; }']
 x = gsub('^(<style type="text/css")( data-origin="pandoc")(>)$', '\\1\\3', x)
 writeLines(x, o)
