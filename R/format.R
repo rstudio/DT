@@ -256,9 +256,7 @@ jsValues = function(x) {
   } else if (inherits(x, "Date")) {
     x = format(x, "%Y-%m-%d")
   }
-  sapply(x, function(v) {
-    jsonlite::toJSON(jsonlite::unbox(v))
-  }, simplify = TRUE, USE.NAMES = FALSE)
+  vapply(x, jsonlite::toJSON, character(1), auto_unbox = TRUE)
 }
 
 
