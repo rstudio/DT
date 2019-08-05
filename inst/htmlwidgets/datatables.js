@@ -743,7 +743,7 @@ HTMLWidgets.widget({
             $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
-          if (disableCols && inArray(_cell.index().column, disableCols)) {
+          if ((disableCols === 0 || disableCols) && inArray(_cell.index().column, disableCols)) {
             $input.attr('readonly', '').css('filter', 'invert(25%)');
           }
           $cell.empty().append($input);
