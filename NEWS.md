@@ -1,3 +1,9 @@
+# CHANGES IN DT VERSION 0.9
+
+## BUG FIXES
+
+- Fix the issue that the first column can't be disabled from editing (thanks, @tsolloway #669, @haozhu233 #694).
+
 # CHANGES IN DT VERSION 0.8
 
 ## BUG FIXES
@@ -5,8 +11,6 @@
 - For `datatable()`, `options$buttons` now works as expected when providing a scalar string or a boolean value (thanks, @shrektan, #685 #658).
 
 - Fix the issue that when parameters of the `formatXXX()` functions contain single quotes, they may lead to incorrect JavasSript code due to failing to escape the single quotes (thanks, @shrektan #683 #666, @lorenzwalthert #667).
-
-- Fix the issue that the first column can't be disabled from editing (thanks, @tsolloway #669, @haozhu233 #694).
 
 # CHANGES IN DT VERSION 0.7
 
