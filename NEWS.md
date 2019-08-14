@@ -3,6 +3,7 @@
 ## BUG FIXES
 
 - Fix the issue that the first column can't be disabled from editing (thanks, @tsolloway #669, @haozhu233 #694).
+- Fix the issue that the filter boxes are not anchored to the corresponding value columns when there are many columns (thanks, @philibe, #554).
 
 # CHANGES IN DT VERSION 0.8
 
