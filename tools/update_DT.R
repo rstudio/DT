@@ -1,9 +1,29 @@
+dt_path = local({
+  path = normalizePath('./inst/htmlwidgets/lib/datatables/')
+  function(...) {
+    path = file.path(path, ...)
+    if (!dir.exists(path))
+      dir.create(path)
+    path
+  }
+})
+
 owd = setwd('tools')
 ver = DT:::DataTablesVersion
 out = sprintf('DataTables-%s.zip', ver)
 unlink('DataTables*', recursive = TRUE)
 download.file(sprintf('http://datatables.net/releases/DataTables-%s.zip', ver), out, mode = 'wb')
 unzip(out)
+setwd = function(x) {
+  if (!dir.exists(x))
+    dir.create(x)
+  base::setwd(x)
+}
+in_dir = function(dir, expr) {
+  if (!dir.exists(dir))
+    dir.create(dir, recursive = TRUE)
+  DT:::in_dir(dir, expr)
+}
 
 # base64 encode images into CSS
 encode_img = function(css) {
@@ -27,8 +47,6 @@ keep_min = function(dir = '.') {
   file.remove(x1[file.exists(x2)])
 }
 
-in_dir = DT:::in_dir
-
 setwd(file.path(sprintf('DataTables-%s', ver), 'media'))
 invisible({
   lapply(list.dirs('..'), keep_min)
@@ -37,10 +55,6 @@ invisible({
 unlink('css/jquery.dataTables_themeroller.css')
 unlink('js/jquery.js')
 
-dt_path = local({
-  path = normalizePath('../../../inst/htmlwidgets/lib/datatables/')
-  function(...) file.path(path, ...)
-})
 # copy required files to the R package
 file.copy(
   list.files('css', '[.]css$', full.names = TRUE), dt_path('css/'),
