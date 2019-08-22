@@ -8,7 +8,7 @@
 \usage{
 styleInterval(cuts, values)
 
-styleEqual(levels, values, default = "")
+styleEqual(levels, values, default = NULL)
 
 styleColorBar(data, color, angle = 90)
 }
@@ -20,7 +20,9 @@ styleColorBar(data, color, angle = 90)
 \item{levels}{a character vector of data values to be mapped (one-to-one) to
 CSS values}
 
-\item{default}{a string used as the the default CSS value for values other than levels}
+\item{default}{a string or \code{NULL} used as the the default CSS value
+for values other than levels. If \code{NULL}, the CSS value of non-matched
+cells will be left unchanged.}
 
 \item{data}{a numeric vector whose range will be used for scaling the
 table data from 0-100 before being represented as color bars. A vector

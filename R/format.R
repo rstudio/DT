@@ -304,15 +304,17 @@ styleInterval = function(cuts, values) {
 
 #' @param levels a character vector of data values to be mapped (one-to-one) to
 #'   CSS values
-#' @param default a string used as the the default CSS value for values other than levels
+#' @param default a string or \code{NULL} used as the the default CSS value
+#'   for values other than levels. If \code{NULL}, the CSS value of non-matched
+#'   cells will be left unchanged.
 #' @export
 #' @rdname styleInterval
-styleEqual = function(levels, values, default = "") {
+styleEqual = function(levels, values, default = NULL) {
   n = length(levels)
   if (n != length(values))
     stop("length(levels) must be equal to length(values)")
-  if (!is.character(default) || length(default) != 1)
-    stop("default must be a string")
+  if (!is.null(default) && (!is.character(default) || length(default) != 1))
+    stop("default must be null or a string")
   if (n == 0) return("''")
   levels = jsValues(levels)
   values = jsValues(values)
@@ -320,7 +322,8 @@ styleEqual = function(levels, values, default = "") {
   for (i in seq_len(n)) {
     js = paste0(js, sprintf("value == %s ? %s : ", levels[i], values[i]))
   }
-  JS(paste0(js, jsValues(default)))
+  default = if (is.null(default)) 'value' else jsValues(default)
+  JS(paste0(js, default))
 }
 
 #' @param data a numeric vector whose range will be used for scaling the
