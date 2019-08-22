@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.9
 
+## NEW FEATURES
+
+- `formatStyle()` with `styleEqual()` is now chainable by default (thanks, @e-kennedy #632).
+
 ## BUG FIXES
 
 - Fix the issue that the first column can't be disabled from editing (thanks, @tsolloway #669, @haozhu233 #694).
