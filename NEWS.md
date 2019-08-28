@@ -3,7 +3,10 @@
 ## BUG FIXES
 
 - Fix the issue that the first column can't be disabled from editing (thanks, @tsolloway #669, @haozhu233 #694).
+
 - Fix the issue that the filter boxes are not anchored to the corresponding value columns when there are many columns (thanks, @philibe, #554).
+
+- Column selection now works in `row+column` selection mode, when one of `scrollX` or `scrollY` is enabled (thanks, @akarslan #705).
 
 ## MINOR CHANGES
 
