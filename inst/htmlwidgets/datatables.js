@@ -1019,7 +1019,7 @@ HTMLWidgets.widget({
         if (selTarget === 'row+column') {
           $(table.columns().footer()).css('cursor', 'pointer');
         }
-        table.on('click.dt', selTarget === 'column' ? 'tbody td' : 'tfoot tr th', function() {
+        var callback = function() {
           var colIdx = selTarget === 'column' ? table.cell(this).index().column :
               $.inArray(this, table.columns().footer()),
               thisCol = $(table.column(colIdx).nodes());
@@ -1033,7 +1033,12 @@ HTMLWidgets.widget({
             selected2 = selMode === 'single' ? [colIdx] : unique(selected2.concat([colIdx]));
           }
           changeInput('columns_selected', selected2);
-        });
+        }
+        if (selTarget === 'column') {
+          $(table.table().body()).on('click.dt', 'td', callback);
+        } else {
+          $(table.table().footer()).on('click.dt', 'tr th', callback);
+        }
         changeInput('columns_selected', selected2);
         var selectCols = function() {
           table.columns().nodes().flatten().to$().removeClass(selClass);
