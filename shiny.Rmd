@@ -145,3 +145,8 @@ You can edit a table via the `editable` argument of `datatable()`. After you fin
 Below is a list of miscellaneous examples:
 
 1. [Radio Buttons in Tables](011-radio.html)
+
+1. [Useful callbacks for DT (in Shiny)](https://laustep.github.io/stlahblog/posts/DTcallbacks.html)
+
+1. [Plotting the columns of a Datatable](https://laustep.github.io/stlahblog/posts/PlotDatatableColumns.html)
+
