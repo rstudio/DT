@@ -1,3 +1,5 @@
+site:
+	Rscript site.R
 
 HTML_FILES := $(patsubst %.Rmd, %.html ,$(wildcard *.Rmd)) \
               $(patsubst %.md, %.html ,$(wildcard *.md))
@@ -12,9 +14,6 @@ html: $(HTML_FILES)
 
 %.html: %.md
 	Rscript compile.R "$<"
-
-site:
-	Rscript site.R
 
 .PHONY: clean
 clean:
