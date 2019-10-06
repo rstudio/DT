@@ -916,13 +916,17 @@ HTMLWidgets.widget({
     var selected1, selected2, selected3;
     selected1 = selected2 = selected3 = [];
     if (selInited) table.on('select', function (e, dt, type, indexes) {
+      var style = dt.table().select.style();
       if (type === 'row') {
+        if (style === 'single') selected1 = [];
         selected1 = unique(selected1.concat(serverRowIndexes(indexes)));
         changeInput('rows_selected', selected1);
       } else if (type === 'column') {
+        if (style === 'single') selected2 = [];
         selected2 = unique(selected2.concat(indexes));
         changeInput('columns_selected', selected2);
       } else {
+        if (style === 'single') selected3 = [];
         indexes.forEach(function(i) {
           var row = serverRowIndex(i.row);
           var col = i.column;
