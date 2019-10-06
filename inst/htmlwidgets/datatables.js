@@ -946,11 +946,10 @@ HTMLWidgets.widget({
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
       }
     } );
-    // previously, it set to `active` for bootstrap themes but it should be always `selected`
-    // because the example on datatables website
-    // (https://datatables.net/extensions/select/examples/styling/bootstrap.html)
-    // is using `selected` class for bootstrap or other themes.
-    var selClass = 'selected';
+    // by reading the source, we know that the class name is stored in
+    // table.settings()[0]._select.className; see the line 129 of
+    // https://cdn.datatables.net/select/1.3.1/js/dataTables.select.js
+    var selClass = table.settings()[0]._select.className;
     var removeSelClass = function() {
       table.$('tr.' + selClass).removeClass(selClass);
       table.columns().nodes().flatten().to$().removeClass(selClass);
