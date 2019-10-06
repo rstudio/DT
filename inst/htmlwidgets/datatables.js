@@ -896,6 +896,22 @@ HTMLWidgets.widget({
     var serverRowIndexes = function(clientRowIndexes) {
       return clientRowIndexes.map(serverRowIndex);
     }
+
+    // record the last clicked cells if on server-processing mode
+    var lastClickedCell = null;
+    var recordLastClickedCell = function(e) {
+      var cell = table.cell( $(e.target).closest('td, th') );
+      if (cell !== undefined)
+        lastClickedCell = {row: serverRowIndex(cell.index().row), col: cell.index().column}
+    }
+    // this event is based on the Select ext source file so it's consistent
+    // with the extension's behavior, see the line 366 of
+    // https://cdn.datatables.net/select/1.3.1/js/dataTables.select.js
+    if (selInited && server) $(table.table().container()).on(
+      'click.dtSelect', table.settings()[0]._select.selector, function (e) {
+      recordLastClickedCell(e);
+    });
+
     //  row,       column,    cell indexes that's selected
     var selected1, selected2, selected3;
     selected1 = selected2 = selected3 = [];
