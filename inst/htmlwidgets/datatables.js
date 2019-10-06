@@ -946,12 +946,12 @@ HTMLWidgets.widget({
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
       }
     } );
-   // previously, it set to `active` for bootstrap themes but it should be always `selected`
-   // because the example on datatables website
-   // (https://datatables.net/extensions/select/examples/styling/bootstrap.html)
-   // is using `selected` class for bootstrap or other themes.
-   var selClass = 'selected';
-   var selectRows = function() {
+    // previously, it set to `active` for bootstrap themes but it should be always `selected`
+    // because the example on datatables website
+    // (https://datatables.net/extensions/select/examples/styling/bootstrap.html)
+    // is using `selected` class for bootstrap or other themes.
+    var selClass = 'selected';
+    var selectRows = function() {
       table.$('tr.' + selClass).removeClass(selClass);
       if (selected1.length === 0) return;
       if (server) {
