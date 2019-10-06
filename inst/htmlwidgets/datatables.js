@@ -976,7 +976,14 @@ HTMLWidgets.widget({
     var selectCells = function() {
       if (selected3.length === 0) return;
       if (server) {
+        var findIndex = function(ij) {
+          for (var i = 0; i < selected3.length; i++) {
+            if (ij[0] === selected3[i][0] && ij[1] === selected3[i][1]) return i;
+          }
+          return -1;
+        }
         table.cells({page: 'current'}).every(function() {
+          debugger;
           var info = tweakCellIndex(this);
           if (findIndex([info.row, info.col], selected3) > -1)
             $(this.node()).addClass(selClass);
@@ -1162,12 +1169,6 @@ HTMLWidgets.widget({
           selected3 = [];
         } else {
           selected3 = selected;
-        }
-        var findIndex = function(ij) {
-          for (var i = 0; i < selected3.length; i++) {
-            if (ij[0] === selected3[i][0] && ij[1] === selected3[i][1]) return i;
-          }
-          return -1;
         }
         table.on('click.dt', 'tbody td', function() {
           var $this = $(this), info = tweakCellIndex(table.cell(this));
