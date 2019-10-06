@@ -1009,9 +1009,12 @@ HTMLWidgets.widget({
         });
       }
     };
+    var refreshSelStatus = function() {
+      removeSelClass();
+      selectRows(); selectCols(); selectCells();
+    }
     if (selInited && server) table.on('draw.dt', function() {
-       removeSelClass();
-       selectRows(); selectCols(); selectCells();
+       refreshSelStatus();
     });
 /*
     var selMode = data.selection.mode, selTarget = data.selection.target;
