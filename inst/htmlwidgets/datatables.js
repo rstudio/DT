@@ -985,7 +985,7 @@ HTMLWidgets.widget({
         });
       }
     };
-    if (server) table.on('draw.dt', function() { selectRows; selectCols; selectCells; });
+    if (server) table.on('draw.dt', function() { selectRows(); selectCols(); selectCells(); });
 /*
     var selMode = data.selection.mode, selTarget = data.selection.target;
     if (inArray(selMode, ['single', 'multiple'])) {
