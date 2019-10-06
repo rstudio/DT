@@ -886,6 +886,81 @@ HTMLWidgets.widget({
       return {row: info.row, col: info.column};
     }
 
+    // convert the row index of the current page to the server row index
+    // when server-processing mode is enabled
+    var serverRowIndex = function(clientRowIndex) {
+      return server ? DT_rows_current[clientRowIndex] : clientRowIndex + 1;
+    }
+    var serverRowIndexes = function(clientRowIndexes) {
+      return clientRowIndexes.map(serverRowIndex);
+    }
+    //  row,       column,    cell indexes that's selected
+    var selected1, selected2, selected3;
+    selected1 = selected2 = selected3 = [];
+    table.on('select', function (e, dt, type, indexes) {
+      console.log("select " + indexes.toString());
+      // var single = dt.table().select.style() === 'single';
+      if (type === 'row') {
+        selected1 = unique(selected1.concat(serverRowIndexes(indexes)));
+        changeInput('rows_selected', selected1);
+      } else if (type === 'column') {
+        selected2 = unique(selected2.concat(indexes));
+        changeInput('columns_selected', selected2);
+      } else {
+        selected3 = unique(selected3.concat([[indexes.row, indexes.col]]));
+        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+      }
+    }).on('deselect', function (e, dt, type, indexes) {
+      console.log("deselect " + indexes.toString());
+      if (type === 'row') {
+        selected1 = selected1.filter(function(i) { return serverRowIndexes(indexes).indexOf(i) < 0; });
+        changeInput('rows_selected', selected1);
+      } else if (type === 'column') {
+        selected2 = selected2.filter(function(i) { return indexes.indexOf(i) < 0; });
+        changeInput('columns_selected', selected2);
+      } else {
+        selected3 = selected3.splice(findIndex([indexes.row, indexes.col]), 1);
+        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+      }
+    } );
+   // not sure we'd better set it to 'selected' or like below
+   var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
+   var selectRows = function() {
+      table.$('tr.' + selClass).removeClass(selClass);
+      if (selected1.length === 0) return;
+      if (server) {
+        table.rows({page: 'current'}).every(function() {
+          if (inArray(DT_rows_current[this.index()], selected1)) {
+            $(this.node()).addClass(selClass);
+          }
+        });
+      } else {
+        var selected0 = selected1.map(function(i) { return i - 1; });
+        $(table.rows(selected0).nodes()).addClass(selClass);
+      }
+    }
+    var selectCols = function() {
+      table.columns().nodes().flatten().to$().removeClass(selClass);
+      if (selected2.length > 0)
+        table.columns(selected2).nodes().flatten().to$().addClass(selClass);
+    }
+    var selectCells = function() {
+      table.$('td.' + selClass).removeClass(selClass);
+      if (selected3.length === 0) return;
+      if (server) {
+        table.cells({page: 'current'}).every(function() {
+          var info = tweakCellIndex(this);
+          if (findIndex([info.row, info.col], selected3) > -1)
+            $(this.node()).addClass(selClass);
+        });
+      } else {
+        selected3.map(function(ij) {
+          $(table.cell(ij[0] - 1, ij[1]).node()).addClass(selClass);
+        });
+      }
+    };
+    if (server) table.on('draw.dt', function() { selectRows; selectCols; selectCells; });
+/*
     var selMode = data.selection.mode, selTarget = data.selection.target;
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = data.style === 'bootstrap' ? 'active' : 'selected';
@@ -914,10 +989,6 @@ HTMLWidgets.widget({
           var tmp = end; end = start; start = tmp;
         }
         return indexes.slice(start, end + 1);
-      }
-
-      var serverRowIndex = function(clientRowIndex) {
-        return server ? DT_rows_current[clientRowIndex] : clientRowIndex + 1;
       }
 
       // row, column, or cell selection
@@ -1105,7 +1176,7 @@ HTMLWidgets.widget({
         }
       }
     }
-
+*/
     // expose some table info to Shiny
     var updateTableInfo = function(e, settings) {
       // TODO: is anyone interested in the page info?
