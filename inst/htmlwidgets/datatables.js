@@ -898,8 +898,7 @@ HTMLWidgets.widget({
     var selected1, selected2, selected3;
     selected1 = selected2 = selected3 = [];
     table.on('select', function (e, dt, type, indexes) {
-      console.log("select " + indexes.toString());
-      // var single = dt.table().select.style() === 'single';
+      // console.log("select " + indexes.toString());
       if (type === 'row') {
         selected1 = unique(selected1.concat(serverRowIndexes(indexes)));
         changeInput('rows_selected', selected1);
@@ -907,11 +906,25 @@ HTMLWidgets.widget({
         selected2 = unique(selected2.concat(indexes));
         changeInput('columns_selected', selected2);
       } else {
-        selected3 = unique(selected3.concat([[indexes.row, indexes.col]]));
+        indexes.forEach(function(i) {
+          var row = serverRowIndex(i.row);
+          var col = i.column;
+          var oneOfSel3 = function() {
+            var out = false;
+            for (elem of selected3) {
+              if (elem[0] === row & elem[1] === col) {
+                out = true;
+                break;
+              }
+            }
+            return out;
+          };
+          if (!oneOfSel3()) selected3 = selected3.concat([[row, col]]);
+        });
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
       }
     }).on('deselect', function (e, dt, type, indexes) {
-      console.log("deselect " + indexes.toString());
+      // console.log("deselect " + indexes.toString());
       if (type === 'row') {
         selected1 = selected1.filter(function(i) { return serverRowIndexes(indexes).indexOf(i) < 0; });
         changeInput('rows_selected', selected1);
@@ -919,7 +932,17 @@ HTMLWidgets.widget({
         selected2 = selected2.filter(function(i) { return indexes.indexOf(i) < 0; });
         changeInput('columns_selected', selected2);
       } else {
-        selected3 = selected3.splice(findIndex([indexes.row, indexes.col]), 1);
+        var inIndexes = function(x) {
+          var out = false;
+          for (index of indexes) {
+            if (serverRowIndex(index.row) === x[0] & index.column === x[1]) {
+              out = true;
+              break;
+            }
+          }
+          return out;
+        };
+        selected3 = selected3.filter(function(i) { return !inIndexes(i); });
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
       }
     } );
