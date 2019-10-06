@@ -951,8 +951,12 @@ HTMLWidgets.widget({
     // (https://datatables.net/extensions/select/examples/styling/bootstrap.html)
     // is using `selected` class for bootstrap or other themes.
     var selClass = 'selected';
-    var selectRows = function() {
+    var removeSelClass = function() {
       table.$('tr.' + selClass).removeClass(selClass);
+      table.columns().nodes().flatten().to$().removeClass(selClass);
+      table.$('td.' + selClass).removeClass(selClass);
+    }
+    var selectRows = function() {
       if (selected1.length === 0) return;
       if (server) {
         table.rows({page: 'current'}).every(function() {
@@ -966,12 +970,10 @@ HTMLWidgets.widget({
       }
     }
     var selectCols = function() {
-      table.columns().nodes().flatten().to$().removeClass(selClass);
       if (selected2.length > 0)
         table.columns(selected2).nodes().flatten().to$().addClass(selClass);
     }
     var selectCells = function() {
-      table.$('td.' + selClass).removeClass(selClass);
       if (selected3.length === 0) return;
       if (server) {
         table.cells({page: 'current'}).every(function() {
@@ -985,7 +987,10 @@ HTMLWidgets.widget({
         });
       }
     };
-    if (server) table.on('draw.dt', function() { selectRows(); selectCols(); selectCells(); });
+    if (server) table.on('draw.dt', function() {
+       removeSelClass();
+       selectRows(); selectCols(); selectCells();
+    });
 /*
     var selMode = data.selection.mode, selTarget = data.selection.target;
     if (inArray(selMode, ['single', 'multiple'])) {
