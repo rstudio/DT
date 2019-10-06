@@ -886,6 +886,8 @@ HTMLWidgets.widget({
       return {row: info.row, col: info.column};
     }
 
+    // a flag to indicates if select extension is initialized or not
+    var selInited = table.settings()[0]._select !== undefined;
     // convert the row index of the current page to the server row index
     // when server-processing mode is enabled
     var serverRowIndex = function(clientRowIndex) {
@@ -897,8 +899,8 @@ HTMLWidgets.widget({
     //  row,       column,    cell indexes that's selected
     var selected1, selected2, selected3;
     selected1 = selected2 = selected3 = [];
-    table.on('select', function (e, dt, type, indexes) {
-      // console.log("select " + indexes.toString());
+    if (selInited) table.on('select', function (e, dt, type, indexes) {
+      if (!selInited) return;
       if (type === 'row') {
         selected1 = unique(selected1.concat(serverRowIndexes(indexes)));
         changeInput('rows_selected', selected1);
@@ -924,7 +926,6 @@ HTMLWidgets.widget({
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
       }
     }).on('deselect', function (e, dt, type, indexes) {
-      // console.log("deselect " + indexes.toString());
       if (type === 'row') {
         selected1 = selected1.filter(function(i) { return serverRowIndexes(indexes).indexOf(i) < 0; });
         changeInput('rows_selected', selected1);
@@ -949,7 +950,7 @@ HTMLWidgets.widget({
     // by reading the source, we know that the class name is stored in
     // table.settings()[0]._select.className; see the line 129 of
     // https://cdn.datatables.net/select/1.3.1/js/dataTables.select.js
-    var selClass = table.settings()[0]._select.className;
+    var selClass = selInited ? table.settings()[0]._select.className : 'selected';
     var removeSelClass = function() {
       table.$('tr.' + selClass).removeClass(selClass);
       table.columns().nodes().flatten().to$().removeClass(selClass);
@@ -993,7 +994,7 @@ HTMLWidgets.widget({
         });
       }
     };
-    if (server) table.on('draw.dt', function() {
+    if (selInited && server) table.on('draw.dt', function() {
        removeSelClass();
        selectRows(); selectCols(); selectCells();
     });
