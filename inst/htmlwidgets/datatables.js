@@ -916,7 +916,6 @@ HTMLWidgets.widget({
     var selected1, selected2, selected3;
     selected1 = selected2 = selected3 = [];
     if (selInited) table.on('select', function (e, dt, type, indexes) {
-      if (!selInited) return;
       if (type === 'row') {
         selected1 = unique(selected1.concat(serverRowIndexes(indexes)));
         changeInput('rows_selected', selected1);
