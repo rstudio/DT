@@ -956,8 +956,7 @@ HTMLWidgets.widget({
           var out = false;
           for (index of indexes) {
             if (serverRowIndex(index.row) === x[0] & index.column === x[1]) {
-              out = true;
-              break;
+              out = true; break;
             }
           }
           return out;
