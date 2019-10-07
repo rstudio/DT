@@ -915,36 +915,61 @@ HTMLWidgets.widget({
     //  row,       column,    cell indexes that's selected
     var selected1, selected2, selected3;
     selected1 = selected2 = selected3 = [];
+    // should reimplement the server select logical in below
     if (selInited) table.on('select', function (e, dt, type, indexes) {
       var style = dt.table().select.style();
       if (type === 'row') {
-        if (style === 'single') selected1 = [];
-        selected1 = unique(selected1.concat(serverRowIndexes(indexes)));
+        indexes = serverRowIndexes(indexes);
+        if (server) {
+           if (style === 'single') {
+             // if the clicked item has already been selected, de-select it.
+             if (indexes.length === 1 && selected1.indexOf(indexes[0]) >= 0) {
+               indexes = [];
+             }
+             selected1 = [];
+           }
+        }
+        selected1 = unique(selected1.concat(indexes));
         changeInput('rows_selected', selected1);
+        if (server) refreshSelStatus();
       } else if (type === 'column') {
-        if (style === 'single') selected2 = [];
+        // no need to handle column seperatedly, because there's no change
+        // after switching pages.
         selected2 = unique(selected2.concat(indexes));
         changeInput('columns_selected', selected2);
       } else {
-        if (style === 'single') selected3 = [];
+        var oneOfSel3 = function(row, col) {
+          var out = false;
+          for (elem of selected3) {
+            if (elem[0] === row & elem[1] === col) {
+              out = true; break;
+            }
+          }
+          return out;
+        };
+        if (server) {
+           if (style === 'single') {
+             // if the clicked item has already been selected, de-select it.
+             if (indexes.length === 1 && oneOfSel3(serverRowIndex(indexes[0].row), indexes[0].column)) {
+               indexes = [];
+             }
+             selected3 = [];
+           }
+        }
         indexes.forEach(function(i) {
           var row = serverRowIndex(i.row);
           var col = i.column;
-          var oneOfSel3 = function() {
-            var out = false;
-            for (elem of selected3) {
-              if (elem[0] === row & elem[1] === col) {
-                out = true;
-                break;
-              }
-            }
-            return out;
-          };
-          if (!oneOfSel3()) selected3 = selected3.concat([[row, col]]);
+          if (!oneOfSel3(row, col)) selected3 = selected3.concat([[row, col]]);
         });
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+        if (server) refreshSelStatus();
       }
     }).on('deselect', function (e, dt, type, indexes) {
+      // no need to do extra stuff for deselect event on server mode, it's because
+      // the undesired behavior only occurs when switching pages. However, after switching
+      // pages, the datatables js will never trigger a deselect event on the new page
+      // because it assumes no range is in selection. It means only the select event
+      // should be handled specially for server-processing mode.
       if (type === 'row') {
         selected1 = selected1.filter(function(i) { return serverRowIndexes(indexes).indexOf(i) < 0; });
         changeInput('rows_selected', selected1);
