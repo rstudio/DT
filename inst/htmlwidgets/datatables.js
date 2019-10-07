@@ -1002,7 +1002,6 @@ HTMLWidgets.widget({
           return -1;
         }
         table.cells({page: 'current'}).every(function() {
-          debugger;
           var info = tweakCellIndex(this);
           if (findIndex([info.row, info.col], selected3) > -1)
             $(this.node()).addClass(selClass);
