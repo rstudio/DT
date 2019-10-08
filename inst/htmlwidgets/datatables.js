@@ -939,13 +939,10 @@ HTMLWidgets.widget({
         changeInput('columns_selected', selected2);
       } else {
         var oneOfSel3 = function(row, col) {
-          var out = false;
           for (elem of selected3) {
-            if (elem[0] === row & elem[1] === col) {
-              out = true; break;
-            }
+            if (elem[0] === row & elem[1] === col) return true;
           }
-          return out;
+          return false;
         };
         if (server) {
            if (style === 'single') {
@@ -978,13 +975,10 @@ HTMLWidgets.widget({
         changeInput('columns_selected', selected2);
       } else {
         var inIndexes = function(x) {
-          var out = false;
           for (index of indexes) {
-            if (serverRowIndex(index.row) === x[0] & index.column === x[1]) {
-              out = true; break;
-            }
+            if (serverRowIndex(index.row) === x[0] & index.column === x[1]) return true;,
           }
-          return out;
+          return false;
         };
         selected3 = selected3.filter(function(i) { return !inIndexes(i); });
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
