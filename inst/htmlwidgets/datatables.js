@@ -696,7 +696,7 @@ HTMLWidgets.widget({
 
       // don't highlight the "not found" row, so we get the rows using the api
       if (table.rows({ filter: 'applied' }).data().length === 0) return;
-      // highlight gloal search keywords
+      // highlight global search keywords
       body.highlight($.trim(table.search()).split(/\s+/));
       // then highlight keywords from individual column filters
       if (filterRow) filterRow.each(function(i, td) {
@@ -717,6 +717,10 @@ HTMLWidgets.widget({
         // remove event handler
         table.off('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth');
       });
+
+      // Set the option for escaping regex characters in our search string.  This will be used
+      // for all future matching.
+      jQuery.fn.highlight.options.escapeRegex = (!options.search || !options.search.regex);
 
       // initial highlight for state saved conditions and initial states
       highlight();
