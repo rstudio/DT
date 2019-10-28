@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.10
 
+## BUG FIXES
+
+- Fix the issue that `styleEqual()` doesn't work expectedly for values contain special HTML character like `>` or `<` (thanks, @hjia222 #723).
 
 # CHANGES IN DT VERSION 0.9
 
