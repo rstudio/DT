@@ -316,6 +316,10 @@ styleEqual = function(levels, values, default = NULL) {
   if (!is.null(default) && (!is.character(default) || length(default) != 1))
     stop("default must be null or a string")
   if (n == 0) return("''")
+  # because the data will be transformed by escapeData(), we need to compare
+  # the "escaped value" of the "levels" instead of the raw value
+  if (is.character(levels) || is.factor(levels))
+    levels = htmlEscape(levels)
   levels = jsValues(levels)
   values = jsValues(values)
   js = ''
