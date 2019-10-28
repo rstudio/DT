@@ -863,6 +863,11 @@ HTMLWidgets.widget({
       }
     };
 
+    // shinytest requires initialized inputs #716
+    if (HTMLWidgets.shinyMode) {
+      changeInput('cell_edit', null, 'DT.cellInfo', null, {priority: "event"});
+    }
+
     var addOne = function(x) {
       return x.map(function(i) { return 1 + i; });
     };
