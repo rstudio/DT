@@ -1,8 +1,8 @@
 # CHANGES IN DT VERSION 0.11
 
-## NEW FEATURES
+## MINOR CHANGES
 
-- Filters now use Perl-compatible regular expressions (regexps), such as for lookround and negating assertions, see `help(regex)` or https://perldoc.perl.org/perlre.html. This may be most useful in columns (`DT::renderDataTable(filter = list(position = "top"))`), but also works in the global search (`DT::renderDataTable(options = list(dom = 'f')`) (@rfhb).
+- In the server-side processing mode, filters now use Perl-compatible regular expressions (regexps), such as for lookround and negating assertions, see `help(regex)` or https://perldoc.perl.org/perlre.html. This may be most useful in columns (`DT::renderDataTable(filter = list(position = "top"), options = list(search = list(regex = TRUE))`), but also works in the global search (thanks, @rfhb, #727).
 
 # CHANGES IN DT VERSION 0.10
 
