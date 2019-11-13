@@ -621,9 +621,9 @@ grep2 = function(pattern, x, ignore.case = FALSE, fixed = FALSE, ...) {
   }
   # when the user types in the search box, the regular expression may not be
   # complete before it is sent to the server, in which case we do not search
-  if (!fixed && inherits(try(grep(pattern, ''), silent = TRUE), 'try-error'))
+  if (!fixed && inherits(try(grep(pattern, '', perl = TRUE), silent = TRUE), 'try-error'))
     return(seq_along(x))
-  grep(pattern, x, ignore.case = ignore.case, fixed = fixed, ...)
+  grep(pattern, x, ignore.case = ignore.case, fixed = fixed, perl = TRUE, ...)
 }
 
 # filter a numeric/date/time vector using the search string "lower ... upper"
