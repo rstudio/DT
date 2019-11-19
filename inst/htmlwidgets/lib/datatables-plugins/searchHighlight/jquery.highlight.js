@@ -47,11 +47,27 @@ jQuery.extend({
     highlight: function (node, re, nodeName, className) {
         if (node.nodeType === 3) {
             var match = node.data.match(re);
-            if (match) {
+            if (!match || match.length == 0) {
+              return 0;
+            }
+
+            // If there is a match, return the first non-empty string result.  This guards against regex that
+            // are incredibly broad (e.g., "^", ".") which will match everything.  If we don't protect against
+            // that, very broad regex cause the system to hang as it tries to resolve every node.
+            var firstMatch = null;
+            for (var index = 0; index < match.length; index++) {
+              var item = match[index];
+              if (item != null && item != '') {
+                firstMatch = item;
+                break;
+              }
+            }
+            if (firstMatch) {
                 var highlight = document.createElement(nodeName || 'span');
                 highlight.className = className || 'highlight';
-                var wordNode = node.splitText(match.index);
-                wordNode.splitText(match[0].length);
+                var firstMatchIndex = node.data.indexOf(firstMatch);
+                var wordNode = node.splitText(firstMatchIndex);
+                wordNode.splitText(firstMatch.length);
                 var wordClone = wordNode.cloneNode(true);
                 highlight.appendChild(wordClone);
                 wordNode.parentNode.replaceChild(highlight, wordNode);
@@ -82,16 +98,20 @@ jQuery.fn.unhighlight = function (options) {
 jQuery.fn.highlight = function (words, options) {
     var settings = { className: 'highlight', element: 'span', caseSensitive: false, wordsOnly: false };
     jQuery.extend(settings, options);
-    
+
     if (words.constructor === String) {
         words = [words];
     }
     words = jQuery.grep(words, function(word, i){
       return word != '';
     });
-    words = jQuery.map(words, function(word, i) {
-      return word.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-    });
+
+    // If we are not configured for regex matching, escape regex characters
+    if (jQuery.fn.highlight.options.escapeRegex) {
+      words = jQuery.map(words, function(word, i) {
+        return word.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+      });
+    }
     if (words.length == 0) { return this; };
 
     var flag = settings.caseSensitive ? "" : "i";
@@ -99,10 +119,22 @@ jQuery.fn.highlight = function (words, options) {
     if (settings.wordsOnly) {
         pattern = "\\b" + pattern + "\\b";
     }
-    var re = new RegExp(pattern, flag);
-    
-    return this.each(function () {
+
+    try {
+      var re = new RegExp(pattern, flag);
+      return this.each(function () {
         jQuery.highlight(this, re, settings.element, settings.className);
-    });
+      });
+    }
+    catch(e) {
+      // If the regex is invalid, we are going to leave the highlighting
+      // status unchanged.  This is likely caused when a user is putting
+      // in a regex that is not valid (or is incomplete).
+    }
 };
+
+// Define a global option for the plugin on whether or not we should escape regex when
+// performing the search.  By default we want to escape regex so that searching "^."
+// actually becomes a search for the literal "\^\."
+jQuery.fn.highlight.options = { escapeRegex: true };
 
