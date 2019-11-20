@@ -35,7 +35,7 @@ Imports:
 Suggests:
     knitr (>= 1.8),
     rmarkdown,
-    shiny (>= 1.1.0)
+    shiny (>= 1.2.0)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Encoding: UTF-8
