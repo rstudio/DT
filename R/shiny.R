@@ -457,7 +457,7 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
-  if (missing(outputId)) outputId <- shiny::getCurrentOutputInfo()[["name"]]
+  if (missing(outputId)) outputId <- session$getCurrentOutputInfo()[["name"]]
   # abuse tempfile() to obtain a random id unique to this R session
   if (is.null(outputId)) outputId <- basename(tempfile(''))
 
