@@ -23,7 +23,9 @@ list(value = 'FOO', regex = 'false'), length = 10, ...)}) that return the
 filtered table result according to the DataTables Ajax request}
 
 \item{outputId}{the output ID of the table (the same ID passed to
-\code{dataTableOutput()}; if missing, a random string)}
+\code{dataTableOutput()}; if missing, an attempt to infer it from
+\code{session} is made. If it can't be inferred, a random id is
+generated.)}
 }
 \value{
 A character string (an Ajax URL that can be queried by DataTables).
@@ -56,7 +58,7 @@ DTApp = function(data, ..., options = list()) {
     ),
     server = function(input, output, session) {
       options$serverSide = TRUE
-      options$ajax = list(url = dataTableAjax(session, data))
+      options$ajax = list(url = dataTableAjax(session, data, outputId = 'tbl'))
       # create a widget using an Ajax URL created above
       widget = datatable(data, ..., options = options)
       output$tbl = DT::renderDataTable(widget)

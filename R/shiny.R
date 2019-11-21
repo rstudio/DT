@@ -426,7 +426,7 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 # version 1.4 signals an error if there is no active output (the private field
 # ShinySession$currentOutputName is NULL). Consider removing in the future
 # sometime after https://github.com/rstudio/shiny/pull/2707 is released.
-getCurrentOutputName <- function(session) {
+getCurrentOutputName = function(session) {
   tryCatch(session$getCurrentOutputInfo()[["name"]], error = function(e) NULL)
 }
 
@@ -467,9 +467,9 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
-  if (missing(outputId)) outputId <- getCurrentOutputName(session)
+  if (missing(outputId)) outputId = getCurrentOutputName(session)
   # abuse tempfile() to obtain a random id unique to this R session
-  if (is.null(outputId)) outputId <- basename(tempfile(''))
+  if (is.null(outputId)) outputId = basename(tempfile(''))
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
