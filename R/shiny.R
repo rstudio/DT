@@ -448,7 +448,9 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #'   list(value = 'FOO', regex = 'false'), length = 10, ...)}) that return the
 #'   filtered table result according to the DataTables Ajax request
 #' @param outputId the output ID of the table (the same ID passed to
-#'   \code{dataTableOutput()}; if missing, a random string)
+#'   \code{dataTableOutput()}; if missing, an attempt to infer it from
+#'   \code{session} is made. If it can't be inferred, a random id is
+#'   generated.)
 #' @references \url{https://rstudio.github.io/DT/server.html}
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
