@@ -11,7 +11,7 @@ DTApp = function(data, ..., options = list()) {
     ),
     server = function(input, output, session) {
       options$serverSide = TRUE
-      options$ajax = list(url = dataTableAjax(session, data))
+      options$ajax = list(url = dataTableAjax(session, data, outputId = 'tbl'))
       # create a widget using an Ajax URL created above
       widget = datatable(data, ..., options = options)
       output$tbl = DT::renderDataTable(widget)
