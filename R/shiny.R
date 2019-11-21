@@ -424,8 +424,8 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 
 # Works around the fact that session$getCurrentOutputInfo() in Shiny through
 # version 1.4 signals an error if there is no active output (the private field
-# ShinySession$currentOutputName is NULL).
-# Can be removed after https://github.com/rstudio/shiny/pull/2707 is released.
+# ShinySession$currentOutputName is NULL). Consider removing in the future
+# sometime after https://github.com/rstudio/shiny/pull/2707 is released.
 getCurrentOutputName <- function(session) {
   tryCatch(session$getCurrentOutputInfo()[["name"]], error = function(e) NULL)
 }
