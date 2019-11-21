@@ -422,6 +422,14 @@ invokeRemote = function(proxy, method, args = list()) {
 
 shinyFun = function(name) getFromNamespace(name, 'shiny')
 
+# Works around the fact that session$getCurrentOutputInfo() in Shiny through
+# version 1.4 signals an error if there is no active output (the private field
+# ShinySession$currentOutputName is NULL).
+# Can be removed after https://github.com/rstudio/shiny/pull/2707 is released.
+getCurrentOutputName <- function(session) {
+  tryCatch(session$getCurrentOutputInfo()[["name"]], error = function(e) NULL)
+}
+
 #' Register a data object in a shiny session for DataTables
 #'
 #' This function stores a data object in a shiny session and returns a URL that
@@ -459,7 +467,7 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
-  if (missing(outputId)) outputId <- session$getCurrentOutputInfo()[["name"]]
+  if (missing(outputId)) outputId <- getCurrentOutputName(session)
   # abuse tempfile() to obtain a random id unique to this R session
   if (is.null(outputId)) outputId <- basename(tempfile(''))
 
