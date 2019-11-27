@@ -463,7 +463,7 @@ filterRow = function(
         d = c('true', 'false', if (any(is.na(d))) 'na')
       } else {
         t = 'factor'
-        d = sort(unique(d))
+        d = levels(d)
       }
       if (t != 'disabled') tags$div(
         tags$select(

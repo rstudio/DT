@@ -1,5 +1,16 @@
+# CHANGES IN DT VERSION 0.11
+
+## MINOR CHANGES
+
+- In the server-side processing mode, filters now use Perl-compatible regular expressions (regexps), such as for lookround and negating assertions, see `help(regex)` or https://perldoc.perl.org/perlre.html. This may be most useful in columns (`DT::renderDataTable(filter = list(position = "top"), options = list(search = list(regex = TRUE))`), but also works in the global search (thanks, @rfhb, #727).
+
+- For a factor column, the choices of the filter now use the factor levels (#728).
+
 # CHANGES IN DT VERSION 0.10
 
+## BUG FIXES
+
+- Fix the issue that `styleEqual()` doesn't work expectedly for values contain special HTML character like `>` or `<` (thanks, @hjia222 #723).
 
 # CHANGES IN DT VERSION 0.9
 
