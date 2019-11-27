@@ -976,7 +976,7 @@ HTMLWidgets.widget({
       } else {
         var inIndexes = function(x) {
           for (index of indexes) {
-            if (serverRowIndex(index.row) === x[0] & index.column === x[1]) return true;,
+            if (serverRowIndex(index.row) === x[0] & index.column === x[1]) return true;
           }
           return false;
         };
