@@ -4,13 +4,28 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, options = list(), class = "display", callback = JS("return table;"), 
-    rownames, colnames, container, caption = NULL, filter = c("none", 
-        "bottom", "top"), escape = TRUE, style = "default", width = NULL, 
-    height = NULL, elementId = NULL, fillContainer = getOption("DT.fillContainer", 
-        NULL), autoHideNavigation = getOption("DT.autoHideNavigation", 
-        NULL), selection = c("multiple", "single", "none"), extensions = list(), 
-    plugins = NULL, editable = FALSE)
+datatable(
+  data,
+  options = list(),
+  class = "display",
+  callback = JS("return table;"),
+  rownames,
+  colnames,
+  container,
+  caption = NULL,
+  filter = c("none", "bottom", "top"),
+  escape = TRUE,
+  style = "default",
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  fillContainer = getOption("DT.fillContainer", NULL),
+  autoHideNavigation = getOption("DT.autoHideNavigation", NULL),
+  selection = c("multiple", "single", "none"),
+  extensions = list(),
+  plugins = NULL,
+  editable = FALSE
+)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}

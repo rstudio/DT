@@ -422,6 +422,14 @@ invokeRemote = function(proxy, method, args = list()) {
 
 shinyFun = function(name) getFromNamespace(name, 'shiny')
 
+# Works around the fact that session$getCurrentOutputInfo() in Shiny through
+# version 1.4 signals an error if there is no active output (the private field
+# ShinySession$currentOutputName is NULL). Consider removing in the future
+# sometime after https://github.com/rstudio/shiny/pull/2707 is released.
+getCurrentOutputName = function(session) {
+  tryCatch(session$getCurrentOutputInfo()[["name"]], error = function(e) NULL)
+}
+
 #' Register a data object in a shiny session for DataTables
 #'
 #' This function stores a data object in a shiny session and returns a URL that
@@ -448,7 +456,9 @@ shinyFun = function(name) getFromNamespace(name, 'shiny')
 #'   list(value = 'FOO', regex = 'false'), length = 10, ...)}) that return the
 #'   filtered table result according to the DataTables Ajax request
 #' @param outputId the output ID of the table (the same ID passed to
-#'   \code{dataTableOutput()}; if missing, a random string)
+#'   \code{dataTableOutput()}; if missing, an attempt to infer it from
+#'   \code{session} is made. If it can't be inferred, a random id is
+#'   generated.)
 #' @references \url{https://rstudio.github.io/DT/server.html}
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
@@ -457,8 +467,9 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
+  if (missing(outputId)) outputId = getCurrentOutputName(session)
   # abuse tempfile() to obtain a random id unique to this R session
-  if (missing(outputId)) outputId = basename(tempfile(''))
+  if (is.null(outputId)) outputId = basename(tempfile(''))
 
   # deal with row names: rownames = TRUE or missing, use rownames(data)
   rn = if (missing(rownames) || isTRUE(rownames)) base::rownames(data) else {
