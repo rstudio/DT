@@ -68,7 +68,8 @@
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
 #'   (\url{https://rstudio.github.io/DT/plugins.html}).  Note that only those
-#'   plugins supported by the \code{DT} package can be used here.
+#'   plugins supported by the \code{DT} package can be used here, including
+#'   "ellipsis", "natural" and "pagination".
 #' @param editable \code{FALSE} to disable the table editor, or \code{TRUE} (or
 #'   \code{"cell"}) to enable editing a single cell. Alternatively, you can set
 #'   it to \code{"row"} to be able to edit a row, or \code{"column"} to edit a
