@@ -150,6 +150,8 @@ local({
     files,
     file.path(dld_dt_path('Buttons', 'js'), basename(files))
   )
+  # so that all other folders except DataTables are extensions
+  unlink(c(dld_dt_path('JSZip'), dld_dt_path('pdfmake')), recursive = TRUE)
 })
 
 # copy files --------------------------------------------------------------
