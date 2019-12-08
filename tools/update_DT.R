@@ -85,6 +85,15 @@ keep_min = function(dir) {
   invisible()
 }
 
+# sometimes the bundle downloaded from datatables.net contains empty
+# files (seems caused by the downloading set-up error) so we just
+# remove those
+rm_empty_files = function(dir) {
+  files = list.files(dir, recursive = TRUE, full.names = TRUE)
+  empty_files = files[file.size(files) == 0]
+  unlink(empty_files)
+}
+
 rm_version_number = function(dir) {
   dirs = list.dirs(dir, recursive = FALSE)
   pattern = '-\\d+[.]\\d+[.]\\d+$'
@@ -122,6 +131,8 @@ copy_js_css_swf = function(from_dir, to_dir) {
 
 # remove the version number attached in the subfolder of DataTables
 rm_version_number(dld_dt_path())
+# remove the empty files if exists
+rm_empty_files(dld_folder())
 
 # only keep min files
 keep_min(dld_folder())
