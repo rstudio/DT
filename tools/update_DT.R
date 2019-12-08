@@ -80,14 +80,6 @@ invisible(lapply(
   encode_img
 ))
 
-setwd(file.path(sprintf('DataTables-%s', ver), 'media'))
-invisible({
-  lapply(list.dirs('..'), keep_min)
-  lapply(list.files('..', '[.]css$', recursive = TRUE, full.names = TRUE), encode_img)
-})
-unlink('css/jquery.dataTables_themeroller.css')
-unlink('js/jquery.js')
-
 # copy required files to the R package
 file.copy(
   list.files('css', '[.]css$', full.names = TRUE), dt_path('css/'),
