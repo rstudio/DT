@@ -125,6 +125,7 @@ invisible(lapply(
 ))
 
 # put JSZip, pdfmake js files to Buttons because it depends on those files
+# but those files are placed separately from Buttons
 local({
   jszip_files = list.files(
     dld_dt_path('JSZip'),
