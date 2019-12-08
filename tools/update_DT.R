@@ -90,6 +90,24 @@ invisible(lapply(
   encode_img
 ))
 
+# put JSZip, pdfmake js files to Buttons because it depends on those files
+local({
+  jszip_files = list.files(
+    file.path(dld_folder, 'DataTables', 'JSZip'),
+    pattern = '[.]js$',
+    full.names = TRUE
+  )
+  pdfmake_files = list.files(
+    file.path(dld_folder, 'DataTables', 'pdfmake'),
+    pattern = '[.]js$',
+    full.names = TRUE
+  )
+  files = c(jszip_files, pdfmake_files)
+  file.rename(
+    files,
+    file.path(file.path(dld_folder, 'DataTables', 'Buttons'), basename(files))
+  )
+})
 # copy required files to the R package
 file.copy(
   list.files('css', '[.]css$', full.names = TRUE), dt_path('css/'),
