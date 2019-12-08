@@ -168,6 +168,22 @@ local({
   unlink(c(dld_dt_path('JSZip'), dld_dt_path('pdfmake')), recursive = TRUE)
 })
 
+# put all the plugins under a folder with the same name if it only consists
+# a single js file
+local({
+  folders = list.dirs(dld_plugin_path(), recursive = FALSE)
+  create_folder_and_move = function(js_file, folder) {
+    dir = file.path(folder, gsub('[.]js$', '', js_file))
+    dir.create(dir)
+    file.rename(file.path(folder, js_file), file.path(dir, js_file))
+  }
+  lapply(folders, function(folder) {
+    js_files = list.files(folder, pattern = '[.]js$')
+    lapply(js_files, create_folder_and_move, folder = folder)
+  })
+  invisible()
+})
+
 # copy files --------------------------------------------------------------
 
 # update DataTables
