@@ -67,7 +67,7 @@ encode_img = function(css) {
 }
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
-keep_min = function(dir = dld_folder) {
+keep_min = function(dir) {
   dirs = list.dirs(dir, recursive = FALSE)
   invisible(lapply(dirs, keep_min))
   x1 = list.files(dir, '[.](css|js)$', full.names = TRUE)
@@ -77,7 +77,7 @@ keep_min = function(dir = dld_folder) {
   invisible()
 }
 
-rm_version_number = function(dir = file.path(dld_folder, 'DataTables')) {
+rm_version_number = function(dir) {
   dirs = list.dirs(dir, recursive = FALSE)
   pattern = '-\\d+[.]\\d+[.]\\d+$'
   dirs = dirs[grepl(pattern, dirs)]
@@ -105,10 +105,10 @@ copy_js_css = function(from_dir, to_dir) {
 # clean up ----------------------------------------------------------------
 
 # remove the version number attached in the subfolder of DataTables
-rm_version_number()
+rm_version_number(dld_dt_path())
 
 # only keep min files
-keep_min()
+keep_min(dld_folder)
 
 # replace the png files with base64 encode images
 invisible(lapply(
