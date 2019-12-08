@@ -28,12 +28,14 @@
 
 # param -------------------------------------------------------------------
 
-dld_folder = './download'
+dld_folder = function() {
+  './download'
+}
 dld_dt_path = function(...) {
-  file.path(dld_folder, 'DataTables', ...)
+  file.path(dld_folder(), 'DataTables', ...)
 }
 dld_plugin_path = function(...) {
-  file.path(dld_folder, 'Plugins', ...)
+  file.path(dld_folder(), 'Plugins', ...)
 }
 
 # utils -------------------------------------------------------------------
@@ -122,11 +124,11 @@ copy_js_css_swf = function(from_dir, to_dir) {
 rm_version_number(dld_dt_path())
 
 # only keep min files
-keep_min(dld_folder)
+keep_min(dld_folder())
 
 # replace the png files with base64 encode images
 invisible(lapply(
-  list.files(dld_folder, '[.]css$', recursive = TRUE, full.names = TRUE),
+  list.files(dld_folder(), '[.]css$', recursive = TRUE, full.names = TRUE),
   encode_img
 ))
 
