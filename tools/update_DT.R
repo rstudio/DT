@@ -22,7 +22,7 @@
 
 # param -------------------------------------------------------------------
 
-dld_folder <- './download'
+dld_folder = './download'
 
 # utils -------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ encode_img = function(css) {
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
 keep_min = function(dir = dld_folder) {
-  dirs <- list.dirs(dir, recursive = FALSE)
+  dirs = list.dirs(dir, recursive = FALSE)
   invisible(lapply(dirs, keep_min))
   x1 = list.files(dir, '[.](css|js)$', full.names = TRUE)
   x2 = gsub('[.](css|js)$', '.min.\\1', x1)
