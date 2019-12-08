@@ -1,4 +1,10 @@
 
+# todo --------------------------------------------------------------------
+
+# 1. automate the download - maybe no need
+# 2. the datatables license file is not in the bundle anymore - do we really
+#    need that?
+
 # note --------------------------------------------------------------------
 
 # This script is going to update
