@@ -69,7 +69,17 @@ keep_min = function(dir = dld_folder) {
   file.remove(x1[file.exists(x2)])
 }
 
+rm_version_number = function(dir = file.path(dld_folder, 'DataTables')) {
+  dirs = list.dirs(dir, recursive = FALSE)
+  pattern = '-\\d+[.]\\d+[.]\\d+$'
+  dirs = dirs[grepl(pattern, dirs)]
+  file.rename(dirs, gsub(pattern, '', dirs))
+}
+
 # clean up ----------------------------------------------------------------
+
+# remove the version number attached in the subfolder of DataTables
+invisible(rm_version_number())
 
 # only keep min files
 invisible(keep_min())
