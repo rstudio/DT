@@ -170,13 +170,13 @@ local({
 
 # copy files --------------------------------------------------------------
 
-# copy DataTables
+# update DataTables
 # dataTables.uikit.min.css, dataTables.uikit.min.js, dataTables.dataTables.min.js
 # may be obsolete
 # In addition, there's no license file bundled. Does this matter?
 copy_js_css_swf(dld_dt_path('DataTables'), lib_path('datatables'))
 
-# copy extensions
+# update extensions
 local({
   # the only not-extension folders are jszip and pdfmake, which should have
   # been deleted in the above steps
@@ -187,7 +187,7 @@ local({
   }))
 })
 
-# copy plugins
+# update offical plugins
 local({
   plugins = DT:::available_plugins()
   official_plugins = names(plugins)[plugins != 'searchHighlight']
