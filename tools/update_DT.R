@@ -203,24 +203,14 @@ local({
   }))
 })
 
-# update offical plugins
+# update plugins whose dependency is only one js file
 local({
-  plugins = DT:::available_plugins()
-  official_plugins = names(plugins)[plugins != 'searchHighlight']
-  invisible(lapply(official_plugins, function(plugin) {
-    file.copy(
-      dld_plugin_path(paste0(plugin, '.js')),
-      lib_plugin_path(plugin, paste0(basename(plugin), '.js')),
-      overwrite = TRUE
+  plugins = names(DT:::available_plugins())
+  lapply(plugins, function(plugin) {
+    copy_js_css_swf(
+      dld_plugin_path(plugin),
+      lib_plugin_path(plugin)
     )
-  }))
-})
-
-in_dir('features/searchHighlight', {
-  download.file('http://bartaz.github.io/sandbox.js/jquery.highlight.js', 'jquery.highlight.js')
-  file.copy(
-    c('dataTables.searchHighlight.css', 'dataTables.searchHighlight.min.js', 'jquery.highlight.js'),
-    dt_path('..', 'datatables-plugins', 'searchHighlight'), overwrite = TRUE
-  )
-  unlink('jquery.highlight.js')
+  })
+  invisible()
 })
