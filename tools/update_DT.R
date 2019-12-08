@@ -162,6 +162,17 @@ local({
 # In addition, there's no license file bundled. Does this matter?
 copy_js_css_swf(dld_dt_path('DataTables'), lib_path('datatables'))
 
+# copy extensions
+local({
+  # the only not-extension folders are jszip and pdfmake, which should have
+  # been deleted in the above steps
+  exts = list.dirs(dld_dt_path(), recursive = FALSE, full.names = FALSE)
+  exts = setdiff(exts, 'DataTables')
+  invisible(lapply(exts, function(ext) {
+    copy_js_css_swf(dld_dt_path(ext), lib_ext_path(ext))
+  }))
+})
+
 setwd('../extensions')
 
 extPath = dt_path('..', 'datatables-extensions')
