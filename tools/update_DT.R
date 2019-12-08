@@ -1,27 +1,45 @@
-dt_path = local({
-  path = normalizePath('./inst/htmlwidgets/lib/datatables/')
-  function(...) {
-    path = file.path(path, ...)
-    if (!dir.exists(path))
-      dir.create(path)
-    path
-  }
-})
 
-owd = setwd('tools')
-ver = DT:::DataTablesVersion
-out = sprintf('DataTables-%s.zip', ver)
-unlink('DataTables*', recursive = TRUE)
-download.file(sprintf('http://datatables.net/releases/DataTables-%s.zip', ver), out, mode = 'wb')
-unzip(out)
+# note --------------------------------------------------------------------
+
+# This script is going to update
+# 1. datatables and its extentions' css and js files
+# 2. datatables' plugins' js files
+# 3. other dependencies like jquery.highlight.js
+
+# steps -------------------------------------------------------------------
+
+# 1. Create a folder "download" under the root of this project
+# 2. Go to https://datatables.net/download/index , click all the extentions,
+#    then go to Step 3 choose "minify" but not "concatenate". Put the files
+#    in "download/DataTables"
+# 3. Download all the content from https://github.com/DataTables/Plugins/ and
+#    put them under folder "download/Plugins"
+# 4. Update the value of "DataTablesVersion" in "package.R"
+# 5. Run this script (note it will clean up the "download" folder afterwards
+#    so you might want to backup those files in case)
+# 6. Manually test all the apps in "inst/examples"
+# 7. Rebuild the site
+
+# param -------------------------------------------------------------------
+
+dld_folder <- './download'
+
+# utils -------------------------------------------------------------------
+
+dt_path = function(...) {
+  path = file.path('./inst/htmlwidgets/lib/datatables/', ...)
+  path = normalizePath(path)
+  if (!dir.exists(path)) dir.create(path)
+  path
+}
+
 setwd = function(x) {
-  if (!dir.exists(x))
-    dir.create(x)
+  if (!dir.exists(x)) dir.create(x)
   base::setwd(x)
 }
+
 in_dir = function(dir, expr) {
-  if (!dir.exists(dir))
-    dir.create(dir, recursive = TRUE)
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
   DT:::in_dir(dir, expr)
 }
 
