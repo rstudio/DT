@@ -28,9 +28,6 @@
 
 # param -------------------------------------------------------------------
 
-plugins = c('pagination', '')
-
-
 dld_folder = function() {
   './download'
 }
@@ -191,6 +188,17 @@ local({
 })
 
 # copy plugins
+local({
+  plugins = DT:::available_plugins()
+  official_plugins = names(plugins)[plugins != 'searchHighlight']
+  invisible(lapply(official_plugins, function(plugin) {
+    file.copy(
+      dld_plugin_path(paste0(plugin, '.js')),
+      lib_plugin_path(plugin, paste0(basename(plugin), '.js')),
+      overwrite = TRUE
+    )
+  }))
+})
 
 in_dir('features/searchHighlight', {
   download.file('http://bartaz.github.io/sandbox.js/jquery.highlight.js', 'jquery.highlight.js')
