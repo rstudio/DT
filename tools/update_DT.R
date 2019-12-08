@@ -148,7 +148,7 @@ local({
   files = c(jszip_files, pdfmake_files)
   file.rename(
     files,
-    file.path(dld_dt_path('Buttons'), basename(files))
+    file.path(dld_dt_path('Buttons', 'js'), basename(files))
   )
 })
 
