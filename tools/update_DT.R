@@ -18,8 +18,8 @@
 # 2. Go to https://datatables.net/download/index , click all the extentions,
 #    then go to Step 3 choose "minify" but not "concatenate". Put the files
 #    in "download/DataTables"
-# 3. Download all the content from https://github.com/DataTables/Plugins/ and
-#    put them under folder "download/Plugins"
+# 3. The plugins will be downloaded by this script automatically if
+#    "download/Plugins" doesn't exist
 # 4. Update the value of "DataTablesVersion" in "package.R"
 # 5. Run this script (note it will clean up the "download" folder afterwards
 #    so you might want to backup those files in case)
@@ -109,6 +109,17 @@ copy_js_css_swf = function(from_dir, to_dir) {
   file.copy(file.path(from_dir, js_css_files), to_files, overwrite = TRUE)
   invisible()
 }
+
+# download plugins --------------------------------------------------------
+
+if (!dir.exists(dld_plugin_path())) system2(
+  'git',
+  args = c(
+    'clone',
+    'https://github.com/DataTables/Plugins.git',
+    dld_plugin_path()
+  )
+)
 
 # clean up ----------------------------------------------------------------
 
