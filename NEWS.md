@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.11
 
+## NEW FEATURES
+
+- Support [pagination plug-ins](https://datatables.net/plug-ins/pagination/) (#734).
+
 ## BUG FIXES
 
 - Highlighting when searching with regex (i.e., using `options = list(searchHighlight = TRUE, search = list(regex = TRUE))` for the table) works now (thanks, @lrasmus, #719).
