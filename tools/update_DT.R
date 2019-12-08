@@ -115,19 +115,19 @@ invisible(lapply(
 # put JSZip, pdfmake js files to Buttons because it depends on those files
 local({
   jszip_files = list.files(
-    file.path(dld_folder, 'DataTables', 'JSZip'),
+    dld_dt_path('JSZip'),
     pattern = '[.]js$',
     full.names = TRUE
   )
   pdfmake_files = list.files(
-    file.path(dld_folder, 'DataTables', 'pdfmake'),
+    dld_dt_path('pdfmake'),
     pattern = '[.]js$',
     full.names = TRUE
   )
   files = c(jszip_files, pdfmake_files)
   file.rename(
     files,
-    file.path(file.path(dld_folder, 'DataTables', 'Buttons'), basename(files))
+    file.path(dld_dt_path('Buttons'), basename(files))
   )
 })
 
