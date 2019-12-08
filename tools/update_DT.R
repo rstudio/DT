@@ -63,6 +63,7 @@ encode_img = function(css) {
     sapply(ps, knitr::image_uri)
   })
   writeLines(x, css)
+  invisible()
 }
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
@@ -73,6 +74,7 @@ keep_min = function(dir = dld_folder) {
   x2 = gsub('[.](css|js)$', '.min.\\1', x1)
   if (length(x1) == 0) return()
   file.remove(x1[file.exists(x2)])
+  invisible()
 }
 
 rm_version_number = function(dir = file.path(dld_folder, 'DataTables')) {
@@ -80,6 +82,7 @@ rm_version_number = function(dir = file.path(dld_folder, 'DataTables')) {
   pattern = '-\\d+[.]\\d+[.]\\d+$'
   dirs = dirs[grepl(pattern, dirs)]
   file.rename(dirs, gsub(pattern, '', dirs))
+  invisible()
 }
 
 lib_path = function(...) {
@@ -95,16 +98,17 @@ copy_js_css = function(from_dir, to_dir) {
   lapply(Filter(Negate(dir.exists), dirname(to_files)), function(dir) {
     dir.create(dir, recursive = TRUE, showWarnings = FALSE)
   })
-  invisible(file.copy(file.path(from_dir, js_css_files), to_files, overwrite = TRUE))
+  file.copy(file.path(from_dir, js_css_files), to_files, overwrite = TRUE)
+  invisible()
 }
 
 # clean up ----------------------------------------------------------------
 
 # remove the version number attached in the subfolder of DataTables
-invisible(rm_version_number())
+rm_version_number()
 
 # only keep min files
-invisible(keep_min())
+keep_min()
 
 # replace the png files with base64 encode images
 invisible(lapply(
