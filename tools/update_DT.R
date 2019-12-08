@@ -23,6 +23,12 @@
 # param -------------------------------------------------------------------
 
 dld_folder = './download'
+dld_dt_path = function(...) {
+  file.path(dld_folder, 'DataTables', ...)
+}
+dld_plugin_path = function(...) {
+  file.path(dld_folder, 'Plugins', ...)
+}
 
 # utils -------------------------------------------------------------------
 
@@ -76,6 +82,22 @@ rm_version_number = function(dir = file.path(dld_folder, 'DataTables')) {
   file.rename(dirs, gsub(pattern, '', dirs))
 }
 
+lib_path = function(...) {
+  file.path('inst/htmlwidgets/lib', ...)
+}
+
+copy_js_css = function(from_dir, to_dir) {
+  js_css_files = list.files(
+    from_dir, pattern = '[.](css|js)$', recursive = TRUE
+  )
+  to_files = file.path(to_dir, js_css_files)
+  # create the sub-folder if doesn't exist
+  lapply(Filter(Negate(dir.exists), dirname(to_files)), function(dir) {
+    dir.create(dir, recursive = TRUE, showWarnings = FALSE)
+  })
+  invisible(file.copy(file.path(from_dir, js_css_files), to_files, overwrite = TRUE))
+}
+
 # clean up ----------------------------------------------------------------
 
 # remove the version number attached in the subfolder of DataTables
@@ -108,6 +130,15 @@ local({
     file.path(file.path(dld_folder, 'DataTables', 'Buttons'), basename(files))
   )
 })
+
+# copy files --------------------------------------------------------------
+
+# copy DataTables
+# dataTables.uikit.min.css, dataTables.uikit.min.js, dataTables.dataTables.min.js
+# may be obsolete
+# In addition, there's no license file bundled. Does this matter?
+copy_js_css(dld_dt_path('DataTables'), lib_path('datatables'))
+
 # copy required files to the R package
 file.copy(
   list.files('css', '[.]css$', full.names = TRUE), dt_path('css/'),
