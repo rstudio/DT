@@ -4,13 +4,13 @@
 # 1. automate the download - maybe no need
 # 2. the datatables license file is not in the bundle anymore - do we really
 #    need that?
+# 3. should not update jquery.highlight.js because it's now manually maintained
 
 # note --------------------------------------------------------------------
 
 # This script is going to update
 # 1. datatables and its extentions' css and js files
 # 2. datatables' plugins' js files
-# 3. other dependencies like jquery.highlight.js
 
 # steps -------------------------------------------------------------------
 
