@@ -635,12 +635,29 @@ DT2BSClass = function(class) {
   paste(class, collapse = ' ')
 }
 
-pluginDependency = function(plugin) {
-  d = depPath('datatables-plugins', plugin)
-  if (!dir.exists(d)) warning(
-    "Could not find plugin '", plugin, "'.  ',
-    'See https://rstudio.github.io/DT/plugins.html for a list of supported plugins."
+# all the plugins' js/css files should be place under datatables-plugins/group/plugin
+# the name is the path of the plugins relative to depPath('datatables-plugins')
+available_plugins = function() {
+  plugin_path = depPath('datatables-plugins')
+  groups = list.dirs(plugin_path, full.names = FALSE, recursive = FALSE)
+  plugins = lapply(
+    groups,
+    function(g) {
+      out = list.dirs(file.path(plugin_path, g), full.names = FALSE, recursive = FALSE)
+      setNames(out, file.path(g, out))
+    }
   )
+  unlist(plugins)
+}
+
+pluginDependency = function(plugin) {
+  plugins = available_plugins()
+  if (!plugin %in% plugins) stop(
+    "Could not find plugin '", plugin, "'.  '",
+    'Only the following plugins are supported by DT: ',
+    paste0(plugins, collapse = ', ')
+  )
+  d = depPath('datatables-plugins', names(plugins)[plugins == plugin])
   htmlDependency(
     paste0('dt-plugin-', tolower(plugin)), DataTablesVersion, src = d,
     script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
