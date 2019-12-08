@@ -26,35 +26,18 @@
 # 6. Manually test all the apps in "inst/examples"
 # 7. Rebuild the site
 
-# param -------------------------------------------------------------------
+# utils -------------------------------------------------------------------
 
 dld_folder = function() {
   './download'
 }
+
 dld_dt_path = function(...) {
   file.path(dld_folder(), 'DataTables', ...)
 }
+
 dld_plugin_path = function(...) {
   file.path(dld_folder(), 'Plugins', ...)
-}
-
-# utils -------------------------------------------------------------------
-
-dt_path = function(...) {
-  path = file.path('./inst/htmlwidgets/lib/datatables/', ...)
-  path = normalizePath(path)
-  if (!dir.exists(path)) dir.create(path)
-  path
-}
-
-setwd = function(x) {
-  if (!dir.exists(x)) dir.create(x)
-  base::setwd(x)
-}
-
-in_dir = function(dir, expr) {
-  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
-  DT:::in_dir(dir, expr)
 }
 
 # base64 encode images into CSS
@@ -217,4 +200,3 @@ local({
 
 # clean up download folder
 unlink(dld_folder(), recursive = TRUE)
-
