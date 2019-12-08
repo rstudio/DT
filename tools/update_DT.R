@@ -89,9 +89,17 @@ lib_path = function(...) {
   file.path('inst/htmlwidgets/lib', ...)
 }
 
-copy_js_css = function(from_dir, to_dir) {
+lib_ext_path = function(...) {
+  lib_path('datatables-extensions', ...)
+}
+
+lib_plugin_path = function(...) {
+  lib_path('datatables-plugins', ...)
+}
+
+copy_js_css_swf = function(from_dir, to_dir) {
   js_css_files = list.files(
-    from_dir, pattern = '[.](css|js)$', recursive = TRUE
+    from_dir, pattern = '[.](css|js|swf)$', recursive = TRUE
   )
   to_files = file.path(to_dir, js_css_files)
   # create the sub-folder if doesn't exist
@@ -141,7 +149,7 @@ local({
 # dataTables.uikit.min.css, dataTables.uikit.min.js, dataTables.dataTables.min.js
 # may be obsolete
 # In addition, there's no license file bundled. Does this matter?
-copy_js_css(dld_dt_path('DataTables'), lib_path('datatables'))
+copy_js_css_swf(dld_dt_path('DataTables'), lib_path('datatables'))
 
 # copy required files to the R package
 file.copy(
