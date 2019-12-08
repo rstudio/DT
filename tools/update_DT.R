@@ -28,6 +28,9 @@
 
 # param -------------------------------------------------------------------
 
+plugins = c('pagination', '')
+
+
 dld_folder = function() {
   './download'
 }
@@ -187,16 +190,7 @@ local({
   }))
 })
 
-setwd('../extensions')
-
-extPath = dt_path('..', 'datatables-extensions')
-unlink(extPath, recursive = TRUE)
-
-file.rename('../extensions', '../datatables-extensions')
-file.copy('../datatables-extensions', dt_path('..'), overwrite = TRUE, recursive = TRUE)
-
-setwd('../../Plugins/')
-system2('git', 'pull origin master')
+# copy plugins
 
 in_dir('features/searchHighlight', {
   download.file('http://bartaz.github.io/sandbox.js/jquery.highlight.js', 'jquery.highlight.js')
