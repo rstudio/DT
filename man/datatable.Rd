@@ -111,8 +111,8 @@ extensions (\url{https://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
 (\url{https://rstudio.github.io/DT/plugins.html}).  Note that only those
-plugins supported by the \code{DT} package can be used here, including
-"ellipsis", "natural" and "pagination".}
+plugins supported by the \code{DT} package can be used here. You can see
+the available plugins by calling \code{DT:::available_plugins()}}
 
 \item{editable}{\code{FALSE} to disable the table editor, or \code{TRUE} (or
 \code{"cell"}) to enable editing a single cell. Alternatively, you can set
