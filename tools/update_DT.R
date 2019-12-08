@@ -129,8 +129,6 @@ copy_js_css_swf = function(from_dir, to_dir) {
 
 # clean up ----------------------------------------------------------------
 
-# remove the version number attached in the subfolder of DataTables
-rm_version_number(dld_dt_path())
 # remove the empty files if exists
 rm_empty_files(dld_folder())
 
@@ -142,6 +140,11 @@ invisible(lapply(
   list.files(dld_folder(), '[.]css$', recursive = TRUE, full.names = TRUE),
   encode_img
 ))
+
+# must be placed after `encode_img` because the css files may contain
+# images like "DataTables-1.10.20/images/sort_both.png"
+# remove the version number attached in the subfolder of DataTables
+rm_version_number(dld_dt_path())
 
 # put JSZip, pdfmake js files to Buttons because it depends on those files
 # but those files are placed separately from Buttons
