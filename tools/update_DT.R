@@ -214,3 +214,7 @@ local({
   })
   invisible()
 })
+
+# clean up download folder
+unlink(dld_folder(), recursive = TRUE)
+
