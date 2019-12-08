@@ -30,10 +30,12 @@ encode_img = function(css) {
   w = setwd(dirname(css)); on.exit(setwd(w), add = TRUE)
   css = basename(css)
   x = readLines(css)
-  m = gregexpr('("?)[.][.][^"]+?[.]png\\1', x)
+  # match both "../images/xxx.png" and "images/xxx.png"
+  m = gregexpr('("|\']?)(\\.\\.)?[^"\']+?[.]png\\1', x)
   regmatches(x, m) = lapply(regmatches(x, m), function(ps) {
     if (length(ps) == 0) return(ps)
-    ps = gsub('^"|"$', '', ps)
+    # replace the first and the last `"` with empty
+    ps = gsub('^"|^\'|"$|\'$', '', ps)
     sapply(ps, knitr::image_uri)
   })
   writeLines(x, css)
