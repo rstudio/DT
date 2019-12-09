@@ -68,8 +68,8 @@
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
 #'   (\url{https://rstudio.github.io/DT/plugins.html}).  Note that only those
-#'   plugins supported by the \code{DT} package can be used here, including
-#'   "ellipsis", "natural" and "pagination".
+#'   plugins supported by the \code{DT} package can be used here. You can see
+#'   the available plugins by calling \code{DT:::available_plugins()}
 #' @param editable \code{FALSE} to disable the table editor, or \code{TRUE} (or
 #'   \code{"cell"}) to enable editing a single cell. Alternatively, you can set
 #'   it to \code{"row"} to be able to edit a row, or \code{"column"} to edit a
@@ -635,12 +635,29 @@ DT2BSClass = function(class) {
   paste(class, collapse = ' ')
 }
 
-pluginDependency = function(plugin) {
-  d = depPath('datatables-plugins', plugin)
-  if (!dir.exists(d)) warning(
-    "Could not find plugin '", plugin, "'.  ',
-    'See https://rstudio.github.io/DT/plugins.html for a list of supported plugins."
+# all the plugins' js/css files should be place under datatables-plugins/group/plugin
+# the name is the path of the plugins relative to depPath('datatables-plugins')
+available_plugins = function() {
+  plugin_path = depPath('datatables-plugins')
+  groups = list.dirs(plugin_path, full.names = FALSE, recursive = FALSE)
+  plugins = lapply(
+    groups,
+    function(g) {
+      out = list.dirs(file.path(plugin_path, g), full.names = FALSE, recursive = FALSE)
+      setNames(out, file.path(g, out))
+    }
   )
+  unlist(plugins)
+}
+
+pluginDependency = function(plugin) {
+  plugins = available_plugins()
+  if (!plugin %in% plugins) stop(
+    "Could not find plugin '", plugin, "'.  '",
+    'Only the following plugins are supported by DT: ',
+    paste0(plugins, collapse = ', ')
+  )
+  d = depPath('datatables-plugins', names(plugins)[plugins == plugin])
   htmlDependency(
     paste0('dt-plugin-', tolower(plugin)), DataTablesVersion, src = d,
     script = list.files(d, '[.]js$'), stylesheet = list.files(d, '[.]css$')
