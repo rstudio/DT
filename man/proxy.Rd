@@ -16,11 +16,8 @@
 \alias{reloadData}
 \title{Manipulate an existing DataTables instance in a Shiny app}
 \usage{
-dataTableProxy(
-  outputId,
-  session = shiny::getDefaultReactiveDomain(),
-  deferUntilFlush = TRUE
-)
+dataTableProxy(outputId, session = shiny::getDefaultReactiveDomain(), 
+    deferUntilFlush = TRUE)
 
 selectRows(proxy, selected)
 
@@ -44,11 +41,8 @@ hideCols(proxy, hide, reset = FALSE)
 
 colReorder(proxy, order, origOrder = FALSE)
 
-reloadData(
-  proxy,
-  resetPaging = TRUE,
-  clearSelection = c("all", "none", "row", "column", "cell")
-)
+reloadData(proxy, resetPaging = TRUE, clearSelection = c("all", "none", 
+    "row", "column", "cell"))
 }
 \arguments{
 \item{outputId}{the id of the table to be manipulated (the same id as the one

@@ -10,59 +10,25 @@
 \alias{formatStyle}
 \title{Format table columns}
 \usage{
-formatCurrency(
-  table,
-  columns,
-  currency = "$",
-  interval = 3,
-  mark = ",",
-  digits = 2,
-  dec.mark = getOption("OutDec"),
-  before = TRUE
-)
+formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", 
+    digits = 2, dec.mark = getOption("OutDec"), before = TRUE)
 
 formatString(table, columns, prefix = "", suffix = "")
 
-formatPercentage(
-  table,
-  columns,
-  digits = 0,
-  interval = 3,
-  mark = ",",
-  dec.mark = getOption("OutDec")
-)
+formatPercentage(table, columns, digits = 0, interval = 3, mark = ",", 
+    dec.mark = getOption("OutDec"))
 
-formatRound(
-  table,
-  columns,
-  digits = 2,
-  interval = 3,
-  mark = ",",
-  dec.mark = getOption("OutDec")
-)
+formatRound(table, columns, digits = 2, interval = 3, mark = ",", 
+    dec.mark = getOption("OutDec"))
 
-formatSignif(
-  table,
-  columns,
-  digits = 2,
-  interval = 3,
-  mark = ",",
-  dec.mark = getOption("OutDec")
-)
+formatSignif(table, columns, digits = 2, interval = 3, mark = ",", 
+    dec.mark = getOption("OutDec"))
 
 formatDate(table, columns, method = "toDateString", params = NULL)
 
-formatStyle(
-  table,
-  columns,
-  valueColumns = columns,
-  target = c("cell", "row"),
-  fontWeight = NULL,
-  color = NULL,
-  backgroundColor = NULL,
-  background = NULL,
-  ...
-)
+formatStyle(table, columns, valueColumns = columns, target = c("cell", 
+    "row"), fontWeight = NULL, color = NULL, backgroundColor = NULL, 
+    background = NULL, ...)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -138,7 +104,7 @@ m
 datatable(m) \%>\% formatCurrency(c('A', 'C')) \%>\% formatPercentage('D', 2)
 
 # the first two columns are Euro currency, and round column E to 3 decimal places
-datatable(m) \%>\% formatCurrency(1:2, '\\U20AC') \%>\% formatRound('E', 3)
+datatable(m) \%>\% formatCurrency(1:2, '\U20AC') \%>\% formatRound('E', 3)
 
 # render vapor pressure with only two significant figures.
 datatable(pressure) \%>\% formatSignif('pressure',2)
