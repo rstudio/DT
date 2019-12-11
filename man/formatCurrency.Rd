@@ -104,7 +104,7 @@ m
 datatable(m) \%>\% formatCurrency(c('A', 'C')) \%>\% formatPercentage('D', 2)
 
 # the first two columns are Euro currency, and round column E to 3 decimal places
-datatable(m) \%>\% formatCurrency(1:2, '\\U20AC') \%>\% formatRound('E', 3)
+datatable(m) \%>\% formatCurrency(1:2, '\U20AC') \%>\% formatRound('E', 3)
 
 # render vapor pressure with only two significant figures.
 datatable(pressure) \%>\% formatSignif('pressure',2)
