@@ -17,7 +17,8 @@ shinyServer(function(input, output) {
     options = list(
       ajax = 'large.txt',
       deferRender = TRUE,
-      dom = 'frtiS',
+      dom = 'frti',
+      scroller = TRUE,
       scrollY = 200,
       scrollCollapse = TRUE
     )
