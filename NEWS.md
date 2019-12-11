@@ -8,6 +8,8 @@
 
 - Highlighting when searching with regex (i.e., using `options = list(searchHighlight = TRUE, search = list(regex = TRUE))` for the table) works now (thanks, @lrasmus, #719).
 
+- Updated the AutoFill extension (thanks, @stla @shrektan, #711).
+
 ## MINOR CHANGES
 
 - In the server-side processing mode, filters now use Perl-compatible regular expressions (regexps), such as for lookround and negating assertions, see `help(regex)` or https://perldoc.perl.org/perlre.html. This may be most useful in columns (`DT::renderDataTable(filter = list(position = "top"), options = list(search = list(regex = TRUE))`), but also works in the global search (thanks, @rfhb, #727).
