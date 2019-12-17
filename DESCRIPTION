@@ -36,7 +36,15 @@ Suggests:
     knitr (>= 1.8),
     rmarkdown,
     shiny (>= 1.2.0),
-    testit
+    testit,
+    sass
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Encoding: UTF-8
+Collate: 
+    'datatables.R'
+    'format.R'
+    'package.R'
+    'shiny.R'
+    'theme.R'
+    'utils.R'

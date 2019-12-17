@@ -691,8 +691,8 @@ extraDependency = function(names = NULL, ...) {
   })
 }
 
-# core JS and CSS dependencies of DataTables
-DTDependency = function(style) {
+# Core JS and CSS dependencies of DataTables
+DTDependency = function(style, variables = datatableThemeVariables()) {
   js = 'jquery.dataTables.min.js'
   if (style == 'default') {
     # patch the default style
@@ -704,12 +704,39 @@ DTDependency = function(style) {
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
     if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
+
+  # Do SASS compilation, if relevant
+  if (length(variables)) {
+    outputPath = tempdir('dtcustom')
+    # Copy over all the relevant JS/CSS file to the temp dir
+    lapply(file.path(outputPath, c('js', 'css')), dir.create, showWarnings = FALSE)
+    file.copy(depPath('datatables/css', css), file.path(outputPath, 'css'))
+    file.copy(depPath('datatables/js', js), file.path(outputPath, 'js'))
+    # Overwrite the main CSS file that contains the SASS variables
+    sass::sass(
+      list(variables, sassFile('jquery.dataTables.scss')),
+      options = sass::sass_options(output_style = 'compressed'),
+      output = file.path(outputPath, 'css', 'jquery.dataTables.min.css')
+    )
+  } else {
+    outputPath = depPath('datatables')
+  }
+
   htmlDependency(
-    depName(style, 'dt-core'), DataTablesVersion, src = depPath('datatables'),
-    script = file.path('js', js), stylesheet = file.path('css', css),
+    depName(style, 'dt-core'), DataTablesVersion,
+    src = outputPath,
+    script = file.path('js', js),
+    stylesheet = file.path('css', css),
     all_files = FALSE
   )
 }
+
+
+sassFile = function(file) {
+  scss_dir = depPath('datatables', 'scss')
+  sass::sass_file(file.path(scss_dir, file))
+}
+
 
 # translate DataTables classes to Bootstrap table classes
 DT2BSClass = function(class) {
