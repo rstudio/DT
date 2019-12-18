@@ -763,8 +763,8 @@ themeIncludes = function(theme = NULL) {
     bootstraplib::sass_file_bootstrap("_mixins.scss"),
 
     list(
-      "table-header-border"        = "$table-border-width solid $table-border-color !default;",
-      "table-body-border"          = "$table-header-border !default;",
+      "table-body-border"          = "$table-border-width solid $table-border-color !default;",
+      "table-header-border"        = "2*$table-border-width solid $table-border-color !default;",
       "table-row-selected"         = "$table-active-bg !default;",
       # Why does Bootstrap set $table-bg explicitly to null?
       "table-row-background"       = "if($table-bg, $table-bg, $body-bg) !default;",
