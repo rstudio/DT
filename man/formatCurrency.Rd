@@ -10,25 +10,59 @@
 \alias{formatStyle}
 \title{Format table columns}
 \usage{
-formatCurrency(table, columns, currency = "$", interval = 3, mark = ",", 
-    digits = 2, dec.mark = getOption("OutDec"), before = TRUE)
+formatCurrency(
+  table,
+  columns,
+  currency = "$",
+  interval = 3,
+  mark = ",",
+  digits = 2,
+  dec.mark = getOption("OutDec"),
+  before = TRUE
+)
 
 formatString(table, columns, prefix = "", suffix = "")
 
-formatPercentage(table, columns, digits = 0, interval = 3, mark = ",", 
-    dec.mark = getOption("OutDec"))
+formatPercentage(
+  table,
+  columns,
+  digits = 0,
+  interval = 3,
+  mark = ",",
+  dec.mark = getOption("OutDec")
+)
 
-formatRound(table, columns, digits = 2, interval = 3, mark = ",", 
-    dec.mark = getOption("OutDec"))
+formatRound(
+  table,
+  columns,
+  digits = 2,
+  interval = 3,
+  mark = ",",
+  dec.mark = getOption("OutDec")
+)
 
-formatSignif(table, columns, digits = 2, interval = 3, mark = ",", 
-    dec.mark = getOption("OutDec"))
+formatSignif(
+  table,
+  columns,
+  digits = 2,
+  interval = 3,
+  mark = ",",
+  dec.mark = getOption("OutDec")
+)
 
 formatDate(table, columns, method = "toDateString", params = NULL)
 
-formatStyle(table, columns, valueColumns = columns, target = c("cell", 
-    "row"), fontWeight = NULL, color = NULL, backgroundColor = NULL, 
-    background = NULL, ...)
+formatStyle(
+  table,
+  columns,
+  valueColumns = columns,
+  target = c("cell", "row"),
+  fontWeight = NULL,
+  color = NULL,
+  backgroundColor = NULL,
+  background = NULL,
+  ...
+)
 }
 \arguments{
 \item{table}{a table object created from \code{\link{datatable}()}}
@@ -95,6 +129,7 @@ of significant figures (\code{formatSignif()}).  The function
 \code{formatStyle()} applies CSS styles to table cells by column.
 }
 \examples{
+# !formatR
 library(DT)
 m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
 colnames(m) = head(LETTERS, ncol(m))

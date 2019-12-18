@@ -4,13 +4,28 @@
 \alias{datatable}
 \title{Create an HTML table widget using the DataTables library}
 \usage{
-datatable(data, options = list(), class = "display", callback = JS("return table;"), 
-    rownames, colnames, container, caption = NULL, filter = c("none", 
-        "bottom", "top"), escape = TRUE, style = "default", width = NULL, 
-    height = NULL, elementId = NULL, fillContainer = getOption("DT.fillContainer", 
-        NULL), autoHideNavigation = getOption("DT.autoHideNavigation", 
-        NULL), selection = c("multiple", "single", "none"), extensions = list(), 
-    plugins = NULL, editable = FALSE)
+datatable(
+  data,
+  options = list(),
+  class = "display",
+  callback = JS("return table;"),
+  rownames,
+  colnames,
+  container,
+  caption = NULL,
+  filter = c("none", "bottom", "top"),
+  escape = TRUE,
+  style = "default",
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  fillContainer = getOption("DT.fillContainer", NULL),
+  autoHideNavigation = getOption("DT.autoHideNavigation", NULL),
+  selection = c("multiple", "single", "none"),
+  extensions = list(),
+  plugins = NULL,
+  editable = FALSE
+)
 }
 \arguments{
 \item{data}{a data object (either a matrix or a data frame)}
@@ -68,7 +83,8 @@ the first column to display, you should add the numeric column indices
 by one when using \code{rownames}}
 
 \item{style}{the style name (\url{http://datatables.net/manual/styling/});
-currently only \code{'default'} and \code{'bootstrap'} are supported}
+currently only \code{'default'}, \code{'bootstrap'}, and
+\code{'bootstrap4'} are supported.}
 
 \item{width, height}{Width/Height in pixels (optional, defaults to automatic
 sizing)}
@@ -120,6 +136,7 @@ You are recommended to escape the table content for security reasons
   web applications.
 }
 \examples{
+# !formatR
 library(DT)
 
 # see the package vignette for examples and the link to website
