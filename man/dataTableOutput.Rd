@@ -11,11 +11,23 @@ dataTableOutput(outputId, width = "100\%", height = "auto")
 
 DTOutput(outputId, width = "100\%", height = "auto")
 
-renderDataTable(expr, server = TRUE, env = parent.frame(), quoted = FALSE, 
-    funcFilter = dataTablesFilter, ...)
+renderDataTable(
+  expr,
+  server = TRUE,
+  env = parent.frame(),
+  quoted = FALSE,
+  funcFilter = dataTablesFilter,
+  ...
+)
 
-renderDT(expr, server = TRUE, env = parent.frame(), quoted = FALSE, 
-    funcFilter = dataTablesFilter, ...)
+renderDT(
+  expr,
+  server = TRUE,
+  env = parent.frame(),
+  quoted = FALSE,
+  funcFilter = dataTablesFilter,
+  ...
+)
 }
 \arguments{
 \item{outputId}{output variable to read the table from}
@@ -53,6 +65,7 @@ container for table, and the latter is used in the server logic to render the
 table.
 }
 \examples{
+# !formatR
 if (interactive()) {
   library(shiny)
   library(DT)
