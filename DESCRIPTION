@@ -37,7 +37,8 @@ Suggests:
     rmarkdown,
     shiny (>= 1.2.0),
     testit,
-    sass
+    sass,
+    bootstraplib
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Encoding: UTF-8
@@ -48,3 +49,4 @@ Collate:
     'shiny.R'
     'theme.R'
     'utils.R'
+Remotes: rstudio/bootstraplib
