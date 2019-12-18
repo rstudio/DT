@@ -338,6 +338,14 @@ datatable = function(
           'consider server-side processing: https://rstudio.github.io/DT/server.html'
         )
 
+      theme = getOption("bootswatch.theme")
+      if (length(theme)) {
+        instance$dependencies = c(
+          instance$dependencies,
+          list(DTDependency(style, theme))
+        )
+      }
+
       data = escapeData(data, escape, colnames)
       data = unname(data)
       instance$x$data = data
@@ -692,7 +700,8 @@ extraDependency = function(names = NULL, ...) {
 }
 
 # Core JS and CSS dependencies of DataTables
-DTDependency = function(style, variables = datatableThemeVariables()) {
+DTDependency = function(style, theme = getOption("bootswatch.theme", default = NULL),
+                        variables = datatableThemeVariables()) {
   js = 'jquery.dataTables.min.js'
   if (style == 'default') {
     # patch the default style
@@ -706,7 +715,7 @@ DTDependency = function(style, variables = datatableThemeVariables()) {
   }
 
   # Do SASS compilation, if relevant
-  if (length(variables)) {
+  if (length(theme) || length(variables)) {
     outputPath = tempdir('dtcustom')
     # Copy over all the relevant JS/CSS file to the temp dir
     lapply(file.path(outputPath, c('js', 'css')), dir.create, showWarnings = FALSE)
@@ -714,8 +723,13 @@ DTDependency = function(style, variables = datatableThemeVariables()) {
     file.copy(depPath('datatables/js', js), file.path(outputPath, 'js'))
     # Overwrite the main CSS file that contains the SASS variables
     sass::sass(
-      list(variables, sassFile('jquery.dataTables.scss')),
-      options = sass::sass_options(output_style = 'compressed'),
+      list(
+        variables,
+        # Set sensible SASS variable defaults based any present bootswatch theme
+        themeIncludes(theme),
+        sassFile('jquery.dataTables.scss')
+      ),
+      options = sass::sass_options(output_style = 'expanded'),
       output = file.path(outputPath, 'css', 'jquery.dataTables.min.css')
     )
   } else {
@@ -735,6 +749,31 @@ DTDependency = function(style, variables = datatableThemeVariables()) {
 sassFile = function(file) {
   scss_dir = depPath('datatables', 'scss')
   sass::sass_file(file.path(scss_dir, file))
+}
+
+themeIncludes = function(theme = NULL) {
+  if (is.null(theme)) return("")
+  if (system.file(package = "bootstraplib") == "") return("")
+
+  theme <- bootstraplib::bootswatch_detect(theme)
+  list(
+    if (!theme %in% c("bootstrap", "default")) bootstraplib::sass_file_bootswatch(theme, "_variables.scss") else "",
+    bootstraplib::sass_file_bootstrap("_functions.scss"),
+    bootstraplib::sass_file_bootstrap("_variables.scss"),
+    bootstraplib::sass_file_bootstrap("_mixins.scss"),
+
+    list(
+      "table-header-border"        = "$table-border-width solid $table-border-color !default;",
+      "table-body-border"          = "$table-header-border !default;",
+      "table-row-selected"         = "$table-active-bg !default;",
+      # Why does Bootstrap set $table-bg explicitly to null?
+      "table-row-background"       = "if($table-bg, $table-bg, $body-bg) !default;",
+      "table-control-color"        = "$table-color !default",
+      "table-paging-button-active" = "$primary !default",
+      "table-paging-button-hover"  = "rgba($primary, 0.7) !default",
+      "table-shade"                = "$table-color !default"
+    )
+  )
 }
 
 
