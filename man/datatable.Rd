@@ -84,7 +84,9 @@ by one when using \code{rownames}}
 
 \item{style}{the style name (\url{http://datatables.net/manual/styling/});
 currently only \code{'default'}, \code{'bootstrap'}, and
-\code{'bootstrap4'} are supported.}
+\code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
+files so in order to display the style correctly, you have to link
+the necessary files in the header.}
 
 \item{width, height}{Width/Height in pixels (optional, defaults to automatic
 sizing)}
