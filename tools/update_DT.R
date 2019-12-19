@@ -113,13 +113,13 @@ copy_js_css_swf = function(from_dir, to_dir) {
 # rename plugin/plugin.js to plugin/source.js
 shorten_name = function(x) {
   dir_name = basename(dirname(x))
-  file_name = gsub('[.]css$|(\\.min)?[.]js$', '', x)
+  file_name = gsub('(\\.min)?[.](js|css)$', '', basename(x))
   # some files are named as dataTables.xxx.min.js
-  cleaned_file_name = gsub('^dataTables[.]', '', x)
+  cleaned_file_name = gsub('^dataTables[.]', '', file_name)
   # if not equal, it means there exist mutiple files
   # and we just leave them alone
   if (cleaned_file_name == dir_name) {
-    file_ext = gsub(paste0('^', file_name), '', x)
+    file_ext = gsub(file_name, '', basename(x), fixed = TRUE)
     new_file = file.path(dirname(x), paste0('source', file_ext))
     file.rename(x, new_file)
   }
