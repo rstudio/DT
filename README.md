@@ -7,7 +7,7 @@ This package provides a function `datatable()` to display R data via the [DataTa
 
 ## Installation
 
-You may install the stable version from CRAN, or the development version using **devtools**:
+You may install the stable version from CRAN, or the development version using **remotes**:
 
 ```r
 # install from CRAN
