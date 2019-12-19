@@ -65,7 +65,6 @@ container for table, and the latter is used in the server logic to render the
 table.
 }
 \examples{
-# !formatR
 if (interactive()) {
   library(shiny)
   library(DT)

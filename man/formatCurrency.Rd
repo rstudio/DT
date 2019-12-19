@@ -129,7 +129,6 @@ of significant figures (\code{formatSignif()}).  The function
 \code{formatStyle()} applies CSS styles to table cells by column.
 }
 \examples{
-# !formatR
 library(DT)
 m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
 colnames(m) = head(LETTERS, ncol(m))
