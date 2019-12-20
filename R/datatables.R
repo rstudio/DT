@@ -47,7 +47,10 @@
 #'   the first column to display, you should add the numeric column indices
 #'   by one when using \code{rownames}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
-#'   currently only \code{'default'} and \code{'bootstrap'} are supported
+#'   currently only \code{'default'}, \code{'bootstrap'}, and
+#'   \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
+#'   files so in order to display the style correctly, you have to link
+#'   the necessary files in the header.
 #' @param width,height Width/Height in pixels (optional, defaults to automatic
 #'   sizing)
 #' @param elementId An id for the widget (a random string by default).
@@ -184,7 +187,7 @@ datatable = function(
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
   style = match.arg(tolower(style), DTStyles())
-  if (style == 'bootstrap') class = DT2BSClass(class)
+  if (grepl('^bootstrap', style)) class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
   # add class for fillContainer if necessary

@@ -110,6 +110,21 @@ copy_js_css_swf = function(from_dir, to_dir) {
   invisible()
 }
 
+# rename plugin/plugin.js to plugin/source.js
+shorten_name = function(x) {
+  dir_name = basename(dirname(x))
+  file_name = gsub('(\\.min)?[.](js|css)$', '', basename(x))
+  # some files are named as dataTables.xxx.min.js
+  cleaned_file_name = gsub('^dataTables[.]', '', file_name)
+  # if not equal, it means there exist mutiple files
+  # and we just leave them alone
+  if (cleaned_file_name == dir_name) {
+    file_ext = gsub(file_name, '', basename(x), fixed = TRUE)
+    new_file = file.path(dirname(x), paste0('source', file_ext))
+    file.rename(x, new_file)
+  }
+}
+
 # download plugins --------------------------------------------------------
 
 if (!dir.exists(dld_plugin_path())) system2(
@@ -163,11 +178,13 @@ local({
 })
 
 # put all the plugins under a folder with the same name if it only consists
-# a single js file
+# a single js file. In addition, in order to avoid "path length longer than
+# 100 chars", we need to rename the files to things like source.js/css
+# see the comment in https://github.com/rstudio/DT/pull/734
 local({
   folders = list.dirs(dld_plugin_path(), recursive = FALSE)
   create_folder_and_move = function(js_file, folder) {
-    dir = file.path(folder, gsub('[.]js$', '', js_file))
+    dir = file.path(folder, gsub('(\\.min)?[.]js$', '', js_file))
     dir.create(dir)
     file.rename(file.path(folder, js_file), file.path(dir, js_file))
   }
@@ -175,6 +192,8 @@ local({
     js_files = list.files(folder, pattern = '[.]js$')
     lapply(js_files, create_folder_and_move, folder = folder)
   })
+  files = list.files(dld_plugin_path(), '[.](js|css)$', recursive = TRUE, full.names = TRUE)
+  lapply(files, shorten_name)
   invisible()
 })
 
