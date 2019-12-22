@@ -67,9 +67,9 @@
 #'   selection, or \code{'row+column'} to make it possible to select both rows
 #'   and columns (click on the footer to select columns), or \code{'cell'} to
 #'   select cells. Note that DT has its own selection implementation and doesn't
-#'   use the Select extension because the latter is limited to be used in the
-#'   client-side processing mode (i.e., server = FALSE). If you really want to
-#'   use the Select extension please set this argument to \code{'none'}
+#'   use the Select extension because the latter doesn't support the
+#'   server-side processing mode well. Please set this argument to \code{'none'}
+#'   if you really want to use the Select extension.
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
