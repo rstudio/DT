@@ -116,6 +116,21 @@ renderDataTable = function(
         options$ajax$url = url
       }
       instance$x$options = fixServerOptions(options)
+
+      # We need to warn the use of "Select" extension in the server-side processing
+      # mode since right now there's no good way of supporting the server mode.
+      # More specifically, the Select ext can't remember the cross-page selections
+      # because the javascript implementation doesn't take the server mode into account.
+      # Until that gets changed, we are not able to integrate the Select ext with DT's
+      # own implementations.
+      if ('Select' %in% as.character(instance$x$extensions)) warning(
+        "The Select extension is not able to work with the server-side ",
+        "processing mode properly. It's recommended to use the Select extension ",
+        "only in the client-side processing mode (by setting `server = FALSE` ",
+        "in `DT::renderDT()`) or use DT's own selection implementations (",
+        "see the `selection` argument in ?DT::datatable).",
+        immediate. = TRUE, call. = FALSE
+      )
     }
 
     instance

@@ -264,21 +264,11 @@ datatable = function(
   }
 
   # warn if the Select ext is used but selection is not set to none
-  # and remove the Select extensions
   if ('Select' %in% extensions && selection$mode != 'none') warning(
     "The Select extension can't work properly with DT's own ",
     "selection implemention and is only recommended in the client mode. ",
-    "Please set `selection = 'none'` if you really want to use the Select",
-    "extension.", immediate. = TRUE
-  )
-  # we need to warn the use of "Select" extension in the server-side processing
-  # mode since right now there's no good API of supporting the server mode.
-  # see [this comment](https://github.com/rstudio/DT/pull/717#issuecomment-568228919)
-  if ('Select' %in% extensions && isTRUE(server)) warning(
-    "The Select extension is not able to work with the server-side ",
-    "processing mode. Please either set `server = FALSE` or use ",
-    "DT's own selection implementations. See the selection argument ",
-    "in ?datatable().", immediate. = TRUE
+    "If you really want to use the Select extension please set ",
+    "`selection = 'none'`", immediate. = TRUE
   )
 
   deps = list(DTDependency(style))
