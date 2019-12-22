@@ -1,6 +1,8 @@
 # CHANGES IN DT VERSION 0.12
 
+## NEW FEATURES
 
+- Support the Select extension on the client-side processing mode (thanks, @shrektan, #744).
 
 # CHANGES IN DT VERSION 0.11
 
