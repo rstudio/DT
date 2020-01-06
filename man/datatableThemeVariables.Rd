@@ -33,20 +33,11 @@ stroke <- "#839496"
 
 # Full list of SASS variables
 # https://github.com/DataTables/DataTablesSrc/blob/master/css/jquery.dataTables.scss
-datatableThemeVariables(
-  "table-header-border" = color,
-  "table-body-border" = color,
-  "table-row-background" = color,
-  "table-control-color" = stroke,
-  "table-paging-button-active" = stroke,
-  "table-paging-button-hover" = color,
-  "table-shade" = stroke
-)
-browsable(
-  tags$body(
-    style = sprintf("background-color: \%s; color: \%s", color, stroke),
-    datatable(mtcars)
-  )
-)
+datatableThemeVariables(`table-header-border` = color, `table-body-border` = color, 
+    `table-row-background` = color, `table-control-color` = stroke, 
+    `table-paging-button-active` = stroke, `table-paging-button-hover` = color, 
+    `table-shade` = stroke)
+browsable(tags$body(style = sprintf("background-color: \%s; color: \%s", 
+    color, stroke), datatable(mtcars)))
 
 }

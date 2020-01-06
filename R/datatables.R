@@ -338,7 +338,8 @@ datatable = function(
           'consider server-side processing: https://rstudio.github.io/DT/server.html'
         )
 
-      theme = getOption("bootswatch.theme")
+      # Overwrite the DT dependency if we detect a bootstraplib theme
+      theme = bsThemeGet()
       if (length(theme)) {
         instance$dependencies = c(
           instance$dependencies,
@@ -700,8 +701,7 @@ extraDependency = function(names = NULL, ...) {
 }
 
 # Core JS and CSS dependencies of DataTables
-DTDependency = function(style, theme = getOption("bootswatch.theme", default = NULL),
-                        variables = datatableThemeVariables()) {
+DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeVariables()) {
   js = 'jquery.dataTables.min.js'
   if (style == 'default') {
     # patch the default style
@@ -722,16 +722,31 @@ DTDependency = function(style, theme = getOption("bootswatch.theme", default = N
     file.copy(depPath('datatables/css', css), file.path(outputPath, 'css'))
     file.copy(depPath('datatables/js', js), file.path(outputPath, 'js'))
     # Overwrite the main CSS file that contains the SASS variables
-    sass::sass(
-      list(
-        variables,
-        # Set sensible SASS variable defaults based any present bootswatch theme
-        themeIncludes(theme),
-        sassFile('jquery.dataTables.scss')
-      ),
-      options = sass::sass_options(output_style = 'expanded'),
-      output = file.path(outputPath, 'css', 'jquery.dataTables.min.css')
+
+    dt_layer = sass::sass_layer(
+      defaults = variables,
+      declarations = list(
+        "table-body-border"          = "$table-border-width solid $table-border-color !default;",
+        "table-header-border"        = "2*$table-border-width solid $table-border-color !default;",
+        "table-row-selected"         = "$table-active-bg !default;",
+        # Why does Bootstrap set $table-bg explicitly to null?
+        "table-row-background"       = "if($table-bg, $table-bg, $body-bg) !default;",
+        "table-control-color"        = "$table-color !default",
+        "table-paging-button-active" = "$primary !default",
+        "table-paging-button-hover"  = "rgba($primary, 0.7) !default",
+        "table-shade"                = "$table-color !default"
+      )
     )
+
+    writeLines(
+      bootstraplib::bootstrap_sass(
+        sassFile('jquery.dataTables.scss'),
+        sass::sass_layer_merge(theme, dt_layer),
+        options = sass::sass_options(output_style = 'expanded')
+      ),
+      file.path(outputPath, 'css', 'jquery.dataTables.min.css')
+    )
+
   } else {
     outputPath = depPath('datatables')
   }
@@ -745,35 +760,15 @@ DTDependency = function(style, theme = getOption("bootswatch.theme", default = N
   )
 }
 
+# If bootstraplib is installed, access the current global theme
+bsThemeGet = function() {
+  if (system.file(package = "bootstraplib") == "") return(NULL)
+  bootstraplib::bs_theme_get()
+}
 
 sassFile = function(file) {
   scss_dir = depPath('datatables', 'scss')
   sass::sass_file(file.path(scss_dir, file))
-}
-
-themeIncludes = function(theme = NULL) {
-  if (is.null(theme)) return("")
-  if (system.file(package = "bootstraplib") == "") return("")
-
-  theme <- bootstraplib::bootswatch_detect(theme)
-  list(
-    if (!theme %in% c("bootstrap", "default")) bootstraplib::sass_file_bootswatch(theme, "_variables.scss") else "",
-    bootstraplib::sass_file_bootstrap("_functions.scss"),
-    bootstraplib::sass_file_bootstrap("_variables.scss"),
-    bootstraplib::sass_file_bootstrap("_mixins.scss"),
-
-    list(
-      "table-body-border"          = "$table-border-width solid $table-border-color !default;",
-      "table-header-border"        = "2*$table-border-width solid $table-border-color !default;",
-      "table-row-selected"         = "$table-active-bg !default;",
-      # Why does Bootstrap set $table-bg explicitly to null?
-      "table-row-background"       = "if($table-bg, $table-bg, $body-bg) !default;",
-      "table-control-color"        = "$table-color !default",
-      "table-paging-button-active" = "$primary !default",
-      "table-paging-button-hover"  = "rgba($primary, 0.7) !default",
-      "table-shade"                = "$table-color !default"
-    )
-  )
 }
 
 
