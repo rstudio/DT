@@ -1,6 +1,8 @@
 # CHANGES IN DT VERSION 0.12
 
+## BUG FIXES
 
+- The server no longer throws warnings when conducting searching (thanks, @bquast @shrektan, #749).
 
 # CHANGES IN DT VERSION 0.11
 

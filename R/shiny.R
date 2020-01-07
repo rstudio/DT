@@ -634,7 +634,9 @@ grep2 = function(pattern, x, ignore.case = FALSE, fixed = FALSE, ...) {
   # complete before it is sent to the server, in which case we do not search
   if (!fixed && inherits(try(grep(pattern, '', perl = TRUE), silent = TRUE), 'try-error'))
     return(seq_along(x))
-  grep(pattern, x, ignore.case = ignore.case, fixed = fixed, perl = TRUE, ...)
+  # #749 if both fixed and perl are TRUE, the latter will be ignored by R with
+  # an annoyed warning
+  grep(pattern, x, ignore.case = ignore.case, fixed = fixed, perl = !fixed, ...)
 }
 
 # filter a numeric/date/time vector using the search string "lower ... upper"
