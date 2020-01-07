@@ -738,14 +738,20 @@ DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeV
       )
     )
 
-    writeLines(
+    outputFile = file.path(outputPath, 'css', 'jquery.dataTables.min.css')
+    options = sass::sass_options(output_style = 'expanded')
+    if (!length(theme)) {
+      sass::sass(
+        list(variables, sassFile('jquery.dataTables.scss')),
+        output = outputFile, options = options
+      )
+    } else {
       bootstraplib::bootstrap_sass(
         sassFile('jquery.dataTables.scss'),
         sass::sass_layer_merge(theme, dt_layer),
-        options = sass::sass_options(output_style = 'expanded')
-      ),
-      file.path(outputPath, 'css', 'jquery.dataTables.min.css')
-    )
+        output = outputFile, options = options
+      )
+    }
 
   } else {
     outputPath = depPath('datatables')
