@@ -66,7 +66,10 @@
 #'   \code{target} in the list can be \code{'column'} to enable column
 #'   selection, or \code{'row+column'} to make it possible to select both rows
 #'   and columns (click on the footer to select columns), or \code{'cell'} to
-#'   select cells
+#'   select cells. Note that DT has its own selection implementation and doesn't
+#'   use the Select extension because the latter doesn't support the
+#'   server-side processing mode well. Please set this argument to \code{'none'}
+#'   if you really want to use the Select extension.
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
@@ -259,6 +262,14 @@ datatable = function(
     }
     params$selection = selection
   }
+
+  # warn if the Select ext is used but selection is not set to none
+  if ('Select' %in% extensions && selection$mode != 'none') warning(
+    "The Select extension can't work properly with DT's own ",
+    "selection implemention and is only recommended in the client mode. ",
+    "If you really want to use the Select extension please set ",
+    "`selection = 'none'`", immediate. = TRUE
+  )
 
   deps = list(DTDependency(style))
   deps = c(deps, unlist(
