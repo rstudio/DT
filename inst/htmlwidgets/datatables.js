@@ -890,6 +890,40 @@ HTMLWidgets.widget({
       return {row: info.row, col: info.column};
     }
 
+    // a flag to indicates if select extension is initialized or not
+    var flagSelectExt = table.settings()[0]._select !== undefined;
+    // the Select extension should only be used in the client mode and
+    // when the selection.mode is set to none
+    if (data.selection.mode === 'none' && !server && flagSelectExt) {
+      var updateRowsSelected = function() {
+        var rows = table.rows({selected: true});
+        var selected = [];
+        $.each(rows.indexes().toArray(), function(i, v) {
+          selected.push(v + 1);
+        });
+        changeInput('rows_selected', selected);
+      }
+      var updateColsSelected = function() {
+        var columns = table.columns({selected: true});
+        changeInput('columns_selected', columns.indexes().toArray());
+      }
+      var updateCellsSelected = function() {
+        var cells = table.cells({selected: true});
+        var selected = [];
+        cells.every(function() {
+          var row = this.index().row;
+          var col = this.index().column;
+          selected = selected.concat([[row + 1, col]]);
+        });
+        changeInput('cells_selected', transposeArray2D(selected), 'shiny.matrix');
+      }
+      table.on('select deselect', function(e, dt, type, indexes) {
+        updateRowsSelected();
+        updateColsSelected();
+        updateCellsSelected();
+      })
+    }
+
     var selMode = data.selection.mode, selTarget = data.selection.target;
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = data.style === 'bootstrap' ? 'active' : 'selected';

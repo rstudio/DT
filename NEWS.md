@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.12
 
+## NEW FEATURES
+
+- Support the Select extension on the client-side processing mode (thanks, @shrektan, #744).
+
 ## BUG FIXES
 
 - The server no longer throws warnings when conducting searching (thanks, @bquast @shrektan, #749).
