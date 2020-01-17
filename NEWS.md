@@ -4,6 +4,8 @@
 
 - Support the Select extension on the client-side processing mode (thanks, @shrektan, #744).
 
+- Support [features/scrollResize plug-in](https://datatables.net/blog/2017-12-31) (thanks, @andrewkho @shrektan, #467 #754).
+
 ## BUG FIXES
 
 - The server no longer throws warnings when conducting searching (thanks, @bquast @shrektan, #749).
