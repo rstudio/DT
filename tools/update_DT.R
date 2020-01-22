@@ -58,14 +58,27 @@ encode_img = function(css) {
 }
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
-keep_min = function(dir) {
+keep_min = function(dir, only_minified = FALSE) {
   dirs = list.dirs(dir, recursive = FALSE)
-  invisible(lapply(dirs, keep_min))
-  x1 = list.files(dir, '[.](css|js)$', full.names = TRUE)
-  x2 = gsub('[.](css|js)$', '.min.\\1', x1)
-  if (length(x1) == 0) return()
-  file.remove(x1[file.exists(x2)])
-  invisible()
+  invisible(lapply(dirs, keep_min, only_minified = only_minified))
+  files = list.files(dir, '[.](css|js)$', full.names = TRUE)
+  if (length(files) == 0) return()
+  src_files = files[!grepl('[.]min[.](css|js)$', files)]
+  min_files = gsub('[.](css|js)$', '.min.\\1', src_files)
+  no_min_src_files = src_files[!file.exists(min_files)]
+  if (length(no_min_src_files) && only_minified) {
+    warning(
+      "Removing src js/css files w/o minified version in '",
+      dir, "'. ",
+      "They should be garbage files but you'd better take a closer look.\n",
+      paste0("'", basename(no_min_src_files), "'", collapse = ", "),
+      immediate. = TRUE, call. = FALSE
+    )
+    rm_files = src_files
+  } else {
+    rm_files = setdiff(src_files, no_min_src_files)
+  }
+  invisible(file.remove(rm_files))
 }
 
 # sometimes the bundle downloaded from datatables.net contains empty
@@ -142,7 +155,14 @@ if (!dir.exists(dld_plugin_path())) system2(
 rm_empty_files(dld_folder())
 
 # only keep min files
-keep_min(dld_folder())
+# For extensions, we should remove all the foo.js even if foo.min.js doesn't
+# exist (with a warning). This is because datatables download
+# manager sometimes includes obsolete files like
+# "ColReorder-1.5.2/js/colReorder.dataTables.js". Usually, when this happens,
+# no corresponding minified version files can be found. In addition,
+# the current dependence implementation only uses min.js/css files.
+keep_min(dld_dt_path(), only_minified = TRUE)
+keep_min(dld_plugin_path())
 
 # replace the png files with base64 encode images
 invisible(lapply(
