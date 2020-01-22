@@ -44,7 +44,8 @@ dld_plugin_path = function(...) {
 encode_img = function(css) {
   w = setwd(dirname(css)); on.exit(setwd(w), add = TRUE)
   css = basename(css)
-  x = readLines(css)
+  # some css files miss the final EOL marker - just ignore the warnings
+  x = readLines(css, warn = FALSE)
   # match both "../images/xxx.png" and "images/xxx.png"
   m = gregexpr('("|\']?)(\\.\\.)?[^"\']+?[.]png\\1', x)
   regmatches(x, m) = lapply(regmatches(x, m), function(ps) {
