@@ -139,6 +139,12 @@ shorten_name = function(x) {
   }
 }
 
+clean_up = function(dir, keep_reg = NULL) {
+  files = list.files(dir, full.names = TRUE, recursive = TRUE)
+  if (length(keep_reg)) files = files[!grepl(keep_reg, files)]
+  invisible(file.remove(files))
+}
+
 # download plugins --------------------------------------------------------
 
 if (!dir.exists(dld_plugin_path())) system2(
@@ -220,10 +226,18 @@ local({
 
 # copy files --------------------------------------------------------------
 
+# since there're no manually maintained css/js scripts, we should just remove
+# all the datatables files except for the plugins folder, which contains
+# DT maintained js file "jquery.highlight.js" and the sub-folders' names are
+# used to tell the available plugins. The reason of this step is that we want
+# to remove those not-in-used files like "dataTables.uikit.min.css".
+
+# remove all the existing files
+clean_up(lib_path('datatables'), keep_reg = 'license[.]txt$')
+clean_up(lib_path('datatables-extensions'))
+clean_up(lib_path('datatables-plugins'), keep_reg = "jquery[.]highlight[.]js$")
+
 # update DataTables
-# dataTables.uikit.min.css, dataTables.uikit.min.js, dataTables.dataTables.min.js
-# may be obsolete
-# In addition, there's no license file bundled. Does this matter?
 copy_js_css_swf(dld_dt_path('DataTables'), lib_path('datatables'))
 
 # update extensions
