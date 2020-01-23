@@ -142,7 +142,9 @@ shorten_name = function(x) {
 
 clean_up = function(dir, keep_reg = NULL) {
   files = list.files(dir, full.names = TRUE, recursive = TRUE)
-  if (length(keep_reg)) files = files[!grepl(keep_reg, files)]
+  if (length(keep_reg)) {
+    files = files[!Reduce(`|`, lapply(keep_reg, grepl, files))]
+  }
   invisible(file.remove(files))
 }
 
@@ -234,9 +236,17 @@ local({
 # to remove those not-in-used files like "dataTables.uikit.min.css".
 
 # remove all the existing files
-clean_up(lib_path('datatables'), keep_reg = 'license[.]txt$')
+clean_up(
+  lib_path('datatables'),
+  keep_reg = c(
+    'license[.]txt$',
+    'jquery[.]dataTables[.]extra[.]css$',
+    'dataTables[.]bootstrap[.]extra[.]css$'
+  )
+)
 clean_up(lib_path('datatables-extensions'))
-clean_up(lib_path('datatables-plugins'), keep_reg = "jquery[.]highlight[.]js$")
+clean_up(lib_path('datatables-plugins'),
+         keep_reg = "jquery[.]highlight[.]js$")
 
 # update DataTables
 copy_js_css_swf(dld_dt_path('DataTables'), lib_path('datatables'))
