@@ -60,10 +60,8 @@ encode_img = function(css) {
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
 keep_min = function(dir, only_minified = FALSE, keep_reg = NULL) {
-  dirs = list.dirs(dir, recursive = FALSE)
-  invisible(lapply(dirs, keep_min, only_minified = only_minified, keep_reg = keep_reg))
-  files = list.files(dir, '[.](css|js)$', full.names = TRUE)
-  if (length(files) == 0) return()
+  files = list.files(dir, '[.](css|js)$', full.names = TRUE, recursive = TRUE)
+  if (length(files) == 0) return(invisible())
   src_files = files[!grepl('[.]min[.](css|js)$', files)]
   min_files = gsub('[.](css|js)$', '.min.\\1', src_files)
   no_min_src_files = src_files[!file.exists(min_files)]
@@ -71,12 +69,11 @@ keep_min = function(dir, only_minified = FALSE, keep_reg = NULL) {
     # currently Buttons/js/vfs_fonts.js has not minified version
     # keep_reg will handle such cases
     keep_files = no_min_src_files[Reduce(`|`, lapply(keep_reg, grepl, no_min_src_files))]
-    no_min_src_files = setdiff(no_min_src_files, keep_files)
-    if (length(no_min_src_files)) warning(
-      "Removing src js/css files w/o minified version in '",
-      dir, "'. ",
+    warn_files = setdiff(no_min_src_files, keep_files)
+    if (length(warn_files)) warning(
+      "Removing src js/css files w/o minified version.",
       "They should be garbage files but you'd better take a closer look.\n",
-      paste0("'", basename(no_min_src_files), "'", collapse = ", "),
+      paste0(warn_files, collapse = "\n"),
       immediate. = TRUE, call. = FALSE
     )
     rm_files = setdiff(src_files, keep_files)
