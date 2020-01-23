@@ -59,23 +59,27 @@ encode_img = function(css) {
 }
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
-keep_min = function(dir, only_minified = FALSE) {
+keep_min = function(dir, only_minified = FALSE, keep_reg = NULL) {
   dirs = list.dirs(dir, recursive = FALSE)
-  invisible(lapply(dirs, keep_min, only_minified = only_minified))
+  invisible(lapply(dirs, keep_min, only_minified = only_minified, keep_reg = keep_reg))
   files = list.files(dir, '[.](css|js)$', full.names = TRUE)
   if (length(files) == 0) return()
   src_files = files[!grepl('[.]min[.](css|js)$', files)]
   min_files = gsub('[.](css|js)$', '.min.\\1', src_files)
   no_min_src_files = src_files[!file.exists(min_files)]
-  if (length(no_min_src_files) && only_minified) {
-    warning(
+  if (only_minified) {
+    # currently Buttons/js/vfs_fonts.js has not minified version
+    # keep_reg will handle such cases
+    keep_files = no_min_src_files[Reduce(`|`, lapply(keep_reg, grepl, no_min_src_files))]
+    no_min_src_files = setdiff(no_min_src_files, keep_files)
+    if (length(no_min_src_files)) warning(
       "Removing src js/css files w/o minified version in '",
       dir, "'. ",
       "They should be garbage files but you'd better take a closer look.\n",
       paste0("'", basename(no_min_src_files), "'", collapse = ", "),
       immediate. = TRUE, call. = FALSE
     )
-    rm_files = src_files
+    rm_files = setdiff(src_files, keep_files)
   } else {
     rm_files = setdiff(src_files, no_min_src_files)
   }
@@ -168,7 +172,7 @@ rm_empty_files(dld_folder())
 # "ColReorder-1.5.2/js/colReorder.dataTables.js". Usually, when this happens,
 # no corresponding minified version files can be found. In addition,
 # the current dependence implementation only uses min.js/css files.
-keep_min(dld_dt_path(), only_minified = TRUE)
+keep_min(dld_dt_path(), only_minified = TRUE, keep_reg = "vfs_fonts[.]js$")
 keep_min(dld_plugin_path())
 
 # replace the png files with base64 encode images
