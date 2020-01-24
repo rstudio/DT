@@ -177,10 +177,37 @@ You can also save the data as JSON in a file and load it via the `ajax` option. 
 
 # Select
 
-The `Select` extension has not been tested by the author of **DT**. You will be on your own if you decide to use this extension. However, see [#305](https://github.com/rstudio/DT/issues/305) for an example of using Shift/Ctrl + Click for selecting multiple rows.
+[The `Select` extension](https://datatables.net/extensions/select/) allows the user to perform item selections in DataTable. It supports three different selection styles including `os`(Operating system), `single`(Single item select) and `multiple`(Multi-item selection) and has built-in button types for [the `Buttons` extension](https://datatables.net/extensions/buttons) allowing select all / none and other actions to be performed very easily. However, it only works well **in the client-side processing mode**, i.e., `DT::renderDT(..., server = FALSE)`. Note that you need to turn off **DT**'s own select functionality by setting `selection = 'none'` when you want to use the `Select` extension in shiny.
 
-**DT** has its own implementation of row/column/cell selections in Shiny, which is very different from the `Select` extension. In particular, the `Select` extension is unlikely to work in the server-side processing mode. On the other hand, **DT**'s implementation does not allow multiple selections via the Shift/Ctrl keys at the moment.
+**DT** also has its own implementation of row/column/cell selections in Shiny (see the `selection` param in `?DT::datatable`), which is different from the `Select` extension. In particular, it only supports Shift/Ctrl + Click for selecting multiple rows at the time of writing (see [#305](https://github.com/rstudio/DT/issues/305) for an example). On the other hand, **DT**'s implementation supports both client and server-side processing mode. 
+
+```{r}
+datatable(
+  iris, extensions = c('Select', 'Buttons'), options = list(
+    select = list(style = 'os', items = 'row'),
+    dom = 'Blfrtip',
+    rowId = 0,
+    buttons = c('selectAll', 'selectNone', 'selectRows', 'selectColumns', 'selectCells')
+  ),
+  selection = 'none'
+)
+```
 
 # TableTools
 
 The `TableTools` extension has been removed from **DT**. Please use the `Buttons` extension instead.
+
+# SearchPanel
+
+[The `SearchPanel` extension](https://datatables.net/extensions/searchpanes/) is a new extension that adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes. As documented in [the realsing blog](https://datatables.net/blog/2020-01-13), it doesn't support the server-side processing mode. Since it depends on the `Select` extension, you are expected to always include the `Select` extension with `SearchPanel`. In addition, in order to display the search panes, you need to insert `P` to the `dom` option.
+
+```{r}
+datatable(
+  iris,
+  options = list(dom = 'Pfrtip', columnDefs = list(list(
+    searchPanes = list(show = FALSE), targets = 1:4
+  ))),
+  extensions = c('Select', 'SearchPanes'),
+  selection = 'none'
+)
+```
