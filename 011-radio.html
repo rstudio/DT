@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -75,18 +74,18 @@
 </div>
 
 
-<p>You can render arbitrary HTML content in the table when you choose not to escape the columns that contain HTML content (<code>escape = FALSE</code>). Here we show an example of embedding radio buttons in table cells. First, we prepare the raw HTML content (a radio button is <code>&lt;input type=&quot;radio&quot; /&gt;</code> in HTML):</p>
-<pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">matrix</span>(
-  <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">12</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>,
-  <span class="dt">dimnames =</span> <span class="kw">list</span>(month.abb, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
-)
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))) {
-  m[i, ] =<span class="st"> </span><span class="kw">sprintf</span>(
-    <span class="st">&#39;&lt;input type=&quot;radio&quot; name=&quot;%s&quot; value=&quot;%s&quot;/&gt;&#39;</span>,
-    month.abb[i], m[i, ]
-  )
-}
-m[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</code></pre>
+<p>You can render arbitrary HTML content in the table when you choose not to escape the columns that contain HTML content (<code>escape = FALSE</code>). Here we show an example of embedding radio buttons in table cells. First, we prepare the raw HTML content (a radio button is <code>&lt;input type="radio" /&gt;</code> in HTML):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">12</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="dt">dimnames =</span> <span class="kw">list</span>(month.abb, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span>
+<span id="cb1-4"><a href="#cb1-4"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))) {</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  m[i, ] =<span class="st"> </span><span class="kw">sprintf</span>(</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="st">&#39;&lt;input type=&quot;radio&quot; name=&quot;%s&quot; value=&quot;%s&quot;/&gt;&#39;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    month.abb[i], m[i, ]</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  )</span>
+<span id="cb1-10"><a href="#cb1-10"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11"></a>m[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span></code></pre>
 <pre><code>##     A                                                 
 ## Jan &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Jan\&quot; value=\&quot;1\&quot;/&gt;&quot;
 ## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;1\&quot;/&gt;&quot;
@@ -96,8 +95,8 @@ m[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <
 ## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;2\&quot;/&gt;&quot;
 ## Mar &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Mar\&quot; value=\&quot;2\&quot;/&gt;&quot;</code></pre>
 <p>After we have got the character matrix of HTML code, we can pass it to <code>datatable()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>, <span class="dt">paging =</span> <span class="ot">FALSE</span>, <span class="dt">ordering =</span> <span class="ot">FALSE</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>, <span class="dt">paging =</span> <span class="ot">FALSE</span>, <span class="dt">ordering =</span> <span class="ot">FALSE</span>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {

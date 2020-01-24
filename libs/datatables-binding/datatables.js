@@ -696,7 +696,7 @@ HTMLWidgets.widget({
 
       // don't highlight the "not found" row, so we get the rows using the api
       if (table.rows({ filter: 'applied' }).data().length === 0) return;
-      // highlight gloal search keywords
+      // highlight global search keywords
       body.highlight($.trim(table.search()).split(/\s+/));
       // then highlight keywords from individual column filters
       if (filterRow) filterRow.each(function(i, td) {
@@ -717,6 +717,10 @@ HTMLWidgets.widget({
         // remove event handler
         table.off('draw.dt.dth column-visibility.dt.dth column-reorder.dt.dth');
       });
+
+      // Set the option for escaping regex characters in our search string.  This will be used
+      // for all future matching.
+      jQuery.fn.highlight.options.escapeRegex = (!options.search || !options.search.regex);
 
       // initial highlight for state saved conditions and initial states
       highlight();
@@ -838,7 +842,7 @@ HTMLWidgets.widget({
       if (event !== 'cell_edit' && shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
       shinyData[id] = JSON.stringify(value);
-      if (HTMLWidgets.shinyMode) {
+      if (HTMLWidgets.shinyMode && Shiny.setInputValue) {
         Shiny.setInputValue(id, value, opts);
         if (!instance.clearInputs[id]) instance.clearInputs[id] = function() {
           Shiny.setInputValue(id, null);
@@ -884,6 +888,40 @@ HTMLWidgets.widget({
         info.row += 1;
       }
       return {row: info.row, col: info.column};
+    }
+
+    // a flag to indicates if select extension is initialized or not
+    var flagSelectExt = table.settings()[0]._select !== undefined;
+    // the Select extension should only be used in the client mode and
+    // when the selection.mode is set to none
+    if (data.selection.mode === 'none' && !server && flagSelectExt) {
+      var updateRowsSelected = function() {
+        var rows = table.rows({selected: true});
+        var selected = [];
+        $.each(rows.indexes().toArray(), function(i, v) {
+          selected.push(v + 1);
+        });
+        changeInput('rows_selected', selected);
+      }
+      var updateColsSelected = function() {
+        var columns = table.columns({selected: true});
+        changeInput('columns_selected', columns.indexes().toArray());
+      }
+      var updateCellsSelected = function() {
+        var cells = table.cells({selected: true});
+        var selected = [];
+        cells.every(function() {
+          var row = this.index().row;
+          var col = this.index().column;
+          selected = selected.concat([[row + 1, col]]);
+        });
+        changeInput('cells_selected', transposeArray2D(selected), 'shiny.matrix');
+      }
+      table.on('select deselect', function(e, dt, type, indexes) {
+        updateRowsSelected();
+        updateColsSelected();
+        updateCellsSelected();
+      })
     }
 
     var selMode = data.selection.mode, selTarget = data.selection.target;

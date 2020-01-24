@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -29,7 +28,7 @@
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
-<script src="libs/dt-plugin-natural/natural.js"></script>
+<script src="libs/dt-plugin-natural/source.js"></script>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 
@@ -104,7 +103,7 @@
 
 
 <hr />
-<p><strong>DataTables</strong> has provided a large number of <a href="http://datatables.net/plug-ins/">plug-ins</a>, and we have integrated a subset of them in <strong>DT</strong>. You may enable plug-ins via the <code>plugins</code> argument of <code>datatable()</code>, e.g. <code>plugins = c('natural')</code>. If you find any plug-ins that you are interested in but are not listed here, you may file a feature request using <a href="https://github.com/rstudio/DT/issues">Github issues</a>. Currently these plug-ins have been integrated into <strong>DT</strong>:</p>
+<p><strong>DataTables</strong> has provided a large number of <a href="http://datatables.net/plug-ins/">plug-ins</a>, and we have integrated a subset of them in <strong>DT</strong>. You may enable plug-ins via the <code>plugins</code> argument of <code>datatable()</code>, e.g. <code>plugins = c('natural')</code>. If you find any plug-ins that you are interested in but are not listed here, you may file a feature request using <a href="https://github.com/rstudio/DT/issues">Github issues</a>. Currently these plug-ins have been integrated into <strong>DT</strong>:</p>
 <ul>
 <li>Sorting
 <ul>
@@ -119,12 +118,12 @@
 <div id="examples" class="section level1">
 <h1><span class="header-section-number">1</span> Examples</h1>
 <p>Here is an example of the plug-in <code>natural.js</code> for natural sorting. Compare the last column of the two tables after sorting:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-d =<span class="st"> </span><span class="kw">cbind</span>(
-  <span class="kw">head</span>(iris),
-  <span class="dt">Mixed =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&#39;10&#39;</span>, <span class="st">&#39;1a&#39;</span>, <span class="st">&#39;1b&#39;</span>)
-)
-<span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>d =<span class="st"> </span><span class="kw">cbind</span>(</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="kw">head</span>(iris),</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="dt">Mixed =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&#39;10&#39;</span>, <span class="st">&#39;1a&#39;</span>, <span class="st">&#39;1b&#39;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -159,10 +158,10 @@ d =<span class="st"> </span><span class="kw">cbind</span>(
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(d, <span class="dt">plugins =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
-  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">type =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">targets =</span> <span class="dv">6</span>))
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">datatable</span>(d, <span class="dt">plugins =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">type =</span> <span class="st">&#39;natural&#39;</span>, <span class="dt">targets =</span> <span class="dv">6</span>))</span>
+<span id="cb2-4"><a href="#cb2-4"></a>))</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {

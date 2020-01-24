@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -80,20 +79,20 @@
 
 
 <p>Global searching can be turned off using the option <code>searching = FALSE</code>, and you may also disable searching for individual columns using the option <code>searchable</code> in <code>columnDefs</code>, e.g. we disable searching for the first and third column:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-iris2 =<span class="st"> </span>iris[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>, ]
-<span class="kw">datatable</span>(
-  iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">searchable =</span> <span class="ot">FALSE</span>)),
-    <span class="dt">pageLength =</span> <span class="dv">5</span>
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span>iris[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>, ]</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">datatable</span>(</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">searchable =</span> <span class="ot">FALSE</span>)),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">pageLength =</span> <span class="dv">5</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>  )</span>
+<span id="cb1-9"><a href="#cb1-9"></a>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "top",
-    "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4.6\" data-max=\"7\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.3\" data-max=\"3.8\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.4\" data-max=\"4.9\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.2\" data-max=\"1.5\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;setosa&quot;,&quot;versicolor&quot;]\"></select>\n    </div>\n  </td>\n</tr>",
+    "filterHTML": "<tr>\n  <td></td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4.6\" data-max=\"7\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2.3\" data-max=\"3.8\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.4\" data-max=\"4.9\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.2\" data-max=\"1.5\" data-scale=\"1\"></div>\n      <span style=\"float: left;\"></span>\n      <span style=\"float: right;\"></span>\n    </div>\n  </td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"></span>\n    </div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;setosa&quot;,&quot;versicolor&quot;,&quot;virginica&quot;]\"></select>\n    </div>\n  </td>\n</tr>",
     "data": [
       ["46", "47", "48", "49", "50", "51", "52", "53", "54", "55"],
       [4.8, 5.1, 4.6, 5.3, 5, 7, 6.4, 6.9, 5.5, 6.5],

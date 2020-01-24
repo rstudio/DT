@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -77,11 +76,11 @@
 
 
 <p>When you use <code>style = 'bootstrap'</code> in <code>datatable()</code>, you can specify the CSS classes for Bootstrap tables. You can find the possible classes <a href="http://getbootstrap.com/css/#tables">on this page</a>. We show the appearance of a few classes here:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
-<span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))
-<span class="co"># default Bootstrap style in DT</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># default Bootstrap style in DT</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -117,8 +116,8 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with cell borders</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>, <span class="dt">class =</span> <span class="st">&#39;table-bordered&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># with cell borders</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>, <span class="dt">class =</span> <span class="st">&#39;table-bordered&#39;</span>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
@@ -154,8 +153,8 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with cell borders, and make the table compact</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>, <span class="dt">class =</span> <span class="st">&#39;table-bordered table-condensed&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># with cell borders, and make the table compact</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">datatable</span>(iris2, <span class="dt">style =</span> <span class="st">&#39;bootstrap&#39;</span>, <span class="dt">class =</span> <span class="st">&#39;table-bordered table-condensed&#39;</span>)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {

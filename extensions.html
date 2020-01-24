@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -126,7 +125,7 @@
 
 
 <hr />
-<p><strong>DataTables</strong> has a number of extensions, and all of them have been integrated into <strong>DT</strong>. You can use the <code>extensions</code> argument of <code>datatable()</code> to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. <code>extensions = c('AutoFill', 'ColReorder')</code>. Please take a look at the <a href="https://datatables.net/download/compatibility">feature compatibility chart</a> to know which extensions can be used together.</p>
+<p><strong>DataTables</strong> has a number of extensions, and all of them have been integrated into <strong>DT</strong>. You can use the <code>extensions</code> argument of <code>datatable()</code> to add extensions to the table. Although we only use one extension in each section below, it is possible to apply multiple extensions to one table by providing the names of the extensions as a character vector, e.g. <code>extensions = c('AutoFill', 'ColReorder')</code>. Please take a look at the <a href="https://datatables.net/download/compatibility">feature compatibility chart</a> to know which extensions can be used together.</p>
 <div class="panel panel-danger">
 <div class="panel-heading">
 Known Issues of Extensions
@@ -148,12 +147,12 @@ Known Issues of Extensions
 </ul>
 </div>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is the example data we use on this page</span>
-iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">30</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># this is the example data we use on this page</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">30</span>)</span></code></pre>
 <div id="autofill" class="section level1">
 <h1><span class="header-section-number">1</span> AutoFill</h1>
 <p>With the <code>AutoFill</code> extension, you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoFill =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoFill =</span> <span class="ot">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -190,11 +189,11 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pass some initialization options to AutoFill: only enable auto filling on the</span>
-<span class="co"># columns 2, 3, 4; show the blue square on click instead of hover</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">autoFill =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">focus =</span> <span class="st">&#39;click&#39;</span>)
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># pass some initialization options to AutoFill: only enable auto filling on the</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># columns 2, 3, 4; show the blue square on click instead of hover</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">autoFill =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">focus =</span> <span class="st">&#39;click&#39;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>))</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
@@ -238,12 +237,12 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="buttons" class="section level1">
 <h1><span class="header-section-number">2</span> Buttons</h1>
 <p>The <code>Buttons</code> extension adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note <code>B</code> in <code>dom</code> denotes the place where the buttons are to be inserted):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  iris, <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,
-    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>, <span class="st">&#39;print&#39;</span>)
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  iris, <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>, <span class="st">&#39;print&#39;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  )</span>
+<span id="cb4-6"><a href="#cb4-6"></a>)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
@@ -295,7 +294,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="colreorder" class="section level1">
 <h1><span class="header-section-number">3</span> ColReorder</h1>
 <p>You can click and drag the table header to move a certain column to a different place using the <code>ColReorder</code> extension.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">colReorder =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">colReorder =</span> <span class="ot">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
@@ -332,10 +331,10 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># disable realtime updating</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">colReorder =</span> <span class="kw">list</span>(<span class="dt">realtime =</span> <span class="ot">FALSE</span>)
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># disable realtime updating</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">colReorder =</span> <span class="kw">list</span>(<span class="dt">realtime =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>))</span></code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
@@ -378,11 +377,11 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="colvis" class="section level1">
 <h1><span class="header-section-number">4</span> ColVis</h1>
 <p>The <code>ColVis</code> extension has been removed from <strong>DT</strong> after v0.1 because it was <a href="http://datatables.net/blog/2015-08-13">replaced by the Buttons extension</a> in the <strong>DataTables</strong> library. You can use the button <code>colvis</code> instead.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using I() here to make sure it is converted to an array in JavaScript</span>
-<span class="kw">datatable</span>(
-  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,
-  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>, <span class="dt">buttons =</span> <span class="kw">I</span>(<span class="st">&#39;colvis&#39;</span>))
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># using I() here to make sure it is converted to an array in JavaScript</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>, <span class="dt">buttons =</span> <span class="kw">I</span>(<span class="st">&#39;colvis&#39;</span>))</span>
+<span id="cb7-5"><a href="#cb7-5"></a>)</span></code></pre>
 <div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {
@@ -417,14 +416,14 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># exclude the first two columns (i.e. they are always visible)</span>
-<span class="kw">datatable</span>(
-  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,
-  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,
-    <span class="dt">buttons =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">extend =</span> <span class="st">&#39;colvis&#39;</span>, <span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)))
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># exclude the first two columns (i.e. they are always visible)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>    <span class="dt">buttons =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">extend =</span> <span class="st">&#39;colvis&#39;</span>, <span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)))</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  )</span>
+<span id="cb8-8"><a href="#cb8-8"></a>)</span></code></pre>
 <div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7">{
   "x": {
@@ -466,15 +465,15 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="fixedcolumns" class="section level1">
 <h1><span class="header-section-number">5</span> FixedColumns</h1>
 <p>When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) so that they will be visible when you scroll the table horizontally.</p>
-<pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">round</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dv">5</span>), <span class="dv">5</span>))
-<span class="kw">datatable</span>(
-  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
-    <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,
-    <span class="dt">fixedColumns =</span> <span class="ot">TRUE</span>
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>m =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">round</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dv">5</span>), <span class="dv">5</span>))</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6"></a>    <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="dt">fixedColumns =</span> <span class="ot">TRUE</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>  )</span>
+<span id="cb9-9"><a href="#cb9-9"></a>)</span></code></pre>
 <div id="htmlwidget-8" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-8">{
   "x": {
@@ -528,15 +527,15 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fix some left 2 columns and right 1 column</span>
-<span class="kw">datatable</span>(
-  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,
-    <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,
-    <span class="dt">fixedColumns =</span> <span class="kw">list</span>(<span class="dt">leftColumns =</span> <span class="dv">2</span>, <span class="dt">rightColumns =</span> <span class="dv">1</span>)
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># fix some left 2 columns and right 1 column</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    <span class="dt">fixedColumns =</span> <span class="kw">list</span>(<span class="dt">leftColumns =</span> <span class="dv">2</span>, <span class="dt">rightColumns =</span> <span class="dv">1</span>)</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9"></a>)</span></code></pre>
 <div id="htmlwidget-9" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-9">{
   "x": {
@@ -597,16 +596,16 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="fixedheader" class="section level1">
 <h1><span class="header-section-number">6</span> FixedHeader</h1>
 <p>You may want the table header to be always visible when scrolling down the table, and you can use the <code>FixedHeader</code> extension in this case.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  iris, <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>, <span class="dt">fixedHeader =</span> <span class="ot">TRUE</span>)
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  iris, <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>, <span class="dt">fixedHeader =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>)</span></code></pre>
 <p>Since we have a navigation bar on the top of this page, this extension does not work well on this particular page (the table header will be hidden behind the navigation bar). Please see <a href="001-fixedheader.html">this separate page</a> for a real example.</p>
 </div>
 <div id="keytable" class="section level1">
 <h1><span class="header-section-number">7</span> KeyTable</h1>
 <p>The <code>KeyTable</code> extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">keys =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">keys =</span> <span class="ot">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-10">{
   "x": {
@@ -647,7 +646,7 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="responsive" class="section level1">
 <h1><span class="header-section-number">8</span> Responsive</h1>
 <p>The <code>Responsive</code> extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;Responsive&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;Responsive&#39;</span>)</span></code></pre>
 <div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-11">{
   "x": {
@@ -688,10 +687,10 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="rowreorder" class="section level1">
 <h1><span class="header-section-number">9</span> RowReorder</h1>
 <p>The <code>RowReorder</code> extension allows you to drag and reorder a certain row in the table. Note the first column <code>ID</code> is not changed when you reorder the rows in the example below, which can be a little confusing:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  iris2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="dt">ID =</span> <span class="dv">1</span>), <span class="dt">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowReorder =</span> <span class="ot">TRUE</span>, <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  iris2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="dt">ID =</span> <span class="dv">1</span>), <span class="dt">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowReorder =</span> <span class="ot">TRUE</span>, <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))</span>
+<span id="cb14-4"><a href="#cb14-4"></a>)</span></code></pre>
 <div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-12">{
   "x": {
@@ -731,13 +730,13 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
 <div id="scroller" class="section level1">
 <h1><span class="header-section-number">10</span> Scroller</h1>
 <p>When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. The <code>Scroller</code> extension makes it possible to only render the visible portion of the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="ot">NULL</span>, letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))
-m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), <span class="kw">round</span>(m, <span class="dv">2</span>))
-<span class="kw">datatable</span>(m, <span class="dt">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">deferRender =</span> <span class="ot">TRUE</span>,
-  <span class="dt">scrollY =</span> <span class="dv">200</span>,
-  <span class="dt">scroller =</span> <span class="ot">TRUE</span>
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="ot">NULL</span>, letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</span>
+<span id="cb15-2"><a href="#cb15-2"></a>m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), <span class="kw">round</span>(m, <span class="dv">2</span>))</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">datatable</span>(m, <span class="dt">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="dt">deferRender =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="dt">scrollY =</span> <span class="dv">200</span>,</span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="dt">scroller =</span> <span class="ot">TRUE</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>))</span></code></pre>
 <div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-13">{
   "x": {

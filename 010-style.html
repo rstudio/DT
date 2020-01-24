@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -78,14 +77,14 @@
 <div id="style-one-column-based-on-another-column" class="section level1">
 <h1><span class="header-section-number">1</span> Style One Column Based on Another Column</h1>
 <p>By default, <code>formatStyle()</code> uses the values of the column(s) specified by the <code>columns</code> argument to style column(s). You can also style a column conditional on the values of a different column using the <code>valueColumns</code> argument.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))
-df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">50</span>), <span class="dv">3</span>), <span class="dv">10</span>), <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="ot">TRUE</span>)))
-<span class="co"># style V6 based on values of V6</span>
-<span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(
-  <span class="st">&#39;V6&#39;</span>,
-  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))</span>
+<span id="cb1-3"><a href="#cb1-3"></a>df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">50</span>), <span class="dv">3</span>), <span class="dv">10</span>), <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="ot">TRUE</span>)))</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># style V6 based on values of V6</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb1-8"><a href="#cb1-8"></a>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -122,11 +121,11 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># style V1 base on values of V6</span>
-<span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(
-  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
-  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># style V1 base on values of V6</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb2-5"><a href="#cb2-5"></a>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
@@ -163,13 +162,13 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hide V6</span>
-<span class="kw">datatable</span>(df, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">targets =</span> <span class="dv">6</span>, <span class="dt">visible =</span> <span class="ot">FALSE</span>))
-)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(
-  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,
-  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># hide V6</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">datatable</span>(df, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">targets =</span> <span class="dv">6</span>, <span class="dt">visible =</span> <span class="ot">FALSE</span>))</span>
+<span id="cb3-4"><a href="#cb3-4"></a>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb3-7"><a href="#cb3-7"></a>)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
@@ -214,11 +213,11 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
 <div id="style-a-full-row" class="section level1">
 <h1><span class="header-section-number">2</span> Style A Full Row</h1>
 <p>You can also style the full row instead of a single cell by using the argument <code>target = 'row'</code> in <code>formatStyle()</code>, e.g.,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(
-  <span class="st">&#39;V6&#39;</span>,
-  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,
-  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
@@ -259,11 +258,11 @@ df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="
 <div id="style-a-full-table" class="section level1">
 <h1><span class="header-section-number">3</span> Style A Full Table</h1>
 <p>You can also style the full table as a type of heat map by using either <code>styleInterval</code> or <code>styleColorBar</code>, e.g.,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create 19 breaks and 20 rgb color values ranging from white to red</span>
-brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span class="dt">probs =</span> <span class="kw">seq</span>(.<span class="dv">05</span>, <span class="fl">.95</span>, <span class="fl">.05</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}
-<span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># create 19 breaks and 20 rgb color values ranging from white to red</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span class="dt">probs =</span> <span class="kw">seq</span>(.<span class="dv">05</span>, <span class="fl">.95</span>, <span class="fl">.05</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</span></code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
@@ -300,12 +299,12 @@ clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using styleColorBar</span>
-<span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df),
-  <span class="dt">background =</span> <span class="kw">styleColorBar</span>(<span class="kw">range</span>(df), <span class="st">&#39;lightblue&#39;</span>),
-  <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,
-  <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
-  <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># using styleColorBar</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df),</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">background =</span> <span class="kw">styleColorBar</span>(<span class="kw">range</span>(df), <span class="st">&#39;lightblue&#39;</span>),</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</span></code></pre>
 <div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {

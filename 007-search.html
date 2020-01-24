@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -80,18 +79,18 @@
 
 
 <p>By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option <code>search = list(regex = TRUE)</code>, and perform case-sensitive searching by <code>list(search = caseInsensitive = FALSE)</code> (the two options are orthogonal).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-mtcars2 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">9</span>)]
-mtcars2<span class="op">$</span>am =<span class="st"> </span><span class="kw">factor</span>(mtcars<span class="op">$</span>am, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;automatic&#39;</span>, <span class="st">&#39;manual&#39;</span>))
-<span class="co"># search for Ma or Me</span>
-<span class="kw">datatable</span>(
-  mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),
-  <span class="dt">filter =</span> <span class="kw">list</span>(<span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>),
-  <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">search =</span> <span class="kw">list</span>(<span class="dt">regex =</span> <span class="ot">TRUE</span>, <span class="dt">caseInsensitive =</span> <span class="ot">FALSE</span>, <span class="dt">search =</span> <span class="st">&#39;M[ae]&#39;</span>),
-    <span class="dt">pageLength =</span> <span class="dv">5</span>
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>mtcars2 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">9</span>)]</span>
+<span id="cb1-3"><a href="#cb1-3"></a>mtcars2<span class="op">$</span>am =<span class="st"> </span><span class="kw">factor</span>(mtcars<span class="op">$</span>am, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;automatic&#39;</span>, <span class="st">&#39;manual&#39;</span>))</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># search for Ma or Me</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">datatable</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">filter =</span> <span class="kw">list</span>(<span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>),</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="dt">search =</span> <span class="kw">list</span>(<span class="dt">regex =</span> <span class="ot">TRUE</span>, <span class="dt">caseInsensitive =</span> <span class="ot">FALSE</span>, <span class="dt">search =</span> <span class="st">&#39;M[ae]&#39;</span>),</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="dt">pageLength =</span> <span class="dv">5</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>  )</span>
+<span id="cb1-12"><a href="#cb1-12"></a>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -131,17 +130,17 @@ mtcars2<span class="op">$</span>am =<span class="st"> </span><span class="kw">fa
   "jsHooks": []
 }</script>
 <p>Please note the interpretation of regular expressions depends on whether you use client-side or server-side processing. For client-side processing, the search string is treated as JavaScript regular expressions. For server-side processing, it is up to the server-side script. In <strong>DT</strong>, the server-side processing function is implemented in R, so the search string is treated as R regular expressions.</p>
-<p>In the above example, we specified an initial search string <code>M[ae]</code> (meaning <code>Ma</code> or <code>Me</code>) in the global search box. We can also specify initial search strings for individual columns via the <code>searchCols</code> option when column filters are enabled. The <code>searchCols</code> option is a list of the same length as the number of columns of the table. Each element in the list is either <code>NULL</code> or a list of the form <code>list(search = 'keyword')</code>. In the example below, we search for <code>er</code> in the first column, filter the second column using <code>[15, 25]</code>, and filter the last column by <code>&quot;automatic&quot;</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),
-  <span class="dt">filter =</span> <span class="kw">list</span>(<span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>),
-  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">searchCols =</span> <span class="kw">list</span>(
-    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;er&#39;</span>),
-    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;15 ... 25&#39;</span>),
-    <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>,
-    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;[&quot;automatic&quot;]&#39;</span>)
-  ))
-)</code></pre>
+<p>In the above example, we specified an initial search string <code>M[ae]</code> (meaning <code>Ma</code> or <code>Me</code>) in the global search box. We can also specify initial search strings for individual columns via the <code>searchCols</code> option when column filters are enabled. The <code>searchCols</code> option is a list of the same length as the number of columns of the table. Each element in the list is either <code>NULL</code> or a list of the form <code>list(search = 'keyword')</code>. In the example below, we search for <code>er</code> in the first column, filter the second column using <code>[15, 25]</code>, and filter the last column by <code>"automatic"</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  mtcars2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;model&#39;</span> =<span class="st"> </span><span class="dv">1</span>),</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">filter =</span> <span class="kw">list</span>(<span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>),</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">searchCols =</span> <span class="kw">list</span>(</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;er&#39;</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;15 ... 25&#39;</span>),</span>
+<span id="cb2-7"><a href="#cb2-7"></a>    <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>,</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="kw">list</span>(<span class="dt">search =</span> <span class="st">&#39;[&quot;automatic&quot;]&#39;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>  ))</span>
+<span id="cb2-10"><a href="#cb2-10"></a>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
