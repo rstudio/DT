@@ -261,15 +261,14 @@ datatable = function(
       selection$selected = match(selection$selected, rn)
     }
     params$selection = selection
+    # warn if the Select ext is used but selection is not set to none
+    if ('Select' %in% extensions && selection$mode != 'none') warning(
+      "The Select extension can't work properly with DT's own ",
+      "selection implemention and is only recommended in the client mode. ",
+      "If you really want to use the Select extension please set ",
+      "`selection = 'none'`", immediate. = TRUE
+    )
   }
-
-  # warn if the Select ext is used but selection is not set to none
-  if ('Select' %in% extensions && selection$mode != 'none') warning(
-    "The Select extension can't work properly with DT's own ",
-    "selection implemention and is only recommended in the client mode. ",
-    "If you really want to use the Select extension please set ",
-    "`selection = 'none'`", immediate. = TRUE
-  )
 
   deps = list(DTDependency(style))
   deps = c(deps, unlist(
