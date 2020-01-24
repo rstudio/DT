@@ -723,21 +723,6 @@ DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeV
     file.copy(depPath('datatables/js', js), file.path(outputPath, 'js'))
     # Overwrite the main CSS file that contains the SASS variables
 
-    dt_layer = sass::sass_layer(
-      defaults = variables,
-      declarations = list(
-        "table-body-border"          = "$table-border-width solid $table-border-color !default;",
-        "table-header-border"        = "2*$table-border-width solid $table-border-color !default;",
-        "table-row-selected"         = "$table-active-bg !default;",
-        # Why does Bootstrap set $table-bg explicitly to null?
-        "table-row-background"       = "if($table-bg, $table-bg, $body-bg) !default;",
-        "table-control-color"        = "$table-color !default",
-        "table-paging-button-active" = "$primary !default",
-        "table-paging-button-hover"  = "rgba($primary, 0.7) !default",
-        "table-shade"                = "$table-color !default"
-      )
-    )
-
     outputFile = file.path(outputPath, 'css', 'jquery.dataTables.min.css')
     options = sass::sass_options(output_style = 'expanded')
     if (!length(theme)) {
@@ -746,6 +731,38 @@ DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeV
         output = outputFile, options = options
       )
     } else {
+
+      version <- bootstraplib::theme_version(theme)
+      declarations <- if (version %in% "3") {
+        list(
+          "table-body-border"          = "1px solid $table-border-color !default;",
+          "table-header-border"        = "2px solid $table-border-color !default;",
+          "table-row-selected"         = "$table-bg-active !default;",
+          "table-row-background"       = "$table-bg !default;",
+          "table-control-color"        = "$text-color !default",
+          "table-paging-button-active" = "$brand-primary !default",
+          "table-paging-button-hover"  = "rgba($brand-primary, 0.7) !default",
+          "table-shade"                = "$text-color !default"
+        )
+      } else {
+        list(
+          "table-body-border"          = "$table-border-width solid $table-border-color !default;",
+          "table-header-border"        = "2*$table-border-width solid $table-border-color !default;",
+          "table-row-selected"         = "$table-active-bg !default;",
+          # Why does Bootstrap set $table-bg explicitly to null?
+          "table-row-background"       = "if($table-bg, $table-bg, transparent) !default;",
+          "table-control-color"        = "$table-color !default",
+          "table-paging-button-active" = "$primary !default",
+          "table-paging-button-hover"  = "rgba($primary, 0.7) !default",
+          "table-shade"                = "$table-color !default"
+        )
+      }
+
+      dt_layer = sass::sass_layer(
+        defaults = variables,
+        declarations = declarations
+      )
+
       bootstraplib::bootstrap_sass(
         sassFile('jquery.dataTables.scss'),
         sass::sass_layer_merge(theme, dt_layer),
