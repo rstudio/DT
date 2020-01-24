@@ -105,13 +105,30 @@
 <hr />
 <p><strong>DataTables</strong> has provided a large number of <a href="http://datatables.net/plug-ins/">plug-ins</a>, and we have integrated a subset of them in <strong>DT</strong>. You may enable plug-ins via the <code>plugins</code> argument of <code>datatable()</code>, e.g. <code>plugins = c('natural')</code>. If you find any plug-ins that you are interested in but are not listed here, you may file a feature request using <a href="https://github.com/rstudio/DT/issues">Github issues</a>. Currently these plug-ins have been integrated into <strong>DT</strong>:</p>
 <ul>
-<li>Sorting
+<li>dataRender
+<ul>
+<li>ellipsis</li>
+</ul></li>
+<li>features
+<ul>
+<li>scrollResize</li>
+<li>searchHighlight</li>
+</ul></li>
+<li>pagination
+<ul>
+<li>ellipses</li>
+<li>extjs</li>
+<li>four_button</li>
+<li>full_numbers_no_ellipses</li>
+<li>input</li>
+<li>scrolling</li>
+<li>select</li>
+<li>simple_incremental_bootstrap</li>
+<li>simple_numbers_no_ellipses</li>
+</ul></li>
+<li>sorting
 <ul>
 <li>natural</li>
-</ul></li>
-<li>Filtering
-<ul>
-<li>searchHighlight</li>
 </ul></li>
 </ul>
 <p>Please note the plug-ins for filtering and sorting may not work for server-side processing, e.g. when you render tables in Shiny.</p>
