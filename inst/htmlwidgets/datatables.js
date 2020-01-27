@@ -882,6 +882,12 @@ HTMLWidgets.widget({
     // change the row index of a cell
     var tweakCellIndex = function(cell) {
       var info = cell.index();
+      // some cell may not be valid. e.g, #759
+      // when using the RowGroup extension, datatables will
+      // generate the row label and the cells are not part of
+      // the data thus contain no row/col info
+      if (info === undefined)
+        return {row: null, col: null};
       if (server) {
         info.row = DT_rows_current[info.row];
       } else {
