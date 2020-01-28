@@ -292,10 +292,9 @@ selectCells = function(proxy, selected) {
 addRow = function(proxy, data) {
   if ((is.matrix(data) || is.data.frame(data)) && nrow(data) != 1)
     stop("'data' must be of only one row")
-  # must use unname(as.list(data)) instead of as.list(unname(data)) because
-  # when data is a data.table object unname(data) will result an object with
-  # "" as the names. In short, the names will still exist and it's difficult
-  # to debug. (see #760)
+  # must apply unname() after as.list() because a data.table object
+  # can't be really unnamed. The names() attributes will be
+  # preserved but with empty strings (see #760).
   invokeRemote(proxy, 'addRow', list(unname(as.list(data)), I(rownames(data))))
 }
 
