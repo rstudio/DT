@@ -47,6 +47,8 @@
 <script src="libs/dt-ext-keytable/js/dataTables.keyTable.min.js"></script>
 <link href="libs/dt-ext-responsive/css/responsive.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-responsive/js/dataTables.responsive.min.js"></script>
+<link href="libs/dt-ext-rowgroup/css/rowGroup.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-rowgroup/js/dataTables.rowGroup.min.js"></script>
 <link href="libs/dt-ext-rowreorder/css/rowReorder.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-rowreorder/js/dataTables.rowReorder.min.js"></script>
 <link href="libs/dt-ext-scroller/css/scroller.dataTables.min.css" rel="stylesheet" />
@@ -688,15 +690,70 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="rowreorder" class="section level1">
-<h1><span class="header-section-number">9</span> RowReorder</h1>
-<p>The <code>RowReorder</code> extension allows you to drag and reorder a certain row in the table. Note the first column <code>ID</code> is not changed when you reorder the rows in the example below, which can be a little confusing:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb14-2"><a href="#cb14-2"></a>  iris2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="dt">ID =</span> <span class="dv">1</span>), <span class="dt">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowReorder =</span> <span class="ot">TRUE</span>, <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))</span>
-<span id="cb14-4"><a href="#cb14-4"></a>)</span></code></pre>
+<div id="rowgroup" class="section level1">
+<h1><span class="header-section-number">9</span> RowGroup</h1>
+<p><a href="https://datatables.net/extensions/rowgroup/">The <code>RowGroup</code> extension</a> provides an easy way to use the row grouping feature. In the example below, <code>cyl</code> (<em>number of cylinders</em>) is used as the row group column and its value is displayed as the row group label.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>df =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, ]</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  df[<span class="kw">order</span>(df<span class="op">$</span>cyl), ],</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;RowGroup&#39;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowGroup =</span> <span class="kw">list</span>(<span class="dt">dataSrc =</span> <span class="dv">2</span>)),</span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>)</span></code></pre>
 <div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-12">{
+  "x": {
+    "filter": "none",
+    "extensions": [
+      "RowGroup"
+    ],
+    "data": [
+      ["Datsun 710", "Merc 240D", "Merc 230", "Fiat 128", "Honda Civic", "Toyota Corolla", "Mazda RX4", "Mazda RX4 Wag", "Hornet 4 Drive", "Valiant", "Merc 280", "Merc 280C", "Hornet Sportabout", "Duster 360", "Merc 450SE", "Merc 450SL", "Merc 450SLC", "Cadillac Fleetwood", "Lincoln Continental", "Chrysler Imperial"],
+      [22.8, 24.4, 22.8, 32.4, 30.4, 33.9, 21, 21, 21.4, 18.1, 19.2, 17.8, 18.7, 14.3, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7],
+      [4, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 8, 8],
+      [108, 146.7, 140.8, 78.7, 75.7, 71.1, 160, 160, 258, 225, 167.6, 167.6, 360, 360, 275.8, 275.8, 275.8, 472, 460, 440],
+      [93, 62, 95, 66, 52, 65, 110, 110, 110, 105, 123, 123, 175, 245, 180, 180, 180, 205, 215, 230],
+      [3.85, 3.69, 3.92, 4.08, 4.93, 4.22, 3.9, 3.9, 3.08, 2.76, 3.92, 3.92, 3.15, 3.21, 3.07, 3.07, 3.07, 2.93, 3, 3.23],
+      [2.32, 3.19, 3.15, 2.2, 1.615, 1.835, 2.62, 2.875, 3.215, 3.46, 3.44, 3.44, 3.44, 3.57, 4.07, 3.73, 3.78, 5.25, 5.424, 5.345],
+      [18.61, 20, 22.9, 19.47, 18.52, 19.9, 16.46, 17.02, 19.44, 20.22, 18.3, 18.9, 17.02, 15.84, 17.4, 17.6, 18, 17.98, 17.82, 17.42],
+      [1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3],
+      [1, 2, 2, 1, 2, 1, 4, 4, 1, 1, 4, 4, 2, 4, 3, 3, 3, 4, 4, 4]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>mpg</th>\n      <th>cyl</th>\n      <th>disp</th>\n      <th>hp</th>\n      <th>drat</th>\n      <th>wt</th>\n      <th>qsec</th>\n      <th>vs</th>\n      <th>am</th>\n      <th>gear</th>\n      <th>carb</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "rowGroup": {
+        "dataSrc": 2
+      },
+      "columnDefs": [
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
+    }
+  },
+  "evals": [],
+  "jsHooks": []
+}</script>
+</div>
+<div id="rowreorder" class="section level1">
+<h1><span class="header-section-number">10</span> RowReorder</h1>
+<p>The <code>RowReorder</code> extension allows you to drag and reorder a certain row in the table. Note the first column <code>ID</code> is not changed when you reorder the rows in the example below, which can be a little confusing:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  iris2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="dt">ID =</span> <span class="dv">1</span>), <span class="dt">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowReorder =</span> <span class="ot">TRUE</span>, <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))</span>
+<span id="cb15-4"><a href="#cb15-4"></a>)</span></code></pre>
+<div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-13">{
   "x": {
     "filter": "none",
     "extensions": [
@@ -732,17 +789,17 @@ Known Issues of Extensions
 <p>In order to make <code>RowReorder</code> work, there must be at least one sorted column in the table, which can be initialized by <code>options = list(order = list(c(0 , 'asc')))</code>.</p>
 </div>
 <div id="scroller" class="section level1">
-<h1><span class="header-section-number">10</span> Scroller</h1>
+<h1><span class="header-section-number">11</span> Scroller</h1>
 <p>When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. The <code>Scroller</code> extension makes it possible to only render the visible portion of the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="ot">NULL</span>, letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</span>
-<span id="cb15-2"><a href="#cb15-2"></a>m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), <span class="kw">round</span>(m, <span class="dv">2</span>))</span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">datatable</span>(m, <span class="dt">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="dt">deferRender =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="dt">scrollY =</span> <span class="dv">200</span>,</span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="dt">scroller =</span> <span class="ot">TRUE</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>))</span></code></pre>
-<div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-13">{
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="ot">NULL</span>, letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</span>
+<span id="cb16-2"><a href="#cb16-2"></a>m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), <span class="kw">round</span>(m, <span class="dv">2</span>))</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">datatable</span>(m, <span class="dt">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="dt">deferRender =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="dt">scrollY =</span> <span class="dv">200</span>,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="dt">scroller =</span> <span class="ot">TRUE</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>))</span></code></pre>
+<div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-14">{
   "x": {
     "filter": "none",
     "extensions": [
@@ -777,20 +834,20 @@ Known Issues of Extensions
 <p>You can also save the data as JSON in a file and load it via the <code>ajax</code> option. See a live example in Shiny <a href="https://yihui.shinyapps.io/DT-scroller/">here</a>.</p>
 </div>
 <div id="select" class="section level1">
-<h1><span class="header-section-number">11</span> Select</h1>
+<h1><span class="header-section-number">12</span> Select</h1>
 <p><a href="https://datatables.net/extensions/select/">The <code>Select</code> extension</a> allows the user to perform item selections in DataTable. It supports three different selection styles including <code>os</code>(Operating system), <code>single</code>(Single item select) and <code>multiple</code>(Multi-item selection) and has built-in button types for <a href="https://datatables.net/extensions/buttons">the <code>Buttons</code> extension</a> allowing select all / none and other actions to be performed very easily. However, it only works well <strong>in the client-side processing mode</strong>, i.e., <code>DT::renderDT(..., server = FALSE)</code>. Note that you need to turn off <strong>DT</strong>’s own select functionality by setting <code>selection = 'none'</code> when you want to use the <code>Select</code> extension in shiny.</p>
 <p><strong>DT</strong> also has its own implementation of row/column/cell selections in Shiny (see the <code>selection</code> param in <code>?DT::datatable</code>), which is different from the <code>Select</code> extension. In particular, it only supports Shift/Ctrl + Click for selecting multiple rows at the time of writing (see <a href="https://github.com/rstudio/DT/issues/305">#305</a> for an example). On the other hand, <strong>DT</strong>’s implementation supports both client and server-side processing mode.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb16-2"><a href="#cb16-2"></a>  iris, <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;Buttons&#39;</span>), <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb16-3"><a href="#cb16-3"></a>    <span class="dt">select =</span> <span class="kw">list</span>(<span class="dt">style =</span> <span class="st">&#39;os&#39;</span>, <span class="dt">items =</span> <span class="st">&#39;row&#39;</span>),</span>
-<span id="cb16-4"><a href="#cb16-4"></a>    <span class="dt">dom =</span> <span class="st">&#39;Blfrtip&#39;</span>,</span>
-<span id="cb16-5"><a href="#cb16-5"></a>    <span class="dt">rowId =</span> <span class="dv">0</span>,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;selectAll&#39;</span>, <span class="st">&#39;selectNone&#39;</span>, <span class="st">&#39;selectRows&#39;</span>, <span class="st">&#39;selectColumns&#39;</span>, <span class="st">&#39;selectCells&#39;</span>)</span>
-<span id="cb16-7"><a href="#cb16-7"></a>  ),</span>
-<span id="cb16-8"><a href="#cb16-8"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a>)</span></code></pre>
-<div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-14">{
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  iris, <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;Buttons&#39;</span>), <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb17-3"><a href="#cb17-3"></a>    <span class="dt">select =</span> <span class="kw">list</span>(<span class="dt">style =</span> <span class="st">&#39;os&#39;</span>, <span class="dt">items =</span> <span class="st">&#39;row&#39;</span>),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">dom =</span> <span class="st">&#39;Blfrtip&#39;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>    <span class="dt">rowId =</span> <span class="dv">0</span>,</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;selectAll&#39;</span>, <span class="st">&#39;selectNone&#39;</span>, <span class="st">&#39;selectRows&#39;</span>, <span class="st">&#39;selectColumns&#39;</span>, <span class="st">&#39;selectCells&#39;</span>)</span>
+<span id="cb17-7"><a href="#cb17-7"></a>  ),</span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>)</span></code></pre>
+<div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-15">{
   "x": {
     "filter": "none",
     "extensions": [
@@ -840,22 +897,22 @@ Known Issues of Extensions
 }</script>
 </div>
 <div id="tabletools" class="section level1">
-<h1><span class="header-section-number">12</span> TableTools</h1>
+<h1><span class="header-section-number">13</span> TableTools</h1>
 <p>The <code>TableTools</code> extension has been removed from <strong>DT</strong>. Please use the <code>Buttons</code> extension instead.</p>
 </div>
 <div id="searchpanel" class="section level1">
-<h1><span class="header-section-number">13</span> SearchPanel</h1>
+<h1><span class="header-section-number">14</span> SearchPanel</h1>
 <p><a href="https://datatables.net/extensions/searchpanes/">The <code>SearchPanel</code> extension</a> is a new extension that adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes. As documented in <a href="https://datatables.net/blog/2020-01-13">the realsing blog</a>, it doesn’t support the server-side processing mode. Since it depends on the <code>Select</code> extension, you are expected to always include the <code>Select</code> extension with <code>SearchPanel</code>. In addition, in order to display the search panes, you need to insert <code>P</code> to the <code>dom</code> option.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  iris,</span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Pfrtip&#39;</span>, <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(</span>
-<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">searchPanes =</span> <span class="kw">list</span>(<span class="dt">show =</span> <span class="ot">FALSE</span>), <span class="dt">targets =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>  ))),</span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;SearchPanes&#39;</span>),</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>)</span></code></pre>
-<div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-15">{
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  iris,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Pfrtip&#39;</span>, <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    <span class="dt">searchPanes =</span> <span class="kw">list</span>(<span class="dt">show =</span> <span class="ot">FALSE</span>), <span class="dt">targets =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>  ))),</span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;SearchPanes&#39;</span>),</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>)</span></code></pre>
+<div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16">{
   "x": {
     "filter": "none",
     "extensions": [

@@ -146,6 +146,21 @@ The `Responsive` extension makes the table columns responsive in the sense that 
 datatable(iris2, extensions = 'Responsive')
 ```
 
+# RowGroup
+
+[The `RowGroup` extension](https://datatables.net/extensions/rowgroup/) provides an easy way to use the row grouping feature. In the example below, `cyl` (*number of cylinders*) is used as the row group column and its value is displayed as the row group label.
+
+
+```{r}
+df = mtcars[1:20, ]
+datatable(
+  df[order(df$cyl), ],
+  extensions = 'RowGroup',
+  options = list(rowGroup = list(dataSrc = 2)),
+  selection = 'none'
+)
+```
+
 # RowReorder
 
 The `RowReorder` extension allows you to drag and reorder a certain row in the table. Note the first column `ID` is not changed when you reorder the rows in the example below, which can be a little confusing:
