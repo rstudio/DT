@@ -14,6 +14,8 @@
 
 - Fix a bug that `addRow()` can't add a `data.table` row to the proxy (thanks, @sifodia @shrektan, #760 #761).
 
+- Now DT will always display black text in the RStudio IDE, even under a dark theme like "Cobalt" (thanks, @GegznaV @shrektan, #447 #767).
+
 # CHANGES IN DT VERSION 0.11
 
 ## NEW FEATURES
