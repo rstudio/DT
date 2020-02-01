@@ -152,9 +152,9 @@ datatable(iris2, extensions = 'Responsive')
 
 
 ```{r}
-df = mtcars[1:20, ]
+mtcars2 = mtcars[1:20, ]
 datatable(
-  df[order(df$cyl), ],
+  mtcars2[order(mtcars2$cyl), ],
   extensions = 'RowGroup',
   options = list(rowGroup = list(dataSrc = 2)),
   selection = 'none'
