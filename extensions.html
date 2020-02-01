@@ -833,21 +833,76 @@ Known Issues of Extensions
 }</script>
 <p>You can also save the data as JSON in a file and load it via the <code>ajax</code> option. See a live example in Shiny <a href="https://yihui.shinyapps.io/DT-scroller/">here</a>.</p>
 </div>
-<div id="select" class="section level1">
-<h1><span class="header-section-number">12</span> Select</h1>
-<p><a href="https://datatables.net/extensions/select/">The <code>Select</code> extension</a> allows the user to perform item selections in DataTable. It supports three different selection styles including <code>os</code>(Operating system), <code>single</code>(Single item select) and <code>multiple</code>(Multi-item selection) and has built-in button types for <a href="https://datatables.net/extensions/buttons">the <code>Buttons</code> extension</a> allowing select all / none and other actions to be performed very easily. However, it only works well <strong>in the client-side processing mode</strong>, i.e., <code>DT::renderDT(..., server = FALSE)</code>. Note that you need to turn off <strong>DT</strong>’s own select functionality by setting <code>selection = 'none'</code> when you want to use the <code>Select</code> extension in shiny.</p>
-<p><strong>DT</strong> also has its own implementation of row/column/cell selections in Shiny (see the <code>selection</code> param in <code>?DT::datatable</code>), which is different from the <code>Select</code> extension. In particular, it only supports Shift/Ctrl + Click for selecting multiple rows at the time of writing (see <a href="https://github.com/rstudio/DT/issues/305">#305</a> for an example). On the other hand, <strong>DT</strong>’s implementation supports both client and server-side processing mode.</p>
+<div id="searchpanes" class="section level1">
+<h1><span class="header-section-number">12</span> SearchPanes</h1>
+<p><a href="https://datatables.net/extensions/searchpanes/">The <code>SearchPanes</code> extension</a> is a new extension that adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes. As documented in <a href="https://datatables.net/blog/2020-01-13">the realsing blog</a>, it doesn’t support the server-side processing mode. Since it depends on the <code>Select</code> extension, you are expected to always include the <code>Select</code> extension with <code>SearchPanes</code>. In addition, in order to display the search panes, you need to insert <code>P</code> to the <code>dom</code> option.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  iris, <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;Buttons&#39;</span>), <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb17-3"><a href="#cb17-3"></a>    <span class="dt">select =</span> <span class="kw">list</span>(<span class="dt">style =</span> <span class="st">&#39;os&#39;</span>, <span class="dt">items =</span> <span class="st">&#39;row&#39;</span>),</span>
-<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">dom =</span> <span class="st">&#39;Blfrtip&#39;</span>,</span>
-<span id="cb17-5"><a href="#cb17-5"></a>    <span class="dt">rowId =</span> <span class="dv">0</span>,</span>
-<span id="cb17-6"><a href="#cb17-6"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;selectAll&#39;</span>, <span class="st">&#39;selectNone&#39;</span>, <span class="st">&#39;selectRows&#39;</span>, <span class="st">&#39;selectColumns&#39;</span>, <span class="st">&#39;selectCells&#39;</span>)</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  ),</span>
-<span id="cb17-8"><a href="#cb17-8"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a>)</span></code></pre>
+<span id="cb17-2"><a href="#cb17-2"></a>  iris,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Pfrtip&#39;</span>, <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">searchPanes =</span> <span class="kw">list</span>(<span class="dt">show =</span> <span class="ot">FALSE</span>), <span class="dt">targets =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  ))),</span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;SearchPanes&#39;</span>),</span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>)</span></code></pre>
 <div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-15">{
+  "x": {
+    "filter": "none",
+    "extensions": [
+      "Select",
+      "SearchPanes"
+    ],
+    "data": [
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150"],
+      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1, 5.4, 5.1, 4.6, 5.1, 4.8, 5, 5, 5.2, 5.2, 4.7, 4.8, 5.4, 5.2, 5.5, 4.9, 5, 5.5, 4.9, 4.4, 5.1, 5, 4.5, 4.4, 5, 5.1, 4.8, 5.1, 4.6, 5.3, 5, 7, 6.4, 6.9, 5.5, 6.5, 5.7, 6.3, 4.9, 6.6, 5.2, 5, 5.9, 6, 6.1, 5.6, 6.7, 5.6, 5.8, 6.2, 5.6, 5.9, 6.1, 6.3, 6.1, 6.4, 6.6, 6.8, 6.7, 6, 5.7, 5.5, 5.5, 5.8, 6, 5.4, 6, 6.7, 6.3, 5.6, 5.5, 5.5, 6.1, 5.8, 5, 5.6, 5.7, 5.7, 6.2, 5.1, 5.7, 6.3, 5.8, 7.1, 6.3, 6.5, 7.6, 4.9, 7.3, 6.7, 7.2, 6.5, 6.4, 6.8, 5.7, 5.8, 6.4, 6.5, 7.7, 7.7, 6, 6.9, 5.6, 7.7, 6.3, 6.7, 7.2, 6.2, 6.1, 6.4, 7.2, 7.4, 7.9, 6.4, 6.3, 6.1, 7.7, 6.3, 6.4, 6, 6.9, 6.7, 6.9, 5.8, 6.8, 6.7, 6.7, 6.3, 6.5, 6.2, 5.9],
+      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3, 3.8, 3.2, 3.7, 3.3, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2, 3, 2.2, 2.9, 2.9, 3.1, 3, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3, 2.8, 3, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3, 3.4, 3.1, 2.3, 3, 2.5, 2.6, 3, 2.6, 2.3, 2.7, 3, 2.9, 2.9, 2.5, 2.8, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6, 3.2, 2.7, 3, 2.5, 2.8, 3.2, 3, 3.8, 2.6, 2.2, 3.2, 2.8, 2.8, 2.7, 3.3, 3.2, 2.8, 3, 2.8, 3, 2.8, 3.8, 2.8, 2.8, 2.6, 3, 3.4, 3.1, 3, 3.1, 3.1, 3.1, 2.7, 3.2, 3.3, 3, 2.5, 3, 3.4, 3],
+      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.4, 1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5, 1.7, 1.5, 1, 1.7, 1.9, 1.6, 1.6, 1.5, 1.4, 1.6, 1.6, 1.5, 1.5, 1.4, 1.5, 1.2, 1.3, 1.4, 1.3, 1.5, 1.3, 1.3, 1.3, 1.6, 1.9, 1.4, 1.6, 1.4, 1.5, 1.4, 4.7, 4.5, 4.9, 4, 4.6, 4.5, 4.7, 3.3, 4.6, 3.9, 3.5, 4.2, 4, 4.7, 3.6, 4.4, 4.5, 4.1, 4.5, 3.9, 4.8, 4, 4.9, 4.7, 4.3, 4.4, 4.8, 5, 4.5, 3.5, 3.8, 3.7, 3.9, 5.1, 4.5, 4.5, 4.7, 4.4, 4.1, 4, 4.4, 4.6, 4, 3.3, 4.2, 4.2, 4.2, 4.3, 3, 4.1, 6, 5.1, 5.9, 5.6, 5.8, 6.6, 4.5, 6.3, 5.8, 6.1, 5.1, 5.3, 5.5, 5, 5.1, 5.3, 5.5, 6.7, 6.9, 5, 5.7, 4.9, 6.7, 4.9, 5.7, 6, 4.8, 4.9, 5.6, 5.8, 6.1, 6.4, 5.6, 5.1, 5.6, 6.1, 5.6, 5.5, 4.8, 5.4, 5.6, 5.1, 5.1, 5.9, 5.7, 5.2, 5, 5.2, 5.4, 5.1],
+      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2, 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1, 1.3, 1.4, 1, 1.5, 1, 1.4, 1.3, 1.4, 1.5, 1, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1, 1.1, 1, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3, 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2, 1.9, 2.1, 2, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2, 2, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2, 2.3, 1.8],
+      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica"]
+    ],
+    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
+    "options": {
+      "dom": "Pfrtip",
+      "columnDefs": [
+        {
+          "searchPanes": {
+            "show": false
+          },
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "className": "dt-right",
+          "targets": [1, 2, 3, 4]
+        },
+        {
+          "orderable": false,
+          "targets": 0
+        }
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
+    }
+  },
+  "evals": [],
+  "jsHooks": []
+}</script>
+</div>
+<div id="select" class="section level1">
+<h1><span class="header-section-number">13</span> Select</h1>
+<p><a href="https://datatables.net/extensions/select/">The <code>Select</code> extension</a> allows the user to perform item selections in DataTable. It supports three different selection styles including <code>os</code>(Operating system), <code>single</code>(Single item select) and <code>multiple</code>(Multi-item selection) and has built-in button types for <a href="https://datatables.net/extensions/buttons">the <code>Buttons</code> extension</a> allowing select all / none and other actions to be performed very easily. However, it only works well <strong>in the client-side processing mode</strong>, i.e., <code>DT::renderDT(..., server = FALSE)</code>. Note that you need to turn off <strong>DT</strong>’s own select functionality by setting <code>selection = 'none'</code> when you want to use the <code>Select</code> extension in shiny.</p>
+<p><strong>DT</strong> also has its own implementation of row/column/cell selections in Shiny (see the <code>selection</code> param in <code>?DT::datatable</code>), which is different from the <code>Select</code> extension. In particular, it only supports Shift/Ctrl + Click for selecting multiple rows at the time of writing (see <a href="https://github.com/rstudio/DT/issues/305">#305</a> for an example). On the other hand, <strong>DT</strong>’s implementation supports both client and server-side processing mode.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  iris, <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;Buttons&#39;</span>), <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb18-3"><a href="#cb18-3"></a>    <span class="dt">select =</span> <span class="kw">list</span>(<span class="dt">style =</span> <span class="st">&#39;os&#39;</span>, <span class="dt">items =</span> <span class="st">&#39;row&#39;</span>),</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    <span class="dt">dom =</span> <span class="st">&#39;Blfrtip&#39;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>    <span class="dt">rowId =</span> <span class="dv">0</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;selectAll&#39;</span>, <span class="st">&#39;selectNone&#39;</span>, <span class="st">&#39;selectRows&#39;</span>, <span class="st">&#39;selectColumns&#39;</span>, <span class="st">&#39;selectCells&#39;</span>)</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  ),</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>)</span></code></pre>
+<div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16">{
   "x": {
     "filter": "none",
     "extensions": [
@@ -897,63 +952,8 @@ Known Issues of Extensions
 }</script>
 </div>
 <div id="tabletools" class="section level1">
-<h1><span class="header-section-number">13</span> TableTools</h1>
+<h1><span class="header-section-number">14</span> TableTools</h1>
 <p>The <code>TableTools</code> extension has been removed from <strong>DT</strong>. Please use the <code>Buttons</code> extension instead.</p>
-</div>
-<div id="searchpanel" class="section level1">
-<h1><span class="header-section-number">14</span> SearchPanel</h1>
-<p><a href="https://datatables.net/extensions/searchpanes/">The <code>SearchPanel</code> extension</a> is a new extension that adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes. As documented in <a href="https://datatables.net/blog/2020-01-13">the realsing blog</a>, it doesn’t support the server-side processing mode. Since it depends on the <code>Select</code> extension, you are expected to always include the <code>Select</code> extension with <code>SearchPanel</code>. In addition, in order to display the search panes, you need to insert <code>P</code> to the <code>dom</code> option.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  iris,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Pfrtip&#39;</span>, <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(</span>
-<span id="cb18-4"><a href="#cb18-4"></a>    <span class="dt">searchPanes =</span> <span class="kw">list</span>(<span class="dt">show =</span> <span class="ot">FALSE</span>), <span class="dt">targets =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a>  ))),</span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;SearchPanes&#39;</span>),</span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a>)</span></code></pre>
-<div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-16">{
-  "x": {
-    "filter": "none",
-    "extensions": [
-      "Select",
-      "SearchPanes"
-    ],
-    "data": [
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150"],
-      [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1, 5.4, 5.1, 4.6, 5.1, 4.8, 5, 5, 5.2, 5.2, 4.7, 4.8, 5.4, 5.2, 5.5, 4.9, 5, 5.5, 4.9, 4.4, 5.1, 5, 4.5, 4.4, 5, 5.1, 4.8, 5.1, 4.6, 5.3, 5, 7, 6.4, 6.9, 5.5, 6.5, 5.7, 6.3, 4.9, 6.6, 5.2, 5, 5.9, 6, 6.1, 5.6, 6.7, 5.6, 5.8, 6.2, 5.6, 5.9, 6.1, 6.3, 6.1, 6.4, 6.6, 6.8, 6.7, 6, 5.7, 5.5, 5.5, 5.8, 6, 5.4, 6, 6.7, 6.3, 5.6, 5.5, 5.5, 6.1, 5.8, 5, 5.6, 5.7, 5.7, 6.2, 5.1, 5.7, 6.3, 5.8, 7.1, 6.3, 6.5, 7.6, 4.9, 7.3, 6.7, 7.2, 6.5, 6.4, 6.8, 5.7, 5.8, 6.4, 6.5, 7.7, 7.7, 6, 6.9, 5.6, 7.7, 6.3, 6.7, 7.2, 6.2, 6.1, 6.4, 7.2, 7.4, 7.9, 6.4, 6.3, 6.1, 7.7, 6.3, 6.4, 6, 6.9, 6.7, 6.9, 5.8, 6.8, 6.7, 6.7, 6.3, 6.5, 6.2, 5.9],
-      [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3, 3.8, 3.2, 3.7, 3.3, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2, 3, 2.2, 2.9, 2.9, 3.1, 3, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3, 2.8, 3, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3, 3.4, 3.1, 2.3, 3, 2.5, 2.6, 3, 2.6, 2.3, 2.7, 3, 2.9, 2.9, 2.5, 2.8, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6, 3.2, 2.7, 3, 2.5, 2.8, 3.2, 3, 3.8, 2.6, 2.2, 3.2, 2.8, 2.8, 2.7, 3.3, 3.2, 2.8, 3, 2.8, 3, 2.8, 3.8, 2.8, 2.8, 2.6, 3, 3.4, 3.1, 3, 3.1, 3.1, 3.1, 2.7, 3.2, 3.3, 3, 2.5, 3, 3.4, 3],
-      [1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.4, 1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5, 1.7, 1.5, 1, 1.7, 1.9, 1.6, 1.6, 1.5, 1.4, 1.6, 1.6, 1.5, 1.5, 1.4, 1.5, 1.2, 1.3, 1.4, 1.3, 1.5, 1.3, 1.3, 1.3, 1.6, 1.9, 1.4, 1.6, 1.4, 1.5, 1.4, 4.7, 4.5, 4.9, 4, 4.6, 4.5, 4.7, 3.3, 4.6, 3.9, 3.5, 4.2, 4, 4.7, 3.6, 4.4, 4.5, 4.1, 4.5, 3.9, 4.8, 4, 4.9, 4.7, 4.3, 4.4, 4.8, 5, 4.5, 3.5, 3.8, 3.7, 3.9, 5.1, 4.5, 4.5, 4.7, 4.4, 4.1, 4, 4.4, 4.6, 4, 3.3, 4.2, 4.2, 4.2, 4.3, 3, 4.1, 6, 5.1, 5.9, 5.6, 5.8, 6.6, 4.5, 6.3, 5.8, 6.1, 5.1, 5.3, 5.5, 5, 5.1, 5.3, 5.5, 6.7, 6.9, 5, 5.7, 4.9, 6.7, 4.9, 5.7, 6, 4.8, 4.9, 5.6, 5.8, 6.1, 6.4, 5.6, 5.1, 5.6, 6.1, 5.6, 5.5, 4.8, 5.4, 5.6, 5.1, 5.1, 5.9, 5.7, 5.2, 5, 5.2, 5.4, 5.1],
-      [0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2, 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1, 1.3, 1.4, 1, 1.5, 1, 1.4, 1.3, 1.4, 1.5, 1, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1, 1.1, 1, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3, 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2, 1.9, 2.1, 2, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2, 2, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2, 2.3, 1.8],
-      ["setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "setosa", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "versicolor", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica", "virginica"]
-    ],
-    "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>Sepal.Length</th>\n      <th>Sepal.Width</th>\n      <th>Petal.Length</th>\n      <th>Petal.Width</th>\n      <th>Species</th>\n    </tr>\n  </thead>\n</table>",
-    "options": {
-      "dom": "Pfrtip",
-      "columnDefs": [
-        {
-          "searchPanes": {
-            "show": false
-          },
-          "targets": [1, 2, 3, 4]
-        },
-        {
-          "className": "dt-right",
-          "targets": [1, 2, 3, 4]
-        },
-        {
-          "orderable": false,
-          "targets": 0
-        }
-      ],
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false
-    }
-  },
-  "evals": [],
-  "jsHooks": []
-}</script>
 </div>
 
 <script src="js/script-10.js"></script>
