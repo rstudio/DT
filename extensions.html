@@ -157,7 +157,7 @@ Known Issues of Extensions
 <span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">30</span>)</span></code></pre>
 <div id="autofill" class="section level1">
 <h1><span class="header-section-number">1</span> AutoFill</h1>
-<p>With the <code>AutoFill</code> extension, you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.</p>
+<p>With <a href="https://datatables.net/extensions/autofill">the <code>AutoFill</code> extension</a>, you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoFill =</span> <span class="ot">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
@@ -242,7 +242,7 @@ Known Issues of Extensions
 </div>
 <div id="buttons" class="section level1">
 <h1><span class="header-section-number">2</span> Buttons</h1>
-<p>The <code>Buttons</code> extension adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note <code>B</code> in <code>dom</code> denotes the place where the buttons are to be inserted):</p>
+<p><a href="https://datatables.net/extensions/buttons">The <code>Buttons</code> extension</a> adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note <code>B</code> in <code>dom</code> denotes the place where the buttons are to be inserted):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">datatable</span>(</span>
 <span id="cb4-2"><a href="#cb4-2"></a>  iris, <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
 <span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
@@ -299,7 +299,7 @@ Known Issues of Extensions
 </div>
 <div id="colreorder" class="section level1">
 <h1><span class="header-section-number">3</span> ColReorder</h1>
-<p>You can click and drag the table header to move a certain column to a different place using the <code>ColReorder</code> extension.</p>
+<p>You can click and drag the table header to move a certain column to a different place using <a href="https://datatables.net/extensions/colreorder">the <code>ColReorder</code> extension</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">colReorder =</span> <span class="ot">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
@@ -380,9 +380,9 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="colvis" class="section level1">
-<h1><span class="header-section-number">4</span> ColVis</h1>
-<p>The <code>ColVis</code> extension has been removed from <strong>DT</strong> after v0.1 because it was <a href="http://datatables.net/blog/2015-08-13">replaced by the Buttons extension</a> in the <strong>DataTables</strong> library. You can use the button <code>colvis</code> instead.</p>
+<div id="colvis-retired" class="section level1">
+<h1><span class="header-section-number">4</span> ColVis (Retired)</h1>
+<p><a href="https://datatables.net/extensions/colvis">The <code>ColVis</code> extension</a> has been removed from <strong>DT</strong> after v0.1 because it was <a href="http://datatables.net/blog/2015-08-13">replaced by the Buttons extension</a> in the <strong>DataTables</strong> library. You can use the button <code>colvis</code> instead.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># using I() here to make sure it is converted to an array in JavaScript</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="kw">datatable</span>(</span>
 <span id="cb7-3"><a href="#cb7-3"></a>  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,</span>
@@ -470,7 +470,7 @@ Known Issues of Extensions
 </div>
 <div id="fixedcolumns" class="section level1">
 <h1><span class="header-section-number">5</span> FixedColumns</h1>
-<p>When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) so that they will be visible when you scroll the table horizontally.</p>
+<p>When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) using <a href="https://datatables.net/extensions/fixedcolumns">the <code>FixedColumns</code> extension</a> so that they will be visible when you scroll the table horizontally.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>m =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">round</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dv">5</span>), <span class="dv">5</span>))</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="kw">datatable</span>(</span>
 <span id="cb9-3"><a href="#cb9-3"></a>  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
@@ -601,7 +601,7 @@ Known Issues of Extensions
 </div>
 <div id="fixedheader" class="section level1">
 <h1><span class="header-section-number">6</span> FixedHeader</h1>
-<p>You may want the table header to be always visible when scrolling down the table, and you can use the <code>FixedHeader</code> extension in this case.</p>
+<p>You may want the table header to be always visible when scrolling down the table, and you can use <a href="https://datatables.net/extensions/fixedheader">the <code>FixedHeader</code> extension</a> in this case.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">datatable</span>(</span>
 <span id="cb11-2"><a href="#cb11-2"></a>  iris, <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,</span>
 <span id="cb11-3"><a href="#cb11-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>, <span class="dt">fixedHeader =</span> <span class="ot">TRUE</span>)</span>
@@ -610,7 +610,7 @@ Known Issues of Extensions
 </div>
 <div id="keytable" class="section level1">
 <h1><span class="header-section-number">7</span> KeyTable</h1>
-<p>The <code>KeyTable</code> extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).</p>
+<p><a href="https://datatables.net/extensions/keytable">The <code>KeyTable</code> extension</a> provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">keys =</span> <span class="ot">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-10">{
@@ -651,7 +651,7 @@ Known Issues of Extensions
 </div>
 <div id="responsive" class="section level1">
 <h1><span class="header-section-number">8</span> Responsive</h1>
-<p>The <code>Responsive</code> extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.</p>
+<p><a href="https://datatables.net/extensions/responsive">The <code>Responsive</code> extension</a> makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;Responsive&#39;</span>)</span></code></pre>
 <div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-11">{
@@ -693,9 +693,9 @@ Known Issues of Extensions
 <div id="rowgroup" class="section level1">
 <h1><span class="header-section-number">9</span> RowGroup</h1>
 <p><a href="https://datatables.net/extensions/rowgroup/">The <code>RowGroup</code> extension</a> provides an easy way to use the row grouping feature. In the example below, <code>cyl</code> (<em>number of cylinders</em>) is used as the row group column and its value is displayed as the row group label.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>df =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, ]</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>mtcars2 =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, ]</span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  df[<span class="kw">order</span>(df<span class="op">$</span>cyl), ],</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  mtcars2[<span class="kw">order</span>(mtcars2<span class="op">$</span>cyl), ],</span>
 <span id="cb14-4"><a href="#cb14-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;RowGroup&#39;</span>,</span>
 <span id="cb14-5"><a href="#cb14-5"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowGroup =</span> <span class="kw">list</span>(<span class="dt">dataSrc =</span> <span class="dv">2</span>)),</span>
 <span id="cb14-6"><a href="#cb14-6"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
@@ -747,7 +747,7 @@ Known Issues of Extensions
 </div>
 <div id="rowreorder" class="section level1">
 <h1><span class="header-section-number">10</span> RowReorder</h1>
-<p>The <code>RowReorder</code> extension allows you to drag and reorder a certain row in the table. Note the first column <code>ID</code> is not changed when you reorder the rows in the example below, which can be a little confusing:</p>
+<p><a href="https://datatables.net/extensions/rowreorder">The <code>RowReorder</code> extension</a> allows you to drag and reorder a certain row in the table. Note the first column <code>ID</code> is not changed when you reorder the rows in the example below, which can be a little confusing:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">datatable</span>(</span>
 <span id="cb15-2"><a href="#cb15-2"></a>  iris2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="dt">ID =</span> <span class="dv">1</span>), <span class="dt">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,</span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowReorder =</span> <span class="ot">TRUE</span>, <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))</span>
@@ -790,7 +790,7 @@ Known Issues of Extensions
 </div>
 <div id="scroller" class="section level1">
 <h1><span class="header-section-number">11</span> Scroller</h1>
-<p>When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. The <code>Scroller</code> extension makes it possible to only render the visible portion of the table.</p>
+<p>When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. <a href="https://datatables.net/extensions/scroller">The <code>Scroller</code> extension</a> makes it possible to only render the visible portion of the table.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="ot">NULL</span>, letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</span>
 <span id="cb16-2"><a href="#cb16-2"></a>m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), <span class="kw">round</span>(m, <span class="dv">2</span>))</span>
 <span id="cb16-3"><a href="#cb16-3"></a><span class="kw">datatable</span>(m, <span class="dt">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
@@ -951,9 +951,9 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="tabletools" class="section level1">
-<h1><span class="header-section-number">14</span> TableTools</h1>
-<p>The <code>TableTools</code> extension has been removed from <strong>DT</strong>. Please use the <code>Buttons</code> extension instead.</p>
+<div id="tabletools-retired" class="section level1">
+<h1><span class="header-section-number">14</span> TableTools (Retired)</h1>
+<p><a href="https://datatables.net/extensions/tabletools">The <code>TableTools</code> extension</a> is retired and has been removed from <strong>DT</strong>. Please use the <code>Buttons</code> extension instead.</p>
 </div>
 
 <script src="js/script-10.js"></script>

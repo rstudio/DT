@@ -32,7 +32,7 @@ iris2 = head(iris, 30)
 
 # AutoFill
 
-With the `AutoFill` extension, you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.
+With [the `AutoFill` extension](https://datatables.net/extensions/autofill), you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.
 
 ```{r}
 datatable(iris2, extensions = 'AutoFill', options = list(autoFill = TRUE))
@@ -45,7 +45,7 @@ datatable(iris2, extensions = 'AutoFill', options = list(
 
 # Buttons
 
-The `Buttons` extension adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note `B` in `dom` denotes the place where the buttons are to be inserted):
+[The `Buttons` extension](https://datatables.net/extensions/buttons) adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note `B` in `dom` denotes the place where the buttons are to be inserted):
 
 ```{r}
 datatable(
@@ -62,7 +62,7 @@ Below are more examples of `Buttons`:
 
 # ColReorder
 
-You can click and drag the table header to move a certain column to a different place using the `ColReorder` extension.
+You can click and drag the table header to move a certain column to a different place using [the `ColReorder` extension](https://datatables.net/extensions/colreorder).
 
 ```{r}
 datatable(iris2, extensions = 'ColReorder', options = list(colReorder = TRUE))
@@ -72,9 +72,9 @@ datatable(iris2, extensions = 'ColReorder', options = list(
 ))
 ```
 
-# ColVis
+# ColVis (Retired)
 
-The `ColVis` extension has been removed from **DT** after v0.1 because it was [replaced by the Buttons extension](http://datatables.net/blog/2015-08-13) in the **DataTables** library. You can use the button `colvis` instead.
+[The `ColVis` extension](https://datatables.net/extensions/colvis) has been removed from **DT** after v0.1 because it was [replaced by the Buttons extension](http://datatables.net/blog/2015-08-13) in the **DataTables** library. You can use the button `colvis` instead.
 
 ```{r}
 # using I() here to make sure it is converted to an array in JavaScript
@@ -94,7 +94,7 @@ datatable(
 
 # FixedColumns
 
-When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) so that they will be visible when you scroll the table horizontally.
+When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) using [the `FixedColumns` extension](https://datatables.net/extensions/fixedcolumns) so that they will be visible when you scroll the table horizontally.
 
 ```{r}
 m = as.data.frame(round(matrix(rnorm(100), 5), 5))
@@ -119,7 +119,7 @@ datatable(
 
 # FixedHeader
 
-You may want the table header to be always visible when scrolling down the table, and you can use the `FixedHeader` extension in this case.
+You may want the table header to be always visible when scrolling down the table, and you can use [the `FixedHeader` extension](https://datatables.net/extensions/fixedheader) in this case.
 
 ```{r eval=FALSE}
 datatable(
@@ -132,7 +132,7 @@ Since we have a navigation bar on the top of this page, this extension does not 
 
 # KeyTable
 
-The `KeyTable` extensions provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
+[The `KeyTable` extension](https://datatables.net/extensions/keytable) provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
 
 ```{r}
 datatable(iris2, extensions = 'KeyTable', options = list(keys = TRUE))
@@ -140,7 +140,7 @@ datatable(iris2, extensions = 'KeyTable', options = list(keys = TRUE))
 
 # Responsive
 
-The `Responsive` extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.
+[The `Responsive` extension](https://datatables.net/extensions/responsive) makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.
 
 ```{r}
 datatable(iris2, extensions = 'Responsive')
@@ -163,7 +163,7 @@ datatable(
 
 # RowReorder
 
-The `RowReorder` extension allows you to drag and reorder a certain row in the table. Note the first column `ID` is not changed when you reorder the rows in the example below, which can be a little confusing:
+[The `RowReorder` extension](https://datatables.net/extensions/rowreorder) allows you to drag and reorder a certain row in the table. Note the first column `ID` is not changed when you reorder the rows in the example below, which can be a little confusing:
 
 ```{r}
 datatable(
@@ -176,7 +176,7 @@ In order to make `RowReorder` work, there must be at least one sorted column in 
 
 # Scroller
 
-When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. The `Scroller` extension makes it possible to only render the visible portion of the table.
+When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. [The `Scroller` extension](https://datatables.net/extensions/scroller) makes it possible to only render the visible portion of the table.
 
 ```{r}
 m = matrix(runif(1000 * 4), ncol = 4, dimnames = list(NULL, letters[1:4]))
@@ -223,6 +223,6 @@ datatable(
 )
 ```
 
-# TableTools
+# TableTools (Retired)
 
-The `TableTools` extension has been removed from **DT**. Please use the `Buttons` extension instead.
+[The `TableTools` extension](https://datatables.net/extensions/tabletools) is retired and has been removed from **DT**. Please use the `Buttons` extension instead.
