@@ -59,23 +59,24 @@ encode_img = function(css) {
 }
 
 # if foo.min.js exists, remove foo.js; similar thing to .css
-keep_min = function(dir, only_minified = FALSE) {
-  dirs = list.dirs(dir, recursive = FALSE)
-  invisible(lapply(dirs, keep_min, only_minified = only_minified))
-  files = list.files(dir, '[.](css|js)$', full.names = TRUE)
-  if (length(files) == 0) return()
+keep_min = function(dir, only_minified = FALSE, keep_reg = NULL) {
+  files = list.files(dir, '[.](css|js)$', full.names = TRUE, recursive = TRUE)
+  if (length(files) == 0) return(invisible())
   src_files = files[!grepl('[.]min[.](css|js)$', files)]
   min_files = gsub('[.](css|js)$', '.min.\\1', src_files)
   no_min_src_files = src_files[!file.exists(min_files)]
-  if (length(no_min_src_files) && only_minified) {
-    warning(
-      "Removing src js/css files w/o minified version in '",
-      dir, "'. ",
+  if (only_minified) {
+    # currently Buttons/js/vfs_fonts.js has not minified version
+    # keep_reg will handle such cases
+    keep_files = no_min_src_files[Reduce(`|`, lapply(keep_reg, grepl, no_min_src_files))]
+    warn_files = setdiff(no_min_src_files, keep_files)
+    if (length(warn_files)) warning(
+      "Removing src js/css files w/o minified version.",
       "They should be garbage files but you'd better take a closer look.\n",
-      paste0("'", basename(no_min_src_files), "'", collapse = ", "),
+      paste0(warn_files, collapse = "\n"),
       immediate. = TRUE, call. = FALSE
     )
-    rm_files = src_files
+    rm_files = setdiff(src_files, keep_files)
   } else {
     rm_files = setdiff(src_files, no_min_src_files)
   }
@@ -139,6 +140,14 @@ shorten_name = function(x) {
   }
 }
 
+clean_up = function(dir, keep_reg = NULL) {
+  files = list.files(dir, full.names = TRUE, recursive = TRUE)
+  if (length(keep_reg)) {
+    files = files[!Reduce(`|`, lapply(keep_reg, grepl, files))]
+  }
+  invisible(file.remove(files))
+}
+
 # download plugins --------------------------------------------------------
 
 if (!dir.exists(dld_plugin_path())) system2(
@@ -162,7 +171,7 @@ rm_empty_files(dld_folder())
 # "ColReorder-1.5.2/js/colReorder.dataTables.js". Usually, when this happens,
 # no corresponding minified version files can be found. In addition,
 # the current dependence implementation only uses min.js/css files.
-keep_min(dld_dt_path(), only_minified = TRUE)
+keep_min(dld_dt_path(), only_minified = TRUE, keep_reg = "vfs_fonts[.]js$")
 keep_min(dld_plugin_path())
 
 # replace the png files with base64 encode images
@@ -220,10 +229,26 @@ local({
 
 # copy files --------------------------------------------------------------
 
+# since there're no manually maintained css/js scripts, we should just remove
+# all the datatables files except for the plugins folder, which contains
+# DT maintained js file "jquery.highlight.js" and the sub-folders' names are
+# used to tell the available plugins. The reason of this step is that we want
+# to remove those not-in-used files like "dataTables.uikit.min.css".
+
+# remove all the existing files
+clean_up(
+  lib_path('datatables'),
+  keep_reg = c(
+    'license[.]txt$',
+    'jquery[.]dataTables[.]extra[.]css$',
+    'dataTables[.]bootstrap[.]extra[.]css$'
+  )
+)
+clean_up(lib_path('datatables-extensions'))
+clean_up(lib_path('datatables-plugins'),
+         keep_reg = "jquery[.]highlight[.]js$")
+
 # update DataTables
-# dataTables.uikit.min.css, dataTables.uikit.min.js, dataTables.dataTables.min.js
-# may be obsolete
-# In addition, there's no license file bundled. Does this matter?
 copy_js_css_swf(dld_dt_path('DataTables'), lib_path('datatables'))
 
 # update extensions
