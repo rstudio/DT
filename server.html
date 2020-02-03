@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -108,54 +107,54 @@
 <h1><span class="header-section-number">1</span> A Shiny Example</h1>
 <p>If you have used <strong>DataTables</strong> in <strong>shiny</strong> before, you might know that <strong>shiny</strong> uses the server-side processing model for <strong>DataTables</strong>, which basically means the data is processed through R, and R will return the JSON data to the client.</p>
 <p>Server-side processing in Shiny is enabled by the <code>DT::renderDataTable</code> parameter <code>server = TRUE</code>; it is enabled by default. There is an example in the <strong>DT</strong> package, which you can run by</p>
-<pre class="sourceCode r"><code class="sourceCode r">shiny<span class="op">::</span><span class="kw">runApp</span>(<span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-shiny&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>shiny<span class="op">::</span><span class="kw">runApp</span>(<span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-shiny&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>))</span></code></pre>
 <p>Below is the source code of the example app:</p>
 <div id="ui.r" class="section level2">
 <h2><span class="header-section-number">1.1</span> ui.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-
-<span class="kw">shinyUI</span>(<span class="kw">fluidPage</span>(
-  <span class="dt">title =</span> <span class="st">&#39;Use the DT package in shiny&#39;</span>,
-  <span class="kw">h1</span>(<span class="st">&#39;A Table Using Client-side Processing&#39;</span>),
-  <span class="kw">fluidRow</span>(
-    <span class="kw">column</span>(<span class="dv">2</span>),
-    <span class="kw">column</span>(<span class="dv">8</span>, DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_a&#39;</span>)),
-    <span class="kw">column</span>(<span class="dv">2</span>)
-  ),
-  <span class="kw">h1</span>(<span class="st">&#39;A Table Using Server-side Processing&#39;</span>),
-  <span class="kw">fluidRow</span>(
-    <span class="kw">column</span>(<span class="dv">2</span>),
-    <span class="kw">column</span>(<span class="dv">8</span>, DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_b&#39;</span>)),
-    <span class="kw">column</span>(<span class="dv">2</span>)
-  )
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">shinyUI</span>(<span class="kw">fluidPage</span>(</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">title =</span> <span class="st">&#39;Use the DT package in shiny&#39;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="kw">h1</span>(<span class="st">&#39;A Table Using Client-side Processing&#39;</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="kw">fluidRow</span>(</span>
+<span id="cb2-7"><a href="#cb2-7"></a>    <span class="kw">column</span>(<span class="dv">2</span>),</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="kw">column</span>(<span class="dv">8</span>, DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_a&#39;</span>)),</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="kw">column</span>(<span class="dv">2</span>)</span>
+<span id="cb2-10"><a href="#cb2-10"></a>  ),</span>
+<span id="cb2-11"><a href="#cb2-11"></a>  <span class="kw">h1</span>(<span class="st">&#39;A Table Using Server-side Processing&#39;</span>),</span>
+<span id="cb2-12"><a href="#cb2-12"></a>  <span class="kw">fluidRow</span>(</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    <span class="kw">column</span>(<span class="dv">2</span>),</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="kw">column</span>(<span class="dv">8</span>, DT<span class="op">::</span><span class="kw">dataTableOutput</span>(<span class="st">&#39;tbl_b&#39;</span>)),</span>
+<span id="cb2-15"><a href="#cb2-15"></a>    <span class="kw">column</span>(<span class="dv">2</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a>  )</span>
+<span id="cb2-17"><a href="#cb2-17"></a>))</span></code></pre>
 </div>
 <div id="server.r" class="section level2">
 <h2><span class="header-section-number">1.2</span> server.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-<span class="kw">library</span>(DT)
-
-<span class="kw">shinyServer</span>(<span class="cf">function</span>(input, output, session) {
-  output<span class="op">$</span>tbl_a =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>)
-  output<span class="op">$</span>tbl_b =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(iris)
-})</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">library</span>(DT)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">shinyServer</span>(<span class="cf">function</span>(input, output, session) {</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  output<span class="op">$</span>tbl_a =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(iris, <span class="dt">server =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  output<span class="op">$</span>tbl_b =<span class="st"> </span>DT<span class="op">::</span><span class="kw">renderDataTable</span>(iris)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>})</span></code></pre>
 </div>
 </div>
 <div id="a-jsonp-example" class="section level1">
 <h1><span class="header-section-number">2</span> A JSONP Example</h1>
 <p>Now let’s try the <a href="http://datatables.net/examples/server_side/jsonp.html">JSONP data source example</a> on the DataTables website. It is fairly simple to reproduce that example here using the <code>datatable()</code> function with an option <code>ajax</code> that specifies the data URL:</p>
-<pre class="sourceCode r"><code class="sourceCode r">employee =<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="st">`</span><span class="dt">First name</span><span class="st">`</span> =<span class="st"> </span><span class="kw">character</span>(), <span class="st">`</span><span class="dt">Last name</span><span class="st">`</span> =<span class="st"> </span><span class="kw">character</span>(), <span class="dt">Position =</span> <span class="kw">character</span>(),
-  <span class="dt">Office =</span> <span class="kw">character</span>(), <span class="st">`</span><span class="dt">Start date</span><span class="st">`</span> =<span class="st"> </span><span class="kw">character</span>(), <span class="dt">Salary =</span> <span class="kw">numeric</span>(),
-  <span class="dt">check.names =</span> <span class="ot">FALSE</span>
-)
-<span class="kw">datatable</span>(employee, <span class="dt">rownames =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">ajax =</span> <span class="kw">list</span>(
-    <span class="dt">serverSide =</span> <span class="ot">TRUE</span>, <span class="dt">processing =</span> <span class="ot">TRUE</span>,
-    <span class="dt">url =</span> <span class="st">&#39;https://datatables.net/examples/server_side/scripts/jsonp.php&#39;</span>,
-    <span class="dt">dataType =</span> <span class="st">&#39;jsonp&#39;</span>
-  )
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>employee =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="st">`</span><span class="dt">First name</span><span class="st">`</span> =<span class="st"> </span><span class="kw">character</span>(), <span class="st">`</span><span class="dt">Last name</span><span class="st">`</span> =<span class="st"> </span><span class="kw">character</span>(), <span class="dt">Position =</span> <span class="kw">character</span>(),</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">Office =</span> <span class="kw">character</span>(), <span class="st">`</span><span class="dt">Start date</span><span class="st">`</span> =<span class="st"> </span><span class="kw">character</span>(), <span class="dt">Salary =</span> <span class="kw">numeric</span>(),</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">check.names =</span> <span class="ot">FALSE</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">datatable</span>(employee, <span class="dt">rownames =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="dt">ajax =</span> <span class="kw">list</span>(</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="dt">serverSide =</span> <span class="ot">TRUE</span>, <span class="dt">processing =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    <span class="dt">url =</span> <span class="st">&#39;https://datatables.net/examples/server_side/scripts/jsonp.php&#39;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="dt">dataType =</span> <span class="st">&#39;jsonp&#39;</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>  )</span>
+<span id="cb4-12"><a href="#cb4-12"></a>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {

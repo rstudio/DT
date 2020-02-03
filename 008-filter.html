@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -80,12 +79,12 @@
 
 
 <p>When a table contains too many columns, the column filter boxes may look crowded, and you may want to get rid of the clear buttons in the boxes, or use plain text input styles instead of the Bootstrap style to save some space inside the boxes.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">110</span>), ]
-<span class="co"># no clear buttons</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoWidth =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="kw">list</span>(
-  <span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">110</span>), ]</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># no clear buttons</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoWidth =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="kw">list</span>(</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">position =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -120,10 +119,10 @@ iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># no Bootstrap styles, either</span>
-<span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoWidth =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="kw">list</span>(
-  <span class="dt">position =</span> <span class="st">&#39;bottom&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>, <span class="dt">plain =</span> <span class="ot">TRUE</span>
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># no Bootstrap styles, either</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoWidth =</span> <span class="ot">TRUE</span>), <span class="dt">filter =</span> <span class="kw">list</span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">position =</span> <span class="st">&#39;bottom&#39;</span>, <span class="dt">clear =</span> <span class="ot">FALSE</span>, <span class="dt">plain =</span> <span class="ot">TRUE</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>))</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {

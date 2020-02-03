@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -85,16 +84,16 @@
 
 
 <p>You can choose to use a subset of the buttons in the Buttons extension, or arrange some buttons in a collection. There are <a href="http://datatables.net/extensions/buttons/examples/">such examples</a> on the <strong>DataTables</strong> website. We rewrite two simple examples in R below:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)
-<span class="co"># only show the Copy and Print buttons</span>
-<span class="kw">datatable</span>(
-  iris2,
-  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,
-    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>)
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># only show the Copy and Print buttons</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">datatable</span>(</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  iris2,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  )</span>
+<span id="cb1-10"><a href="#cb1-10"></a>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -135,20 +134,20 @@ iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># put CSV, XLS, and PDF in a collection</span>
-<span class="kw">datatable</span>(
-  iris2,
-  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,
-    <span class="dt">buttons =</span> 
-      <span class="kw">list</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>, <span class="kw">list</span>(
-        <span class="dt">extend =</span> <span class="st">&#39;collection&#39;</span>,
-        <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>),
-        <span class="dt">text =</span> <span class="st">&#39;Download&#39;</span>
-      ))
-    
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># put CSV, XLS, and PDF in a collection</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  iris2,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="dt">buttons =</span> </span>
+<span id="cb2-7"><a href="#cb2-7"></a>      <span class="kw">list</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>, <span class="kw">list</span>(</span>
+<span id="cb2-8"><a href="#cb2-8"></a>        <span class="dt">extend =</span> <span class="st">&#39;collection&#39;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>        <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>),</span>
+<span id="cb2-10"><a href="#cb2-10"></a>        <span class="dt">text =</span> <span class="st">&#39;Download&#39;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>      ))</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    </span>
+<span id="cb2-13"><a href="#cb2-13"></a>  )</span>
+<span id="cb2-14"><a href="#cb2-14"></a>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {

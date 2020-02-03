@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -109,45 +108,51 @@
 <hr />
 <p>The R package <strong>DT</strong> provides an R interface to the JavaScript library <a href="http://datatables.net"><strong>DataTables</strong></a>. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and <strong>DataTables</strong> provides filtering, pagination, sorting, and many other features in the tables.</p>
 <p>You may install the stable version from CRAN, or the development version using <code>remotes::install_github('rstudio/DT')</code> if necessary (this website reflects the development version of <strong>DT</strong>):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if (!require(&quot;DT&quot;)) install.packages(&#39;DT&#39;)</span>
-xfun<span class="op">::</span><span class="kw">session_info</span>(<span class="st">&#39;DT&#39;</span>)</code></pre>
-<pre><code>## R version 3.6.1 (2019-07-05)
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># if (!require(&quot;DT&quot;)) install.packages(&#39;DT&#39;)</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>xfun<span class="op">::</span><span class="kw">session_info</span>(<span class="st">&#39;DT&#39;</span>)</span></code></pre>
+<pre><code>## R version 3.6.2 (2019-12-12)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Mojave 10.14.6
+## Running under: macOS Catalina 10.15.2
 ## 
 ## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
 ## 
 ## Package version:
-##   assertthat_0.2.1   backports_1.1.4    BH_1.69.0.1        cli_1.1.0         
-##   colorspace_1.4.1   crayon_1.3.4       crosstalk_1.0.0    digest_0.6.20     
-##   DT_0.9             ellipsis_0.2.0.1   fansi_0.4.0        ggplot2_3.2.1     
-##   glue_1.3.1         graphics_3.6.1     grDevices_3.6.1    grid_3.6.1        
-##   gtable_0.3.0       htmltools_0.3.6    htmlwidgets_1.3    httpuv_1.5.2      
-##   jsonlite_1.6       labeling_0.3       later_0.8.0        lattice_0.20.38   
-##   lazyeval_0.2.2     magrittr_1.5       MASS_7.3.51.4      Matrix_1.2.17     
-##   methods_3.6.1      mgcv_1.8.29        mime_0.7           munsell_0.5.0     
-##   nlme_3.1.141       pillar_1.4.2       pkgconfig_2.0.2    plyr_1.8.4        
-##   promises_1.0.1     R6_2.4.0           RColorBrewer_1.1.2 Rcpp_1.0.2        
-##   reshape2_1.4.3     rlang_0.4.0        scales_1.0.0       shiny_1.3.2       
-##   sourcetools_0.1.7  splines_3.6.1      stats_3.6.1        stringi_1.4.3     
-##   stringr_1.4.0      tibble_2.1.3       tools_3.6.1        utf8_1.1.4        
-##   utils_3.6.1        vctrs_0.2.0        viridisLite_0.3.0  withr_2.1.2       
-##   xtable_1.8.4       yaml_2.2.0         zeallot_0.1.0</code></pre>
+##   assertthat_0.2.1     base64enc_0.1.3      BH_1.72.0.3         
+##   cli_2.0.1            colorspace_1.4.1     crayon_1.3.4        
+##   crosstalk_1.0.0      digest_0.6.23        DT_0.11.6           
+##   ellipsis_0.3.0       fansi_0.4.1          farver_2.0.3        
+##   fastmap_1.0.1        ggplot2_3.2.1        glue_1.3.1          
+##   graphics_3.6.2       grDevices_3.6.2      grid_3.6.2          
+##   gtable_0.3.0         htmltools_0.4.0.9002 htmlwidgets_1.5.1   
+##   httpuv_1.5.2         jsonlite_1.6         labeling_0.3        
+##   later_1.0.0          lattice_0.20.38      lazyeval_0.2.2      
+##   lifecycle_0.1.0      magrittr_1.5         MASS_7.3.51.5       
+##   Matrix_1.2.18        methods_3.6.2        mgcv_1.8.31         
+##   mime_0.8             munsell_0.5.0        nlme_3.1.143        
+##   pillar_1.4.3         pkgconfig_2.0.3      plyr_1.8.5          
+##   promises_1.1.0       R6_2.4.1             RColorBrewer_1.1.2  
+##   Rcpp_1.0.3           reshape2_1.4.3       rlang_0.4.4         
+##   scales_1.1.0         shiny_1.4.0.9001     sourcetools_0.1.7   
+##   splines_3.6.2        stats_3.6.2          stringi_1.4.5       
+##   stringr_1.4.0        tibble_2.1.3         tools_3.6.2         
+##   utf8_1.1.4           utils_3.6.2          vctrs_0.2.2         
+##   viridisLite_0.3.0    withr_2.1.2          xtable_1.8.4        
+##   yaml_2.2.1</code></pre>
 <p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> to file bug reports or feature requests, and use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> to ask questions.</p>
 <div id="usage" class="section level1">
 <h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>,
-    <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), rownames, colnames, container,
-    <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;top&quot;</span>), <span class="dt">escape =</span> <span class="ot">TRUE</span>,
-    <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">width =</span> <span class="ot">NULL</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, <span class="dt">elementId =</span> <span class="ot">NULL</span>,
-    <span class="dt">fillContainer =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.fillContainer&quot;</span>, <span class="ot">NULL</span>),
-    <span class="dt">autoHideNavigation =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.autoHideNavigation&quot;</span>, <span class="ot">NULL</span>),
-    <span class="dt">selection =</span> <span class="kw">c</span>(<span class="st">&quot;multiple&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="dt">extensions =</span> <span class="kw">list</span>(),
-    <span class="dt">plugins =</span> <span class="ot">NULL</span>, <span class="dt">editable =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">datatable</span>(data, <span class="dt">options =</span> <span class="kw">list</span>(), <span class="dt">class =</span> <span class="st">&quot;display&quot;</span>,</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;return table;&quot;</span>), rownames, colnames, container,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="dt">caption =</span> <span class="ot">NULL</span>, <span class="dt">filter =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;top&quot;</span>), <span class="dt">escape =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">style =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">width =</span> <span class="ot">NULL</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, <span class="dt">elementId =</span> <span class="ot">NULL</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">fillContainer =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.fillContainer&quot;</span>, <span class="ot">NULL</span>),</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="dt">autoHideNavigation =</span> <span class="kw">getOption</span>(<span class="st">&quot;DT.autoHideNavigation&quot;</span>, <span class="ot">NULL</span>),</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="dt">selection =</span> <span class="kw">c</span>(<span class="st">&quot;multiple&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="dt">extensions =</span> <span class="kw">list</span>(),</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="dt">plugins =</span> <span class="ot">NULL</span>, <span class="dt">editable =</span> <span class="ot">FALSE</span>)</span></code></pre>
 <p>Here is a “hello world” example with zero configuration:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">datatable</span>(iris)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">datatable</span>(iris)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -187,7 +192,7 @@ xfun<span class="op">::</span><span class="kw">session_info</span>(<span class="
 <div id="table-css-classes" class="section level2">
 <h2><span class="header-section-number">2.1</span> Table CSS Classes</h2>
 <p>The <code>class</code> argument specifies the CSS classes of the table. The possible values can be found on the page of <a href="http://datatables.net/manual/styling/classes">default styling options</a>. The default value <code>display</code> basically enables row striping, row highlighting on mouse over, row borders, and highlighting ordered columns. You can choose a different combination of CSS classes, such as <code>cell-border</code> and <code>stripe</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">class =</span> <span class="st">&#39;cell-border stripe&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">class =</span> <span class="st">&#39;cell-border stripe&#39;</span>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
@@ -224,16 +229,16 @@ xfun<span class="op">::</span><span class="kw">session_info</span>(<span class="
 <div id="styling" class="section level2">
 <h2><span class="header-section-number">2.2</span> Styling</h2>
 <p>Currently, <strong>DT</strong> only supports the Bootstrap style besides the default style. You can use the argument <code>style = 'bootstrap'</code> to enable the Bootstrap style, and adjust the table classes accordingly using <a href="http://getbootstrap.com/css/#tables">Bootstrap table class names</a>, such as <code>table-stripe</code> and <code>table-hover</code>. Actually, <strong>DT</strong> will automatically adjust the class names even if you provided the DataTables class names such as <code>stripe</code> and <code>hover</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="st">&#39;display&#39;</span>)
-<span class="co">## [1] &quot;table table-striped table-hover&quot;</span>
-DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="st">&#39;compact&#39;</span>, <span class="st">&#39;cell-border&#39;</span>))
-<span class="co">## [1] &quot;table table-condensed table-bordered&quot;</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="st">&#39;display&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## [1] &quot;table table-striped table-hover&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw">c</span>(<span class="st">&#39;compact&#39;</span>, <span class="st">&#39;cell-border&#39;</span>))</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">## [1] &quot;table table-condensed table-bordered&quot;</span></span></code></pre>
 <p>Note you can only use one style for all tables on one page. Please see <a href="005-bootstrap.html">this separate page</a> for examples using the Bootstrap style.</p>
 </div>
 <div id="table-editing" class="section level2">
 <h2><span class="header-section-number">2.3</span> Table Editing</h2>
 <p>You can enable table editing using the argument <code>editable</code> (see <code>?DT::datatable</code> for its possible values). Then you will be able to double-click a cell to edit its value. It works in both client-side and <a href="server.html">server-side processing</a> modes. Below are two client-side examples (also see <a href="https://yihui.shinyapps.io/DT-edit/">a Shiny example</a> with server-side processing):</p>
-<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="st">&#39;cell&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="st">&#39;cell&#39;</span>)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
@@ -272,9 +277,9 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="kw">list</span>(
-  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>, <span class="dt">disable =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>))
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>DT<span class="op">::</span><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">editable =</span> <span class="kw">list</span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>, <span class="dt">disable =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span>
+<span id="cb8-3"><a href="#cb8-3"></a>))</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
@@ -317,7 +322,7 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
 <div id="display-row-names" class="section level2">
 <h2><span class="header-section-number">2.4</span> Display Row Names</h2>
 <p>If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument <code>rownames = FALSE</code>, and you can also change row names by providing a different character vector to <code>rownames</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars))</span></code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
@@ -356,7 +361,7 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="ot">FALSE</span>)  <span class="co"># no row names</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="ot">FALSE</span>)  <span class="co"># no row names</span></span></code></pre>
 <div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {
@@ -390,7 +395,7 @@ DT<span class="op">:::</span><span class="kw">DT2BSClass</span>(<span class="kw"
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="kw">head</span>(LETTERS))  <span class="co"># new row names</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(mtcars), <span class="dt">rownames =</span> <span class="kw">head</span>(LETTERS))  <span class="co"># new row names</span></span></code></pre>
 <div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7">{
   "x": {
@@ -446,8 +451,8 @@ Influence of Row Names on Column Indices in JavaScript
 <div id="custom-column-names" class="section level2">
 <h2><span class="header-section-number">2.5</span> Custom Column Names</h2>
 <p>By default, <code>datatable()</code> shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># colnames(iris) is a character vector of length 5, and we replace it</span>
-<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Here&#39;</span>, <span class="st">&#39;Are&#39;</span>, <span class="st">&#39;Some&#39;</span>, <span class="st">&#39;New&#39;</span>, <span class="st">&#39;Names&#39;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># colnames(iris) is a character vector of length 5, and we replace it</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Here&#39;</span>, <span class="st">&#39;Are&#39;</span>, <span class="st">&#39;Some&#39;</span>, <span class="st">&#39;New&#39;</span>, <span class="st">&#39;Names&#39;</span>))</span></code></pre>
 <div id="htmlwidget-8" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-8">{
   "x": {
@@ -481,7 +486,7 @@ Influence of Row Names on Column Indices in JavaScript
   "jsHooks": []
 }</script>
 <p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;A Better Name&#39;</span> =<span class="st"> &#39;Sepal.Width&#39;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;A Better Name&#39;</span> =<span class="st"> &#39;Sepal.Width&#39;</span>))</span></code></pre>
 <div id="htmlwidget-9" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-9">{
   "x": {
@@ -514,7 +519,7 @@ Influence of Row Names on Column Indices in JavaScript
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Another Better Name&#39;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> =<span class="st"> </span><span class="dv">4</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;Another Better Name&#39;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> =<span class="st"> </span><span class="dv">4</span>))</span></code></pre>
 <div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-10">{
   "x": {
@@ -548,8 +553,8 @@ Influence of Row Names on Column Indices in JavaScript
   "jsHooks": []
 }</script>
 <p>When you display row names of the data, its column name will be a white space by default. That is why you cannot see its column name. You can certainly choose to use a column name for rownames as well, e.g.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the first column name to &#39;ID&#39;</span>
-<span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;ID&#39;</span> =<span class="st"> </span><span class="dv">1</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># change the first column name to &#39;ID&#39;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="kw">datatable</span>(<span class="kw">head</span>(iris), <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="st">&#39;ID&#39;</span> =<span class="st"> </span><span class="dv">1</span>))</span></code></pre>
 <div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-11">{
   "x": {
@@ -582,21 +587,21 @@ Influence of Row Names on Column Indices in JavaScript
 <div id="custom-table-container" class="section level2">
 <h2><span class="header-section-number">2.6</span> Custom Table Container</h2>
 <p>The <code>container</code> argument allows you to provide a different table container to hold the table cells. By default, the container is generated from the column names. Below is an example of a custom table header:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table container</span>
-sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class="kw">withTags</span>(<span class="kw">table</span>(
-  <span class="dt">class =</span> <span class="st">&#39;display&#39;</span>,
-  <span class="kw">thead</span>(
-    <span class="kw">tr</span>(
-      <span class="kw">th</span>(<span class="dt">rowspan =</span> <span class="dv">2</span>, <span class="st">&#39;Species&#39;</span>),
-      <span class="kw">th</span>(<span class="dt">colspan =</span> <span class="dv">2</span>, <span class="st">&#39;Sepal&#39;</span>),
-      <span class="kw">th</span>(<span class="dt">colspan =</span> <span class="dv">2</span>, <span class="st">&#39;Petal&#39;</span>)
-    ),
-    <span class="kw">tr</span>(
-      <span class="kw">lapply</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;Length&#39;</span>, <span class="st">&#39;Width&#39;</span>), <span class="dv">2</span>), th)
-    )
-  )
-))
-<span class="kw">print</span>(sketch)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># a custom table container</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class="kw">withTags</span>(<span class="kw">table</span>(</span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="dt">class =</span> <span class="st">&#39;display&#39;</span>,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="kw">thead</span>(</span>
+<span id="cb16-5"><a href="#cb16-5"></a>    <span class="kw">tr</span>(</span>
+<span id="cb16-6"><a href="#cb16-6"></a>      <span class="kw">th</span>(<span class="dt">rowspan =</span> <span class="dv">2</span>, <span class="st">&#39;Species&#39;</span>),</span>
+<span id="cb16-7"><a href="#cb16-7"></a>      <span class="kw">th</span>(<span class="dt">colspan =</span> <span class="dv">2</span>, <span class="st">&#39;Sepal&#39;</span>),</span>
+<span id="cb16-8"><a href="#cb16-8"></a>      <span class="kw">th</span>(<span class="dt">colspan =</span> <span class="dv">2</span>, <span class="st">&#39;Petal&#39;</span>)</span>
+<span id="cb16-9"><a href="#cb16-9"></a>    ),</span>
+<span id="cb16-10"><a href="#cb16-10"></a>    <span class="kw">tr</span>(</span>
+<span id="cb16-11"><a href="#cb16-11"></a>      <span class="kw">lapply</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;Length&#39;</span>, <span class="st">&#39;Width&#39;</span>), <span class="dv">2</span>), th)</span>
+<span id="cb16-12"><a href="#cb16-12"></a>    )</span>
+<span id="cb16-13"><a href="#cb16-13"></a>  )</span>
+<span id="cb16-14"><a href="#cb16-14"></a>))</span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="kw">print</span>(sketch)</span></code></pre>
 <pre><code>&lt;table class=&quot;display&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -612,9 +617,9 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
     &lt;/tr&gt;
   &lt;/thead&gt;
 &lt;/table&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use rownames = FALSE here because we did not generate a cell for row names in</span>
-<span class="co"># the header, and the header only contains five columns</span>
-<span class="kw">datatable</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)], <span class="dt">container =</span> sketch, <span class="dt">rownames =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># use rownames = FALSE here because we did not generate a cell for row names in</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># the header, and the header only contains five columns</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="kw">datatable</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)], <span class="dt">container =</span> sketch, <span class="dt">rownames =</span> <span class="ot">FALSE</span>)</span></code></pre>
 <div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-12">{
   "x": {
@@ -644,12 +649,12 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
   "jsHooks": []
 }</script>
 <p>You can also add a footer to the table container, and here is an example:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a custom table with both header and footer</span>
-sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class="kw">withTags</span>(<span class="kw">table</span>(
-  <span class="kw">tableHeader</span>(iris),
-  <span class="kw">tableFooter</span>(iris)
-))
-<span class="kw">print</span>(sketch)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># a custom table with both header and footer</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class="kw">withTags</span>(<span class="kw">table</span>(</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="kw">tableHeader</span>(iris),</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="kw">tableFooter</span>(iris)</span>
+<span id="cb19-5"><a href="#cb19-5"></a>))</span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="kw">print</span>(sketch)</span></code></pre>
 <pre><code>&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -670,10 +675,10 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
     &lt;/tr&gt;
   &lt;/tfoot&gt;
 &lt;/table&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  <span class="kw">head</span>(iris, <span class="dv">10</span>),
-  <span class="dt">container =</span> sketch, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>), <span class="dt">rownames =</span> <span class="ot">FALSE</span>
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="kw">head</span>(iris, <span class="dv">10</span>),</span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="dt">container =</span> sketch, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>), <span class="dt">rownames =</span> <span class="ot">FALSE</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>)</span></code></pre>
 <div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-13">{
   "x": {
@@ -709,10 +714,10 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
 <div id="table-caption" class="section level2">
 <h2><span class="header-section-number">2.7</span> Table Caption</h2>
 <p>You can add a table caption via the <code>caption</code> argument. It can be either a character vector, or a tag object created from <code>htmltools::tags$caption()</code>. See this <a href="http://datatables.net/blog/2014-11-07">blog post</a> for more information on table captions.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(
-  <span class="kw">head</span>(iris),
-  <span class="dt">caption =</span> <span class="st">&#39;Table 1: This is a simple caption for the table.&#39;</span>
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">datatable</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="kw">head</span>(iris),</span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="dt">caption =</span> <span class="st">&#39;Table 1: This is a simple caption for the table.&#39;</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>)</span></code></pre>
 <div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-14">{
   "x": {
@@ -746,14 +751,14 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># display the caption at the bottom, and &lt;em&gt; the caption</span>
-<span class="kw">datatable</span>(
-  <span class="kw">head</span>(iris),
-  <span class="dt">caption =</span> htmltools<span class="op">::</span>tags<span class="op">$</span><span class="kw">caption</span>(
-    <span class="dt">style =</span> <span class="st">&#39;caption-side: bottom; text-align: center;&#39;</span>,
-    <span class="st">&#39;Table 2: &#39;</span>, htmltools<span class="op">::</span><span class="kw">em</span>(<span class="st">&#39;This is a simple caption for the table.&#39;</span>)
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># display the caption at the bottom, and &lt;em&gt; the caption</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="kw">head</span>(iris),</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="dt">caption =</span> htmltools<span class="op">::</span>tags<span class="op">$</span><span class="kw">caption</span>(</span>
+<span id="cb23-5"><a href="#cb23-5"></a>    <span class="dt">style =</span> <span class="st">&#39;caption-side: bottom; text-align: center;&#39;</span>,</span>
+<span id="cb23-6"><a href="#cb23-6"></a>    <span class="st">&#39;Table 2: &#39;</span>, htmltools<span class="op">::</span><span class="kw">em</span>(<span class="st">&#39;This is a simple caption for the table.&#39;</span>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a>  )</span>
+<span id="cb23-8"><a href="#cb23-8"></a>)</span></code></pre>
 <div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-15">{
   "x": {
@@ -791,10 +796,10 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
 <div id="column-filters" class="section level2">
 <h2><span class="header-section-number">2.8</span> Column Filters</h2>
 <p><strong>DataTables</strong> does not provide column filters by default. There is only a global filter (the search box on the top-right). We added a <code>filter</code> argument in <code>datatable()</code> to automatically generate column filters. By default, the filters are not shown since <code>filter = 'none'</code>. You can enable these filters by <code>filter = 'top'</code> or <code>'bottom'</code>, depending on whether you want to put the filters on the top or bottom of the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">110</span>), ]
-<span class="kw">datatable</span>(iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">autoWidth =</span> <span class="ot">TRUE</span>
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>iris2 =<span class="st"> </span>iris[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="op">:</span><span class="dv">110</span>), ]</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">datatable</span>(iris2, <span class="dt">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">autoWidth =</span> <span class="ot">TRUE</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>))</span></code></pre>
 <div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-16">{
   "x": {
@@ -840,22 +845,22 @@ sketch =<span class="st"> </span>htmltools<span class="op">::</span><span class=
 <p>When you leave the initial search boxes, the controls will be hidden and the filtering values (if there are any) are stored in the boxes:</p>
 <ul>
 <li>For numeric/date/time columns, the values displayed in the boxes are of the form <code>low ... high</code>;</li>
-<li>For factor columns, the values are serialized as a JSON array of the form <code>[&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]</code>;</li>
+<li>For factor columns, the values are serialized as a JSON array of the form <code>["value1", "value2", "value3"]</code>;</li>
 </ul>
 <p>When a column is filtered, there will be a clear button <span class="glyphicon glyphicon-remove-circle"></span> in its search box, and you can click the button to clear the filter. If you do not want to use the controls, you can actually type in the search boxes directly, e.g. you may type <code>2 ... 5</code> to filter a numeric column, and the range of its slider will automatically adjusted to <code>[2, 5]</code>. In case you find a search box too narrow and it is difficult to read the values in it, you may mouse over the box and its values will be displayed as a tooltip. See <a href="008-filter.html">this example</a> for how to hide the clear buttons, and use plain text input styles instead of Bootstrap.</p>
 <p>Below is a simple example to demonstrate filters for character, date, and time columns:</p>
-<pre class="sourceCode r"><code class="sourceCode r">d =<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">names =</span> <span class="kw">rownames</span>(mtcars),
-  <span class="dt">date =</span> <span class="kw">as.Date</span>(<span class="st">&#39;2015-03-23&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">32</span>,
-  <span class="dt">time =</span> <span class="kw">as.POSIXct</span>(<span class="st">&#39;2015-03-23 12:00:00&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;UTC&#39;</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">32</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5000</span>,
-  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>
-)
-<span class="kw">str</span>(d)
-<span class="co">## &#39;data.frame&#39;:    32 obs. of  3 variables:</span>
-<span class="co">##  $ names: chr  &quot;Mazda RX4&quot; &quot;Mazda RX4 Wag&quot; &quot;Datsun 710&quot; &quot;Hornet 4 Drive&quot; ...</span>
-<span class="co">##  $ date : Date, format: &quot;2015-03-24&quot; &quot;2015-03-25&quot; ...</span>
-<span class="co">##  $ time : POSIXct, format: &quot;2015-03-23 13:23:20&quot; &quot;2015-03-23 14:46:40&quot; ...</span>
-<span class="kw">datatable</span>(d, <span class="dt">filter =</span> <span class="st">&#39;bottom&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>d =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="dt">names =</span> <span class="kw">rownames</span>(mtcars),</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="dt">date =</span> <span class="kw">as.Date</span>(<span class="st">&#39;2015-03-23&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">32</span>,</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="dt">time =</span> <span class="kw">as.POSIXct</span>(<span class="st">&#39;2015-03-23 12:00:00&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;UTC&#39;</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">32</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5000</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>)</span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="kw">str</span>(d)</span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="co">## &#39;data.frame&#39;:    32 obs. of  3 variables:</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a><span class="co">##  $ names: chr  &quot;Mazda RX4&quot; &quot;Mazda RX4 Wag&quot; &quot;Datsun 710&quot; &quot;Hornet 4 Drive&quot; ...</span></span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="co">##  $ date : Date, format: &quot;2015-03-24&quot; &quot;2015-03-25&quot; ...</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a><span class="co">##  $ time : POSIXct, format: &quot;2015-03-23 13:23:20&quot; &quot;2015-03-23 14:46:40&quot; ...</span></span>
+<span id="cb25-12"><a href="#cb25-12"></a><span class="kw">datatable</span>(d, <span class="dt">filter =</span> <span class="st">&#39;bottom&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))</span></code></pre>
 <div id="htmlwidget-17" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-17">{
   "x": {
@@ -898,7 +903,7 @@ Known Issues of Column Filters
 <div id="the-callback-argument" class="section level2">
 <h2><span class="header-section-number">2.9</span> The <code>callback</code> argument</h2>
 <p>The argument <code>callback</code> takes the body of a JavaScript function that will be applied to the <strong>DataTables</strong> object after initialization. Below is an example to show the next page after the table is initialized<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">30</span>), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(&quot;next&quot;).draw(false);&#39;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">datatable</span>(<span class="kw">head</span>(iris, <span class="dv">30</span>), <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&#39;table.page(&quot;next&quot;).draw(false);&#39;</span>))</span></code></pre>
 <div id="htmlwidget-18" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-18">{
   "x": {
@@ -933,9 +938,9 @@ Known Issues of Column Filters
   "jsHooks": []
 }</script>
 <p>In the above example, the actual callback function on the JavaScript side is this (<code>callback</code> is only the body of the function):</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(table) <span class="op">{</span>
-  <span class="va">table</span>.<span class="at">page</span>(<span class="st">&quot;next&quot;</span>).<span class="at">draw</span>(<span class="kw">false</span>)<span class="op">;</span>
-<span class="op">}</span></code></pre>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">function</span>(table) <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="va">table</span>.<span class="at">page</span>(<span class="st">&quot;next&quot;</span>).<span class="at">draw</span>(<span class="kw">false</span>)<span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="op">}</span></span></code></pre>
 <p>After we initialize the table via the <code>.DataTable()</code> method in DataTables, the DataTables instance is passed to this callback function. Below are a few more examples:</p>
 <ul>
 <li><a href="002-rowdetails.html">Show extra information in child rows</a></li>
@@ -945,12 +950,12 @@ Known Issues of Column Filters
 <div id="escaping-table-content" class="section level2">
 <h2><span class="header-section-number">2.10</span> Escaping Table Content</h2>
 <p>The argument <code>escape</code> determines whether the HTML entities in the table are escaped or not. There can be potential security problems when the table is rendered in dynamic web applications such as Shiny if you do not escape them. Here is a quick example:</p>
-<pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(
-  <span class="st">&#39;&lt;b&gt;Bold&lt;/b&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Emphasize&lt;/em&gt;&#39;</span>, <span class="st">&#39;&lt;a href=&quot;http://rstudio.com&quot;&gt;RStudio&lt;/a&gt;&#39;</span>,
-  <span class="st">&#39;&lt;a href=&quot;#&quot; onclick=&quot;alert(</span><span class="ch">\&#39;</span><span class="st">Hello World</span><span class="ch">\&#39;</span><span class="st">);&quot;&gt;Hello&lt;/a&gt;&#39;</span>
-), <span class="dv">2</span>)
-<span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;&lt;span style=&quot;color:red&quot;&gt;Column 1&lt;/span&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Column 2&lt;/em&gt;&#39;</span>)
-<span class="kw">datatable</span>(m)  <span class="co"># escape = TRUE by default</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="st">&#39;&lt;b&gt;Bold&lt;/b&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Emphasize&lt;/em&gt;&#39;</span>, <span class="st">&#39;&lt;a href=&quot;http://rstudio.com&quot;&gt;RStudio&lt;/a&gt;&#39;</span>,</span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="st">&#39;&lt;a href=&quot;#&quot; onclick=&quot;alert(</span><span class="ch">\&#39;</span><span class="st">Hello World</span><span class="ch">\&#39;</span><span class="st">);&quot;&gt;Hello&lt;/a&gt;&#39;</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>), <span class="dv">2</span>)</span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;&lt;span style=&quot;color:red&quot;&gt;Column 1&lt;/span&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Column 2&lt;/em&gt;&#39;</span>)</span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="kw">datatable</span>(m)  <span class="co"># escape = TRUE by default</span></span></code></pre>
 <div id="htmlwidget-19" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-19">{
   "x": {
@@ -969,7 +974,7 @@ Known Issues of Column Filters
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>)</span></code></pre>
 <div id="htmlwidget-20" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-20">{
   "x": {
@@ -989,21 +994,21 @@ Known Issues of Column Filters
   "jsHooks": []
 }</script>
 <p>Besides <code>TRUE</code> and <code>FALSE</code>, you can also specify which columns you want to escape, e.g.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">1</span>)  <span class="co"># escape the first column</span>
-<span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">2</span>)  <span class="co"># escape the second column</span>
-<span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))  <span class="co"># escape the first column</span>
-<span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V2&#39;</span>)
-<span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="st">&#39;V1&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">1</span>)  <span class="co"># escape the first column</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">2</span>)  <span class="co"># escape the second column</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))  <span class="co"># escape the first column</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V2&#39;</span>)</span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="st">&#39;V1&#39;</span>)</span></code></pre>
 <p>Please be cautious when using row names with numeric column indices. Since the row names will become the first column in the display, you should increase the column indices by one, e.g.,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(m) =<span class="st"> </span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))
-<span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)  <span class="co"># escape the first column </span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">rownames</span>(m) =<span class="st"> </span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)  <span class="co"># escape the first column </span></span></code></pre>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>By comparison, R indexes from 1.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>See the documentation for the <a href="http://datatables.net/reference/api/page()">page()</a> API.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>By comparison, R indexes from 1.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>See the documentation for the <a href="http://datatables.net/reference/api/page()">page()</a> API.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

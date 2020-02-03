@@ -6,10 +6,20 @@ title: DataTables Plug-ins
 
 **DataTables** has provided a large number of [plug-ins](http://datatables.net/plug-ins/), and we have integrated a subset of them in **DT**. You may enable plug-ins via the `plugins` argument of `datatable()`, e.g. `plugins = c('natural')`. If you find any plug-ins that you are interested in but are not listed here, you may file a feature request using [Github issues](https://github.com/rstudio/DT/issues). Currently these plug-ins have been integrated into **DT**:
 
-- Sorting
-    - natural
-- Filtering
-    - searchHighlight
+```{r, results='asis', echo=FALSE}
+plugins_txt = sort(names(DT:::available_plugins()))
+plugins = strsplit(plugins_txt, strsplit, split = '/', fixed = TRUE)
+last_group = ''
+for (plugin in plugins) {
+  group = plugin[1]
+  value = plugin[2]
+  if (group != last_group) {
+    cat('- ', group, '\n')
+    last_group = group
+  }
+  cat('    - ', value, '\n')
+}
+```
 
 Please note the plug-ins for filtering and sorting may not work for server-side processing, e.g. when you render tables in Shiny.
 

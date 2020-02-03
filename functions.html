@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -107,12 +106,12 @@
 <div id="format-columns" class="section level1">
 <h1><span class="header-section-number">1</span> Format Columns</h1>
 <p>You can use the functions <code>format*()</code> to format the table columns as currency, percentages, or round numbers. Here are some examples:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-m =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="kw">runif</span>(<span class="dv">20</span>), <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))
-m[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])
-m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>], <span class="dv">7</span>)
-<span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">head</span>(LETTERS, <span class="kw">ncol</span>(m))
-<span class="kw">head</span>(m)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>m =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="kw">runif</span>(<span class="dv">20</span>), <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))</span>
+<span id="cb1-3"><a href="#cb1-3"></a>m[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</span>
+<span id="cb1-4"><a href="#cb1-4"></a>m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>] =<span class="st"> </span><span class="kw">round</span>(m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>], <span class="dv">7</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">head</span>(LETTERS, <span class="kw">ncol</span>(m))</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">head</span>(m)</span></code></pre>
 <pre><code>##            A        B        C         D         E
 ## [1,] -460476  -967824  -594707 0.6478935  99.50897
 ## [2,] -130177  -117975  -107917 0.3198206  97.69083
@@ -120,8 +119,8 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
 ## [4,]  170508  -628891  2268956 0.2197676  99.29080
 ## [5,]  229288  -525039  1307962 0.3694889  99.31199
 ## [6,] 1815065 -1586693 -1023109 0.9842192 101.02557</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format the columns A and C as currency, and D as percentages</span>
-<span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># format the columns A and C as currency, and D as percentages</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
@@ -150,8 +149,8 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span>
-<span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="dt">digits =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">datatable</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatCurrency</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="dt">digits =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
@@ -182,28 +181,28 @@ m[, <span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
 }</script>
 <p>Under the hood, these formatting functions are just wrappers for the <code>rowCallback</code> option to generate the appropriate JavaScript code.</p>
 <p>Similarly, there is a <code>formatDate()</code> function that can be used to format date/time columns. It has a <code>method</code> argument that takes values from a list of possible <a href="http://mzl.la/1xGe99W">conversion methods</a>: <code>toDateString</code>, <code>toISOString</code>, <code>toLocaleDateString</code>, <code>toLocaleString</code>, <code>toLocaleTimeString</code>, <code>toString</code>, <code>toTimeString</code>, <code>toUTCString</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-07-23 22:05:21&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;EST&#39;</span>)
-(<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))
-<span class="co">##  [1] &quot;2015-07-23 22:05:22 EST&quot; &quot;2015-07-25 04:57:13 EST&quot;</span>
-<span class="co">##  [3] &quot;2015-07-26 11:49:04 EST&quot; &quot;2015-07-27 18:40:55 EST&quot;</span>
-<span class="co">##  [5] &quot;2015-07-29 01:32:46 EST&quot; &quot;2015-07-30 08:24:37 EST&quot;</span>
-<span class="co">##  [7] &quot;2015-07-31 15:16:28 EST&quot; &quot;2015-08-01 22:08:19 EST&quot;</span>
-<span class="co">##  [9] &quot;2015-08-03 05:00:10 EST&quot; &quot;2015-08-04 11:52:01 EST&quot;</span>
-DT<span class="op">:::</span>DateMethods
-<span class="co">## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;</span>
-<span class="co">## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          </span>
-<span class="co">## [7] &quot;toTimeString&quot;       &quot;toUTCString&quot;</span>
-<span class="co"># use m = DT:::DateMethods below to see the output of all methods</span>
-m =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;toDateString&#39;</span>, <span class="st">&#39;toLocaleDateString&#39;</span>, <span class="st">&#39;toLocaleString&#39;</span>, <span class="st">&#39;toUTCString&#39;</span>)
-d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, <span class="cf">function</span>(.) x), m))
-<span class="kw">str</span>(d)
-<span class="co">## &#39;data.frame&#39;:    10 obs. of  4 variables:</span>
-<span class="co">##  $ toDateString      : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
-<span class="co">##  $ toLocaleDateString: POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
-<span class="co">##  $ toLocaleString    : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
-<span class="co">##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span>
-<span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(d), m)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x =<span class="st"> </span><span class="kw">strptime</span>(<span class="st">&#39;2015-07-23 22:05:21&#39;</span>, <span class="st">&#39;%Y-%m-%d %H:%M:%S&#39;</span>, <span class="dt">tz =</span> <span class="st">&#39;EST&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>(<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="fl">1e6</span>, <span class="dt">length.out =</span> <span class="dv">10</span>))</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">##  [1] &quot;2015-07-23 22:05:22 EST&quot; &quot;2015-07-25 04:57:13 EST&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">##  [3] &quot;2015-07-26 11:49:04 EST&quot; &quot;2015-07-27 18:40:55 EST&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">##  [5] &quot;2015-07-29 01:32:46 EST&quot; &quot;2015-07-30 08:24:37 EST&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">##  [7] &quot;2015-07-31 15:16:28 EST&quot; &quot;2015-08-01 22:08:19 EST&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">##  [9] &quot;2015-08-03 05:00:10 EST&quot; &quot;2015-08-04 11:52:01 EST&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>DT<span class="op">:::</span>DateMethods</span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">## [1] &quot;toDateString&quot;       &quot;toISOString&quot;        &quot;toLocaleDateString&quot;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## [4] &quot;toLocaleString&quot;     &quot;toLocaleTimeString&quot; &quot;toString&quot;          </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## [7] &quot;toTimeString&quot;       &quot;toUTCString&quot;</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># use m = DT:::DateMethods below to see the output of all methods</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>m =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;toDateString&#39;</span>, <span class="st">&#39;toLocaleDateString&#39;</span>, <span class="st">&#39;toLocaleString&#39;</span>, <span class="st">&#39;toUTCString&#39;</span>)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">setNames</span>(<span class="kw">lapply</span>(m, <span class="cf">function</span>(.) x), m))</span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="kw">str</span>(d)</span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## &#39;data.frame&#39;:    10 obs. of  4 variables:</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">##  $ toDateString      : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">##  $ toLocaleDateString: POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">##  $ toLocaleString    : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="kw">datatable</span>(d, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>, <span class="dt">dom =</span> <span class="st">&#39;tip&#39;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="st">  </span><span class="kw">formatDate</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(d), m)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
@@ -240,8 +239,8 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 <div id="style-table-cells" class="section level1">
 <h1><span class="header-section-number">2</span> Style Table Cells</h1>
 <p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. We have picked a few commonly used CSS properties as the arguments of <code>formatStyle()</code>, such as <code>color</code> and <code>fontWeight</code>. You can pass arbitrary CSS properties to <code>formatStyle()</code>. Here is a quick example to show the syntax:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">datatable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
@@ -282,31 +281,31 @@ d =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="k
 CSS Property Names
 </div>
 <div class="panel-body">
-<p>The actual CSS property names are dash-separated, but you can use camelCase names in <code>formatStyle()</code> anyway (otherwise you will have to use backticks to quote the names, e.g. <code>formatStyle(..., `font-size` = '12px')</code>), and this function will automatically convert camelCase names to dash-separated names, e.g. <code>'fontWeight'</code> will be converted to <code>'font-weight'</code> internally. If you are familiar with CSS, you can still use the dash-separated names – just remember to quote them.</p>
+<p>The actual CSS property names are dash-separated, but you can use camelCase names in <code>formatStyle()</code> anyway (otherwise you will have to use backticks to quote the names, e.g. <code>formatStyle(..., `font-size` = '12px')</code>), and this function will automatically convert camelCase names to dash-separated names, e.g. <code>'fontWeight'</code> will be converted to <code>'font-weight'</code> internally. If you are familiar with CSS, you can still use the dash-separated names – just remember to quote them.</p>
 </div>
 </div>
 <p>The above example did not take the cell values into consideration. All styles are applied to all cells unconditionally: the font color is red, the background color is yellow, and the font weight is bold. That may not be useful in practice. <strong>DT</strong> has provided a few helper functions to apply conditional styles to cells, such as <code>styleInterval()</code>, <code>styleEqual()</code>, and <code>styleColorBar()</code>. Please read the documentation in R for the usage of these functions. We show a comprehensive example below:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>, <span class="dt">fontWeight =</span> <span class="kw">styleInterval</span>(<span class="dv">5</span>, <span class="kw">c</span>(<span class="st">&#39;normal&#39;</span>, <span class="st">&#39;bold&#39;</span>))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">formatStyle</span>(
-    <span class="st">&#39;Sepal.Width&#39;</span>,
-    <span class="dt">color =</span> <span class="kw">styleInterval</span>(<span class="kw">c</span>(<span class="fl">3.4</span>, <span class="fl">3.8</span>), <span class="kw">c</span>(<span class="st">&#39;white&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;red&#39;</span>)),
-    <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">formatStyle</span>(
-    <span class="st">&#39;Petal.Length&#39;</span>,
-    <span class="dt">background =</span> <span class="kw">styleColorBar</span>(iris<span class="op">$</span>Petal.Length, <span class="st">&#39;steelblue&#39;</span>),
-    <span class="dt">backgroundSize =</span> <span class="st">&#39;100% 90%&#39;</span>,
-    <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,
-    <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">formatStyle</span>(
-    <span class="st">&#39;Species&#39;</span>,
-    <span class="dt">transform =</span> <span class="st">&#39;rotateX(45deg) rotateY(20deg) rotateZ(30deg)&#39;</span>,
-    <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(
-      <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="kw">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)
-    )
-  )</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">datatable</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>, <span class="dt">fontWeight =</span> <span class="kw">styleInterval</span>(<span class="dv">5</span>, <span class="kw">c</span>(<span class="st">&#39;normal&#39;</span>, <span class="st">&#39;bold&#39;</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="st">  </span><span class="kw">formatStyle</span>(</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="st">&#39;Sepal.Width&#39;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">color =</span> <span class="kw">styleInterval</span>(<span class="kw">c</span>(<span class="fl">3.4</span>, <span class="fl">3.8</span>), <span class="kw">c</span>(<span class="st">&#39;white&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;red&#39;</span>)),</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="st">  </span><span class="kw">formatStyle</span>(</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="st">&#39;Petal.Length&#39;</span>,</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="dt">background =</span> <span class="kw">styleColorBar</span>(iris<span class="op">$</span>Petal.Length, <span class="st">&#39;steelblue&#39;</span>),</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="dt">backgroundSize =</span> <span class="st">&#39;100% 90%&#39;</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="st">  </span><span class="kw">formatStyle</span>(</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="st">&#39;Species&#39;</span>,</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="dt">transform =</span> <span class="st">&#39;rotateX(45deg) rotateY(20deg) rotateZ(30deg)&#39;</span>,</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(</span>
+<span id="cb7-19"><a href="#cb7-19"></a>      <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="kw">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)</span>
+<span id="cb7-20"><a href="#cb7-20"></a>    )</span>
+<span id="cb7-21"><a href="#cb7-21"></a>  )</span></code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
@@ -346,7 +345,7 @@ CSS Property Names
 <div id="table-utilities" class="section level1">
 <h1><span class="header-section-number">3</span> Table Utilities</h1>
 <p>The functions <code>tableHeader()</code> and <code>tableFooter</code> are wrappers of <code>htmltools::tags</code> to generate a table header or footer. It may be convenient when you want to define a custom <a href="./">table container</a>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableHeader</span>(iris)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">tableHeader</span>(iris)</span></code></pre>
 <pre><code>&lt;thead&gt;
   &lt;tr&gt;
     &lt;th&gt;Sepal.Length&lt;/th&gt;
@@ -356,7 +355,7 @@ CSS Property Names
     &lt;th&gt;Species&lt;/th&gt;
   &lt;/tr&gt;
 &lt;/thead&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableHeader</span>(<span class="kw">colnames</span>(iris))  <span class="co"># equivalent to tableHeader(iris)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">tableHeader</span>(<span class="kw">colnames</span>(iris))  <span class="co"># equivalent to tableHeader(iris)</span></span></code></pre>
 <pre><code>&lt;thead&gt;
   &lt;tr&gt;
     &lt;th&gt;Sepal.Length&lt;/th&gt;
@@ -366,7 +365,7 @@ CSS Property Names
     &lt;th&gt;Species&lt;/th&gt;
   &lt;/tr&gt;
 &lt;/thead&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tableFooter</span>(iris)  <span class="co"># footer</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">tableFooter</span>(iris)  <span class="co"># footer</span></span></code></pre>
 <pre><code>&lt;tfoot&gt;
   &lt;tr&gt;
     &lt;th&gt;Sepal.Length&lt;/th&gt;
@@ -376,8 +375,8 @@ CSS Property Names
     &lt;th&gt;Species&lt;/th&gt;
   &lt;/tr&gt;
 &lt;/tfoot&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(htmltools)
-tags<span class="op">$</span><span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <span class="kw">tableFooter</span>(iris))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">library</span>(htmltools)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>tags<span class="op">$</span><span class="kw">table</span>(<span class="kw">tableHeader</span>(iris), <span class="kw">tableFooter</span>(iris))</span></code></pre>
 <pre><code>&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -402,24 +401,24 @@ tags<span class="op">$</span><span class="kw">table</span>(<span class="kw">tabl
 <div id="functions-imported-from-htmlwidgets" class="section level1">
 <h1><span class="header-section-number">4</span> Functions Imported from htmlwidgets</h1>
 <p>We imported and re-exported a few functions from the <strong>htmlwidgets</strong> package. The function <code>JS()</code> can be used to wrap literal JavaScript code. You can pass either a single character string, or a character vector to <code>JS()</code>. In the latter case, the vector will be concatenated into a single string using the separator <code>\n</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">JS</span>(<span class="st">&#39;alter(&quot;OK&quot;);&#39;</span>)
-<span class="kw">JS</span>(<span class="kw">c</span>(
-  <span class="st">&#39;function(x) {&#39;</span>,
-  <span class="st">&#39;  return x + 1;&#39;</span>,
-  <span class="st">&#39;}&#39;</span>
-))
-<span class="co"># same as</span>
-<span class="kw">JS</span>(<span class="st">&#39;function(x) {</span>
-<span class="st">  return x + 1;</span>
-<span class="st">}&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">JS</span>(<span class="st">&#39;alter(&quot;OK&quot;);&#39;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="kw">JS</span>(<span class="kw">c</span>(</span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="st">&#39;function(x) {&#39;</span>,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="st">&#39;  return x + 1;&#39;</span>,</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="st">&#39;}&#39;</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>))</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># same as</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="kw">JS</span>(<span class="st">&#39;function(x) {</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="st">  return x + 1;</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="st">}&#39;</span>)</span></code></pre>
 <p>The function <code>saveWidget()</code> can be used to save a widget to an HTML file, e.g.</p>
-<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">datatable</span>(iris)
-<span class="kw">saveWidget</span>(x, <span class="st">&#39;iris-table.html&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x =<span class="st"> </span><span class="kw">datatable</span>(iris)</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">saveWidget</span>(x, <span class="st">&#39;iris-table.html&#39;</span>)</span></code></pre>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>If you use Internet Explorer, its version should be at least 10. Other modern web browsers should just work.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>If you use Internet Explorer, its version should be at least 10. Other modern web browsers should just work.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

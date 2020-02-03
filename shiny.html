@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -107,38 +106,38 @@
 <div id="a-minimal-example" class="section level1">
 <h1><span class="header-section-number">1</span> A Minimal Example</h1>
 <p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>DTOutput()</code> and <code>renderDT()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-<span class="kw">library</span>(DT)
-<span class="kw">shinyApp</span>(
-  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw">DTOutput</span>(<span class="st">&#39;tbl&#39;</span>)),
-  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    output<span class="op">$</span>tbl =<span class="st"> </span><span class="kw">renderDT</span>(
-      iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">lengthChange =</span> <span class="ot">FALSE</span>)
-    )
-  }
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">shinyApp</span>(</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw">DTOutput</span>(<span class="st">&#39;tbl&#39;</span>)),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    output<span class="op">$</span>tbl =<span class="st"> </span><span class="kw">renderDT</span>(</span>
+<span id="cb1-7"><a href="#cb1-7"></a>      iris, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">lengthChange =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    )</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  }</span>
+<span id="cb1-10"><a href="#cb1-10"></a>)</span></code></pre>
 <p>Note that in <strong>DT</strong>, <code>DTOutput()</code> is an alias of <code>dataTableOutput()</code>, and <code>renderDT()</code> is an alias of <code>renderDataTable()</code>. You are recommended to use <code>DTOutput()</code> and <code>renderDT()</code> to avoid possible collisions with functions of the same names in <strong>shiny</strong> (<code>shiny::dataTableOutput()</code> and <code>shiny::renderDataTable()</code>).</p>
 <p>If you have used the <code>renderDataTable()</code> function in <strong>shiny</strong> before, please note you should use <code>JS()</code> instead of <code>I()</code> to write literal JavaScript code in options.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-<span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(
-  <span class="dt">pageLength =</span> <span class="dv">5</span>,
-  <span class="dt">initComplete =</span> <span class="kw">I</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
-))</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">renderDT</span>(
-  iris, <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">pageLength =</span> <span class="dv">5</span>,
-    <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)
-  )
-)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">renderDataTable</span>(iris, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">pageLength =</span> <span class="dv">5</span>,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">initComplete =</span> <span class="kw">I</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">renderDT</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  iris, <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">pageLength =</span> <span class="dv">5</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">initComplete =</span> <span class="kw">JS</span>(<span class="st">&#39;function(setting, json) { alert(&quot;done&quot;); }&#39;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  )</span>
+<span id="cb3-7"><a href="#cb3-7"></a>)</span></code></pre>
 <p>The <code>renderDataTable()</code> function in <strong>shiny</strong> uses <a href="server.html">server-side processing</a> and it has no client-side support. <strong>DT</strong> supports both ways; the default is server-side processing, but you can switch to client-side by calling <code>DT::renderDT()</code> with a <code>server = FALSE</code> argument. When the data object is relatively large, do not use <code>server = FALSE</code>, otherwise it will be too slow to render the table in the web browser, and the table will not be very responsive, either.</p>
 <p>The first argument of <code>DT::renderDT()</code> can be either a data object or a table widget returned by <code>datatable()</code>. The latter form can be useful when you want to manipulate the widget before rendering it in Shiny, e.g. you may apply a formatting function to a table widget:</p>
-<pre class="sourceCode r"><code class="sourceCode r">DT<span class="op">::</span><span class="kw">renderDT</span>({
-  <span class="kw">datatable</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(
-    <span class="st">&#39;Sepal.Width&#39;</span>,
-    <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))
-  )
-})</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>DT<span class="op">::</span><span class="kw">renderDT</span>({</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="kw">datatable</span>(iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="st">&#39;Sepal.Width&#39;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(<span class="fl">3.4</span>, <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  )</span>
+<span id="cb4-6"><a href="#cb4-6"></a>})</span></code></pre>
 </div>
 <div id="interaction-with-shiny" class="section level1">
 <h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
@@ -183,9 +182,9 @@
   "evals": ["callback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can find the example locally in the DT package</span>
-app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
-shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># you can find the example locally in the DT package</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-rows&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>shiny<span class="op">::</span><span class="kw">runApp</span>(app)</span></code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-rows/"><img src="https://user-images.githubusercontent.com/163582/57483253-07898c00-726c-11e9-88e9-e084ff0dfcd0.png" alt="Row selection in DataTables" /></a></p>
 <p>You can also obtain the index of the last clicked row via <code>input$tableId_row_last_clicked</code> (it may be <code>NULL</code> initially and when the table is redrawn).</p>
 </div>
@@ -200,7 +199,7 @@ shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
 </div>
 <div id="pre-selection" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Pre-selection</h3>
-<p>The <code>selection</code> argument of <code>datatable()</code> can also include a component <code>selected</code> to specify which rows/columns/cells to be pre-selected when the table is initialized. When <code>target = 'row'</code> or <code>'column'</code>, <code>selected</code> is a vector of row or column indices. For the case of <code>target = 'row+column'</code>, <code>selected</code> should be a list of two components <code>rows</code> and <code>cols</code>, e.g. <code>list(rows = c(1, 2, 4, 9), cols = c(1, 3))</code>. For <code>target = 'cell'</code>, it should be a matrix of two columns: the first column is the row indices of selected cells, and the second column is the column indices.</p>
+<p>The <code>selection</code> argument of <code>datatable()</code> can also include a component <code>selected</code> to specify which rows/columns/cells to be pre-selected when the table is initialized. When <code>target = 'row'</code> or <code>'column'</code>, <code>selected</code> is a vector of row or column indices. For the case of <code>target = 'row+column'</code>, <code>selected</code> should be a list of two components <code>rows</code> and <code>cols</code>, e.g. <code>list(rows = c(1, 2, 4, 9), cols = c(1, 3))</code>. For <code>target = 'cell'</code>, it should be a matrix of two columns: the first column is the row indices of selected cells, and the second column is the column indices.</p>
 </div>
 </div>
 <div id="datatables-information" class="section level2">
@@ -215,16 +214,16 @@ shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
 <li><code>input$tableId_state</code>: the state information of the table (a list containing the search string, ordering and paging information; it is available only if the option <code>stateSave = TRUE</code> is applied to the table)</li>
 </ul>
 <p><a href="https://yihui.shinyapps.io/DT-info/">This example</a> shows how you can make use of these information to highlight points on a scatterplot and download the filtered data.</p>
-<pre class="sourceCode r"><code class="sourceCode r">app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-info&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
-shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-info&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>shiny<span class="op">::</span><span class="kw">runApp</span>(app)</span></code></pre>
 <p><a href="https://yihui.shinyapps.io/DT-info/"><img src="https://user-images.githubusercontent.com/163582/57483283-17a16b80-726c-11e9-82a7-9fc52c7565c3.png" alt="DataTables information in shiny" /></a></p>
 </div>
 <div id="manipulate-an-existing-datatables-instance" class="section level2">
 <h2><span class="header-section-number">2.3</span> Manipulate An Existing DataTables Instance</h2>
 <p>After a table has been rendered in a Shiny app, you can use the proxy object returned from <code>dataTableProxy()</code> to manipulate it. Currently supported methods are <code>selectRows()</code>, <code>selectColumns()</code>, <code>selectCells()</code>, <code>selectPage()</code>, and <code>addRow()</code>. See <a href="https://yihui.shinyapps.io/DT-proxy">this Shiny app</a> for an example of using these methods to update a table.</p>
 <p>Sometimes the data behind the table may change, and you do not want to regenerate the whole table, but only want to replace the data values. The state of the table (sorting, filtering, and pagination) can be preserved after you replace the data with <code>replaceData()</code>. Here is a short example:</p>
-<pre class="sourceCode r"><code class="sourceCode r">app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-reload&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)
-shiny<span class="op">::</span><span class="kw">runApp</span>(app)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>app =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-reload&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;DT&#39;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>shiny<span class="op">::</span><span class="kw">runApp</span>(app)</span></code></pre>
 </div>
 <div id="edit-tables" class="section level2">
 <h2><span class="header-section-number">2.4</span> Edit Tables</h2>

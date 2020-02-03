@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -76,32 +75,32 @@
 
 
 <p>You can show extra information in the child of a row. The example below was adapted <a href="http://datatables.net/examples/api/row_details.html">an example</a> on the DataTables website. Unfortunately, you have to write a fair amount of JavaScript in this case.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DT)
-<span class="kw">datatable</span>(
-  <span class="kw">cbind</span>(<span class="st">&#39; &#39;</span> =<span class="st"> &#39;&amp;oplus;&#39;</span>, mtcars), <span class="dt">escape =</span> <span class="dv">-2</span>,
-  <span class="dt">options =</span> <span class="kw">list</span>(
-    <span class="dt">columnDefs =</span> <span class="kw">list</span>(
-      <span class="kw">list</span>(<span class="dt">visible =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>)),
-      <span class="kw">list</span>(<span class="dt">orderable =</span> <span class="ot">FALSE</span>, <span class="dt">className =</span> <span class="st">&#39;details-control&#39;</span>, <span class="dt">targets =</span> <span class="dv">1</span>)
-    )
-  ),
-  <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;</span>
-<span class="st">  table.column(1).nodes().to$().css({cursor: &#39;pointer&#39;});</span>
-<span class="st">  var format = function(d) {</span>
-<span class="st">    return &#39;&lt;div style=</span><span class="ch">\&quot;</span><span class="st">background-color:#eee; padding: .5em;</span><span class="ch">\&quot;</span><span class="st">&gt; Model: &#39; +</span>
-<span class="st">            d[0] + &#39;, mpg: &#39; + d[2] + &#39;, cyl: &#39; + d[3] + &#39;&lt;/div&gt;&#39;;</span>
-<span class="st">  };</span>
-<span class="st">  table.on(&#39;click&#39;, &#39;td.details-control&#39;, function() {</span>
-<span class="st">    var td = $(this), row = table.row(td.closest(&#39;tr&#39;));</span>
-<span class="st">    if (row.child.isShown()) {</span>
-<span class="st">      row.child.hide();</span>
-<span class="st">      td.html(&#39;&amp;oplus;&#39;);</span>
-<span class="st">    } else {</span>
-<span class="st">      row.child(format(row.data())).show();</span>
-<span class="st">      td.html(&#39;&amp;CircleMinus;&#39;);</span>
-<span class="st">    }</span>
-<span class="st">  });&quot;</span>
-))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">datatable</span>(</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="kw">cbind</span>(<span class="st">&#39; &#39;</span> =<span class="st"> &#39;&amp;oplus;&#39;</span>, mtcars), <span class="dt">escape =</span> <span class="dv">-2</span>,</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">columnDefs =</span> <span class="kw">list</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>      <span class="kw">list</span>(<span class="dt">visible =</span> <span class="ot">FALSE</span>, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>)),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>      <span class="kw">list</span>(<span class="dt">orderable =</span> <span class="ot">FALSE</span>, <span class="dt">className =</span> <span class="st">&#39;details-control&#39;</span>, <span class="dt">targets =</span> <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    )</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  ),</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">callback =</span> <span class="kw">JS</span>(<span class="st">&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  table.column(1).nodes().to$().css({cursor: &#39;pointer&#39;});</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="st">  var format = function(d) {</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="st">    return &#39;&lt;div style=</span><span class="ch">\&quot;</span><span class="st">background-color:#eee; padding: .5em;</span><span class="ch">\&quot;</span><span class="st">&gt; Model: &#39; +</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="st">            d[0] + &#39;, mpg: &#39; + d[2] + &#39;, cyl: &#39; + d[3] + &#39;&lt;/div&gt;&#39;;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">  };</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="st">  table.on(&#39;click&#39;, &#39;td.details-control&#39;, function() {</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="st">    var td = $(this), row = table.row(td.closest(&#39;tr&#39;));</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="st">    if (row.child.isShown()) {</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="st">      row.child.hide();</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="st">      td.html(&#39;&amp;oplus;&#39;);</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="st">    } else {</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="st">      row.child(format(row.data())).show();</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="st">      td.html(&#39;&amp;CircleMinus;&#39;);</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="st">    }</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="st">  });&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
