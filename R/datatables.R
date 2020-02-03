@@ -623,6 +623,7 @@ DTDependency = function(style) {
     css = sprintf('dataTables.%s.min.css', style)
     # patch the Bootstrap style
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
+    if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
   htmlDependency(
     depName(style, 'dt-core'), DataTablesVersion, src = depPath('datatables'),

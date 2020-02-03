@@ -16,6 +16,8 @@
 
 - Fix a bug that `addRow()` can't add a `data.table` row to the proxy (thanks, @sifodia @shrektan, #760 #761).
 
+- Now DT displays the column alignment and the selection style correctly under the bootstrap4 theme (thanks, @pjvandam @shrektan, #601 #765).
+
 # CHANGES IN DT VERSION 0.11
 
 ## NEW FEATURES
