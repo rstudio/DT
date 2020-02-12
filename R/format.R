@@ -44,6 +44,9 @@ formatColumns = function(table, columns, template, ...) {
 #' # render vapor pressure with only two significant figures.
 #' datatable(pressure) %>% formatSignif('pressure',2)
 #'
+#' # render vapor pressure with only two 2-decimal digits in exponential format.
+#' datatable(pressure) %>% formatExp('pressure',2)
+#'
 #' # apply CSS styles to columns
 #' datatable(iris) %>%
 #'   formatStyle('Sepal.Length', fontWeight = styleInterval(5, c('bold', 'weight'))) %>%
@@ -91,6 +94,15 @@ formatSignif = function(
   table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
 ) {
   formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark)
+}
+
+
+#' @export
+#' @rdname formatCurrency
+formatExp = function(
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+) {
+  formatColumns(table, columns, tplExp, digits, interval, mark, dec.mark)
 }
 
 #' @export
@@ -214,6 +226,12 @@ tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
   )
 }
 
+tplExp = function(cols, digits, interval, mark, dec.mark, ...) {
+  sprintf(
+    "DTWidget.formatExp(this, row, data, %d, %d, %d, '%s', '%s');",
+    cols, digits, interval, mark, dec.mark
+  )
+}
 tplDate = function(cols, method, params, ...) {
   params = if (length(params) > 0) paste(',', toJSON(params)) else ''
   sprintf("DTWidget.formatDate(this, row, data, %d, %s%s);", cols, jsValues(method), params)

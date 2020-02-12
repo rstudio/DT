@@ -8,8 +8,9 @@
 var DTWidget = {};
 
 // 123456666.7890 -> 123,456,666.7890
-var markInterval = function(d, digits, interval, mark, decMark, precision) {
+var markInterval = function(d, digits, interval, mark, decMark, precision, exponential) {
   x = precision ? d.toPrecision(digits) : d.toFixed(digits);
+  if(exponential) {x = exponential ? d.toExponential(digits) : d.toFixed(digits);};
   if (!/^-?[\d.]+$/.test(x)) return x;
   var xv = x.split('.');
   if (xv.length > 2) return x;  // should have at most one decimal point
@@ -51,6 +52,13 @@ DTWidget.formatSignif = function(thiz, row, data, col, digits, interval, mark, d
   if (isNaN(d)) return;
   $(thiz.api().cell(row, col).node())
     .html(markInterval(d, digits, interval, mark, decMark, true));
+};
+
+DTWidget.formatExp = function(thiz, row, data, col, digits, interval, mark, decMark) {
+  var d = parseFloat(data[col]);
+  if (isNaN(d)) return;
+  $(thiz.api().cell(row, col).node())
+    .html(markInterval(d, digits, interval, mark, decMark, false,true));
 };
 
 DTWidget.formatDate = function(thiz, row, data, col, method, params) {
