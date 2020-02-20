@@ -716,9 +716,9 @@ DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeV
 
   # Do SASS compilation, if relevant
   if (length(theme) || length(variables)) {
-    outputPath = tempdir('dtcustom')
+    outputPath = tempfile('dtcustom')
     # Copy over all the relevant JS/CSS file to the temp dir
-    lapply(file.path(outputPath, c('js', 'css')), dir.create, showWarnings = FALSE)
+    lapply(file.path(outputPath, c('js', 'css')), dir.create, showWarnings = FALSE, recursive = TRUE)
     file.copy(depPath('datatables/css', css), file.path(outputPath, 'css'))
     file.copy(depPath('datatables/js', js), file.path(outputPath, 'js'))
     # Overwrite the main CSS file that contains the SASS variables
