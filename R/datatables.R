@@ -47,10 +47,10 @@
 #'   the first column to display, you should add the numeric column indices
 #'   by one when using \code{rownames}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
-#'   currently only \code{'default'}, \code{'bootstrap'}, and
-#'   \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
-#'   files so in order to display the style correctly, you have to link
-#'   the necessary files in the header.
+#'   currently \code{'auto'}, \code{'default'}, \code{'bootstrap'}, and
+#'   \code{'bootstrap4'} are supported. If \code{'auto'} and a bootstraplib
+#'   theme is present, then suitable bootstrap styles to match the theme are
+#'   included.
 #' @param width,height Width/Height in pixels (optional, defaults to automatic
 #'   sizing)
 #' @param elementId An id for the widget (a random string by default).
@@ -128,7 +128,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = NULL, height = NULL, elementId = NULL,
+  escape = TRUE, style = 'auto', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
@@ -220,7 +220,7 @@ datatable = function(
   if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
-  style = match.arg(tolower(style), DTStyles())
+  style = styleNormalize(style)
   if (grepl('^bootstrap', style)) class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
@@ -627,6 +627,16 @@ depName = function(style = 'default', ...) {
   tolower(paste(c(..., if (style != 'default') c('-', style)), collapse = ''))
 }
 
+styleNormalize = function(style) {
+  style = tolower(style)
+  if (identical(style, 'auto')) {
+    if (!length(bsThemeGet())) return('default')
+    version = bootstraplib::theme_version()
+    style = if (version %in% "3") "bootstrap" else if (version %in% c("4", "4+3")) "bootstrap4"
+  }
+  match.arg(style, DTStyles())
+}
+
 DTStyles = function() {
   r = '^dataTables[.]([^.]+)[.]min[.]css$'
   x = list.files(depPath('datatables', 'css'), r)
@@ -732,8 +742,8 @@ DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeV
       )
     } else {
 
-      version <- bootstraplib::theme_version(theme)
-      declarations <- if (version %in% "3") {
+      version = bootstraplib::theme_version(theme)
+      declarations = if (version %in% "3") {
         list(
           "table-body-border"          = "1px solid $table-border-color !default;",
           "table-header-border"        = "2px solid $table-border-color !default;",
