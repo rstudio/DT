@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.13
 
+## BUG FIXES
+
+- Fix a bug that on Windows, rmarkdown can't render a file that contains DT with PDF download button enabled (thanks, @mfherman @shrektan, #774)
 
 # CHANGES IN DT VERSION 0.12
 
