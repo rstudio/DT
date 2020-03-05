@@ -164,6 +164,13 @@ if (!dir.exists(dld_plugin_path())) system2(
 # remove the empty files if exists
 rm_empty_files(dld_folder())
 
+# pdfmake.min.js can't get along with self_contained HTML pages on Windows.
+# So we need to delete the min file in order to have pdfmake.js to be used
+# https://github.com/rstudio/DT/issues/774#issuecomment-595277726
+unlink(list.files(
+  dld_dt_path(), pattern = '^pdfmake[.]min[.]js$', recursive = TRUE, full.names = TRUE
+))
+
 # only keep min files
 # For extensions, we should remove all the foo.js even if foo.min.js doesn't
 # exist (with a warning). This is because datatables download
@@ -171,7 +178,7 @@ rm_empty_files(dld_folder())
 # "ColReorder-1.5.2/js/colReorder.dataTables.js". Usually, when this happens,
 # no corresponding minified version files can be found. In addition,
 # the current dependence implementation only uses min.js/css files.
-keep_min(dld_dt_path(), only_minified = TRUE, keep_reg = "vfs_fonts[.]js$")
+keep_min(dld_dt_path(), only_minified = TRUE, keep_reg = "(vfs_fonts|pdfmake)[.]js$")
 keep_min(dld_plugin_path())
 
 # replace the png files with base64 encode images
