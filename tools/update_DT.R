@@ -241,7 +241,7 @@ clean_up(
   keep_reg = c(
     'license[.]txt$',
     'jquery[.]dataTables[.]extra[.]css$',
-    'dataTables[.]bootstrap[.]extra[.]css$'
+    'dataTables[.]\\w+[.]extra[.]css$'
   )
 )
 clean_up(lib_path('datatables-extensions'))
