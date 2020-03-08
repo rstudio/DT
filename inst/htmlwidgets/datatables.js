@@ -17,44 +17,41 @@ var markInterval = function(d, digits, interval, mark, decMark, precision) {
   return xv.join(decMark);
 };
 
-DTWidget.formatCurrency = function(thiz, row, data, col, currency, digits, interval, mark, decMark, before) {
-  var d = parseFloat(data[col]);
+DTWidget.formatCurrency = function(data, currency, digits, interval, mark, decMark, before) {
+  var d = parseFloat(data);
   if (isNaN(d)) return;
   var res = markInterval(d, digits, interval, mark, decMark);
   res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
     res + currency;
-  $(thiz.api().cell(row, col).node()).html(res);
+  return res;
 };
 
-DTWidget.formatString = function(thiz, row, data, col, prefix, suffix) {
-  var d = data[col];
+DTWidget.formatString = function(data, prefix, suffix) {
+  var d = data;
   if (d === null) return;
-  var cell = $(thiz.api().cell(row, col).node());
-  cell.html(prefix + cell.html() + suffix);
+  return prefix + cell.html() + suffix;
 };
 
-DTWidget.formatPercentage = function(thiz, row, data, col, digits, interval, mark, decMark) {
-  var d = parseFloat(data[col]);
+DTWidget.formatPercentage = function(data, digits, interval, mark, decMark) {
+  var d = parseFloat(data);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node())
-  .html(markInterval(d * 100, digits, interval, mark, decMark) + '%');
+  return markInterval(d * 100, digits, interval, mark, decMark) + '%';
 };
 
-DTWidget.formatRound = function(thiz, row, data, col, digits, interval, mark, decMark) {
-  var d = parseFloat(data[col]);
+DTWidget.formatRound = function(data, digits, interval, mark, decMark) {
+  var d = parseFloat(data);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node()).html(markInterval(d, digits, interval, mark, decMark));
+  return markInterval(d, digits, interval, mark, decMark);
 };
 
-DTWidget.formatSignif = function(thiz, row, data, col, digits, interval, mark, decMark) {
-  var d = parseFloat(data[col]);
+DTWidget.formatSignif = function(data, digits, interval, mark, decMark) {
+  var d = parseFloat(data);
   if (isNaN(d)) return;
-  $(thiz.api().cell(row, col).node())
-    .html(markInterval(d, digits, interval, mark, decMark, true));
+  return markInterval(d, digits, interval, mark, decMark, true);
 };
 
-DTWidget.formatDate = function(thiz, row, data, col, method, params) {
-  var d = data[col];
+DTWidget.formatDate = function(data, method, params) {
+  var d = data;
   if (d === null) return;
   // (new Date('2015-10-28')).toDateString() may return 2015-10-27 because the
   // actual time created could be like 'Tue Oct 27 2015 19:00:00 GMT-0500 (CDT)',
@@ -65,7 +62,7 @@ DTWidget.formatDate = function(thiz, row, data, col, method, params) {
   } else {
     d = new Date(d);
   }
-  $(thiz.api().cell(row, col).node()).html(d[method].apply(d, params));
+  return d[method].apply(d, params);
 };
 
 window.DTWidget = DTWidget;
