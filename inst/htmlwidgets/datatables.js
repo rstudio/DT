@@ -29,7 +29,7 @@ DTWidget.formatCurrency = function(data, currency, digits, interval, mark, decMa
 DTWidget.formatString = function(data, prefix, suffix) {
   var d = data;
   if (d === null) return;
-  return prefix + cell.html() + suffix;
+  return prefix + d + suffix;
 };
 
 DTWidget.formatPercentage = function(data, digits, interval, mark, decMark) {
