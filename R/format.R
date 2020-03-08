@@ -3,8 +3,10 @@ formatColumns = function(table, columns, template, ...) {
   x = table$x
   colnames = base::attr(x, 'colnames', exact = TRUE)
   rownames = base::attr(x, 'rownames', exact = TRUE)
-  x$options$rowCallback = appendFormatter(
-    x$options$rowCallback, columns, colnames, rownames, template, ...
+  x$options$columnDefs = append(
+    x$options$columnDefs, colFormatter(
+      columns, colnames, rownames, template, ...
+    )
   )
   table$x = x
   table
@@ -167,15 +169,10 @@ name2int = function(name, names, rownames) {
   i
 }
 
-appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
-  js = if (length(js) == 0) c('function(row, data) {', '}') else {
-    unlist(strsplit(as.character(js), '\n'))
-  }
+colFormatter = function(name, names, rownames = TRUE, template, ...) {
   i = name2int(name, names, rownames)
-  JS(append(
-    js, after = length(js) - 1,
-    template(i, ..., names, rownames)
-  ))
+  js = sprintf("function(data, type, row, meta) { return %s }", template(...))
+  list(list(targets = i, render = JS(js)))
 }
 
 tplCurrency = function(currency, interval, mark, digits, dec.mark, before, ...) {
