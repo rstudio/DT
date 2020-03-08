@@ -1,13 +1,20 @@
-formatColumns = function(table, columns, template, ...) {
+formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs', 'rowCallback')) {
   if (inherits(columns, 'formula')) columns = all.vars(columns)
   x = table$x
   colnames = base::attr(x, 'colnames', exact = TRUE)
   rownames = base::attr(x, 'rownames', exact = TRUE)
-  x$options$columnDefs = append(
-    x$options$columnDefs, colFormatter(
-      columns, colnames, rownames, template, ...
+  appendTo = match.arg(appendTo)
+  if (appendTo == 'columnDefs') {
+    x$options$columnDefs = append(
+      x$options$columnDefs, colFormatter(
+        columns, colnames, rownames, template, ...
+      )
     )
-  )
+  } else {
+    x$options$rowCallback = appendFormatter(
+      x$options$rowCallback, columns, colnames, rownames, template, ...
+    )
+  }
   table$x = x
   table
 }
@@ -151,7 +158,8 @@ formatStyle = function(
     fontWeight = fontWeight, color = color, backgroundColor = backgroundColor,
     background = background, ...
   ))
-  formatColumns(table, columns, tplStyle, valueColumns, match.arg(target), styles)
+  formatColumns(table, columns, tplStyle, valueColumns, match.arg(target), styles,
+                appendTo = 'rowCallback')
 }
 
 # turn character/logical indices to numeric indices
@@ -173,6 +181,17 @@ colFormatter = function(name, names, rownames = TRUE, template, ...) {
   i = name2int(name, names, rownames)
   js = sprintf("function(data, type, row, meta) { return %s }", template(...))
   list(list(targets = i, render = JS(js)))
+}
+
+appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
+  js = if (length(js) == 0) c('function(row, data) {', '}') else {
+    unlist(strsplit(as.character(js), '\n'))
+  }
+  i = name2int(name, names, rownames)
+  JS(append(
+    js, after = length(js) - 1,
+    template(i, ..., names, rownames)
+  ))
 }
 
 tplCurrency = function(currency, interval, mark, digits, dec.mark, before, ...) {
