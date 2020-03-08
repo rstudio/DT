@@ -4,6 +4,10 @@
 
 - Fix a bug that on Windows, rmarkdown can't render a file that contains DT with PDF download button enabled (thanks, @mfherman @shrektan, #774)
 
+## NEW FEATURES
+
+- All the formatting functions except `formatStyle()` now support the `Responsive` plugin (thanks, @shrektan, #777)
+
 # CHANGES IN DT VERSION 0.12
 
 ## NEW FEATURES
