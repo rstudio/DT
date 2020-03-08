@@ -6,9 +6,11 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
   appendTo = match.arg(appendTo)
   if (appendTo == 'columnDefs') {
     x$options$columnDefs = append(
+      # must append to the front so that the later formatting
+      # can override the previous formatting
       x$options$columnDefs, colFormatter(
         columns, colnames, rownames, template, ...
-      )
+      ), after = 0L
     )
   } else {
     x$options$rowCallback = appendFormatter(
