@@ -1,11 +1,22 @@
-formatColumns = function(table, columns, template, ...) {
+formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs', 'rowCallback')) {
   if (inherits(columns, 'formula')) columns = all.vars(columns)
   x = table$x
   colnames = base::attr(x, 'colnames', exact = TRUE)
   rownames = base::attr(x, 'rownames', exact = TRUE)
-  x$options$rowCallback = appendFormatter(
-    x$options$rowCallback, columns, colnames, rownames, template, ...
-  )
+  appendTo = match.arg(appendTo)
+  if (appendTo == 'columnDefs') {
+    x$options$columnDefs = append(
+      # must append to the front so that the later formatting
+      # can override the previous formatting
+      x$options$columnDefs, colFormatter(
+        columns, colnames, rownames, template, ...
+      ), after = 0L
+    )
+  } else {
+    x$options$rowCallback = appendFormatter(
+      x$options$rowCallback, columns, colnames, rownames, template, ...
+    )
+  }
   table$x = x
   table
 }
@@ -149,7 +160,8 @@ formatStyle = function(
     fontWeight = fontWeight, color = color, backgroundColor = backgroundColor,
     background = background, ...
   ))
-  formatColumns(table, columns, tplStyle, valueColumns, match.arg(target), styles)
+  formatColumns(table, columns, tplStyle, valueColumns, match.arg(target), styles,
+                appendTo = 'rowCallback')
 }
 
 # turn character/logical indices to numeric indices
@@ -171,6 +183,12 @@ name2int = function(name, names, rownames, noerror = FALSE) {
   i
 }
 
+colFormatter = function(name, names, rownames = TRUE, template, ...) {
+  i = name2int(name, names, rownames)
+  js = sprintf("function(data, type, row, meta) { return %s }", template(...))
+  list(list(targets = i, render = JS(js)))
+}
+
 appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   js = if (length(js) == 0) c('function(row, data) {', '}') else {
     unlist(strsplit(as.character(js), '\n'))
@@ -182,45 +200,45 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   ))
 }
 
-tplCurrency = function(cols, currency, interval, mark, digits, dec.mark, before, ...) {
+tplCurrency = function(currency, interval, mark, digits, dec.mark, before, ...) {
   sprintf(
-    "DTWidget.formatCurrency(this, row, data, %d, %s, %d, %d, %s, %s, %s);",
-    cols, jsValues(currency), digits, interval, jsValues(mark), jsValues(dec.mark),
+    "DTWidget.formatCurrency(data, %s, %d, %d, %s, %s, %s);",
+    jsValues(currency), digits, interval, jsValues(mark), jsValues(dec.mark),
     jsValues(before)
   )
 }
 
-tplString = function(cols, prefix, suffix, ...) {
+tplString = function(prefix, suffix, ...) {
   sprintf(
-    "DTWidget.formatString(this, row, data, %d, %s, %s);",
-    cols, jsValues(prefix), jsValues(suffix)
+    "DTWidget.formatString(data, %s, %s);",
+    jsValues(prefix), jsValues(suffix)
   )
 }
 
-tplPercentage = function(cols, digits, interval, mark, dec.mark, ...) {
+tplPercentage = function(digits, interval, mark, dec.mark, ...) {
   sprintf(
-    "DTWidget.formatPercentage(this, row, data, %d, %d, %d, %s, %s);",
-    cols, digits, interval, jsValues(mark), jsValues(dec.mark)
+    "DTWidget.formatPercentage(data, %d, %d, %s, %s);",
+    digits, interval, jsValues(mark), jsValues(dec.mark)
   )
 }
 
-tplRound = function(cols, digits, interval, mark, dec.mark, ...) {
+tplRound = function(digits, interval, mark, dec.mark, ...) {
   sprintf(
-    "DTWidget.formatRound(this, row, data, %d, %d, %d, %s, %s);",
-    cols, digits, interval, jsValues(mark), jsValues(dec.mark)
+    "DTWidget.formatRound(data, %d, %d, %s, %s);",
+    digits, interval, jsValues(mark), jsValues(dec.mark)
   )
 }
 
-tplSignif = function(cols, digits, interval, mark, dec.mark, ...) {
+tplSignif = function(digits, interval, mark, dec.mark, ...) {
   sprintf(
-    "DTWidget.formatSignif(this, row, data, %d, %d, %d, %s, %s);",
-    cols, digits, interval, jsValues(mark), jsValues(dec.mark)
+    "DTWidget.formatSignif(data, %d, %d, %s, %s);",
+    digits, interval, jsValues(mark), jsValues(dec.mark)
   )
 }
 
-tplDate = function(cols, method, params, ...) {
+tplDate = function(method, params, ...) {
   params = if (length(params) > 0) paste(',', toJSON(params)) else ''
-  sprintf("DTWidget.formatDate(this, row, data, %d, %s%s);", cols, jsValues(method), params)
+  sprintf("DTWidget.formatDate(data, %s%s);", jsValues(method), params)
 }
 
 DateMethods = c(
