@@ -165,17 +165,20 @@ formatStyle = function(
 }
 
 # turn character/logical indices to numeric indices
-name2int = function(name, names, rownames) {
+name2int = function(name, names, rownames, noerror = FALSE) {
   if (is.numeric(name)) {
     i = if (all(name >= 0)) name else seq_along(names)[name]
     if (!rownames) i = i - 1
     return(i)
   }
   i = unname(setNames(seq_along(names), names)[name]) - 1
-  if (any(is.na(i))) stop(
-    'You specified the columns: ', paste(name, collapse = ', '), ', ',
-    'but the column names of the data are ', paste(names, collapse = ', ')
-  )
+  if (any(is.na(i))) {
+    if (!noerror) stop(
+      'You specified the columns: ', paste(name, collapse = ', '), ', ',
+      'but the column names of the data are ', paste(names, collapse = ', ')
+    )
+    i = na.omit(i)
+  }
   i
 }
 
@@ -189,7 +192,7 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   js = if (length(js) == 0) c('function(row, data) {', '}') else {
     unlist(strsplit(as.character(js), '\n'))
   }
-  i = name2int(name, names, rownames)
+  i = name2int(name, names, rownames, noerror = TRUE)
   JS(append(
     js, after = length(js) - 1,
     template(i, ..., names, rownames)

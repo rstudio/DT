@@ -4,6 +4,8 @@
 
 - Fix a bug that on Windows, rmarkdown can't render a file that contains DT with PDF download button enabled (thanks, @mfherman @shrektan, #774)
 
+- The formatting function will no longer throw errors for non-existing columns (thanks, @philibe @shrektan, #623).
+
 - Fix a bug that `renderDT()` doesn't react to `...` arguments (thanks, @AlfTang @shrektan, #152).
 
 ## NEW FEATURES
