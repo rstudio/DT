@@ -77,6 +77,7 @@ renderDataTable = function(
   outputInfoEnv[["session"]] = NULL
 
   exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
+  argFunc = shiny::exprToFunction(list(...), env, quoted = FALSE)
   widgetFunc = function() {
     opts = options(DT.datatable.shiny = TRUE); on.exit(options(opts), add = TRUE)
     instance = exprFunc()
@@ -88,8 +89,8 @@ renderDataTable = function(
   }
   processWidget = function(instance) {
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
-      instance = datatable(instance, ...)
-    } else if (length(list(...)) != 0) {
+      instance = do.call(datatable, c(list(instance), argFunc()))
+    } else if (length(argFunc()) != 0) {
       warning("renderDataTable ignores ... arguments when expr yields a datatable object; see ?renderDataTable")
     }
 
