@@ -173,12 +173,11 @@ name2int = function(name, names, rownames, noerror = FALSE) {
   }
   i = unname(setNames(seq_along(names), names)[name]) - 1
   if (any(is.na(i))) {
-    if (noerror)
-      i = na.omit(i)
-    else stop(
+    if (!noerror) stop(
       'You specified the columns: ', paste(name, collapse = ', '), ', ',
       'but the column names of the data are ', paste(names, collapse = ', ')
     )
+    i = na.omit(i)
   }
   i
 }
