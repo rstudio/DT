@@ -4,6 +4,8 @@
 
 - Fix a bug that on Windows, rmarkdown can't render a file that contains DT with PDF download button enabled (thanks, @mfherman @shrektan, #774)
 
+- Fix a bug that `renderDT()` doesn't react to `...` arguments (thanks, @AlfTang @shrektan, #152).
+
 # CHANGES IN DT VERSION 0.12
 
 ## NEW FEATURES
