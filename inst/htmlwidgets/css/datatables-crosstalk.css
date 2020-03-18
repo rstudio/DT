@@ -5,20 +5,3 @@
 html body div.DTS div.dataTables_scrollBody {
   background: none;
 }
-
-/* The datatables' theme CSS file doesn't define
-the color but with white background. It leads to an issue that
-when the HTML's body color is set to 'white', the user can't
-see the text since the background is white. One case happens in the
-RStudio's IDE when inline viewing the DT table inside an Rmd file,
-if the IDE theme is set to "Cobalt".
-See https://github.com/rstudio/DT/issues/447 for more info
-
-This fixes should have no side-effects because all the datatables'
-themes use the black text actually. Even if it doesn't, the theme
-will have to explicitly define the color and should override
-this CSS definition.
-*/
-div.datatables {
-  color: black;
-}
