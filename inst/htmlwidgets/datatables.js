@@ -19,7 +19,7 @@ var markInterval = function(d, digits, interval, mark, decMark, precision) {
 
 DTWidget.formatCurrency = function(data, currency, digits, interval, mark, decMark, before) {
   var d = parseFloat(data);
-  if (isNaN(d)) return;
+  if (isNaN(d)) return '';
   var res = markInterval(d, digits, interval, mark, decMark);
   res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
     res + currency;
@@ -28,31 +28,31 @@ DTWidget.formatCurrency = function(data, currency, digits, interval, mark, decMa
 
 DTWidget.formatString = function(data, prefix, suffix) {
   var d = data;
-  if (d === null) return;
+  if (d === null) return '';
   return prefix + d + suffix;
 };
 
 DTWidget.formatPercentage = function(data, digits, interval, mark, decMark) {
   var d = parseFloat(data);
-  if (isNaN(d)) return;
+  if (isNaN(d)) return '';
   return markInterval(d * 100, digits, interval, mark, decMark) + '%';
 };
 
 DTWidget.formatRound = function(data, digits, interval, mark, decMark) {
   var d = parseFloat(data);
-  if (isNaN(d)) return;
+  if (isNaN(d)) return '';
   return markInterval(d, digits, interval, mark, decMark);
 };
 
 DTWidget.formatSignif = function(data, digits, interval, mark, decMark) {
   var d = parseFloat(data);
-  if (isNaN(d)) return;
+  if (isNaN(d)) return '';
   return markInterval(d, digits, interval, mark, decMark, true);
 };
 
 DTWidget.formatDate = function(data, method, params) {
   var d = data;
-  if (d === null) return;
+  if (d === null) return '';
   // (new Date('2015-10-28')).toDateString() may return 2015-10-27 because the
   // actual time created could be like 'Tue Oct 27 2015 19:00:00 GMT-0500 (CDT)',
   // i.e. the date-only string is treated as UTC time instead of local time
