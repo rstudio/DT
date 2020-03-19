@@ -13,10 +13,15 @@ when the HTML's body color is set to 'white', the user can't
 see the text since the background is white. One case happens in the
 RStudio's IDE when inline viewing the DT table inside an Rmd file,
 if the IDE theme is set to "Cobalt".
+
 See https://github.com/rstudio/DT/issues/447 for more info
 
-This fixes should have no side-effects because all the other elements
+This fixes should have little side-effects because all the other elements
 of the default theme use the #333 font color.
+
+TODO: The upstream may use relative colors for both the table background
+and the color. It means the table can display well without this patch
+then. At that time, we need to remove the below CSS attributes.
 */
 div.datatables {
   color: #333;
