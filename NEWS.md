@@ -10,7 +10,7 @@
 
 ## NEW FEATURES
 
-- All the formatting functions except `formatStyle()` now support the `Responsive` plugin (thanks, @shrektan, #777)
+- All the formatting functions except `formatStyle()` now support the `Responsive` plugin (thanks, @andirey @shrektan, #776 #777 #782)
 
 # CHANGES IN DT VERSION 0.12
 
