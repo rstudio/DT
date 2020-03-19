@@ -1,3 +1,19 @@
+# CHANGES IN DT VERSION 0.13
+
+## BUG FIXES
+
+- Fix a bug that on Windows, rmarkdown can't render a file that contains DT with PDF download button enabled (thanks, @mfherman @shrektan, #774)
+
+- The formatting function will no longer throw errors for non-existing columns (thanks, @philibe @shrektan, #623).
+
+- Fix a bug that `renderDT()` doesn't react to `...` arguments (thanks, @AlfTang @shrektan, #152).
+
+- Now DT will always display black text in the RStudio IDE, even under a dark theme like "Cobalt" (thanks, @GegznaV @shrektan, #447 #767).
+
+## NEW FEATURES
+
+- All the formatting functions except `formatStyle()` now support the `Responsive` plugin (thanks, @andirey @shrektan, #776 #777 #782)
+
 # CHANGES IN DT VERSION 0.12
 
 ## NEW FEATURES
@@ -5,6 +21,8 @@
 - Support the Select extension on the client-side processing mode (thanks, @shrektan, #744).
 
 - Support [features/scrollResize plug-in](https://datatables.net/blog/2017-12-31) (thanks, @andrewkho @shrektan, #467 #754).
+
+- Upgrade DataTables to 1.10.20 and support the new datatables extension [SearchPanes](https://datatables.net/blog/2020-01-13) (thanks, @shrektan, #756).
 
 ## BUG FIXES
 
@@ -14,7 +32,7 @@
 
 - Fix a bug that `addRow()` can't add a `data.table` row to the proxy (thanks, @sifodia @shrektan, #760 #761).
 
-- Now DT will always display black text in the RStudio IDE, even under a dark theme like "Cobalt" (thanks, @GegznaV @shrektan, #447 #767).
+- Now DT displays the column alignment and the selection style correctly under the bootstrap4 theme (thanks, @pjvandam @shrektan, #601 #765).
 
 # CHANGES IN DT VERSION 0.11
 
