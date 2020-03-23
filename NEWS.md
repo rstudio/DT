@@ -10,6 +10,8 @@
 
 - Now DT will always display black text in the RStudio IDE, even under a dark theme like "Cobalt" (thanks, @GegznaV @shrektan, #447 #767).
 
+- Fix the issue that DT doesn't look well in pkgdown (thanks, @jayhesselberth @shrektan, #563).
+
 ## NEW FEATURES
 
 - All the formatting functions except `formatStyle()` now support the `Responsive` plugin (thanks, @andirey @shrektan, #776 #777 #782)
