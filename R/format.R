@@ -1,4 +1,6 @@
 formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs', 'rowCallback')) {
+  if (!inherits(table, 'datatables'))
+    stop("Invalid table argument; a table object created from datatable() was expected")
   if (inherits(columns, 'formula')) columns = all.vars(columns)
   x = table$x
   colnames = base::attr(x, 'colnames', exact = TRUE)
