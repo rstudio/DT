@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^tools
 ^\.travis\.yml$
+^codecov\.yml$
 ^inst/examples/random\.R$
 ^\.github$
 ^NEWS.md$

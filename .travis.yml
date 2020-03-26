@@ -12,4 +12,5 @@ before_install:
   - "curl https://xran.yihui.org/.gitconfig -o ~/.gitconfig"
 
 after_success:
+  - Rscript -e 'if (!require("covr")) install.packages("covr"); covr::codecov()'
   - "(curl https://xran.yihui.org/r-xran | bash)"
