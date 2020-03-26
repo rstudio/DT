@@ -34,4 +34,6 @@ assert('coerceValue() works', {
   (out %==% c('a', NA_character_))
   # coerceValue() should not throw warings for characters #541
   !has_warning(coerceValue('a', 'b'))
+  # warn unsupported datatype
+  has_warning(coerceValue('b', list(1)))
 })
