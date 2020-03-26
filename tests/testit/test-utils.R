@@ -37,3 +37,8 @@ assert('coerceValue() works', {
   # warn unsupported datatype
   has_warning(coerceValue('b', list(1)))
 })
+
+assert('fromJSON() will never try to read from a URL', {
+  out = try(fromJSON('https://a.b.c'), silent = TRUE)
+  grepl('invalid char in json text', as.character(out), fixed = TRUE)
+})
