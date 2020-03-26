@@ -116,6 +116,8 @@ formatSignif = function(
 #'   \code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
 #'   'numeric'))}
 formatDate = function(table, columns, method = 'toDateString', params = NULL) {
+  if (!inherits(table, 'datatables'))
+    stop("Invalid table argument; a table object created from datatable() was expected")
   x = table$x
   if (x$filter != 'none') {
     if (inherits(columns, 'formula')) columns = all.vars(columns)
