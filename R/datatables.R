@@ -335,8 +335,8 @@ classNameDefinedColumns = function(options, ncol) {
       } else {
         col = integer()
       }
+      cols = c(cols, col)
     }
-    cols = c(cols, col)
   }
   unique(cols)
 }
