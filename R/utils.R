@@ -126,7 +126,7 @@ editData = function(data, info, proxy = NULL, rownames = TRUE, resetPaging = FAL
     if (j == 0) {
       rownames(data)[i] = v
     } else {
-      data[i, j] = DT::coerceValue(v, data[i, j, drop = TRUE])
+      data[i, j] = coerceValue(v, data[i, j, drop = TRUE])
     }
   }
   if (is.character(proxy)) proxy = dataTableProxy(proxy)
