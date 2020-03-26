@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.14
 
+## MINOR CHANGES
+
+- The formatting functions now throw clearer error messages when called on non-datatables objects (thanks, @shrektan, #785).
 
 # CHANGES IN DT VERSION 0.13
 
