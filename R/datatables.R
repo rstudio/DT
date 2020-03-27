@@ -331,12 +331,12 @@ classNameDefinedColumns = function(options, ncol) {
       if (is.numeric(col)) {
         col[col < 0] = col[col < 0] + ncol
       } else if ("_all" %in% col) {
-        col = seq_len(ncol) - 1
+        col = seq_len(ncol) - 1L
       } else {
         col = integer()
       }
+      cols = c(cols, col)
     }
-    cols = c(cols, col)
   }
   unique(cols)
 }
@@ -361,7 +361,7 @@ convertIdx = function(i, names, n = length(names), invert = FALSE) {
 
 #' @importFrom htmltools HTML htmlEscape
 escapeData = function(data, i, colnames) {
-  if (is.null(data) || prod(dim(data)) == 0 || identical(i, FALSE)) return(data)
+  if (is.null(data) || prod(dim(data)) == 0 || isFALSE(i)) return(data)
   i = convertIdx(i, colnames, ncol(data))
   # only escape character columns (no need to escape numeric or logical columns)
   data[i] = lapply(data[i], function(x) {

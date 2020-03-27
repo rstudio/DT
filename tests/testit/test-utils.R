@@ -34,4 +34,11 @@ assert('coerceValue() works', {
   (out %==% c('a', NA_character_))
   # coerceValue() should not throw warings for characters #541
   !has_warning(coerceValue('a', 'b'))
+  # warn unsupported datatype
+  has_warning(coerceValue('b', list(1)))
+})
+
+assert('fromJSON() will never try to read from a URL', {
+  out = try(fromJSON('https://a.b.c'), silent = TRUE)
+  grepl('invalid char in json text', as.character(out), fixed = TRUE)
 })
