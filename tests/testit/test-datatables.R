@@ -49,3 +49,27 @@ assert('escapeData() works', {
   (escapeData(data, c(1, 3), colnames(data)) %==% expect)
   (escapeData(data, 'A', colnames(data)) %==% expect)
 })
+
+assert('escapeColNames() works', {
+  # escapeColNames() will call HTML() on those no need to escape
+  # and leave alone for others as it will call tags$th() on each
+  # of the elements, when those not protected by HTML() will get
+  # escaped
+  nms = c('<', '>', 'a')
+  (escapeColNames(nms, TRUE) %==% nms)
+  (escapeColNames(nms, FALSE) %==% lapply(nms, HTML))
+  (escapeColNames(nms, c(1, 3)) %==% list('<', HTML('>'), 'a'))
+  (escapeColNames(nms, -2) %==% list('<', HTML('>'), 'a'))
+  (escapeColNames(nms, c('<', 'a')) %==% list('<', HTML('>'), 'a'))
+  (escapeColNames(nms, c(TRUE, FALSE, TRUE)) %==% list('<', HTML('>'), 'a'))
+})
+
+assert('escapeToConfig() works', {
+  nms = c('<', '>', 'a')
+  escapeToConfig(TRUE, nms) %==% 'true'
+  escapeToConfig(FALSE, nms) %==% 'false'
+  escapeToConfig(c(1, 3), nms) %==% '"1,3"'
+  escapeToConfig(-2, nms) %==% '"-2"'
+  escapeToConfig(c('<', 'a'), nms) %==% '"1,3"'
+  escapeToConfig(c(TRUE, FALSE, TRUE), nms) %==% '"1,3"'
+})
