@@ -38,7 +38,6 @@ assert('escapeData() works', {
   # other type of inputs is undefined (may not throw error)
   (escapeData(NULL, TRUE) %==% NULL)
   (escapeData(iris, FALSE) %==% iris)
-  (escapeData(character(), TRUE) %==% character())
   # only escape character and factor
   data = data.frame(A = '<', B = factor('>'), C = 1, stringsAsFactors = FALSE)
   expect = data.frame(A = '&lt;', B = '&gt;', C = 1, stringsAsFactors = FALSE)
