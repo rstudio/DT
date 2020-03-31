@@ -516,7 +516,7 @@ HTMLWidgets.widget({
               $x0.hide().trigger('hide');
             },
             input: function() {
-              if ($input.val() === '') filter.val([r1, r2]);
+              if ($input.val() === '') filter.val([filter.noUiSlider('options').range.min, filter.noUiSlider('options').range.max]);
             },
             change: function() {
               var v = $input.val().replace(/\s/g, '');
@@ -526,8 +526,8 @@ HTMLWidgets.widget({
                 $input.parent().addClass('has-error');
                 return;
               }
-              if (v[0] === '') v[0] = r1;
-              if (v[1] === '') v[1] = r2;
+              if (v[0] === '') v[0] = filter.noUiSlider('options').range.min;
+              if (v[1] === '') v[1] = filter.noUiSlider('options').range.max;
               $input.parent().removeClass('has-error');
               // treat date as UTC time at midnight
               var strTime = function(x) {
@@ -543,8 +543,8 @@ HTMLWidgets.widget({
                 v[0] = strTime(v[0]);
                 v[1] = strTime(v[1]);
               }
-              if (v[0] != r1) v[0] *= scale;
-              if (v[1] != r2) v[1] *= scale;
+              if (v[0] != filter.noUiSlider('options').range.min) v[0] *= scale;
+              if (v[1] != filter.noUiSlider('options').range.max) v[1] *= scale;
               filter.val(v);
             }
           });
@@ -598,7 +598,7 @@ HTMLWidgets.widget({
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
-            $td.data('filter', val[0] > r1 || val[1] < r2);
+            $td.data('filter', val[0] > filter.noUiSlider('options').range.min || val[1] < filter.noUiSlider('options').range.max);
             var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
             if ($td.data('filter')) {
               ival = v1 + ' ... ' + v2;
