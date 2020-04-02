@@ -128,6 +128,10 @@ number of decimal places (\code{formatRound()}), or a specified number
 of significant figures (\code{formatSignif()}).  The function
 \code{formatStyle()} applies CSS styles to table cells by column.
 }
+\note{
+The length of arguments other than \code{table} should be 1 or the same as
+  the length of \code{columns}.
+}
 \examples{
 library(DT)
 m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))

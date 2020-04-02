@@ -41,6 +41,8 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #' @param before whether to place the currency symbol before or after the values
 #' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
+#' @note The length of arguments other than \code{table} should be 1 or the same as
+#'   the length of \code{columns}.
 #' @export
 #' @examples # !formatR
 #' library(DT)
