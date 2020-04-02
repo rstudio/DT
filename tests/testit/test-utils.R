@@ -30,12 +30,12 @@ assert('coerceValue() works', {
       as.POSIXlt('2020-01-01 12:00:00', tz = 'UTC'))
   # factor
   (coerceValue('a', factor(levels = c('a', 'b'))) %==% 'a')
-  has_warning(out <- coerceValue(c('a', 'c'), factor(levels = c('a', 'b'))))
+  (has_warning(out <- coerceValue(c('a', 'c'), factor(levels = c('a', 'b')))))
   (out %==% c('a', NA_character_))
   # coerceValue() should not throw warings for characters #541
-  !has_warning(coerceValue('a', 'b'))
+  (!has_warning(coerceValue('a', 'b')))
   # warn unsupported datatype
-  has_warning(coerceValue('b', list(1)))
+  (has_warning(coerceValue('b', list(1))))
 })
 
 assert('fromJSON() will never try to read from a URL', {
