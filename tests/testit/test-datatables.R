@@ -27,10 +27,10 @@ assert('convertIdx() works', {
   (convertIdx(1L, c('a', 'b'), invert = TRUE) %==% -1L)
   (convertIdx(c(TRUE, FALSE), c('a', 'b')) %==% c(TRUE, FALSE))
   (convertIdx(c(TRUE, FALSE), c('a', 'b'), invert = TRUE) %==% c(FALSE, TRUE))
-  has_error(convertIdx('a', NULL), silent = TRUE)
+  (has_error(convertIdx('a', NULL), silent = TRUE))
   (convertIdx(c('b', 'd'), letters) %==% c(b = 2L, d = 4L))
   (convertIdx(c('b', 'd'), letters[1:4], invert = TRUE) %==% c(a = 1L, c = 3L))
-  has_error(convertIdx('c', c('a', 'b')), silent = TRUE)
+  (has_error(convertIdx('c', c('a', 'b')), silent = TRUE))
 })
 
 assert('escapeData() works', {
@@ -65,10 +65,10 @@ assert('escapeColNames() works', {
 
 assert('escapeToConfig() works', {
   nms = c('<', '>', 'a')
-  escapeToConfig(TRUE, nms) %==% 'true'
-  escapeToConfig(FALSE, nms) %==% 'false'
-  escapeToConfig(c(1, 3), nms) %==% '"1,3"'
-  escapeToConfig(-2, nms) %==% '"-2"'
-  escapeToConfig(c('<', 'a'), nms) %==% '"1,3"'
-  escapeToConfig(c(TRUE, FALSE, TRUE), nms) %==% '"1,3"'
+  (escapeToConfig(TRUE, nms) %==% 'true')
+  (escapeToConfig(FALSE, nms) %==% 'false')
+  (escapeToConfig(c(1, 3), nms) %==% '"1,3"')
+  (escapeToConfig(-2, nms) %==% '"-2"')
+  (escapeToConfig(c('<', 'a'), nms) %==% '"1,3"')
+  (escapeToConfig(c(TRUE, FALSE, TRUE), nms) %==% '"1,3"')
 })

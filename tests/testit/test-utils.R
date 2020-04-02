@@ -40,5 +40,5 @@ assert('coerceValue() works', {
 
 assert('fromJSON() will never try to read from a URL', {
   out = try(fromJSON('https://a.b.c'), silent = TRUE)
-  grepl('invalid char in json text', as.character(out), fixed = TRUE)
+  (grepl('invalid char in json text', as.character(out), fixed = TRUE))
 })
