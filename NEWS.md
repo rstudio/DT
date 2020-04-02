@@ -2,7 +2,7 @@
 
 ## BUG FIXES
 
-- Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR#777 (thanks, @pbreheny @shrektan, #790).
+- Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR #777 (thanks, @pbreheny @shrektan, #790).
 
 ## MINOR CHANGES
 
