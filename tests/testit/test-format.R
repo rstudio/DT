@@ -11,3 +11,15 @@ assert('formatXXX() should throw clear errors when table is not valid', {
   out = try(formatCurrency(list(x = 1L)), silent = TRUE)
   (grepl('Invalid table', as.character(out), fixed = TRUE))
 })
+
+# fix issue #790
+# should generate the render callback for each columns individually
+assert('formatting functions should support vectorized input', {
+  out = datatable(iris) %>% formatRound(1:2, digits = 1:2)
+  defs = Filter(function(x) !is.null(x$render), out$x$options$columnDefs)
+  (length(defs) %==% 2L)
+  (defs[[1L]]$target %==% 1L)
+  (grepl('DTWidget.formatRound(data, 1, 3', defs[[1L]]$render, fixed = TRUE))
+  (defs[[2L]]$target %==% 2L)
+  (grepl('DTWidget.formatRound(data, 2, 3', defs[[2L]]$render, fixed = TRUE))
+})

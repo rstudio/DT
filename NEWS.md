@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.14
 
+## BUG FIXES
+
+- Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR #777 (thanks, @pbreheny @shrektan, #790).
+
 ## MINOR CHANGES
 
 - The formatting functions now throw clearer error messages when called on non-datatables objects (thanks, @shrektan, #785).

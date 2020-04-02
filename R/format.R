@@ -41,6 +41,8 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #' @param before whether to place the currency symbol before or after the values
 #' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
+#' @note The length of arguments other than \code{table} should be 1 or the same as
+#'   the length of \code{columns}.
 #' @export
 #' @examples # !formatR
 #' library(DT)
@@ -189,7 +191,7 @@ name2int = function(name, names, rownames, noerror = FALSE) {
 colFormatter = function(name, names, rownames = TRUE, template, ...) {
   i = name2int(name, names, rownames)
   js = sprintf("function(data, type, row, meta) { return %s }", template(...))
-  list(list(targets = i, render = JS(js)))
+  Map(function(i, js) list(targets = i, render = JS(js)), i, js)
 }
 
 appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
