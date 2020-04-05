@@ -83,3 +83,14 @@ assert('allPosNeg() works', {
   (allPosNeg(list(1:3, -(1:3))) %==% TRUE)
   (allPosNeg(list(c(1, -1, 3), -(1:3))) %==% FALSE)
 })
+
+assert('selection$selectable must be NULL or all pos/neg values', {
+  opt = options('DT.datatable.shiny' = TRUE)
+  on.exit(options(opt), add = TRUE)
+  (has_error(datatable(iris, selection = list(selectable = 0))))
+  (has_error(datatable(iris, selection = list(selectable = c(1, -1)))))
+  (has_error(datatable(iris, selection = list(selectable = list(rows = 1:3, cols = c(1, 0))))))
+  (!has_error(datatable(iris, selection = list(selectable = 1:3))))
+  (!has_error(datatable(iris, selection = list(selectable = NULL))))
+  (!has_error(datatable(iris, selection = list(selectable = list(rows = -1)))))
+})

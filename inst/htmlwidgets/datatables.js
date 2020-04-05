@@ -166,7 +166,7 @@ HTMLWidgets.widget({
     if (data.caption) $table.prepend(data.caption);
 
     if (!data.selection) data.selection = {
-      mode: 'none', selected: null, target: 'row'
+      mode: 'none', selected: null, target: 'row', selectable: null
     };
     if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
         data.selection.target === 'row+column') {

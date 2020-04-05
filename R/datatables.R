@@ -257,12 +257,15 @@ datatable = function(
       selection = list(mode = match.arg(selection))
     }
     selection = modifyList(
-      list(mode = 'multiple', selected = NULL, target = 'row'), selection
+      list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL), selection
     )
     # for compatibility with DT < 0.1.22 ('selected' could be row names)
     if (grepl('^row', selection$target) && is.character(selection$selected) && length(rn)) {
       selection$selected = match(selection$selected, rn)
     }
+    if (!allPosNeg(selection$selectable))
+      stop('the selectable argument of selection must be NULL or an integer vector ',
+           'with all positive/negative values')
     params$selection = selection
     # warn if the Select ext is used but selection is not set to none
     if ('Select' %in% extensions && selection$mode != 'none') warning(
