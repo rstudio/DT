@@ -108,13 +108,7 @@ pre-select rows and control the selectable range; the element
 \code{target} in the list can be \code{'column'} to enable column
 selection, or \code{'row+column'} to make it possible to select both rows
 and columns (click on the footer to select columns), or \code{'cell'} to
-select cells. When \code{target} is \code{'row+column'}, \code{selected}
-should be provide as a list, specifying \code{rows} and \code{cols}
-respectively, e.g., \code{list(rows = 1, cols = 2)}.
-Note that DT has its own selection implementation and doesn't
-use the Select extension because the latter doesn't support the
-server-side processing mode well. Please set this argument to \code{'none'}
-if you really want to use the Select extension.}
+select cells. See details section for more info.}
 
 \item{extensions}{a character vector of the names of the DataTables
 extensions (\url{https://datatables.net/extensions/index})}
@@ -138,6 +132,26 @@ certain columns.}
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
 data frame) using the JavaScript library DataTables.
+}
+\details{
+\code{selection}:
+  \enumerate{
+    \item When a list form is provided for this argument, only parts of the
+      "full" list are allowed. The default values for non-matched elements are
+      \code{list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL)}.
+    \item When \code{target} is \code{'row+column'}, \code{selected} and
+      \code{selectable} should be provide as a list, specifying \code{rows}
+      and \code{cols} respectively, e.g., \code{list(rows = 1, cols = 2)}.
+    \item \code{selectable} must be \code{NULL} or an integer vector with
+      all positive or negative values. The values are the row or column
+      indices of the table. If the values are all positive, it means only
+      certain rows/columns are selectable. Otherwise, it means they are
+      \emph{not} selectable.
+    \item Note that DT has its own selection implementation and doesn't
+      use the Select extension because the latter doesn't support the
+      server-side processing mode well. Please set this argument to
+      \code{'none'} if you really want to use the Select extension.
+  }
 }
 \note{
 You are recommended to escape the table content for security reasons
