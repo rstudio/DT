@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.14
 
+## NEW FEATURES
+
+- Now the user is able to control the selection range by `datatable(..., selection = list(selectable = 3:5))`, where positive and negative `selectable` means "enable" and "disable", respectively (thanks, @tomasreigl @shrektan, #201 #793).
+
 ## BUG FIXES
 
 - Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR #777 (thanks, @pbreheny @shrektan, #790).
