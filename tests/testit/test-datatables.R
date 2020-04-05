@@ -72,3 +72,14 @@ assert('escapeToConfig() works', {
   (escapeToConfig(c('<', 'a'), nms) %==% '"1,3"')
   (escapeToConfig(c(TRUE, FALSE, TRUE), nms) %==% '"1,3"')
 })
+
+assert('allPosNeg() works', {
+  (allPosNeg(NULL) %==% TRUE)
+  (allPosNeg(c(1, 2, 3)) %==% TRUE)
+  (allPosNeg(c(-1, -2, -3)) %==% TRUE)
+  (allPosNeg(c(1, -2, 3)) %==% FALSE)
+  (allPosNeg(c(1, 0, 3)) %==% FALSE)
+  (allPosNeg(c(0, 0, 0)) %==% FALSE)
+  (allPosNeg(list(1:3, -(1:3))) %==% TRUE)
+  (allPosNeg(list(c(1, -1, 3), -(1:3))) %==% FALSE)
+})
