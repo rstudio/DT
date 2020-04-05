@@ -932,7 +932,7 @@ HTMLWidgets.widget({
       var selClass = inArray(data.style, ['bootstrap', 'bootstrap4']) ? 'active' : 'selected';
       // selected1: row indices; selected2: column indices
       var initSel = function(x) {
-        if (x === null) {
+        if (x === null || selTarget === 'cell') {
           return {rows: [], cols: []};
         } else if (selTarget === 'row') {
           return {rows: $.makeArray(x), cols: []};
