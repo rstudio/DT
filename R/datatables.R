@@ -92,11 +92,12 @@
 #'     \item When \code{target} is \code{'row+column'}, \code{selected} and
 #'       \code{selectable} should be provide as a list, specifying \code{rows}
 #'       and \code{cols} respectively, e.g., \code{list(rows = 1, cols = 2)}.
-#'     \item \code{selectable} must be \code{NULL} or an integer vector with
-#'       all positive or negative values. The values are the row or column
-#'       indices of the table. If the values are all positive, it means only
-#'       certain rows/columns are selectable. Otherwise, it means they are
-#'       \emph{not} selectable.
+#'     \item When \code{target} is \code{'cell'}, \code{selected} and
+#'       \code{selectable} should be provide as a 2-col \code{matrix}, where each row
+#'       stands for the row and column indices.
+#'     \item \code{selectable} must be all positive or negative values.
+#'       If the values are all positive, it means only certain rows/columns
+#'       are selectable. Otherwise, it means they are \emph{not} selectable.
 #'     \item Note that DT has its own selection implementation and doesn't
 #'       use the Select extension because the latter doesn't support the
 #'       server-side processing mode well. Please set this argument to
