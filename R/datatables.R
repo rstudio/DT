@@ -66,7 +66,10 @@
 #'   \code{target} in the list can be \code{'column'} to enable column
 #'   selection, or \code{'row+column'} to make it possible to select both rows
 #'   and columns (click on the footer to select columns), or \code{'cell'} to
-#'   select cells. Note that DT has its own selection implementation and doesn't
+#'   select cells. When \code{target} is \code{'row+column'}, \code{selected}
+#'   should be provide as a list, specifying \code{rows} and \code{cols}
+#'   respectively, e.g., \code{list(rows = 1, cols = 2)}.
+#'   Note that DT has its own selection implementation and doesn't
 #'   use the Select extension because the latter doesn't support the
 #'   server-side processing mode well. Please set this argument to \code{'none'}
 #'   if you really want to use the Select extension.
