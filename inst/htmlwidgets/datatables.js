@@ -1139,33 +1139,36 @@ HTMLWidgets.widget({
       }
 
       if (selTarget === 'cell') {
-        var selected3;
-        if (selected === null) {
-          selected3 = [];
-        } else {
-          selected3 = selected;
-        }
-        var findIndex = function(ij) {
-          for (var i = 0; i < selected3.length; i++) {
-            if (ij[0] === selected3[i][0] && ij[1] === selected3[i][1]) return i;
+        var selected3 = [], selectable3 = [];
+        if (selected !== null) selected3 = selected;
+        if (selectable !== null) selectable3 = selectable;
+        var findIndex = function(ij, sel) {
+          for (var i = 0; i < sel.length; i++) {
+            if (ij[0] === sel[i][0] && ij[1] === sel[i][1]) return i;
           }
           return -1;
         }
-        table.on('click.dt', 'tbody td', function() {
-          var $this = $(this), info = tweakCellIndex(table.cell(this));
-          if ($this.hasClass(selClass)) {
-            $this.removeClass(selClass);
-            selected3.splice(findIndex([info.row, info.col]), 1);
+         // Change selected3's value based on selectable3, then refresh the cell state
+        var onlyKeepSelectableCells = function() {
+          if (selectable3.length === 0) return;
+          var nonselectable = selectable3[0][0] < 0;
+          var out = [];
+          if (nonselectable) {
+            selected3.map(function(ij) {
+              // should make selectable3 positive
+              if (findIndex([-ij[0], -ij[1]], selectable3) === -1) { out.push(ij); }
+            });
           } else {
-            if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
-            $this.addClass(selClass);
-            selected3 = selMode === 'single' ? [[info.row, info.col]] :
-              unique(selected3.concat([[info.row, info.col]]));
+            selected3.map(function(ij) {
+              if (findIndex(ij, selectable3) > -1) { out.push(ij); }
+            });
           }
-          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
-        });
-        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+          selected3 = out;
+        }
+        // Change selected3's value based on selectable3, then
+        // refresh the cell selection state according to values in selected3
         var selectCells = function() {
+          onlyKeepSelectableCells();
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
           if (server) {
@@ -1180,7 +1183,23 @@ HTMLWidgets.widget({
             });
           }
         };
+        table.on('click.dt', 'tbody td', function() {
+          var $this = $(this), info = tweakCellIndex(table.cell(this));
+          if ($this.hasClass(selClass)) {
+            $this.removeClass(selClass);
+            selected3.splice(findIndex([info.row, info.col], selected3), 1);
+          } else {
+            if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
+            $this.addClass(selClass);
+            selected3 = selMode === 'single' ? [[info.row, info.col]] :
+              unique(selected3.concat([[info.row, info.col]]));
+          }
+          selectCells(); // must call this to update selected3 based on selectable3
+          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+        });
         selectCells();  // in case users have specified pre-selected columns
+        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+
         if (server) table.on('draw.dt', selectCells);
         methods.selectCells = function(selected) {
           selected3 = selected ? selected : [];
