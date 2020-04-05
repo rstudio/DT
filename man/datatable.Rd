@@ -103,7 +103,8 @@ when the number of total records is less than the page size.}
 \item{selection}{the row/column selection mode (single or multiple selection
 or disable selection) when a table widget is rendered in a Shiny app;
 alternatively, you can use a list of the form \code{list(mode = 'multiple',
-selected = c(1, 3, 8), target = 'row')} to pre-select rows; the element
+selected = c(1, 3, 8), target = 'row', selectable = c(-2, -3))} to
+pre-select rows and control the selectable range; the element
 \code{target} in the list can be \code{'column'} to enable column
 selection, or \code{'row+column'} to make it possible to select both rows
 and columns (click on the footer to select columns), or \code{'cell'} to
