@@ -88,12 +88,12 @@ renderDataTable = function(
     }
   }
   processWidget = function(instance) {
+    args = argFunc(); args = args[-length(args)] # the last element is `server`
+    # which is only used in `renderDT()` not `datatable()`, the reason
+    # of having it in `argFunc()` is we want `server` to be reactive
     if (!all(c('datatables', 'htmlwidget') %in% class(instance))) {
-      args = argFunc(); args = args[-length(args)] # the last element is `server`
-      # which is only used in `renderDT()` not `datatable()`, the reason
-      # of having it in `argFunc()` is we want `server` to be reactive
       instance = do.call(datatable, c(list(instance), args))
-    } else if (length(argFunc()) != 0) {
+    } else if (length(args) != 0) {
       warning("renderDataTable ignores ... arguments when expr yields a datatable object; see ?renderDataTable")
     }
 
