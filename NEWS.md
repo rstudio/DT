@@ -8,6 +8,8 @@
 
 - The formatting functions now throw clearer error messages when called on non-datatables objects (thanks, @shrektan, #785).
 
+- Incorrect `selection` param now triggers a clear error message on the R side (thanks, @shrektan, #795).
+
 # CHANGES IN DT VERSION 0.13
 
 ## BUG FIXES
