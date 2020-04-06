@@ -944,9 +944,10 @@ HTMLWidgets.widget({
       }
       var selected = data.selection.selected;
       var selected1 = initSel(selected).rows, selected2 = initSel(selected).cols;
-      // selectable should contain either positive or negative values, not both, not zero
-      // positive values indicate "selectable" while negative values means "nonselectable"
-      // the assertion is performed on R side
+      // selectable should contain either positive or negative values, not both
+      // positive values indicate "selectable" while negative and zero values means "nonselectable"
+      // the assertion is performed on R side. (only column indicides could be zero which indicates
+      // the row name)
       var selectable = data.selection.selectable;
       var selectable1 = initSel(selectable).rows, selectable2 = initSel(selectable).cols;
 
@@ -989,7 +990,7 @@ HTMLWidgets.widget({
         // Change selected1's value based on selectable1, then refresh the row state
         var onlyKeepSelectableRows = function() {
           if (selectable1.length === 0) return;
-          var nonselectable = selectable1[0] < 0;
+          var nonselectable = selectable1[0] <= 0;
           if (nonselectable) {
             // should make selectable1 positive
             selected1 = $(selected1).not(selectable1.map(function(i) { return -i; })).get();
@@ -1091,7 +1092,7 @@ HTMLWidgets.widget({
         // update selected2's value based on selectable2
         var onlyKeepSelectableCols = function() {
           if (selectable2.length === 0) return;
-          var nonselectable = selectable2[0] < 0;
+          var nonselectable = selectable2[0] <= 0;
           if (nonselectable) {
             // need to make selectable2 positive
             selected2 = $(selected2).not(selectable2.map(function(i) { return -i; })).get();
@@ -1151,7 +1152,7 @@ HTMLWidgets.widget({
          // Change selected3's value based on selectable3, then refresh the cell state
         var onlyKeepSelectableCells = function() {
           if (selectable3.length === 0) return;
-          var nonselectable = selectable3[0][0] < 0;
+          var nonselectable = selectable3[0][0] <= 0;
           var out = [];
           if (nonselectable) {
             selected3.map(function(ij) {
