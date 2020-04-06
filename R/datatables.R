@@ -263,7 +263,7 @@ datatable = function(
     if (grepl('^row', selection$target) && is.character(selection$selected) && length(rn)) {
       selection$selected = match(selection$selected, rn)
     }
-    params$selection = selection
+    params$selection = validateSelection(selection)
     # warn if the Select ext is used but selection is not set to none
     if ('Select' %in% extensions && selection$mode != 'none') warning(
       "The Select extension can't work properly with DT's own ",
@@ -315,6 +315,23 @@ datatable = function(
       instance
     }
   )
+}
+
+validateSelection = function(x) {
+  err = character()
+  if (length(x$mode) != 1L || !x$mode %in% c('none', 'single', 'multiple'))
+    err = c(err, "- `mode` must be one of 'none', 'single' and 'multiple'")
+  if (length(x$target) != 1L || !x$target %in% c('row', 'column', 'row+column', 'cell'))
+    err = c(err, "- `target` must be one of 'row', 'column', 'row+column' and 'cell'")
+  if (length(x$selected)) {
+    if (x$target == 'row+column' && (!is.list(x$selected) || !names(x$selected) %in% c('rows', 'cols')))
+      err = c(err, "- when `target` is 'row+column', `selected` must be a list in the form `list(rows = 1, cols = 2)`")
+    if (x$target == 'cell' && (!is.matrix(x$selected) || ncol(x$selected) != 2L))
+      err = c(err, "- when `target` is 'cell', `selected` must be a 2-col matrix")
+  }
+  if (length(err))
+    stop(paste0(c("the `selection` argument is incorrect:", err), collapse = '\n'), call. = FALSE)
+  x
 }
 
 appendColumnDefs = function(options, def) {
