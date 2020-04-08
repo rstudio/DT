@@ -1,5 +1,40 @@
 library(testit)
 
+assert('validateSelection() works', {
+  (has_error(
+    validateSelection(list(mode = 'a'))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'single', target = 'row'))
+  ))
+  # check selected when target is row+column
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column'))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selected = 1))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selected = list(rows = 3:4)))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selected = list(cols = 3:4)))
+  ))
+  # check selected when target is cell
+   (!has_error(
+    validateSelection(list(mode = 'none', target = 'cell'))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selected = 1))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selected = cbind(1)))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selected = cbind(1, 2)))
+  ))
+})
+
 assert('appendColumnDefs() works', {
   (appendColumnDefs(list(), 1) %==% list(columnDefs = list(1)))
   (appendColumnDefs(list(a = 1), 2) %==% list(a = 1, columnDefs = list(2)))
