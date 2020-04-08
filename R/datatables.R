@@ -96,19 +96,19 @@
 #'        and \code{'cell'}.
 #'     \item \code{selected} could be \code{NULL} or indices. The format is specified below.
 #'     \item \code{selectable} could be \code{NULL}, \code{TRUE}, \code{FALSE} or indices,
-#'       where \code{NULL} and \code{TRUE} means all the table is selectable. When \code{FALSE},
-#'       it means users can't select the table by cursor (but they could still be able to
-#'       select the table via \code{\link{dataTableProxy}}). If indicies, they must be
-#'       all positive or non-positive values. All positive indicies mean only the ranges
-#'       are selectable while all non-positive indicies mean the ranges are \emph{not}
-#'       selectable. The indicies' format is specified below.
+#'       where \code{NULL} and \code{TRUE} mean all the table is selectable. When \code{FALSE},
+#'       it means users can't select the table by the cursor (but they could still be able to
+#'       select the table via \code{\link{dataTableProxy}}). If indices, they must be
+#'       all positive or non-positive values. All positive indices mean only the ranges
+#'       are selectable while all non-positive indices mean the ranges are \emph{not}
+#'       selectable. The indices' format is specified below.
 #'     \item When \code{target} is \code{'row'} or \code{'column'}, \code{selected} and
 #'       \code{selectable} should be a plain numeric vector.
 #'     \item When \code{target} is \code{'row+column'}, \code{selected} and
-#'       \code{selectable} should be provide as a list, specifying \code{rows}
+#'       \code{selectable} should be provided as a list, specifying \code{rows}
 #'       and \code{cols} respectively, e.g., \code{list(rows = 1, cols = 2)}.
 #'     \item When \code{target} is \code{'cell'}, \code{selected} and
-#'       \code{selectable} should be provide as a 2-col \code{matrix}, where the two
+#'       \code{selectable} should be provided as a 2-col \code{matrix}, where the two
 #'       values of each row stand for the row and column indices.
 #'     \item Note that DT has its own selection implementation and doesn't
 #'       use the Select extension because the latter doesn't support the
