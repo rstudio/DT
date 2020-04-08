@@ -332,17 +332,28 @@ datatable = function(
 }
 
 validateSelection = function(x) {
-  err = character()
-  if (length(x$mode) != 1L || !x$mode %in% c('none', 'single', 'multiple'))
-    err = c(err, "- `mode` must be one of 'none', 'single' and 'multiple'")
-  if (length(x$target) != 1L || !x$target %in% c('row', 'column', 'row+column', 'cell'))
-    err = c(err, "- `target` must be one of 'row', 'column', 'row+column' and 'cell'")
-  if (length(x$selected)) {
-    if (x$target == 'row+column' && (!is.list(x$selected) || !names(x$selected) %in% c('rows', 'cols')))
-      err = c(err, "- when `target` is 'row+column', `selected` must be a list in the form `list(rows = 1, cols = 2)`")
-    if (x$target == 'cell' && (!is.matrix(x$selected) || ncol(x$selected) != 2L))
-      err = c(err, "- when `target` is 'cell', `selected` must be a 2-col matrix")
-  }
+  isRowColList = function(x) is.list(x) && names(x) %in% c('rows', 'cols')
+  is2ColMatrix = function(x) is.matrix(x) && ncol(x) == 2L
+  validator = list(
+    mode = function(x) {
+      if (length(x$mode) != 1L || !x$mode %in% c('none', 'single', 'multiple'))
+        "- `mode` must be one of 'none', 'single' and 'multiple'"
+    },
+    target = function(x) {
+      if (length(x$target) != 1L || !x$target %in% c('row', 'column', 'row+column', 'cell'))
+        "- `target` must be one of 'row', 'column', 'row+column' and 'cell'"
+    },
+    selected = function(x) {
+      if (length(x$selected) == 0L)
+        NULL
+      else if (x$target == 'row+column' && !isRowColList(x$selected))
+        "- when `target` is 'row+column', `selected` must be in the form of `list(rows = 1, cols = 2)`"
+      else if (x$target == 'cell' && !is2ColMatrix(x$selected))
+        "- when `target` is 'cell', `selected` must be a 2-col matrix"
+    }
+  )
+  err = lapply(names(validator), function(e) validator[[e]](x))
+  err = unlist(err, use.names = FALSE)
   if (length(err))
     stop(paste0(c("the `selection` argument is incorrect:", err), collapse = '\n'), call. = FALSE)
   x
