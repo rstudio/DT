@@ -945,8 +945,8 @@ HTMLWidgets.widget({
       }
       var selected = data.selection.selected;
       var selected1 = initSel(selected).rows, selected2 = initSel(selected).cols;
-      // selectable should contain either positive or negative values, not both
-      // positive values indicate "selectable" while negative and zero values means "nonselectable"
+      // selectable should contain either all positive or all non-positive values, not both
+      // positive values indicate "selectable" while non-positive values means "nonselectable"
       // the assertion is performed on R side. (only column indicides could be zero which indicates
       // the row name)
       var selectable = data.selection.selectable;
