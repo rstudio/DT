@@ -21,7 +21,7 @@ assert('validateSelection() works', {
     validateSelection(list(mode = 'none', target = 'row+column', selected = list(cols = 3:4)))
   ))
   # check selected when target is cell
-   (!has_error(
+  (!has_error(
     validateSelection(list(mode = 'none', target = 'cell'))
   ))
   (has_error(
