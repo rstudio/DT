@@ -268,22 +268,31 @@ dataTableProxy = function(
 #'   use \code{NULL} to clear existing selections
 #' @rdname proxy
 #' @export
-selectRows = function(proxy, selected) {
-  invokeRemote(proxy, 'selectRows', list(I_null(as.integer(selected))))
+selectRows = function(proxy, selected, ignore.selectable = TRUE) {
+  invokeRemote(
+    proxy, 'selectRows',
+    list(I_null(as.integer(selected)), ignore.selectable)
+  )
 }
 
 #' @rdname proxy
 #' @export
-selectColumns = function(proxy, selected) {
-  invokeRemote(proxy, 'selectColumns', list(I_null(as.integer(selected))))
+selectColumns = function(proxy, selected, ignore.selectable = TRUE) {
+  invokeRemote(
+    proxy, 'selectColumns',
+    list(I_null(as.integer(selected)), ignore.selectable)
+  )
 }
 
 I_null = function(x) if (is.null(x)) list() else x
 
 #' @rdname proxy
 #' @export
-selectCells = function(proxy, selected) {
-  invokeRemote(proxy, 'selectCells', list(selected))
+selectCells = function(proxy, selected, ignore.selectable = TRUE) {
+  invokeRemote(
+    proxy, 'selectCells',
+    list(selected, ignore.selectable)
+  )
 }
 
 #' @param data a single row of data to be added to the table; it can be a matrix

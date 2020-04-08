@@ -1005,8 +1005,8 @@ HTMLWidgets.widget({
         }
         // Change selected1's value based on selectable1, then
         // refresh the row selection state according to values in selected1
-        var selectRows = function() {
-          onlyKeepSelectableRows();
+        var selectRows = function(ignoreSelectable = false) {
+          if (!ignoreSelectable) onlyKeepSelectableRows();
           table.$('tr.' + selClass).removeClass(selClass);
           if (selected1.length === 0) return;
           if (server) {
@@ -1083,9 +1083,9 @@ HTMLWidgets.widget({
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to *real* row indices are in `selected1`
         if (server) table.on('draw.dt', selectRows);
-        methods.selectRows = function(selected) {
+        methods.selectRows = function(selected, ignoreSelectable) {
           selected1 = $.makeArray(selected);
-          selectRows();
+          selectRows(ignoreSelectable);
           changeInput('rows_selected', selected1);
         }
       }
@@ -1111,8 +1111,8 @@ HTMLWidgets.widget({
         }
         // update selected2 and then
         // refresh the col selection state according to values in selected2
-        var selectCols = function() {
-          onlyKeepSelectableCols();
+        var selectCols = function(ignoreSelectable = false) {
+          if (!ignoreSelectable) onlyKeepSelectableCols();
           table.columns().nodes().flatten().to$().removeClass(selClass);
           if (selected2.length > 0)
             table.columns(selected2).nodes().flatten().to$().addClass(selClass);
@@ -1141,9 +1141,9 @@ HTMLWidgets.widget({
         selectCols();  // in case users have specified pre-selected columns
         changeInput('columns_selected', selected2);
         if (server) table.on('draw.dt', selectCols);
-        methods.selectColumns = function(selected) {
+        methods.selectColumns = function(selected, ignoreSelectable) {
           selected2 = $.makeArray(selected);
-          selectCols();
+          selectCols(ignoreSelectable);
           changeInput('columns_selected', selected2);
         }
       }
@@ -1181,8 +1181,8 @@ HTMLWidgets.widget({
         }
         // Change selected3's value based on selectable3, then
         // refresh the cell selection state according to values in selected3
-        var selectCells = function() {
-          onlyKeepSelectableCells();
+        var selectCells = function(ignoreSelectable = false) {
+          if (!ignoreSelectable) onlyKeepSelectableCells();
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
           if (server) {
@@ -1215,9 +1215,9 @@ HTMLWidgets.widget({
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
 
         if (server) table.on('draw.dt', selectCells);
-        methods.selectCells = function(selected) {
+        methods.selectCells = function(selected, ignoreSelectable) {
           selected3 = selected ? selected : [];
-          selectCells();
+          selectCells(ignoreSelectable);
           changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         }
       }
