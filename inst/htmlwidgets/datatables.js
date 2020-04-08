@@ -928,11 +928,12 @@ HTMLWidgets.widget({
     }
 
     var selMode = data.selection.mode, selTarget = data.selection.target;
+    var selDisable = data.selection.selectable === false;
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = inArray(data.style, ['bootstrap', 'bootstrap4']) ? 'active' : 'selected';
       // selected1: row indices; selected2: column indices
       var initSel = function(x) {
-        if (x === null || selTarget === 'cell') {
+        if (x === null || typeof x === 'boolean' || selTarget === 'cell') {
           return {rows: [], cols: []};
         } else if (selTarget === 'row') {
           return {rows: $.makeArray(x), cols: []};
@@ -989,6 +990,10 @@ HTMLWidgets.widget({
         }
         // Change selected1's value based on selectable1, then refresh the row state
         var onlyKeepSelectableRows = function() {
+          if (selDisable) { // users can't select; useful when only want backend select
+            selected1 = [];
+            return;
+          }
           if (selectable1.length === 0) return;
           var nonselectable = selectable1[0] <= 0;
           if (nonselectable) {
@@ -1091,6 +1096,10 @@ HTMLWidgets.widget({
         }
         // update selected2's value based on selectable2
         var onlyKeepSelectableCols = function() {
+          if (selDisable) { // users can't select; useful when only want backend select
+            selected2 = [];
+            return;
+          }
           if (selectable2.length === 0) return;
           var nonselectable = selectable2[0] <= 0;
           if (nonselectable) {
@@ -1142,7 +1151,7 @@ HTMLWidgets.widget({
       if (selTarget === 'cell') {
         var selected3 = [], selectable3 = [];
         if (selected !== null) selected3 = selected;
-        if (selectable !== null) selectable3 = selectable;
+        if (selectable !== null && typeof selectable !== 'boolean') selectable3 = selectable;
         var findIndex = function(ij, sel) {
           for (var i = 0; i < sel.length; i++) {
             if (ij[0] === sel[i][0] && ij[1] === sel[i][1]) return i;
@@ -1151,6 +1160,10 @@ HTMLWidgets.widget({
         }
          // Change selected3's value based on selectable3, then refresh the cell state
         var onlyKeepSelectableCells = function() {
+          if (selDisable) { // users can't select; useful when only want backend select
+            selected3 = [];
+            return;
+          }
           if (selectable3.length === 0) return;
           var nonselectable = selectable3[0][0] <= 0;
           var out = [];
