@@ -86,18 +86,30 @@
 #'   certain columns.
 #' @details \code{selection}:
 #'   \enumerate{
+#'     \item A scalar string means the selection \code{mode}, whose options are
+#'       \code{'multiple'} (the default), \code{'single'} and \code{'none'}
+#'        (disable selection).
 #'     \item When a list form is provided for this argument, only parts of the
 #'       "full" list are allowed. The default values for non-matched elements are
 #'       \code{list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL)}.
+#'     \item \code{target} must be one of \code{'row'}, \code{'column'}, \code{'row+column'}
+#'        and \code{'cell'}.
+#'     \item \code{selected} could be \code{NULL} or indices. The format is specified below.
+#'     \item \code{selectable} could be \code{NULL}, \code{TRUE}, \code{FALSE} or indices,
+#'       where \code{NULL} and \code{TRUE} means all the table is selectable. When \code{FALSE},
+#'       it means users can't select the table by cursor (but they could still be able to
+#'       select the table via \code{\link{dataTableProxy}}). If indicies, they must be
+#'       all positive or non-positive values. All positive indicies mean only the ranges
+#'       are selectable while all non-positive indicies mean the ranges are \emph{not}
+#'       selectable. The indicies' format is specified below.
+#'     \item When \code{target} is \code{'row'} or \code{'column'}, \code{selected} and
+#'       \code{selectable} should be a plain numeric vector.
 #'     \item When \code{target} is \code{'row+column'}, \code{selected} and
 #'       \code{selectable} should be provide as a list, specifying \code{rows}
 #'       and \code{cols} respectively, e.g., \code{list(rows = 1, cols = 2)}.
 #'     \item When \code{target} is \code{'cell'}, \code{selected} and
-#'       \code{selectable} should be provide as a 2-col \code{matrix}, where each row
-#'       stands for the row and column indices.
-#'     \item \code{selectable} must be all positive or negative values.
-#'       If the values are all positive, it means only certain rows/columns
-#'       are selectable. Otherwise, it means they are \emph{not} selectable.
+#'       \code{selectable} should be provide as a 2-col \code{matrix}, where the two
+#'       values of each row stand for the row and column indices.
 #'     \item Note that DT has its own selection implementation and doesn't
 #'       use the Select extension because the latter doesn't support the
 #'       server-side processing mode well. Please set this argument to
