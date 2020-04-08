@@ -20,6 +20,15 @@ assert('validateSelection() works', {
   (!has_error(
     validateSelection(list(mode = 'none', target = 'row+column', selected = list(cols = 3:4)))
   ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selectable = 1))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selectable = list(rows = 3:4)))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selectable = list(cols = 3:4)))
+  ))
   # check selected when target is cell
   (!has_error(
     validateSelection(list(mode = 'none', target = 'cell'))
@@ -32,6 +41,26 @@ assert('validateSelection() works', {
   ))
   (!has_error(
     validateSelection(list(mode = 'none', target = 'cell', selected = cbind(1, 2)))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selectable = 1))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selectable = cbind(1)))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selectable = cbind(1, 2)))
+  ))
+  # selectable must be all positive or non-positive values
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row', selectable = 1:3))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'row', selectable = c(-1, 1)))
+  ))
+  # selectable supports TRUE or FALSE
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row', selectable = FALSE))
   ))
 })
 
@@ -131,7 +160,7 @@ local({
   opt = options('DT.datatable.shiny' = TRUE)
   on.exit(options(opt), add = TRUE)
   assert('selection$selectable must be NULL or all pos/neg values', {
-    (has_error(datatable(iris, selection = list(selectable = 0))))
+    (!has_error(datatable(iris, selection = list(selectable = FALSE))))
     (has_error(datatable(iris, selection = list(selectable = c(1, -1)))))
     (has_error(datatable(iris, selection = list(selectable = list(rows = 1:3, cols = c(1, 0))))))
     (!has_error(datatable(iris, selection = list(selectable = 1:3))))

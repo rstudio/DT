@@ -350,6 +350,16 @@ validateSelection = function(x) {
         "- when `target` is 'row+column', `selected` must be in the form of `list(rows = 1, cols = 2)`"
       else if (x$target == 'cell' && !is2ColMatrix(x$selected))
         "- when `target` is 'cell', `selected` must be a 2-col matrix"
+    },
+    selectable = function(x) {
+      if (length(x$selectable) == 0L || is.logical(x$selectable))
+        NULL
+      else if (!sameSign(x$selectable, zero = -1L))
+        "- selectable must be either all positive or all non-positive values"
+      else if (x$target == 'row+column' && !isRowColList(x$selectable))
+        "- when `target` is 'row+column', `selectable` must be in the form of `list(rows = 1, cols = 2)`"
+      else if (x$target == 'cell' && !is2ColMatrix(x$selectable))
+        "- when `target` is 'cell', `selectable` must be a 2-col matrix"
     }
   )
   err = lapply(names(validator), function(e) validator[[e]](x))
