@@ -266,6 +266,9 @@ dataTableProxy = function(
 #' @param selected an integer vector of row/column indices, or a matrix of two
 #'   columns (row and column indices, respectively) for cell indices; you may
 #'   use \code{NULL} to clear existing selections
+#' @param ignore.selectable when \code{TRUE} (the default), the "selectable"
+#'   range that's specified by \code{selection = list(selectable= )} will be
+#'   ignored; otherwise, you can't select the "non-selectable" range.
 #' @rdname proxy
 #' @export
 selectRows = function(proxy, selected, ignore.selectable = TRUE) {
