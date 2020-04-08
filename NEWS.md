@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- Now the user is able to control the selection range by `datatable(..., selection = list(selectable = 3:5))`, where positive and negative `selectable` means "enable" and "disable", respectively (thanks, @tomasreigl @shrektan, #201 #793).
+- Now the user is able to control the selection range by `datatable(..., selection = list(selectable = 3:5))`, where positive and non-positive `selectable` means "enable" and "disable", respectively (thanks, @tomasreigl @shrektan, #201 #793).
 
 ## BUG FIXES
 
