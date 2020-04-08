@@ -108,15 +108,21 @@ assert('escapeToConfig() works', {
   (escapeToConfig(c(TRUE, FALSE, TRUE), nms) %==% '"1,3"')
 })
 
-assert('allPosNeg() works', {
-  (allPosNeg(NULL) %==% TRUE)
-  (allPosNeg(c(1, 2, 3)) %==% TRUE)
-  (allPosNeg(c(-1, -2, -3)) %==% TRUE)
-  (allPosNeg(c(1, -2, 3)) %==% FALSE)
-  (allPosNeg(c(1, 0, 3)) %==% FALSE)
-  (allPosNeg(c(0, 0, 0)) %==% FALSE)
-  (allPosNeg(list(1:3, -(1:3))) %==% TRUE)
-  (allPosNeg(list(c(1, -1, 3), -(1:3))) %==% FALSE)
+assert('sameSign() works', {
+  (sameSign(NULL) %==% TRUE)
+  (sameSign(c(1, 2, 3)) %==% TRUE)
+  (sameSign(c(-1, -2, -3)) %==% TRUE)
+  (sameSign(c(1, -2, 3)) %==% FALSE)
+  (sameSign(c(1, 0, 3)) %==% FALSE)
+  (sameSign(c(1, 0, 3), zero = 1) %==% TRUE)
+  (sameSign(c(1, 0, 3), zero = -1) %==% FALSE)
+  (sameSign(c(-1, 0, -3)) %==% FALSE)
+  (sameSign(c(-1, 0, -3), zero = 1) %==% FALSE)
+  (sameSign(c(-1, 0, -3), zero = -1) %==% TRUE)
+  (sameSign(c(0, 0, 0)) %==% TRUE)
+  (sameSign(c(0, 0, 0), zero = -1) %==% TRUE)
+  (sameSign(list(1:3, -(1:3))) %==% TRUE)
+  (sameSign(list(c(1, -1, 3), -(1:3))) %==% FALSE)
 })
 
 local({

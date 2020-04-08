@@ -420,10 +420,12 @@ escapeToConfig = function(escape, colnames) {
   sprintf('"%s"', paste(escape, collapse = ','))
 }
 
-allPosNeg = function(x) {
+sameSign = function(x, zero = 0L) {
   if (length(x) == 0L) return(TRUE)
-  if (is.list(x)) return(all(vapply(x, allPosNeg, TRUE)))
-  all(x > 0L) || all(x < 0L)
+  if (is.list(x)) return(all(vapply(x, sameSign, TRUE, zero = zero)))
+  sign = base::sign(x)
+  sign[x == 0L] = base::sign(zero)
+  length(unique(sign)) == 1L
 }
 
 #' Generate a table header or footer from column names
