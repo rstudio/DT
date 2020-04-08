@@ -1083,7 +1083,7 @@ HTMLWidgets.widget({
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to *real* row indices are in `selected1`
         if (server) table.on('draw.dt', selectRows);
-        methods.selectRows = function(selected, ignoreSelectable) {
+        methods.selectRows = function(selected, ignoreSelectable = true) {
           selected1 = $.makeArray(selected);
           selectRows(ignoreSelectable);
           changeInput('rows_selected', selected1);
@@ -1141,7 +1141,7 @@ HTMLWidgets.widget({
         selectCols();  // in case users have specified pre-selected columns
         changeInput('columns_selected', selected2);
         if (server) table.on('draw.dt', selectCols);
-        methods.selectColumns = function(selected, ignoreSelectable) {
+        methods.selectColumns = function(selected, ignoreSelectable = true) {
           selected2 = $.makeArray(selected);
           selectCols(ignoreSelectable);
           changeInput('columns_selected', selected2);
@@ -1215,7 +1215,7 @@ HTMLWidgets.widget({
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
 
         if (server) table.on('draw.dt', selectCells);
-        methods.selectCells = function(selected, ignoreSelectable) {
+        methods.selectCells = function(selected, ignoreSelectable = true) {
           selected3 = selected ? selected : [];
           selectCells(ignoreSelectable);
           changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
