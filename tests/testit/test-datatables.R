@@ -123,6 +123,8 @@ assert('sameSign() works', {
   (sameSign(c(0, 0, 0), zero = -1) %==% TRUE)
   (sameSign(list(1:3, -(1:3))) %==% TRUE)
   (sameSign(list(c(1, -1, 3), -(1:3))) %==% FALSE)
+  (sameSign(cbind(1:2, 3:4)) %==% TRUE)
+  (sameSign(cbind(1:2, -(1:2))) %==% FALSE)
 })
 
 local({

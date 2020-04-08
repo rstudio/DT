@@ -436,7 +436,7 @@ sameSign = function(x, zero = 0L) {
   if (is.list(x)) return(all(vapply(x, sameSign, TRUE, zero = zero)))
   sign = base::sign(x)
   sign[x == 0L] = base::sign(zero)
-  length(unique(sign)) == 1L
+  length(unique(as.vector(sign))) == 1L
 }
 
 #' Generate a table header or footer from column names
