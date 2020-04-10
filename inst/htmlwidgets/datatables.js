@@ -1077,11 +1077,11 @@ HTMLWidgets.widget({
           changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
           lastClickedRow = serverRowIndex(thisRow.index());
         });
-        changeInput('rows_selected', selected1);
         selectRows(false);  // in case users have specified pre-selected rows
         // restore selected rows after the table is redrawn (e.g. sort/search/page);
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to *real* row indices are in `selected1`
+        changeInput('rows_selected', selected1);
         if (server) table.on('draw.dt', function(e) { selectRows(false); });
         methods.selectRows = function(selected, ignoreSelectable) {
           selected1 = $.makeArray(selected);
