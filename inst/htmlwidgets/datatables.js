@@ -1005,7 +1005,7 @@ HTMLWidgets.widget({
         }
         // Change selected1's value based on selectable1, then
         // refresh the row selection state according to values in selected1
-        var selectRows = function(ignoreSelectable = false) {
+        var selectRows = function(ignoreSelectable) {
           if (!ignoreSelectable) onlyKeepSelectableRows();
           table.$('tr.' + selClass).removeClass(selClass);
           if (selected1.length === 0) return;
@@ -1072,18 +1072,18 @@ HTMLWidgets.widget({
             if (inArray(id, selected1)) selected1.splice($.inArray(id, selected1), 1);
           }
           selectedRows(); // need to call to update selected1 values
-          selectRows(); // only keep the selectable rows
+          selectRows(false); // only keep the selectable rows
           changeInput('rows_selected', selected1);
           changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
           lastClickedRow = serverRowIndex(thisRow.index());
         });
         changeInput('rows_selected', selected1);
-        selectRows();  // in case users have specified pre-selected rows
+        selectRows(false);  // in case users have specified pre-selected rows
         // restore selected rows after the table is redrawn (e.g. sort/search/page);
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to *real* row indices are in `selected1`
-        if (server) table.on('draw.dt', selectRows);
-        methods.selectRows = function(selected, ignoreSelectable = true) {
+        if (server) table.on('draw.dt', function(e) { selectRows(false); });
+        methods.selectRows = function(selected, ignoreSelectable) {
           selected1 = $.makeArray(selected);
           selectRows(ignoreSelectable);
           changeInput('rows_selected', selected1);
@@ -1111,7 +1111,7 @@ HTMLWidgets.widget({
         }
         // update selected2 and then
         // refresh the col selection state according to values in selected2
-        var selectCols = function(ignoreSelectable = false) {
+        var selectCols = function(ignoreSelectable) {
           if (!ignoreSelectable) onlyKeepSelectableCols();
           table.columns().nodes().flatten().to$().removeClass(selClass);
           if (selected2.length > 0)
@@ -1130,7 +1130,7 @@ HTMLWidgets.widget({
             thisCol.addClass(selClass);
             selected2 = selMode === 'single' ? [colIdx] : unique(selected2.concat([colIdx]));
           }
-          selectCols(); // update selected2 based on selectable
+          selectCols(false); // update selected2 based on selectable
           changeInput('columns_selected', selected2);
         }
         if (selTarget === 'column') {
@@ -1138,10 +1138,10 @@ HTMLWidgets.widget({
         } else {
           $(table.table().footer()).on('click.dt', 'tr th', callback);
         }
-        selectCols();  // in case users have specified pre-selected columns
+        selectCols(false);  // in case users have specified pre-selected columns
         changeInput('columns_selected', selected2);
-        if (server) table.on('draw.dt', selectCols);
-        methods.selectColumns = function(selected, ignoreSelectable = true) {
+        if (server) table.on('draw.dt', function(e) { selectCols(false); });
+        methods.selectColumns = function(selected, ignoreSelectable) {
           selected2 = $.makeArray(selected);
           selectCols(ignoreSelectable);
           changeInput('columns_selected', selected2);
@@ -1181,7 +1181,7 @@ HTMLWidgets.widget({
         }
         // Change selected3's value based on selectable3, then
         // refresh the cell selection state according to values in selected3
-        var selectCells = function(ignoreSelectable = false) {
+        var selectCells = function(ignoreSelectable) {
           if (!ignoreSelectable) onlyKeepSelectableCells();
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
@@ -1208,14 +1208,14 @@ HTMLWidgets.widget({
             selected3 = selMode === 'single' ? [[info.row, info.col]] :
               unique(selected3.concat([[info.row, info.col]]));
           }
-          selectCells(); // must call this to update selected3 based on selectable3
+          selectCells(false); // must call this to update selected3 based on selectable3
           changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         });
-        selectCells();  // in case users have specified pre-selected columns
+        selectCells(false);  // in case users have specified pre-selected columns
         changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
 
-        if (server) table.on('draw.dt', selectCells);
-        methods.selectCells = function(selected, ignoreSelectable = true) {
+        if (server) table.on('draw.dt', function(e) { selectCells(false); });
+        methods.selectCells = function(selected, ignoreSelectable) {
           selected3 = selected ? selected : [];
           selectCells(ignoreSelectable);
           changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
