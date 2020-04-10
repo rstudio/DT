@@ -266,12 +266,13 @@ dataTableProxy = function(
 #' @param selected an integer vector of row/column indices, or a matrix of two
 #'   columns (row and column indices, respectively) for cell indices; you may
 #'   use \code{NULL} to clear existing selections
-#' @param ignore.selectable when \code{TRUE} (the default), the "selectable"
-#'   range that's specified by \code{selection = list(selectable= )} will be
-#'   ignored; otherwise, you can't select the "non-selectable" range.
+#' @param ignore.selectable when \code{FALSE} (the default), the "non-selectable"
+#'   range specified by \code{selection = list(selectable= )} is respected, i.e.,
+#'   you can't select "non-selectable" range. Otherwise, it is ignored.
+#'
 #' @rdname proxy
 #' @export
-selectRows = function(proxy, selected, ignore.selectable = TRUE) {
+selectRows = function(proxy, selected, ignore.selectable = FALSE) {
   invokeRemote(
     proxy, 'selectRows',
     list(I_null(as.integer(selected)), ignore.selectable)
@@ -280,7 +281,7 @@ selectRows = function(proxy, selected, ignore.selectable = TRUE) {
 
 #' @rdname proxy
 #' @export
-selectColumns = function(proxy, selected, ignore.selectable = TRUE) {
+selectColumns = function(proxy, selected, ignore.selectable = FALSE) {
   invokeRemote(
     proxy, 'selectColumns',
     list(I_null(as.integer(selected)), ignore.selectable)
@@ -291,7 +292,7 @@ I_null = function(x) if (is.null(x)) list() else x
 
 #' @rdname proxy
 #' @export
-selectCells = function(proxy, selected, ignore.selectable = TRUE) {
+selectCells = function(proxy, selected, ignore.selectable = FALSE) {
   invokeRemote(
     proxy, 'selectCells',
     list(selected, ignore.selectable)

@@ -22,11 +22,11 @@ dataTableProxy(
   deferUntilFlush = TRUE
 )
 
-selectRows(proxy, selected, ignore.selectable = TRUE)
+selectRows(proxy, selected, ignore.selectable = FALSE)
 
-selectColumns(proxy, selected, ignore.selectable = TRUE)
+selectColumns(proxy, selected, ignore.selectable = FALSE)
 
-selectCells(proxy, selected, ignore.selectable = TRUE)
+selectCells(proxy, selected, ignore.selectable = FALSE)
 
 addRow(proxy, data)
 
@@ -66,9 +66,9 @@ should be held until after the next time all of the outputs are updated}
 columns (row and column indices, respectively) for cell indices; you may
 use \code{NULL} to clear existing selections}
 
-\item{ignore.selectable}{when \code{TRUE} (the default), the "selectable"
-range that's specified by \code{selection = list(selectable= )} will be
-ignored; otherwise, you can't select the "non-selectable" range.}
+\item{ignore.selectable}{when \code{FALSE} (the default), the "non-selectable"
+range specified by \code{selection = list(selectable= )} is respected, i.e.,
+you can't select "non-selectable" range. Otherwise, it is ignored.}
 
 \item{data}{a single row of data to be added to the table; it can be a matrix
 or data frame of one row, or a vector or list of row data (in the latter
