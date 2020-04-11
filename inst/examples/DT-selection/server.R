@@ -20,12 +20,12 @@ shinyServer(function(input, output, session) {
   output$y14 = renderPrint(input$x14_rows_selected)
 
   output$x15 = DT::renderDataTable(
-    df, server = FALSE, selection = list(selected = c(1, 3, 4, 6, 9))
+    df, server = FALSE, selection = list(selected = c(1, 3, 4, 6, 9), selectable = -(3:5))
   )
   output$y15 = renderPrint(input$x15_rows_selected)
 
   output$x16 = DT::renderDataTable(
-    df, selection = list(selected = c(1, 3, 4, 6, 9))
+    df, selection = list(selected = c(1, 3, 4, 6, 9), selectable = -(3:5))
   )
   output$y16 = renderPrint(input$x16_rows_selected)
 
@@ -49,12 +49,12 @@ shinyServer(function(input, output, session) {
   output$y24 = renderPrint(input$x24_columns_selected)
 
   output$x25 = DT::renderDataTable(
-    df, server = FALSE, selection = list(target = 'column', selected = c(1, 3))
+    df, server = FALSE, selection = list(target = 'column', selected = c(1, 3, 6), selectable = -(3:5))
   )
   output$y25 = renderPrint(input$x25_columns_selected)
 
   output$x26 = DT::renderDataTable(
-    df, selection = list(target = 'column', selected = c(1, 3))
+    df, selection = list(target = 'column', selected = c(1, 3, 6))
   )
   output$y26 = renderPrint(input$x26_columns_selected)
 
@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
     server = FALSE,
     selection = list(target = 'cell', selected = cbind(
       c(1, 3, 4, 9), c(3, 2, 1, 2)
-    ))
+    ), selectable = -cbind(1:5, 1))
   )
   output$y35 = renderPrint(input$x35_cells_selected)
 
@@ -90,7 +90,7 @@ shinyServer(function(input, output, session) {
     df,
     selection = list(target = 'cell', selected = cbind(
       c(1, 3, 4, 9), c(3, 2, 1, 2)
-    ))
+    ), selectable = -cbind(1:5, 1))
   )
   output$y36 = renderPrint(input$x36_cells_selected)
 
@@ -124,6 +124,8 @@ shinyServer(function(input, output, session) {
     server = FALSE,
     selection = list(target = 'row+column', selected = list(
       rows = c(1, 3, 4, 9), cols = c(3, 2)
+    ), selectable = list(
+      rows = -3, cols = 1:5
     ))
   )
   output$y45 = renderPrint(print_rows_cols('x45'))
@@ -132,6 +134,8 @@ shinyServer(function(input, output, session) {
     df,
     selection = list(target = 'row+column', selected = list(
       rows = c(1, 3, 4, 9), cols = c(3, 2)
+    ), selectable = list(
+      rows = -3, cols = 1:5
     ))
   )
   output$y46 = renderPrint(print_rows_cols('x46'))
