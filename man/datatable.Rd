@@ -136,30 +136,32 @@ data frame) using the JavaScript library DataTables.
 \details{
 \code{selection}:
   \enumerate{
-    \item A scalar string means the selection \code{mode}, whose options are
-      \code{'multiple'} (the default), \code{'single'} and \code{'none'}
-       (disable selection).
+    \item The argument could be a scalar string, which means the selection
+      \code{mode}, whose value could be one of  \code{'multiple'} (the default),
+      \code{'single'} and \code{'none'} (disable selection).
     \item When a list form is provided for this argument, only parts of the
       "full" list are allowed. The default values for non-matched elements are
-      \code{list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL)}.
-    \item \code{target} must be one of \code{'row'}, \code{'column'}, \code{'row+column'}
-       and \code{'cell'}.
-    \item \code{selected} could be \code{NULL} or indices. The format is specified below.
-    \item \code{selectable} could be \code{NULL}, \code{TRUE}, \code{FALSE} or indices,
-      where \code{NULL} and \code{TRUE} mean all the table is selectable. When \code{FALSE},
-      it means users can't select the table by the cursor (but they could still be able to
-      select the table via \code{\link{dataTableProxy}}). If indices, they must be
-      all positive or non-positive values. All positive indices mean only the ranges
-      are selectable while all non-positive indices mean the ranges are \emph{not}
-      selectable. The indices' format is specified below.
-    \item When \code{target} is \code{'row'} or \code{'column'}, \code{selected} and
-      \code{selectable} should be a plain numeric vector.
-    \item When \code{target} is \code{'row+column'}, \code{selected} and
-      \code{selectable} should be provided as a list, specifying \code{rows}
-      and \code{cols} respectively, e.g., \code{list(rows = 1, cols = 2)}.
-    \item When \code{target} is \code{'cell'}, \code{selected} and
-      \code{selectable} should be provided as a 2-col \code{matrix}, where the two
-      values of each row stand for the row and column indices.
+      \code{list(mode = 'multiple', selected = NULL, target = 'row',
+      selectable = NULL)}.
+    \item \code{target} must be one of \code{'row'}, \code{'column'},
+      \code{'row+column'} and \code{'cell'}.
+    \item \code{selected} could be \code{NULL} or "indices".
+    \item \code{selectable} could be \code{NULL}, \code{TRUE}, \code{FALSE}
+      or "indices", where \code{NULL} and \code{TRUE} mean all the table is
+      selectable. When \code{FALSE}, it means users can't select the table
+      by the cursor (but they could still be able to select the table via
+      \code{\link{dataTableProxy}}, specifying \code{ignore.selectable = TRUE}).
+      If "indices", they must be all positive or non-positive values. All
+      positive "indices" mean only the specified ranges are selectable while all
+      non-positive "indices" mean those ranges are \emph{not} selectable.
+      The "indices"' format is specified below.
+    \item The "indices"' format of \code{selected} and \code{selectable}:
+      when \code{target} is \code{'row'} or \code{'column'}, it should be a plain
+      numeric vector; when \code{target} is \code{'row+column'}, it should be a
+      list, specifying \code{rows} and \code{cols} respectively, e.g.,
+      \code{list(rows = 1, cols = 2)}; when \code{target} is \code{'cell'},
+      it should be a 2-col \code{matrix}, where the two values of each row
+      stand for the row and column index.
     \item Note that DT has its own selection implementation and doesn't
       use the Select extension because the latter doesn't support the
       server-side processing mode well. Please set this argument to
