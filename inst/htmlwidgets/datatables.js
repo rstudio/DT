@@ -990,7 +990,6 @@ HTMLWidgets.widget({
             return DT_rows_current[i];
           });
           selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
-          selected1 = $(selected1).filter(DT_rows_all).get(); // ensure it's valid row index
           return selected1;
         }
         // Change selected1's value based on selectable1, then refresh the row state
@@ -1026,7 +1025,7 @@ HTMLWidgets.widget({
             // selected0 must be valid row index otherwise this line can't be
             // executed properly. However, unlike in `selectCols()`, we don't
             // need to handle this specially, as `selectedRows()` above will
-            // override selected1's value
+            // override selected1's value in the client-processing mode
             $(table.rows(selected0).nodes()).addClass(selClass);
           }
         }
