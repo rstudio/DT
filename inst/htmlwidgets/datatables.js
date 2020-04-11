@@ -979,6 +979,10 @@ HTMLWidgets.widget({
       if (inArray(selTarget, ['row', 'row+column'])) {
         // Get the current selected rows. It will also
         // update the selected1's value based on the current row selection state
+        // Note we can't put this function inside selectRows() directly,
+        // the reason is method.selectRows() will override selected1's value but this
+        // function will add rows to selected1 (keep the existing selection), which is
+        // inconsistent with column and cell selection.
         var selectedRows = function() {
           var rows = table.rows('.' + selClass);
           var idx = rows.indexes().toArray();
@@ -1010,7 +1014,6 @@ HTMLWidgets.widget({
         // Change selected1's value based on selectable1, then
         // refresh the row selection state according to values in selected1
         var selectRows = function(ignoreSelectable) {
-          selectedRows(); // update selected1's value
           if (!ignoreSelectable) onlyKeepSelectableRows();
           table.$('tr.' + selClass).removeClass(selClass);
           if (selected1.length === 0) return;
@@ -1022,10 +1025,6 @@ HTMLWidgets.widget({
             });
           } else {
             var selected0 = selected1.map(function(i) { return i - 1; });
-            // selected0 must be valid row index otherwise this line can't be
-            // executed properly. However, unlike in `selectCols()`, we don't
-            // need to handle this specially, as `selectedRows()` above will
-            // override selected1's value in the client-processing mode
             $(table.rows(selected0).nodes()).addClass(selClass);
           }
         }
@@ -1080,6 +1079,7 @@ HTMLWidgets.widget({
             // remove id from selected1 since its class .selected has been removed
             if (inArray(id, selected1)) selected1.splice($.inArray(id, selected1), 1);
           }
+          selectedRows(); // update selected1's value based on selClass
           selectRows(false); // only keep the selectable rows
           changeInput('rows_selected', selected1);
           changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
@@ -1123,6 +1123,8 @@ HTMLWidgets.widget({
           if (!ignoreSelectable) onlyKeepSelectableCols();
           // if selected2 is not a valide index (e.g., larger than the column number)
           // table.columns(selected2) will fail and result in a blank table
+          // this is different from the table.rows(), where the out-of-range indexes
+          // doesn't affect at all
           selected2 = $(selected2).filter(table.columns().indexes()).get();
           table.columns().nodes().flatten().to$().removeClass(selClass);
           if (selected2.length > 0)
