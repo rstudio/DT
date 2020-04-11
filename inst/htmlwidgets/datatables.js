@@ -168,10 +168,6 @@ HTMLWidgets.widget({
     if (!data.selection) data.selection = {
       mode: 'none', selected: null, target: 'row', selectable: null
     };
-    // htmlwidgets may removed the null data
-    if (data.selection.selected === undefined) data.selection.selected = null;
-    if (data.selection.selectable === undefined) data.selection.selectable = null;
-
     if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
         data.selection.target === 'row+column') {
       if ($table.children('tfoot').length === 0) {
