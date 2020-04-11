@@ -1113,6 +1113,9 @@ HTMLWidgets.widget({
         // refresh the col selection state according to values in selected2
         var selectCols = function(ignoreSelectable) {
           if (!ignoreSelectable) onlyKeepSelectableCols();
+          // if selected2 is not a valide index (e.g., larger than the column number)
+          // table.columns(selected2) will fail and result in a blank table
+          selected2 = $(selected2).filter(table.columns().indexes()).get();
           table.columns().nodes().flatten().to$().removeClass(selClass);
           if (selected2.length > 0)
             table.columns(selected2).nodes().flatten().to$().addClass(selClass);
