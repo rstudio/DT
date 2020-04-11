@@ -283,7 +283,9 @@ datatable = function(
       selection = list(mode = match.arg(selection))
     }
     selection = modifyList(
-      list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL), selection
+      list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL), selection,
+      keep.null = TRUE # this is necessary otherwise the element may become undefined in JS
+      # instead of the null value
     )
     # for compatibility with DT < 0.1.22 ('selected' could be row names)
     if (grepl('^row', selection$target) && is.character(selection$selected) && length(rn)) {

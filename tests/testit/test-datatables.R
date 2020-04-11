@@ -167,4 +167,9 @@ local({
     (!has_error(datatable(iris, selection = list(selectable = NULL))))
     (!has_error(datatable(iris, selection = list(selectable = list(rows = -1)))))
   })
+  assert('selection option will keep NULL elements', {
+    # to ensure on JS side, the value like data.selection.selectable is null instead of undefined
+    out = datatable(iris, selection = list(selectable = NULL, selected = NULL))
+    (names(out$x$selection) %==% c('mode', 'selected', 'target', 'selectable'))
+  })
 })
