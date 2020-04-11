@@ -986,6 +986,7 @@ HTMLWidgets.widget({
             return DT_rows_current[i];
           });
           selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
+          selected1 = $(selected1).filter(DT_rows_all).get(); // ensure it's valid row index
           return selected1;
         }
         // Change selected1's value based on selectable1, then refresh the row state
@@ -1006,6 +1007,7 @@ HTMLWidgets.widget({
         // Change selected1's value based on selectable1, then
         // refresh the row selection state according to values in selected1
         var selectRows = function(ignoreSelectable) {
+          selectedRows(); // update selected1's value
           if (!ignoreSelectable) onlyKeepSelectableRows();
           table.$('tr.' + selClass).removeClass(selClass);
           if (selected1.length === 0) return;
@@ -1017,6 +1019,10 @@ HTMLWidgets.widget({
             });
           } else {
             var selected0 = selected1.map(function(i) { return i - 1; });
+            // selected0 must be valid row index otherwise this line can't be
+            // executed properly. However, unlike in `selectCols()`, we don't
+            // need to handle this specially, as `selectedRows()` above will
+            // override selected1's value
             $(table.rows(selected0).nodes()).addClass(selClass);
           }
         }
@@ -1071,7 +1077,6 @@ HTMLWidgets.widget({
             // remove id from selected1 since its class .selected has been removed
             if (inArray(id, selected1)) selected1.splice($.inArray(id, selected1), 1);
           }
-          selectedRows(); // need to call to update selected1 values
           selectRows(false); // only keep the selectable rows
           changeInput('rows_selected', selected1);
           changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
