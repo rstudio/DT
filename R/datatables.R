@@ -532,10 +532,10 @@ filterRow = function(
       )
     } else {
       tags$div(
-        class = if (clear) 'form-group has-feedback' else 'form-group',
+        class = if (clear) 'form-group has-feedback row' else 'form-group row',
         style = 'margin-bottom: auto;',
         tags$input(
-          type = 'search', placeholder = 'All', class = 'form-control',
+          type = 'search', placeholder = 'All', class = 'form-control input-sm',
           style = 'width: 100%;', size = "1"
         ),
         if (clear) tags$span(
