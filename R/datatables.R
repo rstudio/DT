@@ -536,7 +536,7 @@ filterRow = function(
         style = 'margin-bottom: auto;',
         tags$input(
           type = 'search', placeholder = 'All', class = 'form-control input-sm',
-          style = 'width: 100%;', size = "1"
+          style = 'width: 100%; padding-right: 0px;', size = "1"
         ),
         if (clear) tags$span(
           class = 'glyphicon glyphicon-remove-circle form-control-feedback'
