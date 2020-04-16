@@ -103,17 +103,12 @@ when the number of total records is less than the page size.}
 \item{selection}{the row/column selection mode (single or multiple selection
 or disable selection) when a table widget is rendered in a Shiny app;
 alternatively, you can use a list of the form \code{list(mode = 'multiple',
-selected = c(1, 3, 8), target = 'row')} to pre-select rows; the element
+selected = c(1, 3, 8), target = 'row', selectable = c(-2, -3))} to
+pre-select rows and control the selectable range; the element
 \code{target} in the list can be \code{'column'} to enable column
 selection, or \code{'row+column'} to make it possible to select both rows
 and columns (click on the footer to select columns), or \code{'cell'} to
-select cells. When \code{target} is \code{'row+column'}, \code{selected}
-should be provide as a list, specifying \code{rows} and \code{cols}
-respectively, e.g., \code{list(rows = 1, cols = 2)}.
-Note that DT has its own selection implementation and doesn't
-use the Select extension because the latter doesn't support the
-server-side processing mode well. Please set this argument to \code{'none'}
-if you really want to use the Select extension.}
+select cells. See details section for more info.}
 
 \item{extensions}{a character vector of the names of the DataTables
 extensions (\url{https://datatables.net/extensions/index})}
@@ -137,6 +132,41 @@ certain columns.}
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
 data frame) using the JavaScript library DataTables.
+}
+\details{
+\code{selection}:
+  \enumerate{
+    \item The argument could be a scalar string, which means the selection
+      \code{mode}, whose value could be one of  \code{'multiple'} (the default),
+      \code{'single'} and \code{'none'} (disable selection).
+    \item When a list form is provided for this argument, only parts of the
+      "full" list are allowed. The default values for non-matched elements are
+      \code{list(mode = 'multiple', selected = NULL, target = 'row',
+      selectable = NULL)}.
+    \item \code{target} must be one of \code{'row'}, \code{'column'},
+      \code{'row+column'} and \code{'cell'}.
+    \item \code{selected} could be \code{NULL} or "indices".
+    \item \code{selectable} could be \code{NULL}, \code{TRUE}, \code{FALSE}
+      or "indices", where \code{NULL} and \code{TRUE} mean all the table is
+      selectable. When \code{FALSE}, it means users can't select the table
+      by the cursor (but they could still be able to select the table via
+      \code{\link{dataTableProxy}}, specifying \code{ignore.selectable = TRUE}).
+      If "indices", they must be all positive or non-positive values. All
+      positive "indices" mean only the specified ranges are selectable while all
+      non-positive "indices" mean those ranges are \emph{not} selectable.
+      The "indices"' format is specified below.
+    \item The "indices"' format of \code{selected} and \code{selectable}:
+      when \code{target} is \code{'row'} or \code{'column'}, it should be a plain
+      numeric vector; when \code{target} is \code{'row+column'}, it should be a
+      list, specifying \code{rows} and \code{cols} respectively, e.g.,
+      \code{list(rows = 1, cols = 2)}; when \code{target} is \code{'cell'},
+      it should be a 2-col \code{matrix}, where the two values of each row
+      stand for the row and column index.
+    \item Note that DT has its own selection implementation and doesn't
+      use the Select extension because the latter doesn't support the
+      server-side processing mode well. Please set this argument to
+      \code{'none'} if you really want to use the Select extension.
+  }
 }
 \note{
 You are recommended to escape the table content for security reasons

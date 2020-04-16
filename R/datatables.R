@@ -62,17 +62,12 @@
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
-#'   selected = c(1, 3, 8), target = 'row')} to pre-select rows; the element
+#'   selected = c(1, 3, 8), target = 'row', selectable = c(-2, -3))} to
+#'   pre-select rows and control the selectable range; the element
 #'   \code{target} in the list can be \code{'column'} to enable column
 #'   selection, or \code{'row+column'} to make it possible to select both rows
 #'   and columns (click on the footer to select columns), or \code{'cell'} to
-#'   select cells. When \code{target} is \code{'row+column'}, \code{selected}
-#'   should be provide as a list, specifying \code{rows} and \code{cols}
-#'   respectively, e.g., \code{list(rows = 1, cols = 2)}.
-#'   Note that DT has its own selection implementation and doesn't
-#'   use the Select extension because the latter doesn't support the
-#'   server-side processing mode well. Please set this argument to \code{'none'}
-#'   if you really want to use the Select extension.
+#'   select cells. See details section for more info.
 #' @param extensions a character vector of the names of the DataTables
 #'   extensions (\url{https://datatables.net/extensions/index})
 #' @param plugins a character vector of the names of DataTables plug-ins
@@ -89,6 +84,39 @@
 #'   \code{row}, \code{column}, or \code{all}, and \code{INDICES} is an integer
 #'   vector of column indices. Use the list form if you want to disable editing
 #'   certain columns.
+#' @details \code{selection}:
+#'   \enumerate{
+#'     \item The argument could be a scalar string, which means the selection
+#'       \code{mode}, whose value could be one of  \code{'multiple'} (the default),
+#'       \code{'single'} and \code{'none'} (disable selection).
+#'     \item When a list form is provided for this argument, only parts of the
+#'       "full" list are allowed. The default values for non-matched elements are
+#'       \code{list(mode = 'multiple', selected = NULL, target = 'row',
+#'       selectable = NULL)}.
+#'     \item \code{target} must be one of \code{'row'}, \code{'column'},
+#'       \code{'row+column'} and \code{'cell'}.
+#'     \item \code{selected} could be \code{NULL} or "indices".
+#'     \item \code{selectable} could be \code{NULL}, \code{TRUE}, \code{FALSE}
+#'       or "indices", where \code{NULL} and \code{TRUE} mean all the table is
+#'       selectable. When \code{FALSE}, it means users can't select the table
+#'       by the cursor (but they could still be able to select the table via
+#'       \code{\link{dataTableProxy}}, specifying \code{ignore.selectable = TRUE}).
+#'       If "indices", they must be all positive or non-positive values. All
+#'       positive "indices" mean only the specified ranges are selectable while all
+#'       non-positive "indices" mean those ranges are \emph{not} selectable.
+#'       The "indices"' format is specified below.
+#'     \item The "indices"' format of \code{selected} and \code{selectable}:
+#'       when \code{target} is \code{'row'} or \code{'column'}, it should be a plain
+#'       numeric vector; when \code{target} is \code{'row+column'}, it should be a
+#'       list, specifying \code{rows} and \code{cols} respectively, e.g.,
+#'       \code{list(rows = 1, cols = 2)}; when \code{target} is \code{'cell'},
+#'       it should be a 2-col \code{matrix}, where the two values of each row
+#'       stand for the row and column index.
+#'     \item Note that DT has its own selection implementation and doesn't
+#'       use the Select extension because the latter doesn't support the
+#'       server-side processing mode well. Please set this argument to
+#'       \code{'none'} if you really want to use the Select extension.
+#'   }
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
@@ -257,7 +285,9 @@ datatable = function(
       selection = list(mode = match.arg(selection))
     }
     selection = modifyList(
-      list(mode = 'multiple', selected = NULL, target = 'row'), selection
+      list(mode = 'multiple', selected = NULL, target = 'row', selectable = NULL), selection,
+      keep.null = TRUE # this is necessary otherwise the element may become undefined in JS
+      # instead of the null value
     )
     # for compatibility with DT < 0.1.22 ('selected' could be row names)
     if (grepl('^row', selection$target) && is.character(selection$selected) && length(rn)) {
@@ -336,6 +366,16 @@ validateSelection = function(x) {
         "- when `target` is 'row+column', `selected` must be in the form of `list(rows = 1, cols = 2)`"
       else if (x$target == 'cell' && !is2ColMatrix(x$selected))
         "- when `target` is 'cell', `selected` must be a 2-col matrix"
+    },
+    selectable = function(x) {
+      if (length(x$selectable) == 0L || is.logical(x$selectable))
+        NULL
+      else if (!sameSign(x$selectable, zero = -1L))
+        "- selectable must be either all positive or all non-positive values"
+      else if (x$target == 'row+column' && !isRowColList(x$selectable))
+        "- when `target` is 'row+column', `selectable` must be in the form of `list(rows = 1, cols = 2)`"
+      else if (x$target == 'cell' && !is2ColMatrix(x$selectable))
+        "- when `target` is 'cell', `selectable` must be a 2-col matrix"
     }
   )
   err = lapply(names(validator), function(e) validator[[e]](x))
@@ -415,6 +455,14 @@ escapeToConfig = function(escape, colnames) {
   if (!is.numeric(escape)) escape = convertIdx(escape, colnames)
   if (is.logical(escape)) escape = which(escape)
   sprintf('"%s"', paste(escape, collapse = ','))
+}
+
+sameSign = function(x, zero = 0L) {
+  if (length(x) == 0L) return(TRUE)
+  if (is.list(x)) return(all(vapply(x, sameSign, TRUE, zero = zero)))
+  sign = base::sign(x)
+  sign[x == 0L] = base::sign(zero)
+  length(unique(as.vector(sign))) == 1L
 }
 
 #' Generate a table header or footer from column names

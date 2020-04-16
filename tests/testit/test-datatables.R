@@ -20,8 +20,17 @@ assert('validateSelection() works', {
   (!has_error(
     validateSelection(list(mode = 'none', target = 'row+column', selected = list(cols = 3:4)))
   ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selectable = 1))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selectable = list(rows = 3:4)))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row+column', selectable = list(cols = 3:4)))
+  ))
   # check selected when target is cell
-   (!has_error(
+  (!has_error(
     validateSelection(list(mode = 'none', target = 'cell'))
   ))
   (has_error(
@@ -32,6 +41,26 @@ assert('validateSelection() works', {
   ))
   (!has_error(
     validateSelection(list(mode = 'none', target = 'cell', selected = cbind(1, 2)))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selectable = 1))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selectable = cbind(1)))
+  ))
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'cell', selectable = cbind(1, 2)))
+  ))
+  # selectable must be all positive or non-positive values
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row', selectable = 1:3))
+  ))
+  (has_error(
+    validateSelection(list(mode = 'none', target = 'row', selectable = c(-1, 1)))
+  ))
+  # selectable supports TRUE or FALSE
+  (!has_error(
+    validateSelection(list(mode = 'none', target = 'row', selectable = FALSE))
   ))
 })
 
@@ -106,4 +135,41 @@ assert('escapeToConfig() works', {
   (escapeToConfig(-2, nms) %==% '"-2"')
   (escapeToConfig(c('<', 'a'), nms) %==% '"1,3"')
   (escapeToConfig(c(TRUE, FALSE, TRUE), nms) %==% '"1,3"')
+})
+
+assert('sameSign() works', {
+  (sameSign(NULL) %==% TRUE)
+  (sameSign(c(1, 2, 3)) %==% TRUE)
+  (sameSign(c(-1, -2, -3)) %==% TRUE)
+  (sameSign(c(1, -2, 3)) %==% FALSE)
+  (sameSign(c(1, 0, 3)) %==% FALSE)
+  (sameSign(c(1, 0, 3), zero = 1) %==% TRUE)
+  (sameSign(c(1, 0, 3), zero = -1) %==% FALSE)
+  (sameSign(c(-1, 0, -3)) %==% FALSE)
+  (sameSign(c(-1, 0, -3), zero = 1) %==% FALSE)
+  (sameSign(c(-1, 0, -3), zero = -1) %==% TRUE)
+  (sameSign(c(0, 0, 0)) %==% TRUE)
+  (sameSign(c(0, 0, 0), zero = -1) %==% TRUE)
+  (sameSign(list(1:3, -(1:3))) %==% TRUE)
+  (sameSign(list(c(1, -1, 3), -(1:3))) %==% FALSE)
+  (sameSign(cbind(1:2, 3:4)) %==% TRUE)
+  (sameSign(cbind(1:2, -(1:2))) %==% FALSE)
+})
+
+local({
+  opt = options('DT.datatable.shiny' = TRUE)
+  on.exit(options(opt), add = TRUE)
+  assert('selection$selectable must be NULL or all pos/neg values', {
+    (!has_error(datatable(iris, selection = list(selectable = FALSE))))
+    (has_error(datatable(iris, selection = list(selectable = c(1, -1)))))
+    (has_error(datatable(iris, selection = list(selectable = list(rows = 1:3, cols = c(1, 0))))))
+    (!has_error(datatable(iris, selection = list(selectable = 1:3))))
+    (!has_error(datatable(iris, selection = list(selectable = NULL))))
+    (!has_error(datatable(iris, selection = list(selectable = list(rows = -1)))))
+  })
+  assert('selection option will keep NULL elements', {
+    # to ensure on JS side, the value like data.selection.selectable is null instead of undefined
+    out = datatable(iris, selection = list(selectable = NULL, selected = NULL))
+    (names(out$x$selection) %==% c('mode', 'selected', 'target', 'selectable'))
+  })
 })
