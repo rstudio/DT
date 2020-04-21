@@ -353,7 +353,10 @@ styleEqual = function(levels, values, default = NULL) {
   for (i in seq_len(n)) {
     js = paste0(js, sprintf("value == %s ? %s : ", levels[i], values[i]))
   }
-  default = if (is.null(default)) 'value' else jsValues(default)
+  # set the css to null will leave the attribute as it is. Despite it's not
+  # documented explicitly but the jquery test covers this behavior
+  # https://github.com/jquery/jquery/commit/2ae872c594790c4b935a1d7eabdf8b8212fd3c3f
+  default = if (is.null(default)) 'null' else jsValues(default)
   JS(paste0(js, default))
 }
 

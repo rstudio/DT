@@ -8,6 +8,8 @@
 
 - Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR #777 (thanks, @pbreheny @shrektan, #790).
 
+- Fix the issue that `styleEqual()` incorrectly uses the column values as the default css values. This was a regression of PR #702 (thanks, @Chr96er @shrektan, #799)
+
 ## MINOR CHANGES
 
 - The formatting functions now throw clearer error messages when called on non-datatables objects (thanks, @shrektan, #785).

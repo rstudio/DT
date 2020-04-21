@@ -23,3 +23,25 @@ assert('formatting functions should support vectorized input', {
   (defs[[2L]]$target %==% 2L)
   (grepl('DTWidget.formatRound(data, 2, 3', defs[[2L]]$render, fixed = TRUE))
 })
+
+# issue #799 #702
+assert('formatStyle is chainable and unmatched CSS value should be left as it is', {
+  out = datatable(
+    data.frame(V1 = c('a', 'green', 'c', 'yellow'), V2 = c('1', '2', '3', '4'))
+  ) %>% formatStyle(
+    'V1',
+    target = 'row',
+    backgroundColor = styleEqual('a', 'red')
+  ) %>% formatStyle(
+    'V1',
+    target = 'row',
+    backgroundColor = styleEqual('c', 'green')
+  )
+  expect = JS(
+    'function(row, data) {',
+      'var value=data[1]; $(row).css({\'background-color\':value == "a" ? "red" : null});',
+      'var value=data[1]; $(row).css({\'background-color\':value == "c" ? "green" : null});',
+    '}'
+  )
+  (out$x$options$rowCallback %==% expect)
+})
