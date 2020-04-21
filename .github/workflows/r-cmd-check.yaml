@@ -21,15 +21,19 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: macOS-r-3.6-${{ hashFiles('depends.Rds') }}
           restore-keys: macOS-r-3.6-
-      - name: yihui gitconfig
-        run: https://xran.yihui.org/.gitconfig -o ~/.gitconfig
-        shell: curl {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
+  Test-Coverage:
+    runs-on: macOS-latest
+    needs: R-CMD-check
+    steps:
+      - name: yihui gitconfig
+        run: |
+          curl https://xran.yihui.org/.gitconfig -o ~/.gitconfig
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}
       - name: xran
-        run: https://xran.yihui.org/r-xran | bash
-        shell: curl {0}
+        run: |
+          curl https://xran.yihui.org/r-xran | bash
