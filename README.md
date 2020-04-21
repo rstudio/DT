@@ -1,6 +1,6 @@
 # An R interface to the DataTables library
 
-[![Build Status](https://travis-ci.org/rstudio/DT.svg)](https://travis-ci.org/rstudio/DT)
+[![Build Status](https://github.com/rstudio/DT/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/DT/actions)
 [![Coverage status](https://codecov.io/gh/rstudio/DT/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/DT?branch=master)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/DT)](https://cran.r-project.org/package=DT)
 
