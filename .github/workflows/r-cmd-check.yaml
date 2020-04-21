@@ -24,10 +24,6 @@ jobs:
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
-  Test-Coverage:
-    runs-on: macOS-latest
-    needs: R-CMD-check
-    steps:
       - name: yihui gitconfig
         run: |
           curl https://xran.yihui.org/.gitconfig -o ~/.gitconfig
