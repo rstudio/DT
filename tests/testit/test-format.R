@@ -45,3 +45,19 @@ assert('formatStyle is chainable and unmatched CSS value should be left as it is
   )
   (out$x$options$rowCallback %==% expect)
 })
+
+assert('styleValue returns raw value', {
+  tbl = data.frame(
+    COL = c("A", "B", "C"),
+    COLOR = c("#DF9AC2", "#83BF9A", "#A2D485"),
+    stringsAsFactors = FALSE
+  )
+  out = datatable(tbl) %>%
+    formatStyle(columns = 1, valueColumns = 2, background = styleValue())
+  expect = JS(
+    'function(row, data) {',
+    'var value=data[2]; $(this.api().cell(row, 1).node()).css({\'background\':value});',
+    '}'
+  )
+  (out$x$options$rowCallback %==% expect)
+})
