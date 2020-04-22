@@ -4,6 +4,8 @@
 
 - Now the user is able to control the selection range by `datatable(..., selection = list(selectable = 3:5))`, where positive and non-positive `selectable` means "enable" and "disable", respectively (thanks, @tomasreigl @shrektan, #201 #793).
 
+- Added a function `styleValue()` to use column values as CSS values. When the user has a complex CSS rule to apply, storing the CSS values in the columns of the table and call this function is very convenient (thanks, @Mosk915 @shrektan, #801 #802).
+
 ## BUG FIXES
 
 - Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR #777 (thanks, @pbreheny @shrektan, #790).
