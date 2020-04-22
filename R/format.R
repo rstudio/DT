@@ -311,6 +311,9 @@ jsValues = function(x) {
 #' The function \code{styleColorBar()} can be used to draw background color bars
 #' behind table cells in a column, and the width of bars is proportional to the
 #' column values.
+#'
+#' The function \code{styleValue()} uses the column value as the CSS values.
+#'
 #' @param cuts a vector of cut points (sorted increasingly)
 #' @param values a vector of CSS values
 #' @export
@@ -358,6 +361,12 @@ styleEqual = function(levels, values, default = NULL) {
   # https://github.com/jquery/jquery/commit/2ae872c594790c4b935a1d7eabdf8b8212fd3c3f
   default = if (is.null(default)) 'null' else jsValues(default)
   JS(paste0(js, default))
+}
+
+#' @export
+#' @rdname styleInterval
+styleValue = function() {
+  JS('value')
 }
 
 #' @param data a numeric vector whose range will be used for scaling the
