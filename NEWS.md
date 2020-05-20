@@ -4,6 +4,8 @@
 
 - Now the user is able to control the selection range by `datatable(..., selection = list(selectable = 3:5))`, where positive and non-positive `selectable` means "enable" and "disable", respectively (thanks, @tomasreigl @shrektan, #201 #793).
 
+- Clicking on a row or cell now always triggers a reactive event in Shiny (`input$tableId_row_last_clicked` or `input$tableId_cell_clicked`), even if the same row or cell is clicked multiple times (thanks @gadenbuie, #811).
+
 ## BUG FIXES
 
 - Fix the issue that formatting functions don't support vectorized arguments any longer. This was a regression of PR #777 (thanks, @pbreheny @shrektan, #790).
