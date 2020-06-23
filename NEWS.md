@@ -4,6 +4,8 @@
 
 - Now the user is able to control the selection range by `datatable(..., selection = list(selectable = 3:5))`, where positive and non-positive `selectable` means "enable" and "disable", respectively (thanks, @tomasreigl @shrektan, #201 #793).
 
+- Added a function `styleValue()` to use column values as CSS values. When the user has a complex CSS rule to apply, storing the CSS values in the columns of the table and call this function is very convenient (thanks, @Mosk915 @shrektan, #801 #802).
+
 - Clicking on a row or cell now always triggers a reactive event in Shiny (`input$tableId_row_last_clicked` or `input$tableId_cell_clicked`), even if the same row or cell is clicked multiple times (thanks @gadenbuie, #811).
 
 ## BUG FIXES

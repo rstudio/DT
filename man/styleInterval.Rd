@@ -3,12 +3,15 @@
 \name{styleInterval}
 \alias{styleInterval}
 \alias{styleEqual}
+\alias{styleValue}
 \alias{styleColorBar}
 \title{Conditional CSS styles}
 \usage{
 styleInterval(cuts, values)
 
 styleEqual(levels, values, default = NULL)
+
+styleValue()
 
 styleColorBar(data, color, angle = 90)
 }
@@ -60,4 +63,6 @@ one-to-one manner, i.e. \code{values[i]} is used when the table cell value is
 The function \code{styleColorBar()} can be used to draw background color bars
 behind table cells in a column, and the width of bars is proportional to the
 column values.
+
+The function \code{styleValue()} uses the column value as the CSS values.
 }
