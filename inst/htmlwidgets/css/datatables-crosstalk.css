@@ -21,3 +21,15 @@ See https://github.com/DataTables/DataTablesSrc/issues/160
 table.dataTable {
   display: table;
 }
+
+/*
+class for <input type="number"> in editable datatable
+*/
+table.dataTable td input[type=number].nospinner::-webkit-outer-spin-button,
+table.dataTable td input[type=number].nospinner::-webkit-inner-spin-button,
+table.dataTable td input[type=number].nospinner {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
+}
+

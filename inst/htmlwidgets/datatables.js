@@ -756,17 +756,24 @@ HTMLWidgets.widget({
           throw 'The editable parameter must be "cell", "row", "column", or "all"';
       }
       var disableCols = data.editable.disable ? data.editable.disable.columns : null;
+      var numericCols = data.editable.numeric;
       for (var i = 0; i < target.length; i++) {
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
-          var _cell = table.cell(cell), value = _cell.data();
-          var $input = $('<input type="text">'), changed = false;
+          var _cell = table.cell(cell), value = _cell.data(), index = _cell.index().column;
+          var $input;
+          if (numericCols === 'all' || inArray(index, numericCols)) {
+            $input = $('<input type="number" class="nospinner">');
+          } else {
+            $input = $('<input type="text">');
+          }
+          var changed = false;
           if (!immediate) {
             $cell.data('input', $input).data('html', html);
             $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
-          if (inArray(_cell.index().column, disableCols)) {
+          if (inArray(index, disableCols)) {
             $input.attr('readonly', '').css('filter', 'invert(25%)');
           }
           $cell.empty().append($input);

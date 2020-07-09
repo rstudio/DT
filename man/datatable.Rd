@@ -127,7 +127,11 @@ also be a list of the form \code{list(target = TARGET, disable =
 list(columns = INDICES))}, where \code{TARGET} can be \code{cell},
 \code{row}, \code{column}, or \code{all}, and \code{INDICES} is an integer
 vector of column indices. Use the list form if you want to disable editing
-certain columns.}
+certain columns. You can also restrict the editing to accept only numbers
+by setting this argument to a list of the form \code{list(target = TARGET,
+numeric = INDICES)} where \code{INDICES} can be the vector of the indices
+of the columns for which you want to restrict the editing to numbers or
+\code{all} to restrict the editing to numbers for all columns.}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
