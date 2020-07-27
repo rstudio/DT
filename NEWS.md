@@ -2,7 +2,7 @@
 
 ## BUG FIXES
 
-- Fix the issue that the formatting functions may throw error for named colname inputs (thanks, @	jarauh @shrektan, #831).
+- Fix the issue that the formatting functions may throw error for named colname inputs (thanks, @jarauh @shrektan, #831).
 
 # CHANGES IN DT VERSION 0.14
 
