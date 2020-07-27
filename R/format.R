@@ -191,7 +191,7 @@ name2int = function(name, names, rownames, noerror = FALSE) {
 colFormatter = function(name, names, rownames = TRUE, template, ...) {
   i = name2int(name, names, rownames)
   js = sprintf("function(data, type, row, meta) { return %s }", template(...))
-  Map(function(i, js) list(targets = i, render = JS(js)), i, js)
+  Map(function(i, js) list(targets = i, render = JS(js)), i, js, USE.NAMES = FALSE)
 }
 
 appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
