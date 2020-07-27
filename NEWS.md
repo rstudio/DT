@@ -4,6 +4,8 @@
 
 - Fix the issue that the formatting functions may throw error for named colname inputs (thanks, @jarauh @shrektan, #831).
 
+- The `input$xxx_xxx_selected` values will always be reset to `NULL` or an empty list when the table gets reloaded (thanks, @stibu81 @shrektan, #828).
+
 # CHANGES IN DT VERSION 0.14
 
 ## NEW FEATURES
