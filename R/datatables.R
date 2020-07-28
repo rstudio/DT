@@ -47,10 +47,10 @@
 #'   the first column to display, you should add the numeric column indices
 #'   by one when using \code{rownames}
 #' @param style the style name (\url{http://datatables.net/manual/styling/});
-#'   currently only \code{'default'}, \code{'bootstrap'}, and
-#'   \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
-#'   files so in order to display the style correctly, you have to link
-#'   the necessary files in the header.
+#'   currently \code{'auto'}, \code{'default'}, \code{'bootstrap'}, and
+#'   \code{'bootstrap4'} are supported. If \code{'auto'} and a bootstraplib
+#'   theme is present, then suitable bootstrap styles to match the theme are
+#'   included.
 #' @param width,height Width/Height in pixels (optional, defaults to automatic
 #'   sizing)
 #' @param elementId An id for the widget (a random string by default).
@@ -128,7 +128,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = NULL, height = NULL, elementId = NULL,
+  escape = TRUE, style = 'auto', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
@@ -220,7 +220,7 @@ datatable = function(
   if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
-  style = match.arg(tolower(style), DTStyles())
+  style = styleNormalize(style)
   if (grepl('^bootstrap', style)) class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
@@ -337,6 +337,15 @@ datatable = function(
           'It seems your data is too big for client-side DataTables. You may ',
           'consider server-side processing: https://rstudio.github.io/DT/server.html'
         )
+
+      # Overwrite the DT dependency if we detect a bootstraplib theme
+      theme = bsThemeGet()
+      if (length(theme)) {
+        instance$dependencies = c(
+          instance$dependencies,
+          list(DTDependency(style, theme))
+        )
+      }
 
       data = escapeData(data, escape, colnames)
       data = unname(data)
@@ -618,6 +627,16 @@ depName = function(style = 'default', ...) {
   tolower(paste(c(..., if (style != 'default') c('-', style)), collapse = ''))
 }
 
+styleNormalize = function(style) {
+  style = tolower(style)
+  if (identical(style, 'auto')) {
+    if (!length(bsThemeGet())) return('default')
+    version = bootstraplib::theme_version()
+    style = if (version %in% "3") "bootstrap" else if (version %in% c("4", "4+3")) "bootstrap4"
+  }
+  match.arg(style, DTStyles())
+}
+
 DTStyles = function() {
   r = '^dataTables[.]([^.]+)[.]min[.]css$'
   x = list.files(depPath('datatables', 'css'), r)
@@ -691,8 +710,8 @@ extraDependency = function(names = NULL, ...) {
   })
 }
 
-# core JS and CSS dependencies of DataTables
-DTDependency = function(style) {
+# Core JS and CSS dependencies of DataTables
+DTDependency = function(style, theme = bsThemeGet(), variables = datatableThemeVariables()) {
   js = 'jquery.dataTables.min.js'
   if (style == 'default') {
     # patch the default style
@@ -704,12 +723,87 @@ DTDependency = function(style) {
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
     if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
+
+  # Do SASS compilation, if relevant
+  if (length(theme) || length(variables)) {
+    outputPath = tempfile('dtcustom')
+    # Copy over all the relevant JS/CSS file to the temp dir
+    lapply(file.path(outputPath, c('js', 'css')), dir.create, showWarnings = FALSE, recursive = TRUE)
+    file.copy(depPath('datatables/css', css), file.path(outputPath, 'css'))
+    file.copy(depPath('datatables/js', js), file.path(outputPath, 'js'))
+    # Overwrite the main CSS file that contains the SASS variables
+
+    outputFile = file.path(outputPath, 'css', 'jquery.dataTables.min.css')
+    options = sass::sass_options(output_style = 'expanded')
+    if (!length(theme)) {
+      sass::sass(
+        list(variables, sassFile('jquery.dataTables.scss')),
+        output = outputFile, options = options
+      )
+    } else {
+
+      version = bootstraplib::theme_version(theme)
+      declarations = if (version %in% "3") {
+        list(
+          "table-body-border"          = "1px solid $table-border-color !default;",
+          "table-header-border"        = "2px solid $table-border-color !default;",
+          "table-row-selected"         = "$table-bg-active !default;",
+          "table-row-background"       = "$table-bg !default;",
+          "table-control-color"        = "$text-color !default",
+          "table-paging-button-active" = "$brand-primary !default",
+          "table-paging-button-hover"  = "rgba($brand-primary, 0.7) !default",
+          "table-shade"                = "$text-color !default"
+        )
+      } else {
+        list(
+          "table-body-border"          = "$table-border-width solid $table-border-color !default;",
+          "table-header-border"        = "2*$table-border-width solid $table-border-color !default;",
+          "table-row-selected"         = "$table-active-bg !default;",
+          # Why does Bootstrap set $table-bg explicitly to null?
+          "table-row-background"       = "if($table-bg, $table-bg, transparent) !default;",
+          "table-control-color"        = "$table-color !default",
+          "table-paging-button-active" = "$primary !default",
+          "table-paging-button-hover"  = "rgba($primary, 0.7) !default",
+          "table-shade"                = "$table-color !default"
+        )
+      }
+
+      dt_layer = sass::sass_layer(
+        defaults = variables,
+        declarations = declarations
+      )
+
+      bootstraplib::bootstrap_sass(
+        sassFile('jquery.dataTables.scss'),
+        sass::sass_layer_merge(theme, dt_layer),
+        output = outputFile, options = options
+      )
+    }
+
+  } else {
+    outputPath = depPath('datatables')
+  }
+
   htmlDependency(
-    depName(style, 'dt-core'), DataTablesVersion, src = depPath('datatables'),
-    script = file.path('js', js), stylesheet = file.path('css', css),
+    depName(style, 'dt-core'), DataTablesVersion,
+    src = outputPath,
+    script = file.path('js', js),
+    stylesheet = file.path('css', css),
     all_files = FALSE
   )
 }
+
+# If bootstraplib is installed, access the current global theme
+bsThemeGet = function() {
+  if (system.file(package = "bootstraplib") == "") return(NULL)
+  bootstraplib::bs_theme_get()
+}
+
+sassFile = function(file) {
+  scss_dir = depPath('datatables', 'scss')
+  sass::sass_file(file.path(scss_dir, file))
+}
+
 
 # translate DataTables classes to Bootstrap table classes
 DT2BSClass = function(class) {

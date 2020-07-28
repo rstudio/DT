@@ -281,5 +281,18 @@ local({
   invisible()
 })
 
+# Download the scss files
+zip_src <- sprintf("https://github.com/DataTables/DataTablesSrc/archive/%s.zip", DataTablesVersion)
+zip_tmp <- tempfile(fileext = ".zip")
+download.file(zip_src, zip_tmp)
+unzip(zip_tmp, exdir = dirname(zip_tmp))
+home_dir <- file.path(dirname(zip_tmp), paste0("DataTablesSrc-", DataTablesVersion))
+scss_files <- Sys.glob(file.path(home_dir, "css", "*.scss"))
+lapply(scss_files, encode_img)
+scss_target <- "inst/htmlwidgets/lib/datatables/scss"
+unlink(scss_target, recursive = TRUE)
+dir.create(scss_target)
+file.copy(scss_files, file.path(scss_target, basename(scss_files)))
+
 # clean up download folder
 unlink(dld_folder(), recursive = TRUE)
