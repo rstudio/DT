@@ -276,7 +276,7 @@ datatable = function(
       editable$numeric = NULL
     else if (identical(editable$numeric, 'all'))
       editable$numeric = seq_along(data) - 1L
-    else if (isFALSE(rownames))
+    else if (is.null(rn))
       editable$numeric = editable$numeric - 1
     editable$numeric = as.list(editable$numeric)
     params$editable = editable
