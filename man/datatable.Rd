@@ -31,14 +31,14 @@ datatable(
 \item{data}{a data object (either a matrix or a data frame)}
 
 \item{options}{a list of initialization options (see
-\url{http://datatables.net/reference/option/}); the character options
+\url{https://datatables.net/reference/option/}); the character options
 wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 JavaScript code instead of normal character strings; you can also set
 options globally via \code{\link{options}(DT.options = list(...))}, and
 global options will be merged into this \code{options} argument if set}
 
 \item{class}{the CSS class(es) of the table; see
-\url{http://datatables.net/manual/styling/classes}}
+\url{https://datatables.net/manual/styling/classes}}
 
 \item{callback}{the body of a JavaScript callback function with the argument
 \code{table} to be applied to the DataTables instance (i.e. \code{table})}
@@ -82,7 +82,7 @@ third), or \code{c('Species', 'Sepal.Length')}; since the row names take
 the first column to display, you should add the numeric column indices
 by one when using \code{rownames}}
 
-\item{style}{the style name (\url{http://datatables.net/manual/styling/});
+\item{style}{the style name (\url{https://datatables.net/manual/styling/});
 currently only \code{'default'}, \code{'bootstrap'}, and
 \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
 files so in order to display the style correctly, you have to link
@@ -200,6 +200,6 @@ datatable(data.frame(x = Sys.Date()))
 datatable(data.frame(x = Sys.time()))
 }
 \references{
-See \url{https://rstudio.github.io/DT} for the full
+See \url{https://rstudio.github.io/DT/} for the full
   documentation.
 }

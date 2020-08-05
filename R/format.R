@@ -112,7 +112,8 @@ formatSignif = function(
 #' @rdname formatCurrency
 #' @param method the method(s) to convert a date to string in JavaScript; see
 #'   \code{DT:::DateMethods} for a list of possible methods, and
-#'   \url{http://mzl.la/1xGe99W} for a full reference
+#'   \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
+#'   for a full reference
 #' @param params a list parameters for the specific date conversion method,
 #'   e.g., for the \code{toLocaleDateString()} method, your browser may support
 #'   \code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
