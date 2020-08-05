@@ -270,11 +270,14 @@ datatable = function(
     editable = list(target = editable, disable = list(columns = NULL))
   if (is.list(editable)) {
     if (is.null(editable$numeric))
-      editable$numeric = which(unname(sapply(data, is.numeric))) - 1L
+      editable$numeric =
+        which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
     else if (identical(editable$numeric, 'none'))
       editable$numeric = NULL
     else if (identical(editable$numeric, 'all'))
       editable$numeric = seq_along(data) - 1L
+    else if (isFALSE(rownames))
+      editable$numeric = editable$numeric - 1
     editable$numeric = as.list(editable$numeric)
     params$editable = editable
   }

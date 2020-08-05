@@ -23,7 +23,7 @@ table.dataTable {
 }
 
 /*
-class for <input type="number"> in editable datatable
+class for <input type="number"> in editable datatable, to disable the arrows
 */
 table.dataTable td input[type=number].DT-nospinner::-webkit-outer-spin-button,
 table.dataTable td input[type=number].DT-nospinner::-webkit-inner-spin-button,
