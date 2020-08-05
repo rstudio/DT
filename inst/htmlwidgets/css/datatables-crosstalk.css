@@ -25,9 +25,9 @@ table.dataTable {
 /*
 class for <input type="number"> in editable datatable
 */
-table.dataTable td input[type=number].nospinner::-webkit-outer-spin-button,
-table.dataTable td input[type=number].nospinner::-webkit-inner-spin-button,
-table.dataTable td input[type=number].nospinner {
+table.dataTable td input[type=number].DT-nospinner::-webkit-outer-spin-button,
+table.dataTable td input[type=number].DT-nospinner::-webkit-inner-spin-button,
+table.dataTable td input[type=number].DT-nospinner {
   -webkit-appearance: none;
   -moz-appearance: textfield;
   margin: 0;

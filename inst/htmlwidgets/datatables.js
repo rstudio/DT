@@ -762,8 +762,8 @@ HTMLWidgets.widget({
           var $cell = $(cell), html = $cell.html();
           var _cell = table.cell(cell), value = _cell.data(), index = _cell.index().column;
           var $input;
-          if (numericCols === 'all' || inArray(index, numericCols)) {
-            $input = $('<input type="number" class="nospinner">');
+          if (inArray(index, numericCols)) {
+            $input = $('<input type="number" class="DT-nospinner">');
           } else {
             $input = $('<input type="text">');
           }
