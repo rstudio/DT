@@ -196,7 +196,7 @@ colFormatter = function(name, names, rownames = TRUE, template, ...) {
   js = sprintf("
   function(data, type, row, meta) {
     if (type === 'display') {
-      return %s
+      return %s;
     } else {
       return data;
     }
