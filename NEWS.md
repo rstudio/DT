@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.16
 
+## BUG FIXES
+
+- Fix the issue that the sorting results may not be expected after formatting functions applied. This is a regression of PR #777 (thanks, @fernandofernandezgonzalez @shrektan, #837).
 
 # CHANGES IN DT VERSION 0.15
 
