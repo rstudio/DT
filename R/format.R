@@ -194,7 +194,7 @@ colFormatter = function(name, names, rownames = TRUE, template, ...) {
   # see https://datatables.net/reference/option/columns.render
   # #837 we only want to use the formatting for the "display" purpose
   js = sprintf("function(data, type, row, meta) {
-    return type === 'display' ? %s : data;
+    return type !== 'display' ? data : %s
   }", template(...))
   Map(function(i, js) list(targets = i, render = JS(js)), i, js, USE.NAMES = FALSE)
 }
