@@ -222,12 +222,15 @@ local({
 local({
   folders = list.dirs(dld_plugin_path(), recursive = FALSE)
   create_folder_and_move = function(js_file, folder) {
-    dir = file.path(folder, gsub('(\\.min)?[.]js$', '', js_file))
+    file_name = gsub('(\\.min)?[.]js$', '', basename(js_file))
+    # sometimes it contain the dataTables prefix...
+    file_name = gsub('^dataTables[.]', '', file_name)
+    dir = file.path(folder, file_name)
     dir.create(dir)
-    file.rename(file.path(folder, js_file), file.path(dir, js_file))
+    file.rename(file.path(folder, js_file), file.path(dir, basename(js_file)))
   }
   lapply(folders, function(folder) {
-    js_files = list.files(folder, pattern = '[.]js$')
+    js_files = list.files(folder, pattern = '[.]js$', recursive = TRUE)
     lapply(js_files, create_folder_and_move, folder = folder)
   })
   files = list.files(dld_plugin_path(), '[.](js|css)$', recursive = TRUE, full.names = TRUE)
