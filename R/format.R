@@ -389,7 +389,7 @@ styleColorBar = function(data, color, angle=90) {
   rg = range(data, na.rm = TRUE, finite = TRUE)
   r1 = rg[1]; r2 = rg[2]; r = r2 - r1
   JS(sprintf(
-    "isNaN(parseFloat(value)) || value <= %f ? '' : 'linear-gradient(%fdeg, transparent ' + (%f - value)/%f * 100 + '%%, %s ' + (%f - value)/%f * 100 + '%%)'",
+    "isNaN(parseFloat(value)) || value <= %f ? '' : 'linear-gradient(%fdeg, transparent ' + Math.max(%f - value, 0)/%f * 100 + '%%, %s ' + Math.max(%f - value, 0)/%f * 100 + '%%)'",
     r1, angle, r2, r, color, r2, r
   ))
 }
