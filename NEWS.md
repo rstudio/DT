@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.16
 
+## NEW FEATURES
+
+- Add a new plugin [accent-neutralise](https://datatables.net/plug-ins/filtering/type-based/accent-neutralise), which can be used for searching accented characters with their unaccented counterparts. Note, it will only work in the client-side processing mode (#822).
+
 ## BUG FIXES
 
 - Fix the issue that the sorting results may not be expected after formatting functions applied. This is a regression of PR #777 (thanks, @fernandofernandezgonzalez @shrektan, #837).
