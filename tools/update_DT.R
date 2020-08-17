@@ -154,6 +154,7 @@ if (!dir.exists(dld_plugin_path())) system2(
   'git',
   args = c(
     'clone',
+    '--depth', '1',
     'https://github.com/DataTables/Plugins.git',
     dld_plugin_path()
   )
