@@ -761,22 +761,33 @@ HTMLWidgets.widget({
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
           var _cell = table.cell(cell), value = _cell.data(), index = _cell.index().column;
-          var $input;
+          var $input, $editField;
           if (inArray(index, numericCols)) {
-            $input = $('<input type="number" class="DT-nospinner">');
+            $editField = $('<div class="DT-numberInputsContainer"></div>');
+            var $spinners = $('<input type="number" class="DT-spinners">');
+            $input = $('<input type="number" class="DT-nospinner DT-numberInput">');
+            $spinners.val(value);
+            $spinners.on('click', function() {
+              $input.val($(this).val()).focus();
+            });
+            $input.on('change', function() {
+              $spinners.val($(this).val());
+            });
+            $editField.append($spinners, $input);
           } else {
             $input = $('<input type="text">');
+            $editField = $('<div></div>').append($input);
           }
           var changed = false;
           if (!immediate) {
-            $cell.data('input', $input).data('html', html);
-            $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
+            $cell.data('input', $editField).data('html', html);
+            $editField.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
           if (inArray(index, disableCols)) {
             $input.attr('readonly', '').css('filter', 'invert(25%)');
           }
-          $cell.empty().append($input);
+          $cell.empty().append($editField);
           if (cell === current) $input.focus();
           $input.css('width', '100%');
 
@@ -793,9 +804,11 @@ HTMLWidgets.widget({
             } else {
               $cell.html(html);
             }
-            $input.remove();
-          }).on('blur', function() {
-            if (!changed) $input.trigger('change');
+            $editField.remove();
+          }).on('blur', function(e) {
+            if (!changed && e.relatedTarget === null) {
+              $input.trigger('change');
+            }
           }).on('keyup', function(e) {
             // hit Escape to cancel editing
             if (e.keyCode === 27) $input.trigger('blur');
