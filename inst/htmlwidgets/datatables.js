@@ -761,53 +761,35 @@ HTMLWidgets.widget({
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
           var _cell = table.cell(cell), value = _cell.data(), index = _cell.index().column;
-          var $input, $editField;
+          var $input;
           if (inArray(index, numericCols)) {
-            $editField = $('<div class="DT-numberInputsContainer"></div>');
-            var $spinners = $('<input type="number" class="DT-spinners">');
-            $input = $('<input type="number" class="DT-nospinner DT-numberInput">');
-            $spinners.val(value);
-            $spinners.on('click', function() {
-              $input.val($(this).val()).focus();
-            });
-            $input.on('change', function() {
-              $spinners.val($(this).val());
-            });
-            $editField.append($spinners, $input);
+            $input = $('<input type="number">');
           } else {
             $input = $('<input type="text">');
-            $editField = $('<div></div>').append($input);
           }
-          var changed = false;
           if (!immediate) {
-            $cell.data('input', $editField).data('html', html);
-            $editField.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
+            $cell.data('input', $input).data('html', html);
+            $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
           if (inArray(index, disableCols)) {
             $input.attr('readonly', '').css('filter', 'invert(25%)');
           }
-          $cell.empty().append($editField);
+          $cell.empty().append($input);
           if (cell === current) $input.focus();
           $input.css('width', '100%');
 
-          if (immediate) $input.on('change', function() {
-            changed = true;
+          if (immediate) $input.on('blur', function(e) {
             var valueNew = $input.val();
             if (valueNew != value) {
               _cell.data(valueNew);
               if (HTMLWidgets.shinyMode) {
-                changeInput('cell_edit', [cellInfo(cell)], 'DT.cellInfo', null, {priority: "event"});
+                changeInput('cell_edit', [cellInfo(cell)], 'DT.cellInfo', null, {priority: 'event'});
               }
               // for server-side processing, users have to call replaceData() to update the table
               if (!server) table.draw(false);
             } else {
               $cell.html(html);
-            }
-            $editField.remove();
-          }).on('blur', function(e) {
-            if (!changed && e.relatedTarget === null) {
-              $input.trigger('change');
             }
           }).on('keyup', function(e) {
             // hit Escape to cancel editing
