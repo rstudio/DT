@@ -36,6 +36,7 @@ Suggests:
     knitr (>= 1.8),
     rmarkdown,
     shiny (>= 1.2.0),
+    bootstraplib,
     testit
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1

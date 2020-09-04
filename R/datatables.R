@@ -44,13 +44,17 @@
 #'   indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 #'   \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 #'   third), or \code{c('Species', 'Sepal.Length')}; since the row names take
-#'   the first column to display, you should add the numeric column indices
-#'   by one when using \code{rownames}
-#' @param style the style name (\url{https://datatables.net/manual/styling/});
-#'   currently only \code{'default'}, \code{'bootstrap'}, and
-#'   \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
-#'   files so in order to display the style correctly, you have to link
-#'   the necessary files in the header.
+#'   the first column to display, you should add the numeric column indices by
+#'   one when using \code{rownames}
+#' @param style either \code{'auto'}, \code{'default'}, \code{'bootstrap'}, or
+#'   \code{'bootstrap4'}. If \code{'auto'}, and a **bootstraplib** theme is
+#'   currently active, then bootstrap styling is used in a way that "just works"
+#'   for the active theme. Otherwise,
+#'   \href{https://datatables.net/manual/styling/classes}{DataTables
+#'   \code{'default'} styling} is used. If set explicitly to \code{'bootstrap'}
+#'   or \code{'bootstrap4'}, one must take care to ensure Bootstrap's HTML
+#'   dependencies (as well as Bootswatch themes, if desired) are included on the
+#'   page.
 #' @param width,height Width/Height in pixels (optional, defaults to automatic
 #'   sizing)
 #' @param elementId An id for the widget (a random string by default).
@@ -130,7 +134,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = NULL, height = NULL, elementId = NULL,
+  escape = TRUE, style = 'auto', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
@@ -222,7 +226,7 @@ datatable = function(
   if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
-  style = match.arg(tolower(style), DTStyles())
+  style = normalizeStyle(style)
   if (grepl('^bootstrap', style)) class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
@@ -314,7 +318,7 @@ datatable = function(
     )
   }
 
-  deps = list(DTDependency(style))
+  deps = DTDependencies(style)
   deps = c(deps, unlist(
     lapply(extensions, extDependency, style, options),
     recursive = FALSE
@@ -702,8 +706,24 @@ extraDependency = function(names = NULL, ...) {
   })
 }
 
+normalizeStyle = function(style) {
+  style = tolower(style)
+  if (!identical(style, 'auto')) {
+    return(match.arg(style, DTStyles()))
+  }
+  if (system.file(package = 'bootstraplib') == '') {
+    return('default')
+  }
+  if (is.null(bootstraplib::bs_theme_get())) {
+    return('default')
+  }
+  style = if ('3' %in% bootstraplib::theme_version()) 'bootstrap' else 'bootstrap4'
+  # Have style remember if bootstraplib should be a dependency
+  structure(style, bootstraplib = TRUE)
+}
+
 # core JS and CSS dependencies of DataTables
-DTDependency = function(style) {
+DTDependencies = function(style) {
   js = 'jquery.dataTables.min.js'
   if (style == 'default') {
     # patch the default style
@@ -715,11 +735,29 @@ DTDependency = function(style) {
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
     if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
-  htmlDependency(
-    depName(style, 'dt-core'), DataTablesVersion, src = depPath('datatables'),
-    script = file.path('js', js), stylesheet = file.path('css', css),
-    all_files = FALSE
+  c(
+    list(htmlDependency(
+      depName(style, 'dt-core'),
+      DataTablesVersion,
+      src = depPath('datatables'),
+      script = file.path('js', js),
+      stylesheet = file.path('css', css),
+      all_files = FALSE
+    )),
+    if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bootstraplib'))) {
+      bootstraplibDependencies()
+    }
   )
+}
+
+bootstraplibDependencies = function() {
+  if (system.file(package = 'bootstraplib') == '') {
+    return(NULL)
+  }
+  if (is.null(bootstraplib::bs_theme_get())) {
+    return(NULL)
+  }
+  bootstraplib::bootstrap()
 }
 
 # translate DataTables classes to Bootstrap table classes
