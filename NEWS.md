@@ -4,6 +4,10 @@
 
 - Add a new plugin [accent-neutralise](https://datatables.net/plug-ins/filtering/type-based/accent-neutralise), which can be used for searching accented characters with their unaccented counterparts. Note, it will only work in the client-side processing mode (#822).
 
+## MINOR CHANGES
+
+- Upgrade the SearchPanes extension to v1.1.1 so that it can [display all the entries properly with the Scroller extension](https://datatables.net/forums/discussion/62807/searchpanes-button-filtering-value-only-show-10-from-all-available-values-with-scroller-extension) (thanks, @JonasMandel @stla, #820).
+
 ## BUG FIXES
 
 - Fix the issue that the sorting results may not be expected after formatting functions applied. This is a regression of PR #777 (thanks, @fernandofernandezgonzalez @shrektan, #837).
