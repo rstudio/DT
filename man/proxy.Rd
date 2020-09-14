@@ -28,7 +28,7 @@ selectColumns(proxy, selected, ignore.selectable = FALSE)
 
 selectCells(proxy, selected, ignore.selectable = FALSE)
 
-addRow(proxy, data)
+addRow(proxy, data, resetPaging = TRUE)
 
 clearSearch(proxy)
 
@@ -76,6 +76,8 @@ case, please be cautious about the row name: if your table contains row
 names, here \code{data} must also contain the row name as the first
 element)}
 
+\item{resetPaging}{whether to reset the paging position}
+
 \item{page}{a number indicating the page to select}
 
 \item{caption}{a new table caption (see the \code{caption} argument of
@@ -102,8 +104,6 @@ set as well as option 'colReordoer' set to TRUE).}
 
 \item{origOrder}{Whether column reordering should be relative to the original
 order (the default is to compare to current order)}
-
-\item{resetPaging}{whether to reset the paging position}
 
 \item{clearSelection}{which existing selections to clear: it can be any
 combinations of \code{row}, \code{column}, and \code{cell}, or \code{all}
