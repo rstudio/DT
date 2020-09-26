@@ -269,16 +269,7 @@ datatable = function(
   if (is.character(editable))
     editable = list(target = editable, disable = list(columns = NULL))
   if (is.list(editable)) {
-    if (is.null(editable$numeric))
-      editable$numeric =
-        which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
-    else if (identical(editable$numeric, 'none'))
-      editable$numeric = NULL
-    else if (identical(editable$numeric, 'all'))
-      editable$numeric = seq_along(data) - 1L
-    else if (is.null(rn))
-      editable$numeric = editable$numeric - 1
-    editable$numeric = as.list(editable$numeric)
+    editable$numeric = makeEditableNumericField(editable$numeric, data, rn)
     params$editable = editable
   }
 
@@ -364,6 +355,21 @@ datatable = function(
 
       instance
     }
+  )
+}
+
+makeEditableNumericField = function(x, data, rn) {
+  as.list(
+    if (is.null(x))
+      which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
+    else if (identical(x, 'none'))
+      NULL
+    else if (identical(x, 'all'))
+      seq_along(data) - 1L
+    else if (is.null(rn))
+      x - 1
+    else
+      x
   )
 }
 
