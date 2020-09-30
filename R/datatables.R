@@ -714,12 +714,29 @@ normalizeStyle = function(style) {
   if (system.file(package = 'bootstraplib') == '') {
     return('default')
   }
-  if (is.null(bootstraplib::bs_theme_get())) {
+  theme = getCurrentTheme()
+  if (is.null(theme)) {
     return('default')
   }
-  style = if ('3' %in% bootstraplib::theme_version()) 'bootstrap' else 'bootstrap4'
+  style = if ('3' %in% bootstraplib::theme_version(theme)) 'bootstrap' else 'bootstrap4'
   # Have style remember if bootstraplib should be a dependency
   structure(style, bootstraplib = TRUE)
+}
+
+# Get the current Bootstrap theme
+#
+# shiny::getCurrentTheme() takes priority because if it returns something,
+# we for sure know that something like fluidPage(theme = bs_theme()) is being used,
+# and thus Bootstrap is relevant, It's up for debate whether we want to also bs_global_get()
+# since we don't know for sure if Bootstrap is going to be included on the page; however,
+# the implications seems rather safe (the worst that happens is that Bootstrap is included
+# when a global bootstraplib theme is active).
+# Ideally, this function would be called later within the preRenderHook(), because then
+# we'd have a better guess at whether Bootstrap is relevant, but that would require a rather
+# involved refactoring of how DT works at the moment.
+getCurrentTheme = function() {
+  getTheme = asNamespace("shiny")$getCurrentTheme %||% function() NULL
+  getTheme() %||% bootstraplib::bs_global_get()
 }
 
 # core JS and CSS dependencies of DataTables
@@ -745,19 +762,9 @@ DTDependencies = function(style) {
       all_files = FALSE
     )),
     if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bootstraplib'))) {
-      bootstraplibDependencies()
+      bootstraplib::bs_dependencies(getCurrentTheme())
     }
   )
-}
-
-bootstraplibDependencies = function() {
-  if (system.file(package = 'bootstraplib') == '') {
-    return(NULL)
-  }
-  if (is.null(bootstraplib::bs_theme_get())) {
-    return(NULL)
-  }
-  bootstraplib::bootstrap()
 }
 
 # translate DataTables classes to Bootstrap table classes
