@@ -7,6 +7,10 @@ isFALSE = function(x) identical(x, FALSE)
 
 is.Date = function(x) inherits(x, c('Date', 'POSIXlt', 'POSIXct'))
 
+"%||%" = function(x, y) {
+  if (is.null(x)) y else x
+}
+
 # for CSS propertices: fontWeight -> font-weight, backgroundColor ->
 # background-color, etc
 upperToDash = function(x) {
