@@ -6,6 +6,9 @@
 
 - `addRow()` now has a new parameter `resetPaging`. By setting it to `FALSE`, we can keep the paging position after adding a row (thanks, @stanstrup, #853).
 
+- Now the user is able to restrict the editing to accept only numbers by e.g. `datatable(..., editable = list(target = "cell", numeric = 3:5))`. By default the editing is restricted to numbers for all numeric columns; set `numeric = "none"` to disable this behavior (#824).
+
+
 ## MINOR CHANGES
 
 - Upgrade the SearchPanes extension to v1.1.1 so that it can [display all the entries properly with the Scroller extension](https://datatables.net/forums/discussion/62807/searchpanes-button-filtering-value-only-show-10-from-all-available-values-with-scroller-extension) (thanks, @JonasMandel @stla, #820).
