@@ -90,7 +90,15 @@
 #'   numbers or \code{"all"} to restrict the editing to numbers for all columns.
 #'   If you don't set \code{numeric}, then the editing is restricted to numbers
 #'   for all numeric columns; set \code{numeric = "none"} to disable this
-#'   behavior.
+#'   behavior. Finally, you can also edit the cells in text areas, which are
+#'   useful for large contents. For that, set the \code{editable} argument to a
+#'   list of the form \code{list(target = TARGET, area = INDICES)} where
+#'   \code{INDICES} can be the vector of the indices of the columns for which
+#'   you want the text areas, or \code{"all"} if you want the text areas for
+#'   all columns. Of course, you can request the numeric editing for some
+#'   columns and the text areas for some other columns by setting
+#'   \code{editable} to a list of the form \code{list(target = TARGET, numeric
+#'   = INDICES1, area = INDICES2)}.
 #' @details \code{selection}:
 #'   \enumerate{
 #'     \item The argument could be a scalar string, which means the selection
@@ -270,6 +278,7 @@ datatable = function(
     editable = list(target = editable, disable = list(columns = NULL))
   if (is.list(editable)) {
     editable$numeric = makeEditableNumericField(editable$numeric, data, rn)
+    editable$area = makeEditableAreaField(editable$area, data, rn)
     params$editable = editable
   }
 
@@ -363,6 +372,19 @@ makeEditableNumericField = function(x, data, rn) {
     if (is.null(x))
       which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
     else if (identical(x, 'none'))
+      NULL
+    else if (identical(x, 'all'))
+      seq_along(data) - 1L
+    else if (is.null(rn))
+      x - 1
+    else
+      x
+  )
+}
+
+makeEditableAreaField = function(x, data, rn) {
+  as.list(
+    if (is.null(x))
       NULL
     else if (identical(x, 'all'))
       seq_along(data) - 1L

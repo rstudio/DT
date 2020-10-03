@@ -757,6 +757,7 @@ HTMLWidgets.widget({
       }
       var disableCols = data.editable.disable ? data.editable.disable.columns : null;
       var numericCols = data.editable.numeric;
+      var areaCols = data.editable.area;
       for (var i = 0; i < target.length; i++) {
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
@@ -764,6 +765,8 @@ HTMLWidgets.widget({
           var $input;
           if (inArray(index, numericCols)) {
             $input = $('<input type="number">');
+          } else if (inArray(index, areaCols)) {
+            $input = $('<textarea></textarea>');
           } else {
             $input = $('<input type="text">');
           }
