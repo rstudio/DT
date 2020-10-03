@@ -4,13 +4,13 @@
 #' data frame) using the JavaScript library DataTables.
 #' @param data a data object (either a matrix or a data frame)
 #' @param options a list of initialization options (see
-#'   \url{http://datatables.net/reference/option/}); the character options
+#'   \url{https://datatables.net/reference/option/}); the character options
 #'   wrapped in \code{\link[htmlwidgets]{JS}()} will be treated as literal
 #'   JavaScript code instead of normal character strings; you can also set
 #'   options globally via \code{\link{options}(DT.options = list(...))}, and
 #'   global options will be merged into this \code{options} argument if set
 #' @param class the CSS class(es) of the table; see
-#'   \url{http://datatables.net/manual/styling/classes}
+#'   \url{https://datatables.net/manual/styling/classes}
 #' @param callback the body of a JavaScript callback function with the argument
 #'   \code{table} to be applied to the DataTables instance (i.e. \code{table})
 #' @param rownames \code{TRUE} (show row names) or \code{FALSE} (hide row names)
@@ -46,7 +46,7 @@
 #'   third), or \code{c('Species', 'Sepal.Length')}; since the row names take
 #'   the first column to display, you should add the numeric column indices
 #'   by one when using \code{rownames}
-#' @param style the style name (\url{http://datatables.net/manual/styling/});
+#' @param style the style name (\url{https://datatables.net/manual/styling/});
 #'   currently only \code{'default'}, \code{'bootstrap'}, and
 #'   \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
 #'   files so in order to display the style correctly, you have to link
@@ -127,7 +127,7 @@
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
-#' @references See \url{https://rstudio.github.io/DT} for the full
+#' @references See \url{https://rstudio.github.io/DT/} for the full
 #'   documentation.
 #' @importFrom htmltools tags htmlDependency
 #' @export

@@ -901,6 +901,14 @@ HTMLWidgets.widget({
       return {row: info.row, col: info.column};
     }
 
+    var cleanSelectedValues = function() {
+      changeInput('rows_selected', []);
+      changeInput('columns_selected', []);
+      changeInput('cells_selected', transposeArray2D([]), 'shiny.matrix');
+    }
+    // #828 we should clean the selection on the server-side when the table reloads
+    cleanSelectedValues();
+
     // a flag to indicates if select extension is initialized or not
     var flagSelectExt = table.settings()[0]._select !== undefined;
     // the Select extension should only be used in the client mode and
@@ -1295,7 +1303,7 @@ HTMLWidgets.widget({
       if (this.className === '') e.stopPropagation();
     });
 
-    methods.addRow = function(data, rowname) {
+    methods.addRow = function(data, rowname, resetPaging) {
       var data0 = table.row(0).data(), n = data0.length, d = n - data.length;
       if (d === 1) {
         data = rowname.concat(data)
@@ -1304,7 +1312,7 @@ HTMLWidgets.widget({
         console.log(data0);
         throw 'New data must be of the same length as current data (' + n + ')';
       };
-      table.row.add(data).draw();
+      table.row.add(data).draw(resetPaging);
     }
 
     methods.updateSearch = function(keywords) {

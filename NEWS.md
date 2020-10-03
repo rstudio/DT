@@ -1,5 +1,28 @@
+# CHANGES IN DT VERSION 0.16
+
+## NEW FEATURES
+
+- Add a new plugin [accent-neutralise](https://datatables.net/plug-ins/filtering/type-based/accent-neutralise), which can be used for searching accented characters with their unaccented counterparts. Note, it will only work in the client-side processing mode (#822).
+
+- `addRow()` now has a new parameter `resetPaging`. By setting it to `FALSE`, we can keep the paging position after adding a row (thanks, @stanstrup, #853).
+
+## MINOR CHANGES
+
+- Upgrade the SearchPanes extension to v1.1.1 so that it can [display all the entries properly with the Scroller extension](https://datatables.net/forums/discussion/62807/searchpanes-button-filtering-value-only-show-10-from-all-available-values-with-scroller-extension) (thanks, @JonasMandel @stla, #820).
+
+## BUG FIXES
+
+- Fix the issue that the sorting results may not be expected after formatting functions applied. This is a regression of PR #777 (thanks, @fernandofernandezgonzalez @shrektan, #837).
+
+- `styleColorBar()` now displays correctly on Safari, when the data is greater than the upper limit, due to negative css percentage values (thanks, @Seyphaton, #843).
+
 # CHANGES IN DT VERSION 0.15
 
+## BUG FIXES
+
+- Fix the issue that the formatting functions may throw error for named colname inputs (thanks, @jarauh @shrektan, #831).
+
+- The `input$xxx_xxx_selected` values will always be reset to `NULL` or an empty list when the table gets reloaded (thanks, @stibu81 @shrektan, #828).
 
 # CHANGES IN DT VERSION 0.14
 

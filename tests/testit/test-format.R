@@ -61,3 +61,11 @@ assert('styleValue returns raw value', {
   )
   (out$x$options$rowCallback %==% expect)
 })
+
+# issue #831
+assert('formatting functions allow named colname inputs', {
+  x = datatable(mtcars)
+  x = formatRound(x, c('mpg' = 1, 'cyl' = 2), mark = ".", dec.mark = ",")
+  coldefs = x$x$options$columnDefs
+  (names(coldefs) %==% NULL)
+})
