@@ -10,6 +10,8 @@
 
 - Upgrade the SearchPanes extension to v1.1.1 so that it can [display all the entries properly with the Scroller extension](https://datatables.net/forums/discussion/62807/searchpanes-button-filtering-value-only-show-10-from-all-available-values-with-scroller-extension) (thanks, @JonasMandel @stla, #820).
 
+- The `class` argument now keeps user-defined classes with bootstrap themes (thanks, @mmuurr, #806).
+
 ## BUG FIXES
 
 - Fix the issue that the sorting results may not be expected after formatting functions applied. This is a regression of PR #777 (thanks, @fernandofernandezgonzalez @shrektan, #837).

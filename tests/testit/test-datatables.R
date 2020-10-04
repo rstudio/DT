@@ -173,3 +173,7 @@ local({
     (names(out$x$selection) %==% c('mode', 'selected', 'target', 'selectable'))
   })
 })
+
+assert('DT2BSClass() keeps user-defined classes', {
+  (DT:::DT2BSClass(c('table-condensed stripe', 'foo')) %==% 'table table-striped table-condensed foo')
+})
