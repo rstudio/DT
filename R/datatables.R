@@ -720,9 +720,11 @@ DT2BSClass = function(class) {
     'cell-border' = 'table-bordered', 'compact' = 'table-condensed',
     'hover' = 'table-hover', 'stripe' = 'table-striped'
   )
+  # translate known default styling classes to BS table classes and keep
+  # unknown classes as they are
   class = c(
     BSclass[intersect(class, names(BSclass))],
-    grep('^table-', class, value = TRUE)
+    setdiff(class, names(BSclass))
   )
   class = unique(c('table', class))
   paste(class, collapse = ' ')
