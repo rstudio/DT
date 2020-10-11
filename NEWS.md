@@ -12,6 +12,8 @@
 
 - The `class` argument now keeps user-defined classes with bootstrap themes (thanks, @mmuurr, #806).
 
+- Now DT will throw a clear error message if the value of `search` provided in `datatables(..., options=)` is illegal (thanks, @realHenningLorenzen, #848).
+
 ## BUG FIXES
 
 - Fix the issue that the sorting results may not be expected after formatting functions applied. This is a regression of PR #777 (thanks, @fernandofernandezgonzalez @shrektan, #837).
