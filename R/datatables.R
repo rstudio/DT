@@ -760,7 +760,7 @@ DTDependencies = function(style) {
       all_files = FALSE
     )),
     if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bootstraplib'))) {
-      bootstraplib::bs_dependencies(getCurrentTheme())
+      bootstraplib::bs_theme_dependencies(getCurrentTheme())
     }
   )
 }
