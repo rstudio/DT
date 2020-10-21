@@ -173,3 +173,13 @@ local({
     (names(out$x$selection) %==% c('mode', 'selected', 'target', 'selectable'))
   })
 })
+
+assert('DT2BSClass() keeps user-defined classes', {
+  (DT:::DT2BSClass(c('table-condensed stripe', 'foo')) %==% 'table table-striped table-condensed foo')
+})
+
+assert('clear message when options$search is illegal', {
+  out = try(datatable(data = iris, options = list(search = TRUE)), silent = TRUE)
+  (inherits(out, 'try-error'))
+  (grepl('must be NULL or a list', out[1L], fixed = TRUE))
+})

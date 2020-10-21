@@ -1,3 +1,6 @@
+# CHANGES IN DT VERSION 0.17
+
+
 # CHANGES IN DT VERSION 0.16
 
 ## NEW FEATURES
@@ -14,6 +17,10 @@
 ## MINOR CHANGES
 
 - Upgrade the SearchPanes extension to v1.1.1 so that it can [display all the entries properly with the Scroller extension](https://datatables.net/forums/discussion/62807/searchpanes-button-filtering-value-only-show-10-from-all-available-values-with-scroller-extension) (thanks, @JonasMandel @stla, #820).
+
+- The `class` argument now keeps user-defined classes with bootstrap themes (thanks, @mmuurr, #806).
+
+- Now DT will throw a clear error message if the value of `search` provided in `datatables(..., options=)` is illegal (thanks, @realHenningLorenzen, #848).
 
 ## BUG FIXES
 
