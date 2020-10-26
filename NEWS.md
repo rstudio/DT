@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.17
-- Add a new plugin [scientific](https://datatables.net/plug-ins/sorting/scientific), which can be used to sort column with numbers in scientific notation (for example 1E-10, 1.2E6, ...) (#868).
+
+## NEW FEATURES
+
+- Add a new plugin [scientific](https://datatables.net/plug-ins/sorting/scientific), which can be used to sort string columns whose value stands for scientific notation numbers (e.g., 1E-10, 1.2E6, ...) (thanks, @shutinet, #868).
 
 # CHANGES IN DT VERSION 0.16
 
