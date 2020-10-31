@@ -275,7 +275,11 @@ datatable = function(
 
   # record fillContainer and autoHideNavigation
   if (!is.null(fillContainer)) params$fillContainer = fillContainer
-  if (!is.null(autoHideNavigation)) params$autoHideNavigation = autoHideNavigation
+  if (!is.null(autoHideNavigation)) {
+    if (isTRUE(autoHideNavigation) && length(options$pageLength) == 0L)
+      warning("When `autoHideNavigation` is `TRUE`, the `pageLength` option must be provided")
+    params$autoHideNavigation = autoHideNavigation
+  }
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
