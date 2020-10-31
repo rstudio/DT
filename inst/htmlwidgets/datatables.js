@@ -140,7 +140,7 @@ HTMLWidgets.widget({
     //  (b) Never want to fill the container (we want the pagination
     //      level to determine the size of the container)
     if (window.FlexDashboard && !window.FlexDashboard.isFillPage()) {
-      data.options.bPaginate = true;
+      data.options.paging = true;
       data.fillContainer = false;
     }
 
@@ -207,7 +207,7 @@ HTMLWidgets.widget({
 
       // if we aren't paginating then move around the info/filter controls
       // to save space at the bottom and rephrase the info callback
-      if (data.options.bPaginate === false) {
+      if (data.options.paging === false) {
 
         // we know how to do this cleanly for bootstrap, not so much
         // for other themes/layouts
@@ -225,9 +225,9 @@ HTMLWidgets.widget({
 
     // auto hide navigation if requested
     if (data.autoHideNavigation === true) {
-      if (bootstrapActive && data.options.bPaginate !== false) {
+      if (bootstrapActive && data.options.paging !== false) {
         // strip all nav if length >= cells
-        if ((cells instanceof Array) && data.options.iDisplayLength >= cells.length)
+        if ((cells instanceof Array) && data.options.pageLength >= cells.length)
           options.dom = "<'row'<'col-sm-12'tr>>";
         // alternatively lean things out for flexdashboard mobile portrait
         else if (window.FlexDashboard && window.FlexDashboard.isMobilePhone())
