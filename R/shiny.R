@@ -111,7 +111,7 @@ renderDataTable = function(
       options = instance[['x']][['options']]
 
       # autoHideNavigation won't work in the server mode
-      if (isTRUE(options$autoHideNavigation))
+      if (isTRUE(instance[['x']][['autoHideNavigation']]))
         warning("`autoHideNavigation` only works with DT client mode and it will be ignored",
                 immediate. = TRUE, call. = FALSE)
 
