@@ -279,7 +279,8 @@ datatable = function(
   if (!is.null(fillContainer)) params$fillContainer = fillContainer
   if (!is.null(autoHideNavigation)) {
     if (isTRUE(autoHideNavigation) && length(options$pageLength) == 0L)
-      warning("When `autoHideNavigation` is `TRUE`, the `pageLength` option must be provided")
+      warning("`autoHideNavigation` will be ignored if the `pageLength` option is not provided.",
+              immediate. = TRUE)
     params$autoHideNavigation = autoHideNavigation
   }
 

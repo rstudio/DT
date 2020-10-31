@@ -112,7 +112,7 @@ renderDataTable = function(
 
       # autoHideNavigation won't work in the server mode
       if (isTRUE(options$autoHideNavigation))
-        warning("`autoHideNavigation` only works with DT client mode",
+        warning("`autoHideNavigation` only works with DT client mode and it will be ignored",
                 immediate. = TRUE, call. = FALSE)
 
       # Normalize "ajax" argument; if we leave it a string then we have several
