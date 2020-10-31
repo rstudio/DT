@@ -224,17 +224,20 @@ HTMLWidgets.widget({
     }
 
     // auto hide navigation if requested
-    if (data.autoHideNavigation === true) {
-      if (bootstrapActive && data.options.paging !== false) {
-        // strip all nav if length >= cells
-        if ((cells instanceof Array) && data.options.pageLength >= cells.length)
-          options.dom = "<'row'<'col-sm-12'tr>>";
-        // alternatively lean things out for flexdashboard mobile portrait
-        else if (window.FlexDashboard && window.FlexDashboard.isMobilePhone())
-          options.dom = "<'row'<'col-sm-12'f>>" +
-                        "<'row'<'col-sm-12'tr>>"  +
-                        "<'row'<'col-sm-12'p>>";
-      }
+    // Note, this only works on client-side processing mode as on server-side,
+    // cells (data.data) is null; In addition, we require the pageLength option
+    // being provided explicitly to enable this. Despite we may be able to deduce
+    // the default value of pageLength, it may complicate things so we'd rather
+    // put this responsiblity to users and warn them on the R side.
+    if (data.autoHideNavigation === true && data.options.paging !== false) {
+      // strip all nav if length >= cells
+      if ((cells instanceof Array) && data.options.pageLength >= cells.length)
+        options.dom = bootstrapActive ? "<'row'<'col-sm-12'tr>>" : "t";
+      // alternatively lean things out for flexdashboard mobile portrait
+      else if (bootstrapActive && window.FlexDashboard && window.FlexDashboard.isMobilePhone())
+        options.dom = "<'row'<'col-sm-12'f>>" +
+                      "<'row'<'col-sm-12'tr>>"  +
+                      "<'row'<'col-sm-12'p>>";
     }
 
     $.extend(true, options, data.options || {});
