@@ -58,7 +58,9 @@
 #'   it's containing element. If the table can't fit fully into it's container
 #'   then vertical and/or horizontal scrolling of the table cells will occur.
 #' @param autoHideNavigation \code{TRUE} to automatically hide navigational UI
-#'   when the number of total records is less than the page size.
+#'   (only display the table body) when the number of total records is less
+#'   than the page size. Note, it only works on the client-side processing mode
+#'   and the `pageLength` option should be provided explicitly.
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
@@ -275,7 +277,12 @@ datatable = function(
 
   # record fillContainer and autoHideNavigation
   if (!is.null(fillContainer)) params$fillContainer = fillContainer
-  if (!is.null(autoHideNavigation)) params$autoHideNavigation = autoHideNavigation
+  if (!is.null(autoHideNavigation)) {
+    if (isTRUE(autoHideNavigation) && length(options$pageLength) == 0L)
+      warning("`autoHideNavigation` will be ignored if the `pageLength` option is not provided.",
+              immediate. = TRUE)
+    params$autoHideNavigation = autoHideNavigation
+  }
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,

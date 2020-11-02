@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.17
 
+## MINOR CHANGES
+
+- The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
 
 # CHANGES IN DT VERSION 0.16
 

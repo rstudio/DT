@@ -98,7 +98,9 @@ it's containing element. If the table can't fit fully into it's container
 then vertical and/or horizontal scrolling of the table cells will occur.}
 
 \item{autoHideNavigation}{\code{TRUE} to automatically hide navigational UI
-when the number of total records is less than the page size.}
+(only display the table body) when the number of total records is less
+than the page size. Note, it only works on the client-side processing mode
+and the `pageLength` option should be provided explicitly.}
 
 \item{selection}{the row/column selection mode (single or multiple selection
 or disable selection) when a table widget is rendered in a Shiny app;

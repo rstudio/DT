@@ -110,6 +110,11 @@ renderDataTable = function(
       # register the data object in a shiny session
       options = instance[['x']][['options']]
 
+      # autoHideNavigation won't work in the server mode
+      if (isTRUE(instance[['x']][['autoHideNavigation']]))
+        warning("`autoHideNavigation` only works with DT client mode and it will be ignored",
+                immediate. = TRUE, call. = FALSE)
+
       # Normalize "ajax" argument; if we leave it a string then we have several
       # code paths that need to account for both string and list representations
       if (is.character(options[['ajax']])) {
