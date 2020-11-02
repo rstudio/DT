@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.17
 
+## MINOR CHANGES
+
+- The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
 
 # CHANGES IN DT VERSION 0.16
 
@@ -16,8 +19,6 @@
 - The `class` argument now keeps user-defined classes with bootstrap themes (thanks, @mmuurr, #806).
 
 - Now DT will throw a clear error message if the value of `search` provided in `datatables(..., options=)` is illegal (thanks, @realHenningLorenzen, #848).
-
-- The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
 
 ## BUG FIXES
 
