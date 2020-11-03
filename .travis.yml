@@ -13,9 +13,7 @@ before_install:
 
 jobs:
   include:
-    - r: oldrel
     - r: release
       after_success:
         - Rscript -e 'if (!require("covr")) install.packages("covr"); covr::codecov()'
         - "(curl https://xran.yihui.org/r-xran | bash)"
-    - r: devel
