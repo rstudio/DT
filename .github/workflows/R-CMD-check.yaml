@@ -84,8 +84,13 @@ jobs:
           path: check
 
       - name: Published on xran
-        if: ${{ github.event_name == 'pull_request' && success() }}
+        if: ${{ github.event_name == 'pull_request' && runner.os == "Linux" && matrix.config.r == "release" && "success() }}
         env:
           R_PKG: ${{ github.event.repository.name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo $R_PKG
+          curl https://xran.yihui.org/.gitconfig -o ~/.gitconfig
+          cat ~/.gitconfig
+          ls
+          (curl https://xran.yihui.org/r-xran | cat)
