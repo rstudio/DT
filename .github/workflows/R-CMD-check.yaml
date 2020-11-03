@@ -82,3 +82,10 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Published on xran
+        if: ${{ github.event_name != "pull_request" && success() }}
+        env:
+          R_PKG: ${{ github.event.repository.name }}
+        run: |
+          echo $R_PKG
