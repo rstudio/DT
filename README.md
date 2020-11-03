@@ -7,8 +7,6 @@
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/DT)](https://cran.r-project.org/package=DT)
 <!-- badges: end -->
 
-
-
 This package provides a function `datatable()` to display R data via the [DataTables](https://datatables.net/) library (N.B. not to be confused with the **data.table** package).
 
 ## Installation
