@@ -47,7 +47,7 @@
 #'   the first column to display, you should add the numeric column indices by
 #'   one when using \code{rownames}
 #' @param style either \code{'auto'}, \code{'default'}, \code{'bootstrap'}, or
-#'   \code{'bootstrap4'}. If \code{'auto'}, and a **bootstraplib** theme is
+#'   \code{'bootstrap4'}. If \code{'auto'}, and a **bslib** theme is
 #'   currently active, then bootstrap styling is used in a way that "just works"
 #'   for the active theme. Otherwise,
 #'   \href{https://datatables.net/manual/styling/classes}{DataTables
@@ -711,16 +711,16 @@ normalizeStyle = function(style) {
   if (!identical(style, 'auto')) {
     return(match.arg(style, DTStyles()))
   }
-  if (system.file(package = 'bootstraplib') == '') {
+  if (system.file(package = 'bslib') == '') {
     return('default')
   }
   theme = getCurrentTheme()
   if (is.null(theme)) {
     return('default')
   }
-  style = if ('3' %in% bootstraplib::theme_version(theme)) 'bootstrap' else 'bootstrap4'
-  # Have style remember if bootstraplib should be a dependency
-  structure(style, bootstraplib = TRUE)
+  style = if ('3' %in% bslib::theme_version(theme)) 'bootstrap' else 'bootstrap4'
+  # Have style remember if bslib should be a dependency
+  structure(style, bslib = TRUE)
 }
 
 # Get the current Bootstrap theme
@@ -730,13 +730,13 @@ normalizeStyle = function(style) {
 # and thus Bootstrap is relevant, It's up for debate whether we want to also bs_global_get()
 # since we don't know for sure if Bootstrap is going to be included on the page; however,
 # the implications seems rather safe (the worst that happens is that Bootstrap is included
-# when a global bootstraplib theme is active).
+# when a global bslib theme is active).
 # Ideally, this function would be called later within the preRenderHook(), because then
 # we'd have a better guess at whether Bootstrap is relevant, but that would require a rather
 # involved refactoring of how DT works at the moment.
 getCurrentTheme = function() {
   getTheme = asNamespace("shiny")$getCurrentTheme %||% function() NULL
-  getTheme() %||% bootstraplib::bs_global_get()
+  getTheme() %||% bslib::bs_global_get()
 }
 
 # core JS and CSS dependencies of DataTables
@@ -761,8 +761,8 @@ DTDependencies = function(style) {
       stylesheet = file.path('css', css),
       all_files = FALSE
     )),
-    if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bootstraplib'))) {
-      bootstraplib::bs_theme_dependencies(getCurrentTheme())
+    if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bslib'))) {
+      bslib::bs_theme_dependencies(getCurrentTheme())
     }
   )
 }
