@@ -152,22 +152,35 @@ renderDataTable = function(
     widgetFunc(), dataTableOutput, environment(), FALSE
   )
 
-  # Can't cache with server-side processing
-  if (server) {
-    cacheHint <- FALSE
+  # The cacheHint arg is not present in Shiny < 1.6.0. Once that version is
+  # very widely used, we can remove this if() statement.
+  if ("cacheHint" %in% names(formals(shiny::markRenderFunction))) {
+    # Can't cache with server-side processing
+    if (server) {
+      cacheHint <- FALSE
+    } else {
+      cacheHint <- list(label = "renderDataTable", userExpr = expr)
+    }
+
+    func <- shiny::markRenderFunction(
+      uiFunc = dataTableOutput,
+      renderFunc = function(shinysession, name, ...) {
+        domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
+
+        promises::with_promise_domain(domain, renderFunc())
+      },
+      cacheHint = cacheHint
+    )
   } else {
-    cacheHint <- list(label = "renderDataTable", userExpr = expr)
+    func <- shiny::markRenderFunction(
+      uiFunc = dataTableOutput,
+      renderFunc = function(shinysession, name, ...) {
+        domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
+
+        promises::with_promise_domain(domain, renderFunc())
+      }
+    )
   }
-
-  func = shiny::markRenderFunction(
-    uiFunc = dataTableOutput,
-    renderFunc = function(shinysession, name, ...) {
-      domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
-
-      promises::with_promise_domain(domain, renderFunc())
-    },
-    cacheHint = cacheHint
-  )
 
   # This snapshotPreprocessOutput function was added in shiny 1.0.3.9002
   if (exists("snapshotPreprocessOutput", asNamespace("shiny"))) {
