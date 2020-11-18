@@ -119,7 +119,7 @@ copy_js_css_swf = function(from_dir, to_dir) {
   to_files = file.path(to_dir, js_css_files)
   # create the sub-folder if doesn't exist
   lapply(Filter(Negate(dir.exists), dirname(to_files)), function(dir) {
-    dir.create(dir, recursive = TRUE, showWarnings = FALSE)
+    if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
   })
   file.copy(file.path(from_dir, js_css_files), to_files, overwrite = TRUE)
   invisible()
@@ -226,7 +226,7 @@ local({
     # sometimes it contain the dataTables prefix...
     file_name = gsub('^dataTables[.]', '', file_name)
     dir = file.path(folder, file_name)
-    dir.create(dir)
+    if (!dir.exists(dir)) dir.create(dir)
     file.rename(file.path(folder, js_file), file.path(dir, basename(js_file)))
   }
   lapply(folders, function(folder) {
