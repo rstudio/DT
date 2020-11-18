@@ -1,5 +1,9 @@
 # CHANGES IN DT VERSION 0.17
 
+## NEW FEATURES
+
+- Support the new datatables' extension [SearchBuilder](https://datatables.net/extensions/searchbuilder/). With this new extension, users can construct a complex search query by adding groups and conditions. Note, as the time of writing, this extension only works on the client-side processing mode (thanks, @stla, #875)
+
 ## MINOR CHANGES
 
 - The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
