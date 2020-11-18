@@ -182,15 +182,12 @@ renderDataTable = function(
     )
   }
 
-  # This snapshotPreprocessOutput function was added in shiny 1.0.3.9002
-  if (exists("snapshotPreprocessOutput", asNamespace("shiny"))) {
-    func = shiny::snapshotPreprocessOutput(func, function(value) {
-      # Looks for a string like this in the JSON:
-      # "url":"session/2a2b834d90637a7559f3ebaba460ad10/dataobj/table?w=&nonce=aea032f33aedfd0e",
-      # and removes it, so that the value isn't saved in test snapshots.
-      gsub('"ajax"\\s*:\\s*\\{\\s*"url"\\s*:\\s*"[^"]*"\\s*,?', '"ajax":{', value)
-    })
-  }
+  func = shiny::snapshotPreprocessOutput(func, function(value) {
+    # Looks for a string like this in the JSON:
+    # "url":"session/2a2b834d90637a7559f3ebaba460ad10/dataobj/table?w=&nonce=aea032f33aedfd0e",
+    # and removes it, so that the value isn't saved in test snapshots.
+    gsub('"ajax"\\s*:\\s*\\{\\s*"url"\\s*:\\s*"[^"]*"\\s*,?', '"ajax":{', value)
+  })
 
   shiny::registerInputHandler('DT.cellInfo', function(val, ...) {
     opts = options(stringsAsFactors = FALSE); on.exit(options(opts), add = TRUE)
