@@ -286,4 +286,6 @@ local({
 })
 
 # clean up download folder
-unlink(dld_folder(), recursive = TRUE)
+if (isTRUE(askYesNo("unlink download folder?"))) {
+  unlink(dld_folder(), recursive = TRUE)
+}
