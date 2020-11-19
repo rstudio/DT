@@ -44,7 +44,9 @@ renderDT(
 data is kept on the server and the browser requests a page at a time; if
 \code{FALSE}, then the entire data frame is sent to the browser at once.
 Highly recommended for medium to large data frames, which can cause
-browsers to slow down or crash.}
+browsers to slow down or crash. Note that if you want to use
+\code{renderDataTable} with \code{\link[shiny]{bindCache}()}, this must be
+\code{FALSE}.}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 

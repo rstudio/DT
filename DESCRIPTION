@@ -37,6 +37,8 @@ Suggests:
     rmarkdown,
     shiny (>= 1.2.0),
     testit
+Remotes:
+    rstudio/shiny
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
