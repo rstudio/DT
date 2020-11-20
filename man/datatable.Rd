@@ -15,7 +15,7 @@ datatable(
   caption = NULL,
   filter = c("none", "bottom", "top"),
   escape = TRUE,
-  style = "default",
+  style = "auto",
   width = NULL,
   height = NULL,
   elementId = NULL,
@@ -79,14 +79,18 @@ alternatively, you can specify numeric column indices or column names to
 indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 third), or \code{c('Species', 'Sepal.Length')}; since the row names take
-the first column to display, you should add the numeric column indices
-by one when using \code{rownames}}
+the first column to display, you should add the numeric column indices by
+one when using \code{rownames}}
 
-\item{style}{the style name (\url{https://datatables.net/manual/styling/});
-currently only \code{'default'}, \code{'bootstrap'}, and
-\code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
-files so in order to display the style correctly, you have to link
-the necessary files in the header.}
+\item{style}{either \code{'auto'}, \code{'default'}, \code{'bootstrap'}, or
+\code{'bootstrap4'}. If \code{'auto'}, and a **bslib** theme is
+currently active, then bootstrap styling is used in a way that "just works"
+for the active theme. Otherwise,
+\href{https://datatables.net/manual/styling/classes}{DataTables
+\code{'default'} styling} is used. If set explicitly to \code{'bootstrap'}
+or \code{'bootstrap4'}, one must take care to ensure Bootstrap's HTML
+dependencies (as well as Bootswatch themes, if desired) are included on the
+page.}
 
 \item{width, height}{Width/Height in pixels (optional, defaults to automatic
 sizing)}

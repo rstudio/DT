@@ -714,29 +714,18 @@ normalizeStyle = function(style) {
   if (system.file(package = 'bslib') == '') {
     return('default')
   }
-  theme = getCurrentTheme()
+  # This function should really be called inside preRenderHook() (if called anytime earlier,
+  # we're running the risk of not knowing the true theme). Overall, I think that's ok in this
+  # case since DT doesn't need to compile new Sass, it just needs to know whether or not
+  # Bootstrap is relevant. If we run into problems in the future, let's move this to preRenderHook()
+  # time, but that's going to be a non-trivial change to existing logic
+  theme = bslib::bs_current_theme()
   if (is.null(theme)) {
     return('default')
   }
   style = if ('3' %in% bslib::theme_version(theme)) 'bootstrap' else 'bootstrap4'
   # Have style remember if bslib should be a dependency
   structure(style, bslib = TRUE)
-}
-
-# Get the current Bootstrap theme
-#
-# shiny::getCurrentTheme() takes priority because if it returns something,
-# we for sure know that something like fluidPage(theme = bs_theme()) is being used,
-# and thus Bootstrap is relevant, It's up for debate whether we want to also bs_global_get()
-# since we don't know for sure if Bootstrap is going to be included on the page; however,
-# the implications seems rather safe (the worst that happens is that Bootstrap is included
-# when a global bslib theme is active).
-# Ideally, this function would be called later within the preRenderHook(), because then
-# we'd have a better guess at whether Bootstrap is relevant, but that would require a rather
-# involved refactoring of how DT works at the moment.
-getCurrentTheme = function() {
-  getTheme = asNamespace("shiny")$getCurrentTheme %||% function() NULL
-  getTheme() %||% bslib::bs_global_get()
 }
 
 # core JS and CSS dependencies of DataTables
