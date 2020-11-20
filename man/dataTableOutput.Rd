@@ -57,8 +57,8 @@ is useful if you want to save an expression in a variable.}
 of \code{\link{dataTableAjax}()}}
 
 \item{...}{ignored when \code{expr} returns a table widget, and passed as
-additional arguments to \code{\link{datatable}()} when \code{expr} returns a data
-object}
+additional arguments to \code{\link{datatable}()} when \code{expr} returns
+a data object}
 }
 \description{
 These two functions are like most \code{fooOutput()} and \code{renderFoo()}
