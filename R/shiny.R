@@ -154,15 +154,11 @@ renderDataTable = function(
 
   # The cacheHint arg is not present in Shiny < 1.6.0. Once that version is
   # very widely used, we can remove this if() statement.
-  if ("cacheHint" %in% names(formals(shiny::markRenderFunction))) {
+  func = if ("cacheHint" %in% names(formals(shiny::markRenderFunction))) {
     # Can't cache with server-side processing
-    if (server) {
-      cacheHint <- FALSE
-    } else {
-      cacheHint <- list(label = "renderDataTable", userExpr = expr)
-    }
+    cacheHint = if (server) FALSE else list(label = "renderDataTable", userExpr = expr)
 
-    func <- shiny::markRenderFunction(
+    shiny::markRenderFunction(
       uiFunc = dataTableOutput,
       renderFunc = function(shinysession, name, ...) {
         domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
@@ -172,7 +168,7 @@ renderDataTable = function(
       cacheHint = cacheHint
     )
   } else {
-    func <- shiny::markRenderFunction(
+    shiny::markRenderFunction(
       uiFunc = dataTableOutput,
       renderFunc = function(shinysession, name, ...) {
         domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
