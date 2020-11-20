@@ -47,7 +47,7 @@ DTOutput = dataTableOutput
 #'   \code{FALSE}, then the entire data frame is sent to the browser at once.
 #'   Highly recommended for medium to large data frames, which can cause
 #'   browsers to slow down or crash. Note that if you want to use
-#'   \code{renderDataTable} with \code{\link[shiny]{bindCache}()}, this must be
+#'   \code{renderDataTable} with \code{shiny::bindCache()}, this must be
 #'   \code{FALSE}.
 #' @param funcFilter (for expert use only) passed to the \code{filter} argument
 #'   of \code{\link{dataTableAjax}()}
