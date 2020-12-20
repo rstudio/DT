@@ -1310,6 +1310,7 @@ HTMLWidgets.widget({
         data = rowname.concat(data)
       } else if (d !== 0) {
         console.log(data);
+        console.log(table.columns().indexes());
         throw 'New data must be of the same length as current data (' + n + ')';
       };
       table.row.add(data).draw(resetPaging);
