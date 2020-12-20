@@ -8,6 +8,10 @@
 
 - The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
 
+## BUG FIXES
+
+- Fix the issue that `addRow()` would fail when the proxy DT table contains no data (e.g., a zero-row data.frame) (thanks, @chalioui, #888).
+
 # CHANGES IN DT VERSION 0.16
 
 ## NEW FEATURES
