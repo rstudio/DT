@@ -8,6 +8,8 @@
 
 - The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
 
+- DT no longer overrides the `options$responsive` to `TRUE`. Thus, it enables users to provide customized options for the Responsive extension (thanks, @hdrab127, #885).
+
 # CHANGES IN DT VERSION 0.16
 
 ## NEW FEATURES
