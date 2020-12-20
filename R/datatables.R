@@ -256,7 +256,7 @@ datatable = function(
   params$extensions = if (length(extensions)) as.list(extensions)
 
   # automatically configure options and callback for extensions
-  if ('Responsive' %in% extensions & is.null(options$responsive)) {
+  if ('Responsive' %in% extensions && is.null(options$responsive)) {
     options$responsive = TRUE
   }
 
