@@ -1305,12 +1305,12 @@ HTMLWidgets.widget({
     });
 
     methods.addRow = function(data, rowname, resetPaging) {
-      var data0 = table.row(0).data(), n = data0.length, d = n - data.length;
+      var n = table.columns().indexes().length, d = n - data.length;
       if (d === 1) {
         data = rowname.concat(data)
       } else if (d !== 0) {
         console.log(data);
-        console.log(data0);
+        console.log(table.columns().indexes());
         throw 'New data must be of the same length as current data (' + n + ')';
       };
       table.row.add(data).draw(resetPaging);
