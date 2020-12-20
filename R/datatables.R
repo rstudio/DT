@@ -256,7 +256,9 @@ datatable = function(
   params$extensions = if (length(extensions)) as.list(extensions)
 
   # automatically configure options and callback for extensions
-  if ('Responsive' %in% extensions) options$responsive = TRUE
+  if ('Responsive' %in% extensions && is.null(options$responsive)) {
+    options$responsive = TRUE
+  }
 
   params$caption = captionString(caption)
 

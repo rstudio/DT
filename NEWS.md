@@ -12,6 +12,8 @@
 
 - Fix the issue that `addRow()` would fail when the proxy DT table contains no data (e.g., a zero-row data.frame) (thanks, @chalioui, #888).
 
+- DT no longer overrides the `options$responsive` to `TRUE`. Thus, it enables users to provide customized options for the Responsive extension (thanks, @hdrab127, #885).
+
 # CHANGES IN DT VERSION 0.16
 
 ## NEW FEATURES
