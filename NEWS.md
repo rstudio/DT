@@ -4,6 +4,8 @@
 
 - Support the new datatables' extension [SearchBuilder](https://datatables.net/extensions/searchbuilder/). With this new extension, users can construct a complex search query by adding groups and conditions. Note, as the time of writing, this extension only works on the client-side processing mode (thanks, @stla, #875)
 
+- Add a new plugin [diacritics-neutralise](https://datatables.net/plug-ins/filtering/type-based/diacritics-neutralise), which can be used for searching accented, _non-Latin_ characters with their unaccented counterparts. Note, it will only work in the client-side processing mode (thanks, @tyler-richardett, #887).
+
 ## MINOR CHANGES
 
 - The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
