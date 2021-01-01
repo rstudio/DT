@@ -116,6 +116,8 @@ coerceValue = function(val, old) {
 #'   object created from \code{\link{dataTableProxy}()}, and the rest of
 #'   arguments are passed to \code{\link{replaceData}()} to update the data in a
 #'   DataTable instance in a Shiny app.
+#' @note For factor columns, new levels would be automatically added when necessary
+#'   to avoid \code{NA} coercing.
 #' @return The updated data object.
 #' @export
 editData = function(data, info, proxy = NULL, rownames = TRUE, resetPaging = FALSE, ...) {
@@ -126,6 +128,10 @@ editData = function(data, info, proxy = NULL, rownames = TRUE, resetPaging = FAL
     if (j == 0) {
       rownames(data)[i] = v
     } else {
+      # allow add new factor levels
+      if (is.factor(data[[j]]) && !all(v %in% levels(data[[j]]))) {
+        levels(data[[j]]) <- unique(c(levels(data[[j]]), v))
+      }
       data[i, j] = coerceValue(v, data[i, j, drop = TRUE])
     }
   }
