@@ -29,3 +29,7 @@ When editing cells in a DataTable in a Shiny app, we know the row/column
 indices and values of the cells that were edited. With these information, we
 can update the data object behind the DataTable accordingly.
 }
+\note{
+For factor columns, new levels would be automatically added when necessary
+  to avoid \code{NA} coercing.
+}
