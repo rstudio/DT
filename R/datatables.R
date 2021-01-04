@@ -750,8 +750,11 @@ DTDependencies = function(style) {
       stylesheet = file.path('css', css),
       all_files = FALSE
     )),
+    # This attribute may have been added in normalizeStyle(), and in that case,
+    # a bslib theme is active/relevant, so add the Bootstrap HTML dependencies to
+    # make sure the Bootstrap styles are present
     if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bslib'))) {
-      bslib::bs_theme_dependencies(getCurrentTheme())
+      bslib::bs_theme_dependencies(bslib::bs_current_theme())
     }
   )
 }
