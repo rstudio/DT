@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.17.1
+Version: 0.17.2
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
     person("Joe", "Cheng", role = "aut"),
@@ -35,7 +35,8 @@ Imports:
 Suggests:
     knitr (>= 1.8),
     rmarkdown,
-    shiny (>= 1.2.0),
+    shiny (>= 1.6),
+    bslib,
     testit
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
