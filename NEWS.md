@@ -4,6 +4,11 @@
 
 - `datatable()`'s `style` argument now defaults to `'auto'`, which resolves to either `'bootstrap'` or `'bootstrap4'` when a `{bslib}` theme is relevant. If a `{bslib}` theme isn't relevant, `'auto'` resolves to the old default value of `'default'` (thanks, @cpsievert, #852).
 
+## BUG FIXES
+
+- `datatable(data)` and `datatable(data, fillContainer = TRUE)` now work as expected when statically rendered inside `flexdashboard::flex_dashboard()` (thanks, @cpsievert, #904).
+
+
 # CHANGES IN DT VERSION 0.17
 
 ## NEW FEATURES

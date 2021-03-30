@@ -134,16 +134,6 @@ HTMLWidgets.widget({
       instance.ctselectHandle.setGroup(crosstalkOptions.group);
     }
 
-    // If we are in a flexdashboard scroll layout then we:
-    //  (a) Always want to use pagination (otherwise we'll have
-    //      a "double scroll bar" effect on the phone); and
-    //  (b) Never want to fill the container (we want the pagination
-    //      level to determine the size of the container)
-    if (window.FlexDashboard && !window.FlexDashboard.isFillPage()) {
-      data.options.paging = true;
-      data.fillContainer = false;
-    }
-
     // if we are in the viewer then we always want to fillContainer and
     // and autoHideNavigation (unless the user has explicitly set these)
     if (window.HTMLWidgets.viewerMode) {
