@@ -38,7 +38,7 @@ assert('formatStyle is chainable and unmatched CSS value should be left as it is
     backgroundColor = styleEqual('c', 'green')
   )
   expect = JS(
-    'function(row, data) {',
+    'function(row, data, displayNum, displayIndex, dataIndex) {',
       'var value=data[1]; $(row).css({\'background-color\':value == "a" ? "red" : null});',
       'var value=data[1]; $(row).css({\'background-color\':value == "c" ? "green" : null});',
     '}'
@@ -55,7 +55,7 @@ assert('styleValue returns raw value', {
   out = datatable(tbl) %>%
     formatStyle(columns = 1, valueColumns = 2, background = styleValue())
   expect = JS(
-    'function(row, data) {',
+    'function(row, data, displayNum, displayIndex, dataIndex) {',
     'var value=data[2]; $(this.api().cell(row, 1).node()).css({\'background\':value});',
     '}'
   )
@@ -69,3 +69,24 @@ assert('formatting functions allow named colname inputs', {
   coldefs = x$x$options$columnDefs
   (names(coldefs) %==% NULL)
 })
+
+assert('styleRow works', {
+  tbl = data.frame(
+    COL_1 = c("A", "B", "C", "D"),
+    COL_2 = c("E", "F", "G", "H"),
+    stringsAsFactors = FALSE
+  )
+  out = datatable(tbl) %>%
+    formatStyle(
+      columns = c(2),
+      target = "row",
+      background = styleRow(list(2, c(1, 3)), c("orange", "yellow"), default = "lightgrey")
+    )
+  expect = JS(
+    'function(row, data, displayNum, displayIndex, dataIndex) {',
+    'var value=data[2]; $(row).css({\'background\':$.inArray(dataIndex + 1, [2]) >= 0 ? "orange" : $.inArray(dataIndex + 1, [1, 3]) >= 0 ? "yellow" : "lightgrey"});',
+    '}'
+  )
+  (out$x$options$rowCallback %==% expect)
+})
+

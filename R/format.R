@@ -200,7 +200,9 @@ colFormatter = function(name, names, rownames = TRUE, template, ...) {
 }
 
 appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
-  js = if (length(js) == 0) c('function(row, data) {', '}') else {
+  js = if (length(js) == 0) {
+    c('function(row, data, displayNum, displayIndex, dataIndex) {', '}')
+  } else {
     unlist(strsplit(as.character(js), '\n'))
   }
   i = name2int(name, names, rownames, noerror = TRUE)
@@ -319,6 +321,8 @@ jsValues = function(x) {
 #'
 #' The function \code{styleValue()} uses the column value as the CSS values.
 #'
+#' The function \code{styleRow()} applies the CSS values based on Row Indexes.
+#'
 #' @param cuts a vector of cut points (sorted increasingly)
 #' @param values a vector of CSS values
 #' @export
@@ -392,4 +396,27 @@ styleColorBar = function(data, color, angle=90) {
     "isNaN(parseFloat(value)) || value <= %f ? '' : 'linear-gradient(%fdeg, transparent ' + Math.max(%f - value, 0)/%f * 100 + '%%, %s ' + Math.max(%f - value, 0)/%f * 100 + '%%)'",
     r1, angle, r2, r, color, r2, r
   ))
+}
+
+#' @param rows the Row Indexes (starting from 1) that applies the CSS style. It could
+#' be an integer vector or a list of integer vectors, whose length must be equal to
+#' the length of \code{values}.
+#' @rdname styleInterval
+#' @export
+styleRow = function(rows, values, default = NULL) {
+  n = length(rows)
+  if (n != length(values))
+    stop("length(rows) must be equal to length(values)")
+  if (!is.null(default) && (!is.character(default) || length(default) != 1))
+    stop("default must be null or a string")
+  if (n == 0) return("''")
+  values = jsValues(values)
+  js = ''
+  for (i in seq_len(n)) {
+    row = as.integer(rows[[i]])
+    # must use dataIndex + 1 as it's suppse
+    js = paste0(js, sprintf("$.inArray(dataIndex + 1, [%s]) >= 0 ? %s : ", toString(row), values[i]))
+  }
+  default = if (is.null(default)) 'null' else jsValues(default)
+  JS(paste0(js, default))
 }
