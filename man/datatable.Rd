@@ -90,7 +90,9 @@ for the active theme. Otherwise,
 \code{'default'} styling} is used. If set explicitly to \code{'bootstrap'}
 or \code{'bootstrap4'}, one must take care to ensure Bootstrap's HTML
 dependencies (as well as Bootswatch themes, if desired) are included on the
-page.}
+page. Note, when set explicitly, it's the user's responsibility to ensure
+that only one unique `style` value is used on the same page, if multiple
+DT tables exist, as different styling resources may conflict with each other.}
 
 \item{width, height}{Width/Height in pixels (optional, defaults to automatic
 sizing)}
