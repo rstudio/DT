@@ -200,7 +200,9 @@ colFormatter = function(name, names, rownames = TRUE, template, ...) {
 }
 
 appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
-  js = if (length(js) == 0) c('function(row, data) {', '}') else {
+  js = if (length(js) == 0) {
+    c('function(row, data, displayNum, displayIndex, dataIndex) {', '}')
+  } else {
     unlist(strsplit(as.character(js), '\n'))
   }
   i = name2int(name, names, rownames, noerror = TRUE)
