@@ -1,3 +1,6 @@
+# CHANGES IN DT VERSION 0.19
+
+
 # CHANGES IN DT VERSION 0.18
 
 ## NEW FEATURES
@@ -9,7 +12,6 @@
 ## BUG FIXES
 
 - `datatable(data)` and `datatable(data, fillContainer = TRUE)` now work as expected when statically rendered inside `flexdashboard::flex_dashboard()` (thanks, @cpsievert, #904).
-
 
 # CHANGES IN DT VERSION 0.17
 
