@@ -469,7 +469,7 @@ HTMLWidgets.widget({
             'background-color': '#fff',
             'border': '1px #ddd solid',
             'border-radius': '4px',
-            'padding': '20px 20px 10px 20px'
+            'padding': data.vertical ? '20px': '20px 20px 10px 20px'
           });
           var $spans = $x0.children('span').css({
             'margin-top': '10px',
