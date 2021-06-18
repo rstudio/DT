@@ -566,7 +566,7 @@ filterRow = function(
 
       if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
         style = paste0('display: none; position: absolute;opacity: ', filter$opacity, vert_style),
-        tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
+        tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec, style='height:140px;'),
         if (is_vert) tagList(tags$span(style = 'position: absolute; bottom: 20px; left: 40px;'),
                              tags$span(style = 'position: absolute; top: 10px; left: 40px;'))
         else tagList(tags$span(style = 'float: left;'),
