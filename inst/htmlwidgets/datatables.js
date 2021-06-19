@@ -469,10 +469,10 @@ HTMLWidgets.widget({
             'background-color': '#fff',
             'border': '1px #ddd solid',
             'border-radius': '4px',
-            'padding': data.vertical ? '20px': '20px 20px 10px 20px'
+            'padding': data.vertical ? '35px 20px': '20px 20px 10px 20px'
           });
           var $spans = $x0.children('span').css({
-            'margin-top': '10px',
+            'margin-top': data.vertical ? '0' : '10px',
             'white-space': 'nowrap'
           });
           var $span1 = $spans.first(), $span2 = $spans.last();
@@ -481,6 +481,8 @@ HTMLWidgets.widget({
           // slider may have numeric precision problems (#150)
           var scale = Math.pow(10, Math.max(0, +$x.data('scale') || 0));
           r1 = Math.round(r1 * scale); r2 = Math.round(r2 * scale);
+          console.log(`r1: ${r1}`)
+          console.log(`r2: ${r2}`)
           var scaleBack = function(x, scale) {
             if (scale === 1) return x;
             var d = Math.round(Math.log(scale) / Math.log(10));
