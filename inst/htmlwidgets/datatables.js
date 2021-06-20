@@ -481,8 +481,6 @@ HTMLWidgets.widget({
           // slider may have numeric precision problems (#150)
           var scale = Math.pow(10, Math.max(0, +$x.data('scale') || 0));
           r1 = Math.round(r1 * scale); r2 = Math.round(r2 * scale);
-          console.log(`r1: ${r1}`)
-          console.log(`r2: ${r2}`)
           var scaleBack = function(x, scale) {
             if (scale === 1) return x;
             var d = Math.round(Math.log(scale) / Math.log(10));

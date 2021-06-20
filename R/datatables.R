@@ -559,13 +559,9 @@ filterRow = function(
         d2 = ceiling(d2 * 10^dec) / 10^dec
       }
       is_vert <- filter$vertical
-      vert_style <- ifelse(is_vert,
-                           ';width: 20px;',
-                           ';width: 200px;')
-
 
       if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
-        style = paste0('display: none; position: absolute;opacity: ', filter$opacity, vert_style),
+        style = paste0('display: none;position: absolute;width: 200px;opacity: ', filter$opacity),
         tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
         if (is_vert) tagList(tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
                              tags$span(style = 'display: none;', HTML('&nbsp;')),
