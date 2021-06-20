@@ -585,7 +585,7 @@ filterRow = function(
       }
       if (t != 'disabled') tags$div(
         tags$select(
-          multiple = 'multiple', style = 'width: 100%;opacity: 0.9;',
+          multiple = 'multiple', style = 'width: 100%;',
           `data-options` = native_encode(jsonlite::toJSON(as.character(d)))
         ),
         style = 'width: 100%; display: none;'
