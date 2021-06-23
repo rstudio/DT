@@ -1,8 +1,7 @@
 # CHANGES IN DT VERSION 0.19
 
 ## NEW FEATUERS
-- Add `vertical` and `opacity` option to `filter` which applies to the noUiSliders. This is useful with limited width DataTables
-to prevent x overflow (thanks, @alexvpickering, #919).
+- Add `vertical` and `opacity` option to `filter` which applies to the noUiSliders. This is useful with limited width DataTables to prevent x overflow (thanks, @alexvpickering, #919).
 
 
 # CHANGES IN DT VERSION 0.18
