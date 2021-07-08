@@ -236,13 +236,14 @@ datatable = function(
   if (isTRUE(fillContainer)) class = paste(class, 'fill-container')
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
-  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
+  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1), filter)
   # HTML code for column filters
   filterHTML = as.character(filterRow(data, !is.null(rn) && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
   params$filter = filter$position
+  params$vertical = filter$vertical
   if (filter$position != 'none') params$filterHTML = filterHTML
 
   if (missing(container)) {
@@ -519,7 +520,7 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
 #' @importFrom htmltools tagList
 filterRow = function(
   data, rownames = TRUE,
-  filter = list(position = 'none', clear = TRUE, plain = FALSE)
+  filter = list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
 ) {
   if (filter$position == 'none') return()
   tds = list()
@@ -557,10 +558,17 @@ filterRow = function(
         d1 = floor(d1 * 10^dec) / 10^dec
         d2 = ceiling(d2 * 10^dec) / 10^dec
       }
+      is_vert <- filter$vertical
+
       if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
-        style = 'display: none; position: absolute; width: 200px;',
+        style = paste0('display: none;position: absolute;width: 200px;opacity: ', filter$opacity),
         tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
-        tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
+        if (is_vert) tagList(tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
+                             tags$span(style = 'display: none;', HTML('&nbsp;')),
+                             tags$span(style = 'position: absolute; top: 2px; left: 15px;')
+                             )
+        else tagList(tags$span(style = 'float: left;'),
+                     tags$span(style = 'float: right;'))
       ) else {
         t = 'disabled'
         NULL

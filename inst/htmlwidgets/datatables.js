@@ -469,10 +469,10 @@ HTMLWidgets.widget({
             'background-color': '#fff',
             'border': '1px #ddd solid',
             'border-radius': '4px',
-            'padding': '20px 20px 10px 20px'
+            'padding': data.vertical ? '35px 20px': '20px 20px 10px 20px'
           });
           var $spans = $x0.children('span').css({
-            'margin-top': '10px',
+            'margin-top': data.vertical ? '0' : '10px',
             'white-space': 'nowrap'
           });
           var $span1 = $spans.first(), $span2 = $spans.last();
@@ -499,9 +499,9 @@ HTMLWidgets.widget({
               // first, make sure the slider div leaves at least 20px between
               // the two (slider value) span's
               $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
-              // then, if the input is really wide, make the slider the same
-              // width as the input
-              if ($x0.outerWidth() < $input.outerWidth()) {
+              // then, if the input is really wide or slider is vertical,
+              // make the slider the same width as the input
+              if ($x0.outerWidth() < $input.outerWidth() || data.vertical) {
                 $x0.outerWidth($input.outerWidth());
               }
               // make sure the slider div does not reach beyond the right margin
@@ -566,6 +566,10 @@ HTMLWidgets.widget({
           };
           var opts = type === 'date' ? { step: 60 * 60 * 1000 } :
                      type === 'integer' ? { step: 1 } : {};
+
+          opts.orientation = data.vertical ? 'vertical': 'horizontal';
+          opts.direction = data.vertical ? 'rtl': 'ltr';
+
           filter = $x.noUiSlider($.extend({
             start: [r1, r2],
             range: {min: r1, max: r2},

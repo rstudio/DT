@@ -15,6 +15,7 @@ Authors@R: c(
     person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
     person("Leon", "Gersen", role = c("ctb", "cph"), comment = "noUiSlider in htmlwidgets/lib"),
     person("Bartek", "Szopka", role = c("ctb", "cph"), comment = "jquery.highlight.js in htmlwidgets/lib"),
+    person("Alex", "Pickering", role = c("ctb")),
     person("RStudio, PBC", role = "cph")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
