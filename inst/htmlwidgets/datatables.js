@@ -501,7 +501,7 @@ HTMLWidgets.widget({
               $x0.width(Math.max(160, $span1.outerWidth() + $span2.outerWidth() + 20));
               // then, if the input is really wide or slider is vertical,
               // make the slider the same width as the input
-              if ($x0.outerWidth() < $input.outerWidth() | data.vertical) {
+              if ($x0.outerWidth() < $input.outerWidth() || data.vertical) {
                 $x0.outerWidth($input.outerWidth());
               }
               // make sure the slider div does not reach beyond the right margin
