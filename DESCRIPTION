@@ -1,7 +1,7 @@
 Package: DT
 Type: Package
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.18.1
+Version: 0.18.2
 Authors@R: c(
     person("Yihui", "Xie", email = "xie@yihui.name", role = c("aut", "cre")),
     person("Joe", "Cheng", role = "aut"),
@@ -10,7 +10,6 @@ Authors@R: c(
     person("Maximilian", "Girlich", role = "ctb"),
     person("Greg", "Freedman Ellis", role = "ctb"),
     person("Johannes", "Rauh", role = "ctb"),
-    person("jQuery contributors", role = c("ctb", "cph"), comment = "jQuery in htmlwidgets/lib"),
     person("SpryMedia Limited", role = c("ctb", "cph"), comment = "DataTables in htmlwidgets/lib"),
     person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
     person("Leon", "Gersen", role = c("ctb", "cph"), comment = "noUiSlider in htmlwidgets/lib"),
@@ -32,6 +31,7 @@ Imports:
     jsonlite (>= 0.9.16),
     magrittr,
     crosstalk,
+    jquerylib,
     promises
 Suggests:
     knitr (>= 1.8),

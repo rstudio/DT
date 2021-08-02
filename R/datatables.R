@@ -752,7 +752,7 @@ DTDependencies = function(style) {
     if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
   c(
-    list(htmlDependency(
+    list(jquerylib::jquery_core(), htmlDependency(
       depName(style, 'dt-core'),
       DataTablesVersion,
       src = depPath('datatables'),

@@ -1,8 +1,12 @@
 # CHANGES IN DT VERSION 0.19
 
 ## NEW FEATUERS
+
 - Add `vertical` and `opacity` option to `filter` which applies to the noUiSliders. This is useful with limited width DataTables to prevent x overflow (thanks, @alexvpickering, #919).
 
+## MAJOR CHANGES
+
+- Upgraded jQuery from v1.12.4 to v3.x imported from the **jquerylib** R package.
 
 # CHANGES IN DT VERSION 0.18
 
