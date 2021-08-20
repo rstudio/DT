@@ -757,7 +757,8 @@ HTMLWidgets.widget({
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
           var _cell = table.cell(cell), value = _cell.data();
-          var $input = $('<input type="text">'), changed = false;
+          var $divInput = $('<div class="form-group row" style="margin-bottom:auto;"><input type="text" class="form-control form-control-sm" size="1"></div>');
+          var $input = $divInput.children("input"), changed = false;
           if (!immediate) {
             $cell.data('input', $input).data('html', html);
             $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
@@ -766,9 +767,9 @@ HTMLWidgets.widget({
           if (inArray(_cell.index().column, disableCols)) {
             $input.attr('readonly', '').css('filter', 'invert(25%)');
           }
-          $cell.empty().append($input);
+          $cell.empty().append($divInput);
           if (cell === current) $input.focus();
-          $input.css('width', '100%');
+          $input.css('width', '100%').css('padding-right', '0px');
 
           if (immediate) $input.on('change', function() {
             changed = true;
