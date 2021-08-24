@@ -4,6 +4,10 @@
 
 - Add `vertical` and `opacity` option to `filter` which applies to the noUiSliders. This is useful with limited width DataTables to prevent x overflow (thanks, @alexvpickering, #919).
 
+- Now the user is able to restrict the editing to accept only numbers by, e.g., `datatable(..., editable = list(target = "cell", numeric = 3:5))`. By default, the editing is restricted to numbers for all numeric columns; set `numeric = "none"` to disable this behavior (thanks, @stla, #860 #824).
+
+- Now the user can request text areas for the editing by, e.g., `datatable(..., editable = list(target = "cell", area = 1:2))`. Text areas are useful for cells with large contents (thanks, @stla #860, @fabiangehring #671).
+
 ## MAJOR CHANGES
 
 - Upgraded jQuery from v1.12.4 to v3.x imported from the **jquerylib** R package.
@@ -39,6 +43,7 @@
 - Fix the issue that `addRow()` would fail when the proxy DT table contains no data (e.g., a zero-row data.frame) (thanks, @chalioui, #888).
 
 - DT no longer overrides the `options$responsive` to `TRUE`. Thus, it enables users to provide customized options for the Responsive extension (thanks, @hdrab127, #885).
+
 
 # CHANGES IN DT VERSION 0.16
 
