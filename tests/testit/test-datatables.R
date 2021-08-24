@@ -183,3 +183,12 @@ assert('clear message when options$search is illegal', {
   (inherits(out, 'try-error'))
   (grepl('must be NULL or a list', out[1L], fixed = TRUE))
 })
+
+assert('warn autoHideNavigation if no pageLength', {
+  (has_warning(
+    datatable(head(iris, 5), autoHideNavigation = TRUE)
+  ))
+  (!has_warning(
+    datatable(head(iris, 5), autoHideNavigation = TRUE, options = list(pageLength = 20))
+  ))
+})

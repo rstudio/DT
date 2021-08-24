@@ -44,7 +44,9 @@ renderDT(
 data is kept on the server and the browser requests a page at a time; if
 \code{FALSE}, then the entire data frame is sent to the browser at once.
 Highly recommended for medium to large data frames, which can cause
-browsers to slow down or crash.}
+browsers to slow down or crash. Note that if you want to use
+\code{renderDataTable} with \code{shiny::bindCache()}, this must be
+\code{FALSE}.}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 
@@ -55,8 +57,8 @@ is useful if you want to save an expression in a variable.}
 of \code{\link{dataTableAjax}()}}
 
 \item{...}{ignored when \code{expr} returns a table widget, and passed as
-additional arguments to \code{\link{datatable}()} when \code{expr} returns a data
-object}
+additional arguments to \code{\link{datatable}()} when \code{expr} returns
+a data object}
 }
 \description{
 These two functions are like most \code{fooOutput()} and \code{renderFoo()}

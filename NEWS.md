@@ -1,10 +1,49 @@
-# CHANGES IN DT VERSION 0.17
+# CHANGES IN DT VERSION 0.19
 
-# NEW FEATURES
+## NEW FEATUERS
+
+- Add `vertical` and `opacity` option to `filter` which applies to the noUiSliders. This is useful with limited width DataTables to prevent x overflow (thanks, @alexvpickering, #919).
 
 - Now the user is able to restrict the editing to accept only numbers by e.g. `datatable(..., editable = list(target = "cell", numeric = 3:5))`. By default the editing is restricted to numbers for all numeric columns; set `numeric = "none"` to disable this behavior (#824).
 
 - Now the user can request text areas for the editing by e.g. `datatable(..., editable = list(target = "cell", area = 1:2))`. Text areas are useful for cells with large contents.
+
+## MAJOR CHANGES
+
+- Upgraded jQuery from v1.12.4 to v3.x imported from the **jquerylib** R package.
+
+# CHANGES IN DT VERSION 0.18
+
+## NEW FEATURES
+
+- `datatable()`'s `style` argument now defaults to `'auto'`, which resolves to either `'bootstrap'` or `'bootstrap4'` when a `{bslib}` theme is relevant. If a `{bslib}` theme isn't relevant, `'auto'` resolves to the old default value of `'default'` (thanks, @cpsievert, #852).
+
+- Add a new function `styleRow()`. It's useful when you want to apply CSS styles based on Row Indexes (thanks, @s-fleck, #894). 
+
+## BUG FIXES
+
+- `datatable(data)` and `datatable(data, fillContainer = TRUE)` now work as expected when statically rendered inside `flexdashboard::flex_dashboard()` (thanks, @cpsievert, #904).
+
+# CHANGES IN DT VERSION 0.17
+
+## NEW FEATURES
+
+- Support the new datatables' extension [SearchBuilder](https://datatables.net/extensions/searchbuilder/). With this new extension, users can construct a complex search query by adding groups and conditions. Note, as the time of writing, this extension only works on the client-side processing mode (thanks, @stla, #875)
+
+- Add a new plugin [diacritics-neutralise](https://datatables.net/plug-ins/filtering/type-based/diacritics-neutralise), which can be used for searching accented, _non-Latin_ characters with their unaccented counterparts. Note, it will only work in the client-side processing mode (thanks, @tyler-richardett, #887).
+
+## MINOR CHANGES
+
+- The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
+
+- When editing factor columns, `editData()` now automatically updates the factor levels if it's necessary (thanks, @aman-malik3010, #865).
+
+## BUG FIXES
+
+- Fix the issue that `addRow()` would fail when the proxy DT table contains no data (e.g., a zero-row data.frame) (thanks, @chalioui, #888).
+
+- DT no longer overrides the `options$responsive` to `TRUE`. Thus, it enables users to provide customized options for the Responsive extension (thanks, @hdrab127, #885).
+
 
 # CHANGES IN DT VERSION 0.16
 

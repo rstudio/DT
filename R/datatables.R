@@ -44,13 +44,19 @@
 #'   indicate which columns to escape, e.g. \code{1:5} (the first 5 columns),
 #'   \code{c(1, 3, 4)}, or \code{c(-1, -3)} (all columns except the first and
 #'   third), or \code{c('Species', 'Sepal.Length')}; since the row names take
-#'   the first column to display, you should add the numeric column indices
-#'   by one when using \code{rownames}
-#' @param style the style name (\url{https://datatables.net/manual/styling/});
-#'   currently only \code{'default'}, \code{'bootstrap'}, and
-#'   \code{'bootstrap4'} are supported. Note that DT doesn't contain the theme
-#'   files so in order to display the style correctly, you have to link
-#'   the necessary files in the header.
+#'   the first column to display, you should add the numeric column indices by
+#'   one when using \code{rownames}
+#' @param style either \code{'auto'}, \code{'default'}, \code{'bootstrap'}, or
+#'   \code{'bootstrap4'}. If \code{'auto'}, and a **bslib** theme is
+#'   currently active, then bootstrap styling is used in a way that "just works"
+#'   for the active theme. Otherwise,
+#'   \href{https://datatables.net/manual/styling/classes}{DataTables
+#'   \code{'default'} styling} is used. If set explicitly to \code{'bootstrap'}
+#'   or \code{'bootstrap4'}, one must take care to ensure Bootstrap's HTML
+#'   dependencies (as well as Bootswatch themes, if desired) are included on the
+#'   page. Note, when set explicitly, it's the user's responsibility to ensure
+#'   that only one unique `style` value is used on the same page, if multiple
+#'   DT tables exist, as different styling resources may conflict with each other.
 #' @param width,height Width/Height in pixels (optional, defaults to automatic
 #'   sizing)
 #' @param elementId An id for the widget (a random string by default).
@@ -58,7 +64,9 @@
 #'   it's containing element. If the table can't fit fully into it's container
 #'   then vertical and/or horizontal scrolling of the table cells will occur.
 #' @param autoHideNavigation \code{TRUE} to automatically hide navigational UI
-#'   when the number of total records is less than the page size.
+#'   (only display the table body) when the number of total records is less
+#'   than the page size. Note, it only works on the client-side processing mode
+#'   and the `pageLength` option should be provided explicitly.
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
@@ -143,7 +151,7 @@
 datatable = function(
   data, options = list(), class = 'display', callback = JS('return table;'),
   rownames, colnames, container, caption = NULL, filter = c('none', 'bottom', 'top'),
-  escape = TRUE, style = 'default', width = NULL, height = NULL, elementId = NULL,
+  escape = TRUE, style = 'auto', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
@@ -235,7 +243,7 @@ datatable = function(
   if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
 
-  style = match.arg(tolower(style), DTStyles())
+  style = normalizeStyle(style)
   if (grepl('^bootstrap', style)) class = DT2BSClass(class)
   if (style != 'default') params$style = style
 
@@ -243,13 +251,14 @@ datatable = function(
   if (isTRUE(fillContainer)) class = paste(class, 'fill-container')
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
-  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
+  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1), filter)
   # HTML code for column filters
   filterHTML = as.character(filterRow(data, !is.null(rn) && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
   params$filter = filter$position
+  params$vertical = filter$vertical
   if (filter$position != 'none') params$filterHTML = filterHTML
 
   if (missing(container)) {
@@ -269,7 +278,9 @@ datatable = function(
   params$extensions = if (length(extensions)) as.list(extensions)
 
   # automatically configure options and callback for extensions
-  if ('Responsive' %in% extensions) options$responsive = TRUE
+  if ('Responsive' %in% extensions && is.null(options$responsive)) {
+    options$responsive = TRUE
+  }
 
   params$caption = captionString(caption)
 
@@ -295,7 +306,12 @@ datatable = function(
 
   # record fillContainer and autoHideNavigation
   if (!is.null(fillContainer)) params$fillContainer = fillContainer
-  if (!is.null(autoHideNavigation)) params$autoHideNavigation = autoHideNavigation
+  if (!is.null(autoHideNavigation)) {
+    if (isTRUE(autoHideNavigation) && length(options$pageLength) == 0L)
+      warning("`autoHideNavigation` will be ignored if the `pageLength` option is not provided.",
+              immediate. = TRUE)
+    params$autoHideNavigation = autoHideNavigation
+  }
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
@@ -325,7 +341,7 @@ datatable = function(
     )
   }
 
-  deps = list(DTDependency(style))
+  deps = DTDependencies(style)
   deps = c(deps, unlist(
     lapply(extensions, extDependency, style, options),
     recursive = FALSE
@@ -552,7 +568,7 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
 #' @importFrom htmltools tagList
 filterRow = function(
   data, rownames = TRUE,
-  filter = list(position = 'none', clear = TRUE, plain = FALSE)
+  filter = list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
 ) {
   if (filter$position == 'none') return()
   tds = list()
@@ -590,10 +606,17 @@ filterRow = function(
         d1 = floor(d1 * 10^dec) / 10^dec
         d2 = ceiling(d2 * 10^dec) / 10^dec
       }
+      is_vert <- filter$vertical
+
       if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
-        style = 'display: none; position: absolute; width: 200px;',
+        style = paste0('display: none;position: absolute;width: 200px;opacity: ', filter$opacity),
         tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
-        tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
+        if (is_vert) tagList(tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
+                             tags$span(style = 'display: none;', HTML('&nbsp;')),
+                             tags$span(style = 'position: absolute; top: 2px; left: 15px;')
+                             )
+        else tagList(tags$span(style = 'float: left;'),
+                     tags$span(style = 'float: right;'))
       ) else {
         t = 'disabled'
         NULL
@@ -741,8 +764,30 @@ extraDependency = function(names = NULL, ...) {
   })
 }
 
+normalizeStyle = function(style) {
+  style = tolower(style)
+  if (!identical(style, 'auto')) {
+    return(match.arg(style, DTStyles()))
+  }
+  if (system.file(package = 'bslib') == '') {
+    return('default')
+  }
+  # This function should really be called inside preRenderHook() (if called anytime earlier,
+  # we're running the risk of not knowing the true theme). Overall, I think that's ok in this
+  # case since DT doesn't need to compile new Sass, it just needs to know whether or not
+  # Bootstrap is relevant. If we run into problems in the future, let's move this to preRenderHook()
+  # time, but that's going to be a non-trivial change to existing logic
+  theme = bslib::bs_current_theme()
+  if (is.null(theme)) {
+    return('default')
+  }
+  style = if ('3' %in% bslib::theme_version(theme)) 'bootstrap' else 'bootstrap4'
+  # Have style remember if bslib should be a dependency
+  structure(style, bslib = TRUE)
+}
+
 # core JS and CSS dependencies of DataTables
-DTDependency = function(style) {
+DTDependencies = function(style) {
   js = 'jquery.dataTables.min.js'
   if (style == 'default') {
     # patch the default style
@@ -754,10 +799,21 @@ DTDependency = function(style) {
     if (style == 'bootstrap') css = c(css, 'dataTables.bootstrap.extra.css')
     if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
-  htmlDependency(
-    depName(style, 'dt-core'), DataTablesVersion, src = depPath('datatables'),
-    script = file.path('js', js), stylesheet = file.path('css', css),
-    all_files = FALSE
+  c(
+    list(jquerylib::jquery_core(), htmlDependency(
+      depName(style, 'dt-core'),
+      DataTablesVersion,
+      src = depPath('datatables'),
+      script = file.path('js', js),
+      stylesheet = file.path('css', css),
+      all_files = FALSE
+    )),
+    # This attribute may have been added in normalizeStyle(), and in that case,
+    # a bslib theme is active/relevant, so add the Bootstrap HTML dependencies to
+    # make sure the Bootstrap styles are present
+    if (grepl('^bootstrap', style) && isTRUE(attr(style, 'bslib'))) {
+      bslib::bs_theme_dependencies(bslib::bs_current_theme())
+    }
   )
 }
 

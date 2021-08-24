@@ -46,12 +46,14 @@ DTOutput = dataTableOutput
 #'   data is kept on the server and the browser requests a page at a time; if
 #'   \code{FALSE}, then the entire data frame is sent to the browser at once.
 #'   Highly recommended for medium to large data frames, which can cause
-#'   browsers to slow down or crash.
+#'   browsers to slow down or crash. Note that if you want to use
+#'   \code{renderDataTable} with \code{shiny::bindCache()}, this must be
+#'   \code{FALSE}.
 #' @param funcFilter (for expert use only) passed to the \code{filter} argument
 #'   of \code{\link{dataTableAjax}()}
 #' @param ... ignored when \code{expr} returns a table widget, and passed as
-#'   additional arguments to \code{\link{datatable}()} when \code{expr} returns a data
-#'   object
+#'   additional arguments to \code{\link{datatable}()} when \code{expr} returns
+#'   a data object
 renderDataTable = function(
     expr, server = TRUE, env = parent.frame(), quoted = FALSE,
     funcFilter = dataTablesFilter, ...
@@ -110,6 +112,11 @@ renderDataTable = function(
       # register the data object in a shiny session
       options = instance[['x']][['options']]
 
+      # autoHideNavigation won't work in the server mode
+      if (isTRUE(instance[['x']][['autoHideNavigation']]))
+        warning("`autoHideNavigation` only works with DT client mode and it will be ignored",
+                immediate. = TRUE, call. = FALSE)
+
       # Normalize "ajax" argument; if we leave it a string then we have several
       # code paths that need to account for both string and list representations
       if (is.character(options[['ajax']])) {
@@ -145,21 +152,38 @@ renderDataTable = function(
     widgetFunc(), dataTableOutput, environment(), FALSE
   )
 
-  func = shiny::markRenderFunction(dataTableOutput, function(shinysession, name, ...) {
-    domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
+  # The cacheHint arg is not present in Shiny < 1.6.0. Once that version is
+  # very widely used, we can remove this if() statement.
+  func = if ("cacheHint" %in% names(formals(shiny::markRenderFunction))) {
+    # Can't cache with server-side processing
+    cacheHint = if (server) FALSE else list(label = "renderDataTable", userExpr = expr)
 
-    promises::with_promise_domain(domain, renderFunc())
-  })
+    shiny::markRenderFunction(
+      uiFunc = dataTableOutput,
+      renderFunc = function(shinysession, name, ...) {
+        domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
 
-  # This snapshotPreprocessOutput function was added in shiny 1.0.3.9002
-  if (exists("snapshotPreprocessOutput", asNamespace("shiny"))) {
-    func = shiny::snapshotPreprocessOutput(func, function(value) {
-      # Looks for a string like this in the JSON:
-      # "url":"session/2a2b834d90637a7559f3ebaba460ad10/dataobj/table?w=&nonce=aea032f33aedfd0e",
-      # and removes it, so that the value isn't saved in test snapshots.
-      gsub('"ajax"\\s*:\\s*\\{\\s*"url"\\s*:\\s*"[^"]*"\\s*,?', '"ajax":{', value)
-    })
+        promises::with_promise_domain(domain, renderFunc())
+      },
+      cacheHint = cacheHint
+    )
+  } else {
+    shiny::markRenderFunction(
+      uiFunc = dataTableOutput,
+      renderFunc = function(shinysession, name, ...) {
+        domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
+
+        promises::with_promise_domain(domain, renderFunc())
+      }
+    )
   }
+
+  func = shiny::snapshotPreprocessOutput(func, function(value) {
+    # Looks for a string like this in the JSON:
+    # "url":"session/2a2b834d90637a7559f3ebaba460ad10/dataobj/table?w=&nonce=aea032f33aedfd0e",
+    # and removes it, so that the value isn't saved in test snapshots.
+    gsub('"ajax"\\s*:\\s*\\{\\s*"url"\\s*:\\s*"[^"]*"\\s*,?', '"ajax":{', value)
+  })
 
   shiny::registerInputHandler('DT.cellInfo', function(val, ...) {
     opts = options(stringsAsFactors = FALSE); on.exit(options(opts), add = TRUE)

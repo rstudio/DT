@@ -5,6 +5,7 @@
 \alias{styleEqual}
 \alias{styleValue}
 \alias{styleColorBar}
+\alias{styleRow}
 \title{Conditional CSS styles}
 \usage{
 styleInterval(cuts, values)
@@ -14,6 +15,8 @@ styleEqual(levels, values, default = NULL)
 styleValue()
 
 styleColorBar(data, color, angle = 90)
+
+styleRow(rows, values, default = NULL)
 }
 \arguments{
 \item{cuts}{a vector of cut points (sorted increasingly)}
@@ -38,6 +41,10 @@ narrower than the range of the table data itself.}
 gradient relative to a horizontal line and the gradient line, going
 counter-clockwise. For example, 90 fills right to left and -90 fills
 left to right.}
+
+\item{rows}{the Row Indexes (starting from 1) that applies the CSS style. It could
+be an integer vector or a list of integer vectors, whose length must be equal to
+the length of \code{values}.}
 }
 \description{
 A few helper functions for the \code{\link{formatStyle}()} function to
@@ -65,4 +72,6 @@ behind table cells in a column, and the width of bars is proportional to the
 column values.
 
 The function \code{styleValue()} uses the column value as the CSS values.
+
+The function \code{styleRow()} applies the CSS values based on Row Indexes.
 }
