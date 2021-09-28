@@ -46,7 +46,10 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@master
         with:
-          extra-packages: rcmdcheck
+          # TODO remove curl when https://github.com/r-lib/actions/issues/370 fixed
+          extra-packages: |
+            rcmdcheck
+            curl
 
       - uses: r-lib/actions/check-r-package@v1
 
