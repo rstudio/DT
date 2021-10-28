@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rstudio/DT/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/DT/actions)
-[![Coverage status](https://codecov.io/gh/rstudio/DT/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/DT?branch=master)
+[![Coverage status](https://codecov.io/gh/rstudio/DT/branch/main/graph/badge.svg)](https://codecov.io/github/rstudio/DT?branch=main)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/DT)](https://cran.r-project.org/package=DT)
 <!-- badges: end -->
 
