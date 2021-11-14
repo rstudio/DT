@@ -1,5 +1,19 @@
+# CHANGES IN DT VERSION 0.20
+
+
 # CHANGES IN DT VERSION 0.19
 
+## NEW FEATUERS
+
+- Add `vertical` and `opacity` option to `filter` which applies to the noUiSliders. This is useful with limited width DataTables to prevent x overflow (thanks, @alexvpickering, #919).
+
+- Now the user is able to restrict the editing to accept only numbers by, e.g., `datatable(..., editable = list(target = "cell", numeric = 3:5))`. By default, the editing is restricted to numbers for all numeric columns; set `numeric = "none"` to disable this behavior (thanks, @stla, #860 #824).
+
+- Now the user can request text areas for the editing by, e.g., `datatable(..., editable = list(target = "cell", area = 1:2))`. Text areas are useful for cells with large contents (thanks, @stla #860, @fabiangehring #671).
+
+## MAJOR CHANGES
+
+- Upgraded jQuery from v1.12.4 to v3.x imported from the **jquerylib** R package.
 
 # CHANGES IN DT VERSION 0.18
 
@@ -32,6 +46,7 @@
 - Fix the issue that `addRow()` would fail when the proxy DT table contains no data (e.g., a zero-row data.frame) (thanks, @chalioui, #888).
 
 - DT no longer overrides the `options$responsive` to `TRUE`. Thus, it enables users to provide customized options for the Responsive extension (thanks, @hdrab127, #885).
+
 
 # CHANGES IN DT VERSION 0.16
 
@@ -185,7 +200,7 @@
 
 ## NEW FEATURES
 
-- The table editor has been enhanced: now the `editable` argument of `datatable()` can take four possible values, `cell` (or `TRUE` for backward compatibility), `row`, `column`, or `all`, which means you can edit a single cell a time, or a whole row or column, or all cells in the table. To trigger the editor, doubleclick on any cell. To submit the edit, hit `Ctrl + Enter` when multiple cells are being edited, or hit `Esc` to cancel the edit. See https://github.com/rstudio/DT/tree/master/inst/examples/DT-edit for comprehensive examples (thanks, @LukasK13 #509 and @mgirlich #493).
+- The table editor has been enhanced: now the `editable` argument of `datatable()` can take four possible values, `cell` (or `TRUE` for backward compatibility), `row`, `column`, or `all`, which means you can edit a single cell a time, or a whole row or column, or all cells in the table. To trigger the editor, doubleclick on any cell. To submit the edit, hit `Ctrl + Enter` when multiple cells are being edited, or hit `Esc` to cancel the edit. See https://github.com/rstudio/DT/tree/main/inst/examples/DT-edit for comprehensive examples (thanks, @LukasK13 #509 and @mgirlich #493).
 
 - Editing can be disabled on specified columns now: pass a list of the form `list(target = TARGET, disable = list(columns = INDICES))` to the `editable` argument of `datatable()`, where `TARGET` can be `'cell'`, `'row'`, `'column'`, or `'all'`, and `INDICES` is an integer vector of column indices (thanks, @opremicSebastian #657, @l-ts #550).
 

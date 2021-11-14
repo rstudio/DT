@@ -88,10 +88,25 @@
 #'   column, or \code{"all"} to edit all cells on the current page of the table.
 #'   In all modes, start editing by doubleclicking on a cell. This argument can
 #'   also be a list of the form \code{list(target = TARGET, disable =
-#'   list(columns = INDICES))}, where \code{TARGET} can be \code{cell},
-#'   \code{row}, \code{column}, or \code{all}, and \code{INDICES} is an integer
-#'   vector of column indices. Use the list form if you want to disable editing
-#'   certain columns.
+#'   list(columns = INDICES))}, where \code{TARGET} can be \code{"cell"},
+#'   \code{"row"}, \code{"column"}, or \code{"all"}, and \code{INDICES} is an
+#'   integer vector of column indices. Use the list form if you want to disable
+#'   editing certain columns. You can also restrict the editing to accept only
+#'   numbers by setting this argument to a list of the form \code{list(target =
+#'   TARGET, numeric = INDICES)} where \code{INDICES} can be the vector of the
+#'   indices of the columns for which you want to restrict the editing to
+#'   numbers or \code{"all"} to restrict the editing to numbers for all columns.
+#'   If you don't set \code{numeric}, then the editing is restricted to numbers
+#'   for all numeric columns; set \code{numeric = "none"} to disable this
+#'   behavior. Finally, you can also edit the cells in text areas, which are
+#'   useful for large contents. For that, set the \code{editable} argument to a
+#'   list of the form \code{list(target = TARGET, area = INDICES)} where
+#'   \code{INDICES} can be the vector of the indices of the columns for which
+#'   you want the text areas, or \code{"all"} if you want the text areas for
+#'   all columns. Of course, you can request the numeric editing for some
+#'   columns and the text areas for some other columns by setting
+#'   \code{editable} to a list of the form \code{list(target = TARGET, numeric
+#'   = INDICES1, area = INDICES2)}.
 #' @details \code{selection}:
 #'   \enumerate{
 #'     \item The argument could be a scalar string, which means the selection
@@ -236,13 +251,14 @@ datatable = function(
   if (isTRUE(fillContainer)) class = paste(class, 'fill-container')
 
   if (is.character(filter)) filter = list(position = match.arg(filter))
-  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE), filter)
+  filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1), filter)
   # HTML code for column filters
   filterHTML = as.character(filterRow(data, !is.null(rn) && colnames[1] == ' ', filter))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
   params$filter = filter$position
+  params$vertical = filter$vertical
   if (filter$position != 'none') params$filterHTML = filterHTML
 
   if (missing(container)) {
@@ -269,8 +285,13 @@ datatable = function(
   params$caption = captionString(caption)
 
   if (isTRUE(editable)) editable = 'cell'
-  if (is.character(editable)) editable = list(target = editable, disable = list(columns = NULL))
-  if (is.list(editable)) params$editable = editable
+  if (is.character(editable))
+    editable = list(target = editable, disable = list(columns = NULL))
+  if (is.list(editable)) {
+    editable$numeric = makeEditableNumericField(editable$numeric, data, rn)
+    editable$area = makeEditableAreaField(editable$area, data, rn)
+    params$editable = editable
+  }
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
@@ -361,6 +382,34 @@ datatable = function(
 
       instance
     }
+  )
+}
+
+makeEditableNumericField = function(x, data, rn) {
+  as.list(
+    if (is.null(x))
+      which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
+    else if (identical(x, 'none'))
+      NULL
+    else if (identical(x, 'all'))
+      seq_along(data) - 1L
+    else if (is.null(rn))
+      x - 1
+    else
+      x
+  )
+}
+
+makeEditableAreaField = function(x, data, rn) {
+  as.list(
+    if (is.null(x))
+      NULL
+    else if (identical(x, 'all'))
+      seq_along(data) - 1L
+    else if (is.null(rn))
+      x - 1
+    else
+      x
   )
 }
 
@@ -519,7 +568,7 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
 #' @importFrom htmltools tagList
 filterRow = function(
   data, rownames = TRUE,
-  filter = list(position = 'none', clear = TRUE, plain = FALSE)
+  filter = list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
 ) {
   if (filter$position == 'none') return()
   tds = list()
@@ -557,10 +606,17 @@ filterRow = function(
         d1 = floor(d1 * 10^dec) / 10^dec
         d2 = ceiling(d2 * 10^dec) / 10^dec
       }
+      is_vert <- filter$vertical
+
       if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
-        style = 'display: none; position: absolute; width: 200px;',
+        style = paste0('display: none;position: absolute;width: 200px;opacity: ', filter$opacity),
         tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
-        tags$span(style = 'float: left;'), tags$span(style = 'float: right;')
+        if (is_vert) tagList(tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
+                             tags$span(style = 'display: none;', HTML('&nbsp;')),
+                             tags$span(style = 'position: absolute; top: 2px; left: 15px;')
+                             )
+        else tagList(tags$span(style = 'float: left;'),
+                     tags$span(style = 'float: right;'))
       ) else {
         t = 'disabled'
         NULL
@@ -744,7 +800,7 @@ DTDependencies = function(style) {
     if (style == 'bootstrap4') css = c(css, 'dataTables.bootstrap4.extra.css')
   }
   c(
-    list(htmlDependency(
+    list(jquerylib::jquery_core(), htmlDependency(
       depName(style, 'dt-core'),
       DataTablesVersion,
       src = depPath('datatables'),
