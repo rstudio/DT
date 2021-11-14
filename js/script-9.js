@@ -1,9 +1,8 @@
+// manage active state of menu based on current page
 $(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
+    // active menu
+    var href = window.location.pathname;
+    href = href.substr(href.lastIndexOf('/') + 1);
+    if (href === '') href = './';
+    $('a[href="' + href + '"]').parent().addClass('active');
 });

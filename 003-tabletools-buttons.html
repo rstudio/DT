@@ -13,12 +13,22 @@
 
 <title>Buttons</title>
 
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/header-attrs/header-attrs.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
@@ -28,36 +38,36 @@
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 <link href="libs/dt-ext-buttons/css/buttons.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-buttons/js/dataTables.buttons.min.js"></script>
-<script src="libs/dt-ext-buttons/js/buttons.flash.min.js"></script>
 <script src="libs/dt-ext-buttons/js/buttons.html5.min.js"></script>
 <script src="libs/dt-ext-buttons/js/buttons.colVis.min.js"></script>
 <script src="libs/dt-ext-buttons/js/buttons.print.min.js"></script>
 <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <script src="libs/jszip/jszip.min.js"></script>
-<script src="libs/pdfmake/pdfmake.min.js"></script>
+<script src="libs/pdfmake/pdfmake.js"></script>
 <script src="libs/pdfmake/vfs_fonts.js"></script>
 
-
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
+
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
-<script src="js/script-7.js"></script>
 <link rel="stylesheet" href="css/style-3.css" type="text/css" />
+<script src="js/script-6.js"></script>
 
 
-<link rel="stylesheet" href="css/style-4.css" type="text/css" />
+
 
 <link rel="stylesheet" href="include/site.css" type="text/css" />
 
 
 
-<link rel="stylesheet" href="css/style-5.css" type="text/css" />
+<link rel="stylesheet" href="css/style-4.css" type="text/css" />
 
 
 
 <!-- tabsets -->
 
-<link rel="stylesheet" href="css/style-6.css" type="text/css" />
+<link rel="stylesheet" href="css/style-5.css" type="text/css" />
 
 <!-- code folding -->
 
@@ -74,7 +84,7 @@
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -84,20 +94,21 @@
 
 
 <p>You can choose to use a subset of the buttons in the Buttons extension, or arrange some buttons in a collection. There are <a href="http://datatables.net/extensions/buttons/examples/">such examples</a> on the <strong>DataTables</strong> website. We rewrite two simple examples in R below:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># only show the Copy and Print buttons</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">datatable</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  iris2,</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
-<span id="cb1-8"><a href="#cb1-8"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  )</span>
-<span id="cb1-10"><a href="#cb1-10"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">=</span> <span class="fu">head</span>(iris, <span class="dv">20</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># only show the Copy and Print buttons</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  iris2,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Buttons"
     ],
@@ -134,24 +145,25 @@
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># put CSV, XLS, and PDF in a collection</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  iris2,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>    <span class="dt">buttons =</span> </span>
-<span id="cb2-7"><a href="#cb2-7"></a>      <span class="kw">list</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>, <span class="kw">list</span>(</span>
-<span id="cb2-8"><a href="#cb2-8"></a>        <span class="dt">extend =</span> <span class="st">&#39;collection&#39;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>        <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>),</span>
-<span id="cb2-10"><a href="#cb2-10"></a>        <span class="dt">text =</span> <span class="st">&#39;Download&#39;</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>      ))</span>
-<span id="cb2-12"><a href="#cb2-12"></a>    </span>
-<span id="cb2-13"><a href="#cb2-13"></a>  )</span>
-<span id="cb2-14"><a href="#cb2-14"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># put CSV, XLS, and PDF in a collection</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  iris2,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;print&#39;</span>, <span class="fu">list</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">extend =</span> <span class="st">&#39;collection&#39;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="st">&#39;Download&#39;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      ))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Buttons"
     ],
@@ -199,11 +211,11 @@
 
 </div>
 
-<script src="js/script-8.js"></script>
+<script src="js/script-7.js"></script>
 
 <!-- tabsets -->
 
-<script src="js/script-9.js"></script>
+<script src="js/script-8.js"></script>
 
 <!-- code folding -->
 

@@ -13,12 +13,22 @@
 
 <title>DataTables Extensions</title>
 
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/header-attrs/header-attrs.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
@@ -31,11 +41,10 @@
 <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <script src="libs/jszip/jszip.min.js"></script>
-<script src="libs/pdfmake/pdfmake.min.js"></script>
+<script src="libs/pdfmake/pdfmake.js"></script>
 <script src="libs/pdfmake/vfs_fonts.js"></script>
 <link href="libs/dt-ext-buttons/css/buttons.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-buttons/js/dataTables.buttons.min.js"></script>
-<script src="libs/dt-ext-buttons/js/buttons.flash.min.js"></script>
 <script src="libs/dt-ext-buttons/js/buttons.html5.min.js"></script>
 <script src="libs/dt-ext-buttons/js/buttons.colVis.min.js"></script>
 <script src="libs/dt-ext-buttons/js/buttons.print.min.js"></script>
@@ -59,26 +68,27 @@
 <script src="libs/dt-ext-searchpanes/js/dataTables.searchPanes.min.js"></script>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
+
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
-<script src="js/script-7.js"></script>
 <link rel="stylesheet" href="css/style-3.css" type="text/css" />
+<script src="js/script-6.js"></script>
 
 
-<link rel="stylesheet" href="css/style-4.css" type="text/css" />
+
 
 <link rel="stylesheet" href="include/site.css" type="text/css" />
 
 
 
-<link rel="stylesheet" href="css/style-5.css" type="text/css" />
+<link rel="stylesheet" href="css/style-4.css" type="text/css" />
 
 
 
 <!-- tabsets -->
 
-<link rel="stylesheet" href="css/style-6.css" type="text/css" />
+<link rel="stylesheet" href="css/style-5.css" type="text/css" />
 
 <!-- code folding -->
 
@@ -121,7 +131,8 @@
   </div><!--/.container -->
 </nav><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+
+<div id="header">
 
 
 
@@ -153,16 +164,17 @@ Known Issues of Extensions
 </ul>
 </div>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># this is the example data we use on this page</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">30</span>)</span></code></pre>
-<div id="autofill" class="section level1">
-<h1><span class="header-section-number">1</span> AutoFill</h1>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the example data we use on this page</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">=</span> <span class="fu">head</span>(iris, <span class="dv">30</span>)</span></code></pre>
+<div id="autofill" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> AutoFill</h1>
 <p>With <a href="https://datatables.net/extensions/autofill">the <code>AutoFill</code> extension</a>, you will see a blue square in the bottom-right corner of a cell when you mouse over the cell. You can drag it to automatically fill the column.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">autoFill =</span> <span class="ot">TRUE</span>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoFill =</span> <span class="cn">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "AutoFill"
     ],
@@ -195,15 +207,16 @@ Known Issues of Extensions
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># pass some initialization options to AutoFill: only enable auto filling on the</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># columns 2, 3, 4; show the blue square on click instead of hover</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">autoFill =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">focus =</span> <span class="st">&#39;click&#39;</span>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pass some initialization options to AutoFill: only enable auto filling on the</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># columns 2, 3, 4; show the blue square on click instead of hover</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">extensions =</span> <span class="st">&#39;AutoFill&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">autoFill =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">focus =</span> <span class="st">&#39;click&#39;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "AutoFill"
     ],
@@ -240,19 +253,20 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="buttons" class="section level1">
-<h1><span class="header-section-number">2</span> Buttons</h1>
+<div id="buttons" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Buttons</h1>
 <p><a href="https://datatables.net/extensions/buttons">The <code>Buttons</code> extension</a> adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note <code>B</code> in <code>dom</code> denotes the place where the buttons are to be inserted):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  iris, <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>, <span class="st">&#39;print&#39;</span>)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  )</span>
-<span id="cb4-6"><a href="#cb4-6"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  iris, <span class="at">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;copy&#39;</span>, <span class="st">&#39;csv&#39;</span>, <span class="st">&#39;excel&#39;</span>, <span class="st">&#39;pdf&#39;</span>, <span class="st">&#39;print&#39;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Buttons"
     ],
@@ -297,14 +311,15 @@ Known Issues of Extensions
 <li><a href="003-tabletools-buttons.html">Customize TableTools Buttons</a></li>
 </ul>
 </div>
-<div id="colreorder" class="section level1">
-<h1><span class="header-section-number">3</span> ColReorder</h1>
+<div id="colreorder" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> ColReorder</h1>
 <p>You can click and drag the table header to move a certain column to a different place using <a href="https://datatables.net/extensions/colreorder">the <code>ColReorder</code> extension</a>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">colReorder =</span> <span class="ot">TRUE</span>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">colReorder =</span> <span class="cn">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "ColReorder"
     ],
@@ -337,14 +352,15 @@ Known Issues of Extensions
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># disable realtime updating</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">colReorder =</span> <span class="kw">list</span>(<span class="dt">realtime =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb6-4"><a href="#cb6-4"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># disable realtime updating</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">extensions =</span> <span class="st">&#39;ColReorder&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colReorder =</span> <span class="fu">list</span>(<span class="at">realtime =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "ColReorder"
     ],
@@ -380,18 +396,19 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="colvis-retired" class="section level1">
-<h1><span class="header-section-number">4</span> ColVis (Retired)</h1>
+<div id="colvis-retired" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> ColVis (Retired)</h1>
 <p><a href="https://datatables.net/extensions/colvis">The <code>ColVis</code> extension</a> has been removed from <strong>DT</strong> after v0.1 because it was <a href="http://datatables.net/blog/2015-08-13">replaced by the Buttons extension</a> in the <strong>DataTables</strong> library. You can use the button <code>colvis</code> instead.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># using I() here to make sure it is converted to an array in JavaScript</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>, <span class="dt">buttons =</span> <span class="kw">I</span>(<span class="st">&#39;colvis&#39;</span>))</span>
-<span id="cb7-5"><a href="#cb7-5"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using I() here to make sure it is converted to an array in JavaScript</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  iris2, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>, <span class="at">buttons =</span> <span class="fu">I</span>(<span class="st">&#39;colvis&#39;</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Buttons"
     ],
@@ -422,18 +439,19 @@ Known Issues of Extensions
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># exclude the first two columns (i.e. they are always visible)</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb8-3"><a href="#cb8-3"></a>  iris2, <span class="dt">rownames =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb8-5"><a href="#cb8-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
-<span id="cb8-6"><a href="#cb8-6"></a>    <span class="dt">buttons =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">extend =</span> <span class="st">&#39;colvis&#39;</span>, <span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)))</span>
-<span id="cb8-7"><a href="#cb8-7"></a>  )</span>
-<span id="cb8-8"><a href="#cb8-8"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exclude the first two columns (i.e. they are always visible)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  iris2, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">extensions =</span> <span class="st">&#39;Buttons&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">extend =</span> <span class="st">&#39;colvis&#39;</span>, <span class="at">columns =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Buttons"
     ],
@@ -468,22 +486,23 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="fixedcolumns" class="section level1">
-<h1><span class="header-section-number">5</span> FixedColumns</h1>
+<div id="fixedcolumns" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> FixedColumns</h1>
 <p>When a table is too wide, you can fix certain columns (e.g. the left and/or the right column) using <a href="https://datatables.net/extensions/fixedcolumns">the <code>FixedColumns</code> extension</a> so that they will be visible when you scroll the table horizontally.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>m =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">round</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dv">5</span>), <span class="dv">5</span>))</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb9-3"><a href="#cb9-3"></a>  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb9-5"><a href="#cb9-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
-<span id="cb9-6"><a href="#cb9-6"></a>    <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb9-7"><a href="#cb9-7"></a>    <span class="dt">fixedColumns =</span> <span class="ot">TRUE</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>  )</span>
-<span id="cb9-9"><a href="#cb9-9"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">round</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="dv">5</span>), <span class="dv">5</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  m, <span class="at">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollX =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fixedColumns =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-8" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-8">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "FixedColumns"
     ],
@@ -533,19 +552,20 @@ Known Issues of Extensions
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># fix some left 2 columns and right 1 column</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb10-3"><a href="#cb10-3"></a>  m, <span class="dt">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb10-5"><a href="#cb10-5"></a>    <span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    <span class="dt">scrollX =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb10-7"><a href="#cb10-7"></a>    <span class="dt">fixedColumns =</span> <span class="kw">list</span>(<span class="dt">leftColumns =</span> <span class="dv">2</span>, <span class="dt">rightColumns =</span> <span class="dv">1</span>)</span>
-<span id="cb10-8"><a href="#cb10-8"></a>  )</span>
-<span id="cb10-9"><a href="#cb10-9"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fix some left 2 columns and right 1 column</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  m, <span class="at">extensions =</span> <span class="st">&#39;FixedColumns&#39;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;t&#39;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollX =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fixedColumns =</span> <span class="fu">list</span>(<span class="at">leftColumns =</span> <span class="dv">2</span>, <span class="at">rightColumns =</span> <span class="dv">1</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-9" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-9">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "FixedColumns"
     ],
@@ -599,23 +619,24 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="fixedheader" class="section level1">
-<h1><span class="header-section-number">6</span> FixedHeader</h1>
+<div id="fixedheader" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> FixedHeader</h1>
 <p>You may want the table header to be always visible when scrolling down the table, and you can use <a href="https://datatables.net/extensions/fixedheader">the <code>FixedHeader</code> extension</a> in this case.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb11-2"><a href="#cb11-2"></a>  iris, <span class="dt">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,</span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">50</span>, <span class="dt">fixedHeader =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb11-4"><a href="#cb11-4"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  iris, <span class="at">extensions =</span> <span class="st">&#39;FixedHeader&#39;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">50</span>, <span class="at">fixedHeader =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <p>Since we have a navigation bar on the top of this page, this extension does not work well on this particular page (the table header will be hidden behind the navigation bar). Please see <a href="001-fixedheader.html">this separate page</a> for a real example.</p>
 </div>
-<div id="keytable" class="section level1">
-<h1><span class="header-section-number">7</span> KeyTable</h1>
+<div id="keytable" class="section level1" number="7">
+<h1 number="7"><span class="header-section-number">7</span> KeyTable</h1>
 <p><a href="https://datatables.net/extensions/keytable">The <code>KeyTable</code> extension</a> provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">keys =</span> <span class="ot">TRUE</span>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">extensions =</span> <span class="st">&#39;KeyTable&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">keys =</span> <span class="cn">TRUE</span>))</span></code></pre>
 <div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-10">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "KeyTable"
     ],
@@ -649,14 +670,15 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="responsive" class="section level1">
-<h1><span class="header-section-number">8</span> Responsive</h1>
+<div id="responsive" class="section level1" number="8">
+<h1 number="8"><span class="header-section-number">8</span> Responsive</h1>
 <p><a href="https://datatables.net/extensions/responsive">The <code>Responsive</code> extension</a> makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">extensions =</span> <span class="st">&#39;Responsive&#39;</span>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">extensions =</span> <span class="st">&#39;Responsive&#39;</span>)</span></code></pre>
 <div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-11">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Responsive"
     ],
@@ -690,20 +712,21 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="rowgroup" class="section level1">
-<h1><span class="header-section-number">9</span> RowGroup</h1>
+<div id="rowgroup" class="section level1" number="9">
+<h1 number="9"><span class="header-section-number">9</span> RowGroup</h1>
 <p><a href="https://datatables.net/extensions/rowgroup/">The <code>RowGroup</code> extension</a> provides an easy way to use the row grouping feature. In the example below, <code>cyl</code> (<em>number of cylinders</em>) is used as the row group column and its value is displayed as the row group label.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>mtcars2 =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, ]</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">datatable</span>(</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  mtcars2[<span class="kw">order</span>(mtcars2<span class="op">$</span>cyl), ],</span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="dt">extensions =</span> <span class="st">&#39;RowGroup&#39;</span>,</span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowGroup =</span> <span class="kw">list</span>(<span class="dt">dataSrc =</span> <span class="dv">2</span>)),</span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mtcars2 <span class="ot">=</span> mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, ]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  mtcars2[<span class="fu">order</span>(mtcars2<span class="sc">$</span>cyl), ],</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">extensions =</span> <span class="st">&#39;RowGroup&#39;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">rowGroup =</span> <span class="fu">list</span>(<span class="at">dataSrc =</span> <span class="dv">2</span>)),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-12">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "RowGroup"
     ],
@@ -745,17 +768,18 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="rowreorder" class="section level1">
-<h1><span class="header-section-number">10</span> RowReorder</h1>
+<div id="rowreorder" class="section level1" number="10">
+<h1 number="10"><span class="header-section-number">10</span> RowReorder</h1>
 <p><a href="https://datatables.net/extensions/rowreorder">The <code>RowReorder</code> extension</a> allows you to drag and reorder a certain row in the table. Note the first column <code>ID</code> is not changed when you reorder the rows in the example below, which can be a little confusing:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  iris2, <span class="dt">colnames =</span> <span class="kw">c</span>(<span class="dt">ID =</span> <span class="dv">1</span>), <span class="dt">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,</span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rowReorder =</span> <span class="ot">TRUE</span>, <span class="dt">order =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))</span>
-<span id="cb15-4"><a href="#cb15-4"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  iris2, <span class="at">colnames =</span> <span class="fu">c</span>(<span class="at">ID =</span> <span class="dv">1</span>), <span class="at">extensions =</span> <span class="st">&#39;RowReorder&#39;</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">rowReorder =</span> <span class="cn">TRUE</span>, <span class="at">order =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span> , <span class="st">&#39;asc&#39;</span>)))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-13">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "RowReorder"
     ],
@@ -788,20 +812,21 @@ Known Issues of Extensions
 }</script>
 <p>In order to make <code>RowReorder</code> work, there must be at least one sorted column in the table, which can be initialized by <code>options = list(order = list(c(0 , 'asc')))</code>.</p>
 </div>
-<div id="scroller" class="section level1">
-<h1><span class="header-section-number">11</span> Scroller</h1>
+<div id="scroller" class="section level1" number="11">
+<h1 number="11"><span class="header-section-number">11</span> Scroller</h1>
 <p>When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. <a href="https://datatables.net/extensions/scroller">The <code>Scroller</code> extension</a> makes it possible to only render the visible portion of the table.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="ot">NULL</span>, letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</span>
-<span id="cb16-2"><a href="#cb16-2"></a>m =<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m)), <span class="kw">round</span>(m, <span class="dv">2</span>))</span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">datatable</span>(m, <span class="dt">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="dt">deferRender =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="dt">scrollY =</span> <span class="dv">200</span>,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>  <span class="dt">scroller =</span> <span class="ot">TRUE</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">1000</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">cbind</span>(<span class="at">id =</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(m)), <span class="fu">round</span>(m, <span class="dv">2</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m, <span class="at">extensions =</span> <span class="st">&#39;Scroller&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">deferRender =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">scrollY =</span> <span class="dv">200</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">scroller =</span> <span class="cn">TRUE</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
 <div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-14">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Scroller"
     ],
@@ -833,21 +858,22 @@ Known Issues of Extensions
 }</script>
 <p>You can also save the data as JSON in a file and load it via the <code>ajax</code> option. See a live example in Shiny <a href="https://yihui.shinyapps.io/DT-scroller/">here</a>.</p>
 </div>
-<div id="searchpanes" class="section level1">
-<h1><span class="header-section-number">12</span> SearchPanes</h1>
+<div id="searchpanes" class="section level1" number="12">
+<h1 number="12"><span class="header-section-number">12</span> SearchPanes</h1>
 <p><a href="https://datatables.net/extensions/searchpanes/">The <code>SearchPanes</code> extension</a> is a new extension that adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes. As documented in <a href="https://datatables.net/blog/2020-01-13">the realsing blog</a>, it doesn’t support the server-side processing mode. Since it depends on the <code>Select</code> extension, you are expected to always include the <code>Select</code> extension with <code>SearchPanes</code>. In addition, in order to display the search panes, you need to insert <code>P</code> to the <code>dom</code> option.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  iris,</span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;Pfrtip&#39;</span>, <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(</span>
-<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">searchPanes =</span> <span class="kw">list</span>(<span class="dt">show =</span> <span class="ot">FALSE</span>), <span class="dt">targets =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>  ))),</span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;SearchPanes&#39;</span>),</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  iris,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">dom =</span> <span class="st">&#39;Pfrtip&#39;</span>, <span class="at">columnDefs =</span> <span class="fu">list</span>(<span class="fu">list</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">searchPanes =</span> <span class="fu">list</span>(<span class="at">show =</span> <span class="cn">FALSE</span>), <span class="at">targets =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  ))),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">extensions =</span> <span class="fu">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;SearchPanes&#39;</span>),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-15">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Select",
       "SearchPanes"
@@ -888,23 +914,24 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="select" class="section level1">
-<h1><span class="header-section-number">13</span> Select</h1>
+<div id="select" class="section level1" number="13">
+<h1 number="13"><span class="header-section-number">13</span> Select</h1>
 <p><a href="https://datatables.net/extensions/select/">The <code>Select</code> extension</a> allows the user to perform item selections in DataTable. It supports three different selection styles including <code>os</code>(Operating system), <code>single</code>(Single item select) and <code>multiple</code>(Multi-item selection) and has built-in button types for <a href="https://datatables.net/extensions/buttons">the <code>Buttons</code> extension</a> allowing select all / none and other actions to be performed very easily. However, it only works well <strong>in the client-side processing mode</strong>, i.e., <code>DT::renderDT(..., server = FALSE)</code>. Note that you need to turn off <strong>DT</strong>’s own select functionality by setting <code>selection = 'none'</code> when you want to use the <code>Select</code> extension in shiny.</p>
 <p><strong>DT</strong> also has its own implementation of row/column/cell selections in Shiny (see the <code>selection</code> param in <code>?DT::datatable</code>), which is different from the <code>Select</code> extension. In particular, it only supports Shift/Ctrl + Click for selecting multiple rows at the time of writing (see <a href="https://github.com/rstudio/DT/issues/305">#305</a> for an example). On the other hand, <strong>DT</strong>’s implementation supports both client and server-side processing mode.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">datatable</span>(</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  iris, <span class="dt">extensions =</span> <span class="kw">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;Buttons&#39;</span>), <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb18-3"><a href="#cb18-3"></a>    <span class="dt">select =</span> <span class="kw">list</span>(<span class="dt">style =</span> <span class="st">&#39;os&#39;</span>, <span class="dt">items =</span> <span class="st">&#39;row&#39;</span>),</span>
-<span id="cb18-4"><a href="#cb18-4"></a>    <span class="dt">dom =</span> <span class="st">&#39;Blfrtip&#39;</span>,</span>
-<span id="cb18-5"><a href="#cb18-5"></a>    <span class="dt">rowId =</span> <span class="dv">0</span>,</span>
-<span id="cb18-6"><a href="#cb18-6"></a>    <span class="dt">buttons =</span> <span class="kw">c</span>(<span class="st">&#39;selectAll&#39;</span>, <span class="st">&#39;selectNone&#39;</span>, <span class="st">&#39;selectRows&#39;</span>, <span class="st">&#39;selectColumns&#39;</span>, <span class="st">&#39;selectCells&#39;</span>)</span>
-<span id="cb18-7"><a href="#cb18-7"></a>  ),</span>
-<span id="cb18-8"><a href="#cb18-8"></a>  <span class="dt">selection =</span> <span class="st">&#39;none&#39;</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  iris, <span class="at">extensions =</span> <span class="fu">c</span>(<span class="st">&#39;Select&#39;</span>, <span class="st">&#39;Buttons&#39;</span>), <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">select =</span> <span class="fu">list</span>(<span class="at">style =</span> <span class="st">&#39;os&#39;</span>, <span class="at">items =</span> <span class="st">&#39;row&#39;</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Blfrtip&#39;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowId =</span> <span class="dv">0</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;selectAll&#39;</span>, <span class="st">&#39;selectNone&#39;</span>, <span class="st">&#39;selectRows&#39;</span>, <span class="st">&#39;selectColumns&#39;</span>, <span class="st">&#39;selectCells&#39;</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">selection =</span> <span class="st">&#39;none&#39;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-16">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "extensions": [
       "Select",
       "Buttons"
@@ -951,22 +978,22 @@ Known Issues of Extensions
   "jsHooks": []
 }</script>
 </div>
-<div id="tabletools-retired" class="section level1">
-<h1><span class="header-section-number">14</span> TableTools (Retired)</h1>
+<div id="tabletools-retired" class="section level1" number="14">
+<h1 number="14"><span class="header-section-number">14</span> TableTools (Retired)</h1>
 <p><a href="https://datatables.net/extensions/tabletools">The <code>TableTools</code> extension</a> is retired and has been removed from <strong>DT</strong>. Please use the <code>Buttons</code> extension instead.</p>
 </div>
 
-<script src="js/script-10.js"></script>
+<script src="js/script-9.js"></script>
 
 
 
 </div>
 
-<script src="js/script-8.js"></script>
+<script src="js/script-7.js"></script>
 
 <!-- tabsets -->
 
-<script src="js/script-9.js"></script>
+<script src="js/script-8.js"></script>
 
 <!-- code folding -->
 

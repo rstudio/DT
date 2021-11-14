@@ -13,12 +13,22 @@
 
 <title>More Examples on Styling Cells, Rows, and Tables</title>
 
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/header-attrs/header-attrs.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
@@ -29,26 +39,27 @@
 <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
-
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
+
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
-<script src="js/script-7.js"></script>
 <link rel="stylesheet" href="css/style-3.css" type="text/css" />
+<script src="js/script-6.js"></script>
 
 
-<link rel="stylesheet" href="css/style-4.css" type="text/css" />
+
 
 <link rel="stylesheet" href="include/site.css" type="text/css" />
 
 
 
-<link rel="stylesheet" href="css/style-5.css" type="text/css" />
+<link rel="stylesheet" href="css/style-4.css" type="text/css" />
 
 
 
 <!-- tabsets -->
 
-<link rel="stylesheet" href="css/style-6.css" type="text/css" />
+<link rel="stylesheet" href="css/style-5.css" type="text/css" />
 
 <!-- code folding -->
 
@@ -65,7 +76,7 @@
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -74,21 +85,22 @@
 </div>
 
 
-<div id="style-one-column-based-on-another-column" class="section level1">
-<h1><span class="header-section-number">1</span> Style One Column Based on Another Column</h1>
+<div id="style-one-column-based-on-another-column" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Style One Column Based on Another Column</h1>
 <p>By default, <code>formatStyle()</code> uses the values of the column(s) specified by the <code>columns</code> argument to style column(s). You can also style a column conditional on the values of a different column using the <code>valueColumns</code> argument.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">options</span>(<span class="dt">DT.options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">5</span>))</span>
-<span id="cb1-3"><a href="#cb1-3"></a>df =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">50</span>), <span class="dv">3</span>), <span class="dv">10</span>), <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="ot">TRUE</span>)))</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># style V6 based on values of V6</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="st">&#39;V6&#39;</span>,</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
-<span id="cb1-8"><a href="#cb1-8"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">DT.options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">50</span>), <span class="dv">3</span>), <span class="dv">10</span>), <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="cn">TRUE</span>)))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># style V6 based on values of V6</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df) <span class="sc">%&gt;%</span> <span class="fu">formatStyle</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundColor =</span> <span class="fu">styleEqual</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
@@ -115,21 +127,22 @@
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : value});\n}"
+      "rowCallback": "function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : null});\n}"
     }
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># style V1 base on values of V6</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
-<span id="cb2-5"><a href="#cb2-5"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># style V1 base on values of V6</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df) <span class="sc">%&gt;%</span> <span class="fu">formatStyle</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundColor =</span> <span class="fu">styleEqual</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
@@ -156,23 +169,24 @@
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[6]; $(this.api().cell(row, 1).node()).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : value});\n}"
+      "rowCallback": "function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[6]; $(this.api().cell(row, 1).node()).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : null});\n}"
     }
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># hide V6</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">datatable</span>(df, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="dt">columnDefs =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">targets =</span> <span class="dv">6</span>, <span class="dt">visible =</span> <span class="ot">FALSE</span>))</span>
-<span id="cb3-4"><a href="#cb3-4"></a>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,</span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
-<span id="cb3-7"><a href="#cb3-7"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hide V6</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">columnDefs =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">targets =</span> <span class="dv">6</span>, <span class="at">visible =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">%&gt;%</span> <span class="fu">formatStyle</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;V1&#39;</span>, <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundColor =</span> <span class="fu">styleEqual</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
@@ -203,25 +217,26 @@
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[6]; $(this.api().cell(row, 1).node()).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : value});\n}"
+      "rowCallback": "function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[6]; $(this.api().cell(row, 1).node()).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : null});\n}"
     }
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
 </div>
-<div id="style-a-full-row" class="section level1">
-<h1><span class="header-section-number">2</span> Style A Full Row</h1>
+<div id="style-a-full-row" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Style A Full Row</h1>
 <p>You can also style the full row instead of a single cell by using the argument <code>target = 'row'</code> in <code>formatStyle()</code>, e.g.,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="st">&#39;V6&#39;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">target =</span> <span class="st">&#39;row&#39;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">backgroundColor =</span> <span class="kw">styleEqual</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
-<span id="cb4-5"><a href="#cb4-5"></a>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df) <span class="sc">%&gt;%</span> <span class="fu">formatStyle</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;V6&#39;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">&#39;row&#39;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundColor =</span> <span class="fu">styleEqual</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="st">&#39;gray&#39;</span>, <span class="st">&#39;yellow&#39;</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
@@ -248,25 +263,26 @@
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[6]; $(row).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : value});\n}"
+      "rowCallback": "function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[6]; $(row).css({'background-color':value == 0 ? \"gray\" : value == 1 ? \"yellow\" : null});\n}"
     }
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
 </div>
-<div id="style-a-full-table" class="section level1">
-<h1><span class="header-section-number">3</span> Style A Full Table</h1>
+<div id="style-a-full-table" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Style A Full Table</h1>
 <p>You can also style the full table as a type of heat map by using either <code>styleInterval</code> or <code>styleColorBar</code>, e.g.,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># create 19 breaks and 20 rgb color values ranging from white to red</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>brks &lt;-<span class="st"> </span><span class="kw">quantile</span>(df, <span class="dt">probs =</span> <span class="kw">seq</span>(.<span class="dv">05</span>, <span class="fl">.95</span>, <span class="fl">.05</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>clrs &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="dt">length.out =</span> <span class="kw">length</span>(brks) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dv">0</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span>{<span class="kw">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}</span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df), <span class="dt">backgroundColor =</span> <span class="kw">styleInterval</span>(brks, clrs))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create 19 breaks and 20 rgb color values ranging from white to red</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>brks <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df, <span class="at">probs =</span> <span class="fu">seq</span>(.<span class="dv">05</span>, .<span class="dv">95</span>, .<span class="dv">05</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>clrs <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">255</span>, <span class="dv">40</span>, <span class="at">length.out =</span> <span class="fu">length</span>(brks) <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">paste0</span>(<span class="st">&quot;rgb(255,&quot;</span>, ., <span class="st">&quot;,&quot;</span>, ., <span class="st">&quot;)&quot;</span>)}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df) <span class="sc">%&gt;%</span> <span class="fu">formatStyle</span>(<span class="fu">names</span>(df), <span class="at">backgroundColor =</span> <span class="fu">styleInterval</span>(brks, clrs))</span></code></pre>
 <div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
@@ -293,22 +309,23 @@
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\n}"
+      "rowCallback": "function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= -1.3207 ? \"rgb(255,255,255)\" : value <= -1.1021 ? \"rgb(255,244,244)\" : value <= -0.9206 ? \"rgb(255,232,232)\" : value <= -0.4028 ? \"rgb(255,221,221)\" : value <= -0.263 ? \"rgb(255,210,210)\" : value <= -0.1925 ? \"rgb(255,198,198)\" : value <= -0.0224 ? \"rgb(255,187,187)\" : value <= 0 ? \"rgb(255,176,176)\" : value <= 0.0667 ? \"rgb(255,164,164)\" : value <= 0.177 ? \"rgb(255,153,153)\" : value <= 0.4059 ? \"rgb(255,142,142)\" : value <= 0.5386 ? \"rgb(255,131,131)\" : value <= 0.8239 ? \"rgb(255,119,119)\" : value <= 1 ? \"rgb(255,108,108)\" : value <= 1 ? \"rgb(255,97,97)\" : value <= 1.1994 ? \"rgb(255,85,85)\" : value <= 1.3762 ? \"rgb(255,74,74)\" : value <= 1.7689 ? \"rgb(255,63,63)\" : value <= 2.0172 ? \"rgb(255,51,51)\" : \"rgb(255,40,40)\"});\n}"
     }
   },
   "evals": ["options.rowCallback"],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># using styleColorBar</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">datatable</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">formatStyle</span>(<span class="kw">names</span>(df),</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">background =</span> <span class="kw">styleColorBar</span>(<span class="kw">range</span>(df), <span class="st">&#39;lightblue&#39;</span>),</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,</span>
-<span id="cb6-5"><a href="#cb6-5"></a>  <span class="dt">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>  <span class="dt">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using styleColorBar</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df) <span class="sc">%&gt;%</span> <span class="fu">formatStyle</span>(<span class="fu">names</span>(df),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">background =</span> <span class="fu">styleColorBar</span>(<span class="fu">range</span>(df), <span class="st">&#39;lightblue&#39;</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundSize =</span> <span class="st">&#39;98% 88%&#39;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundRepeat =</span> <span class="st">&#39;no-repeat&#39;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">backgroundPosition =</span> <span class="st">&#39;center&#39;</span>)</span></code></pre>
 <div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       [0.181, 0.785, -1.353, 1.983, 1.238, 1.201, 0.896, 0.254, 0.55, 1.903],
@@ -335,7 +352,7 @@
       "autoWidth": false,
       "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100],
-      "rowCallback": "function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (3.114000 - value)/4.792000 * 100 + '%, lightblue ' + (3.114000 - value)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (3.114000 - value)/4.792000 * 100 + '%, lightblue ' + (3.114000 - value)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (3.114000 - value)/4.792000 * 100 + '%, lightblue ' + (3.114000 - value)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (3.114000 - value)/4.792000 * 100 + '%, lightblue ' + (3.114000 - value)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (3.114000 - value)/4.792000 * 100 + '%, lightblue ' + (3.114000 - value)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + (3.114000 - value)/4.792000 * 100 + '%, lightblue ' + (3.114000 - value)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\n}"
+      "rowCallback": "function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%, lightblue ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%, lightblue ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%, lightblue ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%, lightblue ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%, lightblue ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background':isNaN(parseFloat(value)) || value <= -1.678000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%, lightblue ' + Math.max(3.114000 - value, 0)/4.792000 * 100 + '%)','background-size':'98% 88%','background-repeat':'no-repeat','background-position':'center'});\n}"
     }
   },
   "evals": ["options.rowCallback"],
@@ -348,11 +365,11 @@
 
 </div>
 
-<script src="js/script-8.js"></script>
+<script src="js/script-7.js"></script>
 
 <!-- tabsets -->
 
-<script src="js/script-9.js"></script>
+<script src="js/script-8.js"></script>
 
 <!-- code folding -->
 
