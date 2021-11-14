@@ -13,12 +13,22 @@
 
 <title>Internationalization</title>
 
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/header-attrs/header-attrs.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
@@ -29,26 +39,27 @@
 <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
-
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
+
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
-<script src="js/script-7.js"></script>
 <link rel="stylesheet" href="css/style-3.css" type="text/css" />
+<script src="js/script-6.js"></script>
 
 
-<link rel="stylesheet" href="css/style-4.css" type="text/css" />
+
 
 <link rel="stylesheet" href="include/site.css" type="text/css" />
 
 
 
-<link rel="stylesheet" href="css/style-5.css" type="text/css" />
+<link rel="stylesheet" href="css/style-4.css" type="text/css" />
 
 
 
 <!-- tabsets -->
 
-<link rel="stylesheet" href="css/style-6.css" type="text/css" />
+<link rel="stylesheet" href="css/style-5.css" type="text/css" />
 
 <!-- code folding -->
 
@@ -65,7 +76,7 @@
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -75,19 +86,20 @@
 
 
 <p>You can use the <a href="https://datatables.net/reference/option/language"><code>language</code> option</a> to change the language of the user interface of <strong>DataTables</strong>. In the following example, we change <code>info</code> (the text at the bottom of the table) and the two pagination buttons:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(DT)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>iris2 =<span class="st"> </span><span class="kw">head</span>(iris, <span class="dv">20</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="dt">language =</span> <span class="kw">list</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">info =</span> <span class="st">&#39;Yeah, _TOTAL_ awesome records from _START_ to _END_&#39;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6"></a>    <span class="dt">paginate =</span> <span class="kw">list</span>(<span class="dt">previous =</span> <span class="st">&#39;Back&#39;</span>, <span class="st">`</span><span class="dt">next</span><span class="st">`</span> =<span class="st"> &#39;Forward&#39;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  ),</span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">pageLength =</span> <span class="dv">5</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">=</span> <span class="fu">head</span>(iris, <span class="dv">20</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">language =</span> <span class="fu">list</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">&#39;Yeah, _TOTAL_ awesome records from _START_ to _END_&#39;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginate =</span> <span class="fu">list</span>(<span class="at">previous =</span> <span class="st">&#39;Back&#39;</span>, <span class="st">`</span><span class="at">next</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&#39;Forward&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">5</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
       [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1],
@@ -126,14 +138,15 @@
   "jsHooks": []
 }</script>
 <p>You can replace the whole <code>language</code> list if you prove a URL that returns a JSON object for the <code>language</code> list. The examples below shows how we can translate the UI language to other languages:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">language =</span> <span class="kw">list</span>(<span class="dt">url =</span> <span class="st">&#39;//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json&#39;</span>),</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">pageLength =</span> <span class="dv">5</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">language =</span> <span class="fu">list</span>(<span class="at">url =</span> <span class="st">&#39;//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json&#39;</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">5</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
       [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1],
@@ -167,14 +180,15 @@
   "evals": [],
   "jsHooks": []
 }</script>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">datatable</span>(iris2, <span class="dt">options =</span> <span class="kw">list</span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">language =</span> <span class="kw">list</span>(<span class="dt">url =</span> <span class="st">&#39;//cdn.datatables.net/plug-ins/1.10.11/i18n/Chinese.json&#39;</span>),</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">pageLength =</span> <span class="dv">5</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">language =</span> <span class="fu">list</span>(<span class="at">url =</span> <span class="st">&#39;//cdn.datatables.net/plug-ins/1.10.11/i18n/Chinese.json&#39;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">5</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
       [5.1, 4.9, 4.7, 4.6, 5, 5.4, 4.6, 5, 4.4, 4.9, 5.4, 4.8, 4.8, 4.3, 5.8, 5.7, 5.4, 5.1, 5.7, 5.1],
@@ -215,11 +229,11 @@
 
 </div>
 
-<script src="js/script-8.js"></script>
+<script src="js/script-7.js"></script>
 
 <!-- tabsets -->
 
-<script src="js/script-9.js"></script>
+<script src="js/script-8.js"></script>
 
 <!-- code folding -->
 

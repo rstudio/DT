@@ -13,12 +13,22 @@
 
 <title>Radio Buttons in Tables</title>
 
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/header-attrs/header-attrs.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap/css/flatly.min.css" rel="stylesheet" />
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="libs/navigation/tabsets.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
@@ -29,26 +39,27 @@
 <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
-
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
+
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
-<script src="js/script-7.js"></script>
 <link rel="stylesheet" href="css/style-3.css" type="text/css" />
+<script src="js/script-6.js"></script>
 
 
-<link rel="stylesheet" href="css/style-4.css" type="text/css" />
+
 
 <link rel="stylesheet" href="include/site.css" type="text/css" />
 
 
 
-<link rel="stylesheet" href="css/style-5.css" type="text/css" />
+<link rel="stylesheet" href="css/style-4.css" type="text/css" />
 
 
 
 <!-- tabsets -->
 
-<link rel="stylesheet" href="css/style-6.css" type="text/css" />
+<link rel="stylesheet" href="css/style-5.css" type="text/css" />
 
 <!-- code folding -->
 
@@ -65,7 +76,7 @@
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -75,17 +86,17 @@
 
 
 <p>You can render arbitrary HTML content in the table when you choose not to escape the columns that contain HTML content (<code>escape = FALSE</code>). Here we show an example of embedding radio buttons in table cells. First, we prepare the raw HTML content (a radio button is <code>&lt;input type="radio" /&gt;</code> in HTML):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">12</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="dt">dimnames =</span> <span class="kw">list</span>(month.abb, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span>
-<span id="cb1-4"><a href="#cb1-4"></a>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(m))) {</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  m[i, ] =<span class="st"> </span><span class="kw">sprintf</span>(</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    <span class="st">&#39;&lt;input type=&quot;radio&quot; name=&quot;%s&quot; value=&quot;%s&quot;/&gt;&#39;</span>,</span>
-<span id="cb1-8"><a href="#cb1-8"></a>    month.abb[i], m[i, ]</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  )</span>
-<span id="cb1-10"><a href="#cb1-10"></a>}</span>
-<span id="cb1-11"><a href="#cb1-11"></a>m[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">matrix</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">12</span>, <span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(month.abb, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(m))) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  m[i, ] <span class="ot">=</span> <span class="fu">sprintf</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&lt;input type=&quot;radio&quot; name=&quot;%s&quot; value=&quot;%s&quot;/&gt;&#39;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    month.abb[i], m[i, ]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>m[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre>
 <pre><code>##     A                                                 
 ## Jan &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Jan\&quot; value=\&quot;1\&quot;/&gt;&quot;
 ## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;1\&quot;/&gt;&quot;
@@ -95,12 +106,13 @@
 ## Feb &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Feb\&quot; value=\&quot;2\&quot;/&gt;&quot;
 ## Mar &quot;&lt;input type=\&quot;radio\&quot; name=\&quot;Mar\&quot; value=\&quot;2\&quot;/&gt;&quot;</code></pre>
 <p>After we have got the character matrix of HTML code, we can pass it to <code>datatable()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(DT)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">datatable</span>(m, <span class="dt">escape =</span> <span class="ot">FALSE</span>, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">dom =</span> <span class="st">&#39;t&#39;</span>, <span class="dt">paging =</span> <span class="ot">FALSE</span>, <span class="dt">ordering =</span> <span class="ot">FALSE</span>))</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m, <span class="at">escape =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">dom =</span> <span class="st">&#39;t&#39;</span>, <span class="at">paging =</span> <span class="cn">FALSE</span>, <span class="at">ordering =</span> <span class="cn">FALSE</span>))</span></code></pre>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
+    "vertical": false,
     "data": [
       ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       ["<input type=\"radio\" name=\"Jan\" value=\"1\"/>", "<input type=\"radio\" name=\"Feb\" value=\"1\"/>", "<input type=\"radio\" name=\"Mar\" value=\"1\"/>", "<input type=\"radio\" name=\"Apr\" value=\"1\"/>", "<input type=\"radio\" name=\"May\" value=\"1\"/>", "<input type=\"radio\" name=\"Jun\" value=\"1\"/>", "<input type=\"radio\" name=\"Jul\" value=\"1\"/>", "<input type=\"radio\" name=\"Aug\" value=\"1\"/>", "<input type=\"radio\" name=\"Sep\" value=\"1\"/>", "<input type=\"radio\" name=\"Oct\" value=\"1\"/>", "<input type=\"radio\" name=\"Nov\" value=\"1\"/>", "<input type=\"radio\" name=\"Dec\" value=\"1\"/>"],
@@ -135,11 +147,11 @@
 
 </div>
 
-<script src="js/script-8.js"></script>
+<script src="js/script-7.js"></script>
 
 <!-- tabsets -->
 
-<script src="js/script-9.js"></script>
+<script src="js/script-8.js"></script>
 
 <!-- code folding -->
 
