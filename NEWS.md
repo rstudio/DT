@@ -15,6 +15,8 @@
 
 - Upgraded jQuery from v1.12.4 to v3.x imported from the **jquerylib** R package.
 
+- Upgraded the DataTables Library to v1.11.3 as the previous version contains a security vulnerability (thanks, @michaelquinn32 #940).
+
 # CHANGES IN DT VERSION 0.18
 
 ## NEW FEATURES
