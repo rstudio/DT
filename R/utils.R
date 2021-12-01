@@ -109,7 +109,7 @@ coerceValue = function(val, old) {
 #' @param data The original data object used in the DataTable.
 #' @param info The information about the edited cells. It should be obtained
 #'   from \code{input$tableId_cell_edit} from Shiny, and is a data frame
-#'   containing columns \code{row}, \code{column}, and \code{value}.
+#'   containing columns \code{row}, \code{col}, and \code{value}.
 #' @param rownames Whether row names are displayed in the table.
 #' @param proxy,resetPaging,... (Optional) If \code{proxy} is provided, it must
 #'   be either a character string of the output ID of the table or a proxy
