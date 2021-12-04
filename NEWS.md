@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.21
 
+## MAJOR CHANGES
+
+- Now users can provide column names of the data to `options$columnDefs$targets`. Previously, it only supports column indexes or "_all" (thanks, @shrektan #948).
 
 # CHANGES IN DT VERSION 0.20
 
