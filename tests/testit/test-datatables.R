@@ -192,3 +192,42 @@ assert('warn autoHideNavigation if no pageLength', {
     datatable(head(iris, 5), autoHideNavigation = TRUE, options = list(pageLength = 20))
   ))
 })
+
+assert("colDefsTgtHandle() works", {
+  cols = c("A", "B", "C")
+  (colDefsTgtHandle(NULL, cols, TRUE) %==% list())
+  (colDefsTgtHandle(NULL, cols, FALSE) %==% list())
+
+  defs = list(
+    list(1, targets = "_all"),
+    list(2, targets = 1L),
+    list(3, targets = "B"),
+    list(4, targets = c("A", "_all")),
+    list(5, targets = list(c("A", "C"), "_all")),
+    list(6, targets = list(1L, "_all")),
+    list(7, targets = list(1L, "C")),
+    list(8, targets = list(1L, "B", "_all"))
+  )
+  res1 = list(
+    list(1, targets = "_all"),
+    list(2, targets = 1L),
+    list(3, targets = 2L),
+    list(4, targets = list("_all", 1L)),
+    list(5, targets = list(c(1L, 3L), "_all")),
+    list(6, targets = list(1L, "_all")),
+    list(7, targets = list(1L, 3L)),
+    list(8, targets = list(1L, 2L, "_all"))
+  )
+  res2 = list(
+    list(1, targets = "_all"),
+    list(2, targets = 1L),
+    list(3, targets = 1L),
+    list(4, targets = list("_all", 0L)),
+    list(5, targets = list(c(0L, 2L), "_all")),
+    list(6, targets = list(1L, "_all")),
+    list(7, targets = list(1L, 2L)),
+    list(8, targets = list(1L, 1L, "_all"))
+  )
+  (colDefsTgtHandle(defs, cols, TRUE) %==% res1)
+  (colDefsTgtHandle(defs, cols, FALSE) %==% res2)
+})

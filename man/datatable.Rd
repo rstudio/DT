@@ -190,6 +190,23 @@ data frame) using the JavaScript library DataTables.
       server-side processing mode well. Please set this argument to
       \code{'none'} if you really want to use the Select extension.
   }
+  \code{options$columnDefs}:
+  \enumerate{
+    \item \code{columnDefs} is an option that provided by the DataTables library
+      itself, where the user can set various attributes for columns. It must be
+      provided as a list of list, where each sub-list must contain a vector named 'targets',
+      specifying the applied columns, i.e.,
+      \code{list(list(..., targets = '_all'), list(..., targets = c(1, 2)))}
+    \item \code{columnDefs$targets} is a vector and should be one of:
+      \itemize{
+        \item 0 or a positive integer: column index counting from the left
+        \item A negative integer: column index counting from the right
+        \item A string: the column name of the original data and not the ones that
+           could be changed via param \code{colnames}.
+        \item The string "_all": all columns (i.e. assign a default)
+      }
+    \item See \url{https://datatables.net/reference/option/columnDefs} for more.
+  }
 }
 \note{
 You are recommended to escape the table content for security reasons
