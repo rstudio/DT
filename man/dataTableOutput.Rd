@@ -48,15 +48,10 @@ browsers to slow down or crash. Note that if you want to use
 \code{renderDataTable} with \code{shiny::bindCache()}, this must be
 \code{FALSE}.}
 
-\item{env}{The parent environment for the reactive expression. By default,
-this is the calling environment, the same as when defining an ordinary
-non-reactive expression. If \code{expr} is a quosure and \code{quoted} is \code{TRUE},
-then \code{env} is ignored.}
+\item{env}{The environment in which to evaluate \code{expr}.}
 
-\item{quoted}{If it is \code{TRUE}, then the \code{\link[=quote]{quote()}}ed value of \code{expr}
-will be used when \code{expr} is evaluated. If \code{expr} is a quosure and you
-would like to use its expression as a value for \code{expr}, then you must set
-\code{quoted} to \code{TRUE}.}
+\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
+is useful if you want to save an expression in a variable.}
 
 \item{funcFilter}{(for expert use only) passed to the \code{filter} argument
 of \code{\link{dataTableAjax}()}}
