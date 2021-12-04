@@ -149,11 +149,11 @@
 #'       \code{list(list(..., targets = '_all'), list(..., targets = c(1, 2)))}
 #'     \item \code{columnDefs$targets} is a vector and should be one of:
 #'       \itemize{
-#'         \item 0 or a positive integer: column index counting from the left
-#'         \item A negative integer: column index counting from the right
-#'         \item A string: the column name of the original data and not the ones that
-#'            could be changed via param \code{colnames}.
-#'         \item The string "_all": all columns (i.e. assign a default)
+#'         \item 0 or a positive integer: column index counting from the left.
+#'         \item A negative integer: column index counting from the right.
+#'         \item A string: the column name. Note, it must be the names of the
+#'           original data, not the ones that (could) be changed via param \code{colnames}.
+#'         \item The string "_all": all columns (i.e. assign a default).
 #'       }
 #'     \item See \url{https://datatables.net/reference/option/columnDefs} for more.
 #'   }
