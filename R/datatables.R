@@ -262,19 +262,18 @@ datatable = function(
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
-  formated = applyFormatter(data, formatter)
-  data = formated$data
-  if (length(formated$format_cols)) {
-    format_col_idx = targetIdx(formated$format_cols, base::colnames(data))
-    raw_col_idx = targetIdx(formated$raw_cols, base::colnames(data))
+  data = applyFormatter(data, formatter)
+  fmt_idx = attr(data, "DT.format.idx", exact = TRUE)
+  attr(data, "DT.format.idx") = NULL
+  if (length(fmt_idx$raw)) {
     options = appendColumnDefs(options, list(
-      visible = FALSE, targets = format_col_idx
+      visible = FALSE, targets = fmt_idx$format
     ))
-    for (i in seq_along(formated$format_cols)) options = appendColumnDefs(options, list(
-      targets = raw_col_idx[i],
+    for (i in seq_along(fmt_idx$format)) options = appendColumnDefs(options, list(
+      targets = fmt_idx$raw[i],
       render = JS(sprintf(
         "function(data,type,row,meta) {return type!=='display'?data:row[%d];}",
-        format_col_idx[i]
+        fmt_idx$format[i]
       ))
     ))
   }
@@ -614,7 +613,7 @@ sameSign = function(x, zero = 0L) {
 }
 
 applyFormatter = function(data, formatter) {
-  if (!length(formatter)) return(list(data = data))
+  if (!length(formatter)) return(data)
 
   is_fun = vapply(formatter, is.function, TRUE)
   if (any(!is_fun)) stop(sprintf(
@@ -636,9 +635,11 @@ applyFormatter = function(data, formatter) {
     raw_value = data[[raw_col]]
     data[[format_col]] = as.character(format_fun(raw_value))
   }
-  raw_cols = raw_cols[col_exists]
-  format_cols = format_cols[col_exists]
-  list(data = data, raw_cols = raw_cols, format_cols = format_cols)
+  attr(data, "DT.format.idx") = list(
+    raw = targetIdx(raw_cols[col_exists], base::colnames(data)),
+    format = targetIdx(format_cols[col_exists], base::colnames(data))
+  )
+  data
 }
 
 #' Generate a table header or footer from column names
