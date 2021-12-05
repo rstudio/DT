@@ -241,6 +241,7 @@ datatable = function(
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
   }
+  escape = makeLogicalEscape(escape, base::colnames(data))
 
   # convert the string targets
   options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], base::colnames(data))
@@ -266,6 +267,8 @@ datatable = function(
   fmt_idx = attr(data, "DT.format.idx", exact = TRUE)
   attr(data, "DT.format.idx") = NULL
   if (length(fmt_idx$raw)) {
+    # escape now a logical vector and we can append FALSE value after it
+    escape = c(escape, rep(FALSE, length(unique(fmt_idx$format))))
     options = appendColumnDefs(options, list(
       visible = FALSE, targets = fmt_idx$format
     ))
@@ -602,6 +605,17 @@ escapeToConfig = function(escape, colnames) {
   if (!is.numeric(escape)) escape = convertIdx(escape, colnames)
   if (is.logical(escape)) escape = which(escape)
   sprintf('"%s"', paste(escape, collapse = ','))
+}
+
+# `escape` can take many forms, making it difficult to process later, thus
+# we standardize it into a logical vector
+makeLogicalEscape = function(escape, colnames) {
+  out = rep(FALSE, length(colnames))
+  if (isTRUE(escape)) out[] = TRUE
+  if (isFALSE(escape)) { } # do nothing
+  if (!is.numeric(escape)) out[convertIdx(escape, colnames)] = TRUE
+  if (is.logical(escape)) out[which(escape)] = TRUE
+  out
 }
 
 sameSign = function(x, zero = 0L) {
