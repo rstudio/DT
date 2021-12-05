@@ -195,8 +195,8 @@ assert('warn autoHideNavigation if no pageLength', {
 
 assert("colDefsTgtHandle() works", {
   cols = c("A", "B", "C")
-  (colDefsTgtHandle(NULL, cols, TRUE) %==% list())
-  (colDefsTgtHandle(NULL, cols, FALSE) %==% list())
+  (colDefsTgtHandle(NULL, cols) %==% list())
+  (colDefsTgtHandle(NULL, cols) %==% list())
 
   defs = list(
     list(1, targets = "_all"),
@@ -208,17 +208,7 @@ assert("colDefsTgtHandle() works", {
     list(7, targets = list(1L, "C")),
     list(8, targets = list(1L, "B", "_all"))
   )
-  res1 = list(
-    list(1, targets = "_all"),
-    list(2, targets = 1L),
-    list(3, targets = 2L),
-    list(4, targets = list("_all", 1L)),
-    list(5, targets = list(c(1L, 3L), "_all")),
-    list(6, targets = list(1L, "_all")),
-    list(7, targets = list(1L, 3L)),
-    list(8, targets = list(1L, 2L, "_all"))
-  )
-  res2 = list(
+  res = list(
     list(1, targets = "_all"),
     list(2, targets = 1L),
     list(3, targets = 1L),
@@ -228,6 +218,5 @@ assert("colDefsTgtHandle() works", {
     list(7, targets = list(1L, 2L)),
     list(8, targets = list(1L, 1L, "_all"))
   )
-  (colDefsTgtHandle(defs, cols, TRUE) %==% res1)
-  (colDefsTgtHandle(defs, cols, FALSE) %==% res2)
+  (colDefsTgtHandle(defs, cols) %==% res)
 })
