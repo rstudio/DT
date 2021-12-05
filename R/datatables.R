@@ -602,19 +602,18 @@ applyFormatter = function(data, formatter) {
     "The formatter values at indexes %s are not functions",
     toString(which(!is_fun))
   ), call. = FALSE)
-  format_cols = names(formatter)
-  raw_cols = sprintf("_RAW_%s_", format_cols)
+  raw_cols = names(formatter)
+  format_cols = sprintf("_FORMAT_%s_", format_cols)
   col_exists = rep(TRUE, length(formatter))
   for (i in seq_along(formatter)) {
-    format_col = format_cols[i]
-    if (!format_col %in% colnames(data)) {
+    raw_col = raw_cols[i]
+    if (!raw_col %in% colnames(data)) {
       col_exists[i] = FALSE
       next
     }
-    raw_col = raw_cols[i]
+    format_col = format_cols[i]
     format_fun = formatter[[i]]
-    raw_value = data[[format_col]]
-    data[[raw_col]] = raw_value
+    raw_value = data[[raw_col]]
     data[[format_col]] = as.character(format_fun(raw_value))
   }
   raw_cols = raw_cols[col_exists]
