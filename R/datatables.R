@@ -263,22 +263,12 @@ datatable = function(
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
-  data = applyFormatter(data, formatter)
-  fmt_idx = attr(data, "DT.format.idx", exact = TRUE)
-  attr(data, "DT.format.idx") = NULL
-  if (length(fmt_idx$raw)) {
+  data = applyFormatter(data, formatter, options)
+  options = attr(data, "DT.format.options", exact = TRUE)
+  attr(data, "DT.format.options") = NULL
+  if (ncol(data) - length(escape)>0) {
     # escape now a logical vector and we can append FALSE value after it
-    escape = c(escape, rep(FALSE, length(unique(fmt_idx$format))))
-    options = appendColumnDefs(options, list(
-      visible = FALSE, targets = fmt_idx$format
-    ))
-    for (i in seq_along(fmt_idx$format)) options = appendColumnDefs(options, list(
-      targets = fmt_idx$raw[i],
-      render = JS(sprintf(
-        "function(data,type,row,meta) {return type!=='display'?data:row[%d];}",
-        fmt_idx$format[i]
-      ))
-    ))
+    escape = c(escape, rep(FALSE, ncol(data) - length(escape)))
   }
 
   cn = base::colnames(data)
@@ -626,33 +616,42 @@ sameSign = function(x, zero = 0L) {
   length(unique(as.vector(sign))) == 1L
 }
 
-applyFormatter = function(data, formatter) {
-  if (!length(formatter)) return(data)
-
+applyFormatter = function(data, formatter, options) {
   is_fun = vapply(formatter, is.function, TRUE)
   if (any(!is_fun)) stop(sprintf(
     "The formatter values at indexes %s are not functions",
     toString(which(!is_fun))
   ), call. = FALSE)
 
+  opt_attr = "DT.format.options"
+  attr(data, opt_attr) = options
+  # only keep formatter with valid names
+  formatter = formatter[names(formatter) %in% colnames(data)]
+  if (!length(formatter)) return(data)
+
   raw_cols = names(formatter)
-  format_cols = sprintf("_FORMAT_%s_", raw_cols)
-  col_exists = rep(TRUE, length(formatter))
+  format_cols = sprintf("_FORMAT_%s_", htmlEscape(raw_cols))
   for (i in seq_along(formatter)) {
     raw_col = raw_cols[i]
-    if (!raw_col %in% colnames(data)) {
-      col_exists[i] = FALSE
-      next
-    }
     format_col = format_cols[i]
     format_fun = formatter[[i]]
-    raw_value = data[[raw_col]]
-    data[[format_col]] = as.character(format_fun(raw_value))
+    # so that the function can be applied recursively
+    value = if (is.null(data[[format_col]])) data[[raw_col]] else data[[format_col]]
+    data[[format_col]] = as.character(format_fun(value))
   }
-  attr(data, "DT.format.idx") = list(
-    raw = targetIdx(raw_cols[col_exists], base::colnames(data)),
-    format = targetIdx(format_cols[col_exists], base::colnames(data))
-  )
+  raw_idx = targetIdx(raw_cols, base::colnames(data))
+  fmt_idx = targetIdx(format_cols, base::colnames(data))
+  options = appendColumnDefs(options, list(
+    visible = FALSE, targets = fmt_idx
+  ))
+  for (i in seq_along(fmt_idx)) options = appendColumnDefs(options, list(
+    targets = raw_idx[i],
+    render = JS(sprintf(
+      "function(data,type,row,meta) {return type!=='display'?data:row[%d];}",
+      fmt_idx[i]
+    ))
+  ))
+  attr(data, opt_attr) = options
   data
 }
 
