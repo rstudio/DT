@@ -167,7 +167,7 @@
 #'       and it will be applied on the column of data with the same name. Unnamed or non-exists
 #'       values will be omited.
 #'     \item The value applied the function will be store into the column, without \bold{escaping}.
-#'       Thus, if it's intent to be escaped please escape the value via `htmltools::HTML()` in
+#'       Thus, if it's intent to be escaped please escape the value via `htmltools::htmlEscape()` in
 #'       the function body.
 #'     \item The formatted value of the column will be renamed to "_FORMAT_{COLUMNNAME}_" internally.
 #'       Thus, DataTables can read the formatted values when rendering. This will be set
