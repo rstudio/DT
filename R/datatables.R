@@ -164,14 +164,14 @@
 #'   \enumerate{
 #'     \item The formatting function must take a vector as input and return
 #'       a character vector (or can be converted into charactor vector via \code{as.character()})
-#'       and it will be applied on the column of data with the same name.
+#'       and it will be applied on the column of data with the same name. Unnamed or non-exists
+#'       values will be omited.
 #'     \item The value applied the function will be store into the column, without \bold{escaping}.
 #'       Thus, if it's intent to be escaped please escape the value via `htmltools::HTML()` in
 #'       the function body.
-#'     \item The raw value of the column will be renamed to "_RAW_{COLUMNNAME}_" internally.
-#'       This is used for data sorting and will be set to invisible automatically. Thus, we can
-#'       preserve the same order when sorting the columns, as if they're still in the raw value.
-#'     \item The default text-align of column will be decided by the raw value.
+#'     \item The formatted value of the column will be renamed to "_FORMAT_{COLUMNNAME}_" internally.
+#'       Thus, DataTables can read the formatted values when rendering. This will be set
+#'       to invisible automatically so that the users won't see them.
 #'   }
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
