@@ -498,6 +498,10 @@ classNameDefinedColumns = function(options, ncol) {
   unique(cols)
 }
 
+targetIdx = function(targets, names, showRowName) {
+  unname(convertIdx(targets, names)) - !showRowName
+}
+
 colDefsTgtHandle = function(columnDefs, names, showRowName) {
   convert = function(targets, names, showRowName) {
     if (is.list(targets)) {
@@ -510,7 +514,7 @@ colDefsTgtHandle = function(columnDefs, names, showRowName) {
         targets = list(targets[is_all], targets[!is_all])
         out = lapply(targets, convert, names = names, showRowName = showRowName)
       } else {
-        out = unname(convertIdx(targets, names)) - !showRowName
+        out = targetIdx(targets, names, showRowName)
       }
       out
     } else {
@@ -522,7 +526,6 @@ colDefsTgtHandle = function(columnDefs, names, showRowName) {
     x
   })
 }
-
 
 # convert character indices to numeric
 convertIdx = function(i, names, n = length(names), invert = FALSE) {
