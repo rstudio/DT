@@ -241,11 +241,9 @@ datatable = function(
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
   }
-  cn = base::colnames(data)
-  # ===== data, rn, cn has been prepared ======== #
 
   # convert the string targets
-  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], cn)
+  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], base::colnames(data))
 
   # align numeric columns to the right
   if (length(numc)) {
@@ -264,20 +262,24 @@ datatable = function(
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
-  data = applyFormatter(data, formatter)
-  format_cols = attr(data, "DT.format.cols", exact = TRUE)
-  raw_cols = attr(data, "DT.raw.cols", exact = TRUE)
-  if (length(format_cols)) options = appendColumnDefs(options, list(
-    visible = FALSE, targets = targetIdx(format_cols, base::colnames(data), showRowName = !is.null(rn))
-  ))
-  options$columnDefs = append(
-    options$columnDefs, colFormatter(
-      raw_cols, base::colnames(data), rownames = !is.null(rn), template = function(format_col_idx) {
-        sprintf("row[%d];", format_col_idx)
-      }, targetIdx(format_cols, base::colnames(data), showRowName = !is.null(rn))
-    ), after = 0L
-  )
+  formated = applyFormatter(data, formatter)
+  data = formated$data
+  if (length(formated$format_cols)) {
+    format_col_idx = targetIdx(formated$format_cols, base::colnames(data))
+    raw_col_idx = targetIdx(formated$raw_cols, base::colnames(data))
+    options = appendColumnDefs(options, list(
+      visible = FALSE, targets = format_col_idx
+    ))
+    for (i in seq_along(formated$format_cols)) options = appendColumnDefs(options, list(
+      targets = raw_col_idx[i],
+      render = JS(sprintf(
+        "function(data,type,row,meta) {return type!=='display'?data:row[%d];}",
+        format_col_idx[i]
+      ))
+    ))
+  }
 
+  cn = base::colnames(data)
   if (missing(colnames)) {
     colnames = cn
   } else if (!is.null(names(colnames))) {
@@ -612,12 +614,14 @@ sameSign = function(x, zero = 0L) {
 }
 
 applyFormatter = function(data, formatter) {
-  if (!length(formatter)) return(data)
+  if (!length(formatter)) return(list(data = data))
+
   is_fun = vapply(formatter, is.function, TRUE)
   if (any(!is_fun)) stop(sprintf(
     "The formatter values at indexes %s are not functions",
     toString(which(!is_fun))
   ), call. = FALSE)
+
   raw_cols = names(formatter)
   format_cols = sprintf("_FORMAT_%s_", raw_cols)
   col_exists = rep(TRUE, length(formatter))
@@ -634,9 +638,7 @@ applyFormatter = function(data, formatter) {
   }
   raw_cols = raw_cols[col_exists]
   format_cols = format_cols[col_exists]
-  attr(data, "DT.raw.cols") = raw_cols
-  attr(data, "DT.format.cols") = format_cols
-  data
+  list(data = data, raw_cols = raw_cols, format_cols = format_cols)
 }
 
 #' Generate a table header or footer from column names
