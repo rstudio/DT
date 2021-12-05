@@ -637,10 +637,13 @@ applyFormatter = function(data, formatter, options) {
     format_fun = formatter[[i]]
     # so that the function can be applied recursively
     value = if (is.null(data[[format_col]])) data[[raw_col]] else data[[format_col]]
-    data[[format_col]] = as.character(format_fun(value))
+    data[[format_col]] = format_fun(value)
   }
-  raw_idx = targetIdx(raw_cols, base::colnames(data))
-  fmt_idx = targetIdx(format_cols, base::colnames(data))
+
+  # There probably be duplicated cols, but we only apply them for columnDefs once
+  unique_cols = unique(cbind(raw_cols, format_cols))
+  raw_idx = targetIdx(unique_cols[, 1], base::colnames(data))
+  fmt_idx = targetIdx(unique_cols[, 2], base::colnames(data))
   options = appendColumnDefs(options, list(
     visible = FALSE, targets = fmt_idx
   ))
