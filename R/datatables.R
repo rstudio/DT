@@ -644,6 +644,8 @@ applyFormatter = function(data, formatter, options) {
   unique_cols = unique(cbind(raw_cols, format_cols))
   raw_idx = targetIdx(unique_cols[, 1], base::colnames(data))
   fmt_idx = targetIdx(unique_cols[, 2], base::colnames(data))
+  # must convert into character explicilty so that functions like formattable::percent can work
+  data[, fmt_idx] = lapply(data[, fmt_idx, drop = FALSE], as.character)
   options = appendColumnDefs(options, list(
     visible = FALSE, targets = fmt_idx
   ))
