@@ -107,6 +107,10 @@
 #'   columns and the text areas for some other columns by setting
 #'   \code{editable} to a list of the form \code{list(target = TARGET, numeric
 #'   = INDICES1, area = INDICES2)}.
+#' @param formatter should be a named list of formatting functions. The formatting
+#'   function will be applied on the column of data with the same name. The raw value
+#'   of the column will be renamed to "_ORDERDATA_{COLUMNNAME}_" internally and will
+#'   be used for data sorting.
 #' @details \code{selection}:
 #'   \enumerate{
 #'     \item The argument could be a scalar string, which means the selection
@@ -172,7 +176,7 @@ datatable = function(
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
-  editable = FALSE
+  editable = FALSE, formatter = NULL
 ) {
 
   # yes, we all hate it
