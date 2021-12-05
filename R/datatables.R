@@ -210,9 +210,6 @@ datatable = function(
     stop("'data' must be 2-dimensional (e.g. data frame or matrix)")
   }
 
-  # convert the targets
-  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], base::colnames(data), !is.null(rn))
-
   if (is.data.frame(data)) {
     data = as.data.frame(data)
     numc = unname(which(vapply(data, is.numeric, logical(1))))
@@ -228,6 +225,11 @@ datatable = function(
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
   }
+  cn = base::colnames(data)
+  # ===== data, rn, cn has been prepared ======== #
+
+  # convert the string targets
+  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], cn)
 
   # align numeric columns to the right
   if (length(numc)) {
@@ -246,7 +248,6 @@ datatable = function(
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
-  cn = base::colnames(data)
   if (missing(colnames)) {
     colnames = cn
   } else if (!is.null(names(colnames))) {
@@ -498,23 +499,24 @@ classNameDefinedColumns = function(options, ncol) {
   unique(cols)
 }
 
-targetIdx = function(targets, names, showRowName) {
-  unname(convertIdx(targets, names)) - !showRowName
+targetIdx = function(targets, names) {
+  # return the js side idx which starts from zero
+  unname(convertIdx(targets, names)) - 1L
 }
 
-colDefsTgtHandle = function(columnDefs, names, showRowName) {
-  convert = function(targets, names, showRowName) {
+colDefsTgtHandle = function(columnDefs, names) {
+  convert = function(targets, names) {
     if (is.list(targets)) {
-      lapply(targets, convert, names = names, showRowName = showRowName)
+      lapply(targets, convert, names = names)
     } else if (is.character(targets)) {
       is_all = targets == "_all"
       if (all(is_all)) {
         out = "_all"
       } else if (any(is_all)) {
         targets = list(targets[is_all], targets[!is_all])
-        out = lapply(targets, convert, names = names, showRowName = showRowName)
+        out = lapply(targets, convert, names = names)
       } else {
-        out = targetIdx(targets, names, showRowName)
+        out = targetIdx(targets, names)
       }
       out
     } else {
@@ -522,7 +524,7 @@ colDefsTgtHandle = function(columnDefs, names, showRowName) {
     }
   }
   lapply(columnDefs, function(x) {
-    x[["targets"]] = convert(x[["targets"]], names, showRowName)
+    x[["targets"]] = convert(x[["targets"]], names)
     x
   })
 }
