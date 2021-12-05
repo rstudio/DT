@@ -595,6 +595,35 @@ sameSign = function(x, zero = 0L) {
   length(unique(as.vector(sign))) == 1L
 }
 
+applyFormatter = function(data, formatter) {
+  if (!length(formatter)) return(data)
+  is_fun = vapply(formatter, is.function, TRUE)
+  if (any(!is_fun)) stop(sprintf(
+    "The formatter values at indexes %s are not functions",
+    toString(which(!is_fun))
+  ), call. = FALSE)
+  format_cols = names(formatter)
+  raw_cols = sprintf("_RAW_%s_", format_cols)
+  col_exists = rep(TRUE, length(formatter))
+  for (i in seq_along(formatter)) {
+    format_col = format_cols[i]
+    if (!format_col %in% colnames(data)) {
+      col_exists[i] = FALSE
+      next
+    }
+    raw_col = raw_cols[i]
+    format_fun = formatter[[i]]
+    raw_value = data[[format_col]]
+    data[[raw_col]] = raw_value
+    data[[format_col]] = as.character(format_fun(raw_value))
+  }
+  raw_cols = raw_cols[col_exists]
+  format_cols = format_cols[col_exists]
+  attr(data, "DT.raw.cols") = raw_cols
+  attr(data, "DT.format.cols") = format_cols
+  data
+}
+
 #' Generate a table header or footer from column names
 #'
 #' Convenience functions to generate a table header (\samp{<thead></thead>}) or
