@@ -262,6 +262,20 @@ datatable = function(
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
+  data = applyFormatter(data, formatter)
+  format_cols = attr(data, "DT.format.cols", exact = TRUE)
+  raw_cols = attr(data, "DT.raw.cols", exact = TRUE)
+  if (length(format_cols)) options = appendColumnDefs(options, list(
+    visible = FALSE, targets = targetIdx(format_cols, base::colnames(data), showRowName = !is.null(rn))
+  ))
+  options$columnDefs = append(
+    options$columnDefs, colFormatter(
+      raw_cols, base::colnames(data), rownames = !is.null(rn), template = function(format_col_idx) {
+        sprintf("row[%d];", format_col_idx)
+      }, targetIdx(format_cols, base::colnames(data), showRowName = !is.null(rn))
+    ), after = 0L
+  )
+
   cn = base::colnames(data)
   if (missing(colnames)) {
     colnames = cn
@@ -603,7 +617,7 @@ applyFormatter = function(data, formatter) {
     toString(which(!is_fun))
   ), call. = FALSE)
   raw_cols = names(formatter)
-  format_cols = sprintf("_FORMAT_%s_", format_cols)
+  format_cols = sprintf("_FORMAT_%s_", raw_cols)
   col_exists = rep(TRUE, length(formatter))
   for (i in seq_along(formatter)) {
     raw_col = raw_cols[i]
