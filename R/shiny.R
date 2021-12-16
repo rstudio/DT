@@ -162,7 +162,7 @@ renderDataTable = function(
       uiFunc = dataTableOutput,
       renderFunc = function(shinysession, name, ...) {
         domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
-
+        removeTimestampFromSnapshot(name)
         promises::with_promise_domain(domain, renderFunc())
       },
       cacheHint = cacheHint
@@ -172,7 +172,7 @@ renderDataTable = function(
       uiFunc = dataTableOutput,
       renderFunc = function(shinysession, name, ...) {
         domain = tempVarsPromiseDomain(outputInfoEnv, outputName = name, session = shinysession)
-
+        removeTimestampFromSnapshot(name)
         promises::with_promise_domain(domain, renderFunc())
       }
     )
@@ -207,6 +207,13 @@ setAll = function(lst, env) {
     assign(name, val, env)
   })
   invisible()
+}
+
+removeTimestampFromSnapshot = function(name) {
+  shiny::snapshotPreprocessInput(paste0(name, "_state"), function(value) {
+    value$time <- NULL
+    value
+  })
 }
 
 # This promise domain is needed to set/unset temporary variables in
