@@ -39,6 +39,8 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #' @param mark the marker after every \code{interval} decimals in the numbers
 #' @param dec.mark a character to indicate the decimal point
 #' @param before whether to place the currency symbol before or after the values
+#' @param zero.print a string to specify how zeros should be formatted.
+#'   Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.
 #' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
 #' @note The length of arguments other than \code{table} should be 1 or the same as
@@ -68,11 +70,11 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #'   )
 formatCurrency = function(
   table, columns, currency = '$', interval = 3, mark = ',', digits = 2,
-  dec.mark = getOption('OutDec'), before = TRUE
+  dec.mark = getOption('OutDec'), before = TRUE, zero.print = NULL
 ) {
   currency = gsub("'", "\\\\'", currency)
   mark = gsub("'", "\\\\'", mark)
-  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark, before)
+  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark, before, zero.print)
 }
 
 #' @export
@@ -87,25 +89,25 @@ formatString = function(table, columns, prefix = '', suffix = '') {
 #' @rdname formatCurrency
 #' @param digits the number of decimal places to round to
 formatPercentage = function(
-  table, columns, digits = 0, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+  table, columns, digits = 0, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL
 ) {
-  formatColumns(table, columns, tplPercentage, digits, interval, mark, dec.mark)
+  formatColumns(table, columns, tplPercentage, digits, interval, mark, dec.mark, zero.print)
 }
 
 #' @export
 #' @rdname formatCurrency
 formatRound = function(
-  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL
 ) {
-  formatColumns(table, columns, tplRound, digits, interval, mark, dec.mark)
+  formatColumns(table, columns, tplRound, digits, interval, mark, dec.mark, zero.print)
 }
 
 #' @export
 #' @rdname formatCurrency
 formatSignif = function(
-  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec')
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL
 ) {
-  formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark)
+  formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark, zero.print)
 }
 
 #' @export
@@ -212,11 +214,11 @@ appendFormatter = function(js, name, names, rownames = TRUE, template, ...) {
   ))
 }
 
-tplCurrency = function(currency, interval, mark, digits, dec.mark, before, ...) {
+tplCurrency = function(currency, interval, mark, digits, dec.mark, before, zero.print, ...) {
   sprintf(
-    "DTWidget.formatCurrency(data, %s, %d, %d, %s, %s, %s);",
+    "DTWidget.formatCurrency(data, %s, %d, %d, %s, %s, %s, %s);",
     jsValues(currency), digits, interval, jsValues(mark), jsValues(dec.mark),
-    jsValues(before)
+    jsValues(before), jsValuesHandleNull(zero.print)
   )
 }
 
@@ -227,24 +229,24 @@ tplString = function(prefix, suffix, ...) {
   )
 }
 
-tplPercentage = function(digits, interval, mark, dec.mark, ...) {
+tplPercentage = function(digits, interval, mark, dec.mark, zero.print, ...) {
   sprintf(
-    "DTWidget.formatPercentage(data, %d, %d, %s, %s);",
-    digits, interval, jsValues(mark), jsValues(dec.mark)
+    "DTWidget.formatPercentage(data, %d, %d, %s, %s, %s);",
+    digits, interval, jsValues(mark), jsValues(dec.mark), jsValuesHandleNull(zero.print)
   )
 }
 
-tplRound = function(digits, interval, mark, dec.mark, ...) {
+tplRound = function(digits, interval, mark, dec.mark, zero.print, ...) {
   sprintf(
-    "DTWidget.formatRound(data, %d, %d, %s, %s);",
-    digits, interval, jsValues(mark), jsValues(dec.mark)
+    "DTWidget.formatRound(data, %d, %d, %s, %s, %s);",
+    digits, interval, jsValues(mark), jsValues(dec.mark), jsValuesHandleNull(zero.print)
   )
 }
 
-tplSignif = function(digits, interval, mark, dec.mark, ...) {
+tplSignif = function(digits, interval, mark, dec.mark, zero.print, ...) {
   sprintf(
-    "DTWidget.formatSignif(data, %d, %d, %s, %s);",
-    digits, interval, jsValues(mark), jsValues(dec.mark)
+    "DTWidget.formatSignif(data, %d, %d, %s, %s, %s);",
+    digits, interval, jsValues(mark), jsValues(dec.mark), jsValuesHandleNull(zero.print)
   )
 }
 
