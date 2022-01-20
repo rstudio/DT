@@ -293,6 +293,14 @@ jsValues = function(x) {
   vapply(x, jsonlite::toJSON, character(1), auto_unbox = TRUE)
 }
 
+jsValuesHandleNull = function(x) {
+  if (is.null(x)) {
+    "null"
+  } else {
+    jsValues(x)
+  }
+}
+
 
 #' Conditional CSS styles
 #'

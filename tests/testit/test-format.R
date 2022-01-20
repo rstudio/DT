@@ -90,3 +90,9 @@ assert('styleRow works', {
   (out$x$options$rowCallback %==% expect)
 })
 
+assert('jsValuesHandleNull works', {
+  (jsValuesHandleNull(NULL) %==% 'null')
+  (jsValuesHandleNull(123) %==% '123')
+  (jsValuesHandleNull('abc') %==% jsValues('abc'))
+})
+
