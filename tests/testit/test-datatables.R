@@ -196,8 +196,9 @@ assert('warn autoHideNavigation if no pageLength', {
 assert("colDefsTgtHandle() works", {
   cols = c("A", "B", "C")
   (colDefsTgtHandle(NULL, cols) %==% list())
-  (colDefsTgtHandle(NULL, cols) %==% list())
-
+  (colDefsTgtHandle(list(), cols) %==% list())
+  (has_error(colDefsTgtHandle("abc", cols)))
+  (has_error(colDefsTgtHandle(list("abc"), cols)))
   defs = list(
     list(1, targets = "_all"),
     list(2, targets = 1L),

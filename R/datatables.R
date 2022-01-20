@@ -520,7 +520,11 @@ colDefsTgtHandle = function(columnDefs, names) {
       targets
     }
   }
+  error_msg <- "options$columnDefs must be `NULL` or a list of list, where each of the internal list must contain a `targets` element."
   lapply(columnDefs, function(x) {
+    if (!is.list(x) || !"targets" %in% names(x)) {
+      stop(error_msg, call. = FALSE)
+    }
     x[["targets"]] = convert(x[["targets"]], names)
     x
   })
