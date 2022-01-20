@@ -4,6 +4,10 @@
 
 - Now users can provide column names of the data to `options$columnDefs$targets`. Previously, it only supports column indexes or "_all" (thanks, @shrektan #948).
 
+## NEW FEATURES
+
+- Add the `zero.print` argument to `formatPercentage()`, `formatCurrency()`, `formatSignif()` and `formatRound()`, which allows to control the format of zero values. It's useful when the data is "sparse" (thanks, @shrektan #953).
+
 # CHANGES IN DT VERSION 0.20
 
 ## MAJOR CHANGES

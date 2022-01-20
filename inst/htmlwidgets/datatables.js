@@ -17,9 +17,10 @@ var markInterval = function(d, digits, interval, mark, decMark, precision) {
   return xv.join(decMark);
 };
 
-DTWidget.formatCurrency = function(data, currency, digits, interval, mark, decMark, before) {
+DTWidget.formatCurrency = function(data, currency, digits, interval, mark, decMark, before, zeroPrint) {
   var d = parseFloat(data);
   if (isNaN(d)) return '';
+  if (zeroPrint !== null && d === 0.0) return zeroPrint;
   var res = markInterval(d, digits, interval, mark, decMark);
   res = before ? (/^-/.test(res) ? '-' + currency + res.replace(/^-/, '') : currency + res) :
     res + currency;
@@ -32,21 +33,24 @@ DTWidget.formatString = function(data, prefix, suffix) {
   return prefix + d + suffix;
 };
 
-DTWidget.formatPercentage = function(data, digits, interval, mark, decMark) {
+DTWidget.formatPercentage = function(data, digits, interval, mark, decMark, zeroPrint) {
   var d = parseFloat(data);
   if (isNaN(d)) return '';
+  if (zeroPrint !== null && d === 0.0) return zeroPrint;
   return markInterval(d * 100, digits, interval, mark, decMark) + '%';
 };
 
-DTWidget.formatRound = function(data, digits, interval, mark, decMark) {
+DTWidget.formatRound = function(data, digits, interval, mark, decMark, zeroPrint) {
   var d = parseFloat(data);
   if (isNaN(d)) return '';
+  if (zeroPrint !== null && d === 0.0) return zeroPrint;
   return markInterval(d, digits, interval, mark, decMark);
 };
 
-DTWidget.formatSignif = function(data, digits, interval, mark, decMark) {
+DTWidget.formatSignif = function(data, digits, interval, mark, decMark, zeroPrint) {
   var d = parseFloat(data);
   if (isNaN(d)) return '';
+  if (zeroPrint !== null && d === 0.0) return zeroPrint;
   return markInterval(d, digits, interval, mark, decMark, true);
 };
 
