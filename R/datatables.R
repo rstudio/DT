@@ -509,12 +509,9 @@ colDefsTgtHandle = function(columnDefs, names) {
     if (is.list(targets)) {
       lapply(targets, convert, names = names)
     } else if (is.character(targets)) {
-      is_all = targets == "_all"
-      if (all(is_all)) {
+      any_all = "_all" %in% targets
+      if (any_all) {
         out = "_all"
-      } else if (any(is_all)) {
-        targets = list(targets[is_all], targets[!is_all])
-        out = lapply(targets, convert, names = names)
       } else {
         out = targetIdx(targets, names)
       }
