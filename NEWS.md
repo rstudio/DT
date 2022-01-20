@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.21
 
+## NEW FEATURES
+
+- Add the `zero.print` argument to `formatPercentage()`, `formatCurrency()`, `formatSignif()` and `formatRound()`, which allows to control the format of zero values. It's useful when the data is "sparse" (thanks, @shrektan #953).
 
 # CHANGES IN DT VERSION 0.20
 
