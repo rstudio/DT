@@ -225,11 +225,10 @@ datatable = function(
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
   }
-  cn = base::colnames(data)
-  # ===== data, rn, cn has been prepared ======== #
 
-  # convert the string targets
-  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], cn)
+  # convert the string targets; it must be defined here (not after), as it's supported to be
+  # applied to the "original" column names, instead of the "modified“ ones, e.g., via the `colnames` arg
+  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], base::colnames(data))
 
   # align numeric columns to the right
   if (length(numc)) {
@@ -248,6 +247,7 @@ datatable = function(
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
 
+  cn = base::colnames(data)
   if (missing(colnames)) {
     colnames = cn
   } else if (!is.null(names(colnames))) {
