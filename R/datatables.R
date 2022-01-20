@@ -155,6 +155,10 @@
 #'           original data, not the ones that (could) be changed via param \code{colnames}.
 #'         \item The string "_all": all columns (i.e. assign a default).
 #'       }
+#'     \item When conflicts happen, e.g., a single column is defined for some property
+#'       twice but with different values, the value that defined earlier takes the priority.
+#'       For example, \code{list(list(visible=FALSE, target=1), list(visible=TRUE, target=1))}
+#'       results in a table whose first column is \emph{invisible}.
 #'     \item See \url{https://datatables.net/reference/option/columnDefs} for more.
 #'   }
 #' @note You are recommended to escape the table content for security reasons
