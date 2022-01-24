@@ -44,7 +44,7 @@ left to right.}
 
 \item{rows}{the Row Indexes (starting from 1) that applies the CSS style. It could
 be an integer vector or a list of integer vectors, whose length must be equal to
-the length of \code{values}.}
+the length of \code{values}, when \code{values} is not a scalar.}
 }
 \description{
 A few helper functions for the \code{\link{formatStyle}()} function to

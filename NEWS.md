@@ -8,6 +8,10 @@
 
 - Add the `zero.print` argument to `formatPercentage()`, `formatCurrency()`, `formatSignif()` and `formatRound()`, which allows to control the format of zero values. It's useful when the data is "sparse" (thanks, @shrektan #953).
 
+## MINOR CHANGES
+
+- `styleRow()` and `styleEqual()` now allows a scalar `values` argument like other R functions, e.g., `styleRow(1:5, 'abcd')` is the same as `styleRow(1:5, rep('abcd', 5))`. It throws error that `the length(rows) must be equal to length(values)` in the previous version (thanks, @shrektan #955).
+
 # CHANGES IN DT VERSION 0.20
 
 ## MAJOR CHANGES
