@@ -360,8 +360,9 @@ styleInterval = function(cuts, values) {
 #' @rdname styleInterval
 styleEqual = function(levels, values, default = NULL) {
   n = length(levels)
+  if (length(values) == 1L) values <- rep(values, n)
   if (n != length(values))
-    stop("length(levels) must be equal to length(values)")
+    stop("length(levels) must be equal to length(values) when `values` is not a scalar")
   if (!is.null(default) && (!is.character(default) || length(default) != 1))
     stop("default must be null or a string")
   if (n == 0) return("''")
@@ -410,13 +411,14 @@ styleColorBar = function(data, color, angle=90) {
 
 #' @param rows the Row Indexes (starting from 1) that applies the CSS style. It could
 #' be an integer vector or a list of integer vectors, whose length must be equal to
-#' the length of \code{values}.
+#' the length of \code{values}, when \code{values} is not a scalar.
 #' @rdname styleInterval
 #' @export
 styleRow = function(rows, values, default = NULL) {
   n = length(rows)
+  if (length(values) == 1L) values <- rep(values, n)
   if (n != length(values))
-    stop("length(rows) must be equal to length(values)")
+    stop("length(rows) must be equal to length(values) when `values` is not a scalar")
   if (!is.null(default) && (!is.character(default) || length(default) != 1))
     stop("default must be null or a string")
   if (n == 0) return("''")
