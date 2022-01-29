@@ -341,10 +341,11 @@ selectCells = function(proxy, selected, ignore.selectable = FALSE) {
 addRow = function(proxy, data, resetPaging = TRUE) {
   if ((is.matrix(data) || is.data.frame(data)) && nrow(data) != 1)
     stop("'data' must be of only one row")
+  rn <- rownames(data); if (!is.null(rn)) rn <- I(rn)
   # must apply unname() after as.list() because a data.table object
   # can't be really unnamed. The names() attributes will be
   # preserved but with empty strings (see #760).
-  invokeRemote(proxy, 'addRow', list(unname(as.list(data)), I(rownames(data)), resetPaging))
+  invokeRemote(proxy, 'addRow', list(unname(as.list(data)), rn, resetPaging))
 }
 
 #' @rdname proxy
