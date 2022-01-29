@@ -12,6 +12,10 @@
 
 - `styleRow()` and `styleEqual()` now allows a scalar `values` argument like other R functions, e.g., `styleRow(1:5, 'abcd')` is the same as `styleRow(1:5, rep('abcd', 5))`. It throws error that `the length(rows) must be equal to length(values)` in the previous version (thanks, @shrektan #955).
 
+## BUG FIXES
+
+- Fix the bug that `addRow()` doesn't support a list of `data` after R 3.4.0, where `structure(NULL, ...)` was deprecated (thanks, @stla @shrektan #959).
+
 # CHANGES IN DT VERSION 0.20
 
 ## MAJOR CHANGES
