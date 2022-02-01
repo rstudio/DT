@@ -94,10 +94,12 @@ equivalent to \code{c('V1', 'V2')})}
 \item{zero.print}{a string to specify how zeros should be formatted.
 Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.}
 
-\item{rows}{an integer vector to specify the only rows that the style applies to.
+\item{rows}{an integer vector (starting from 1) to specify the only rows
+that the style applies to.
 By default, it's \code{NULL}, meaning all rows should be formatted. Note,
 \code{formatStyle()} doesn't support this argument and you should use
-\code{styleRow()} instead.}
+\code{styleRow()} instead. In addition, this only works expected in the
+client-side processing mode, i.e., \code{server = FALSE}.}
 
 \item{prefix}{string to put in front of the column values}
 

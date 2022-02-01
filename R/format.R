@@ -41,10 +41,12 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #' @param before whether to place the currency symbol before or after the values
 #' @param zero.print a string to specify how zeros should be formatted.
 #'   Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.
-#' @param rows an integer vector to specify the only rows that the style applies to.
+#' @param rows an integer vector (starting from 1) to specify the only rows
+#'   that the style applies to.
 #'   By default, it's \code{NULL}, meaning all rows should be formatted. Note,
 #'   \code{formatStyle()} doesn't support this argument and you should use
-#'   \code{styleRow()} instead.
+#'   \code{styleRow()} instead. In addition, this only works expected in the
+#'   client-side processing mode, i.e., \code{server = FALSE}.
 #' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
 #' @note The length of arguments other than \code{table} should be 1 or the same as
@@ -341,6 +343,7 @@ jsValuesHandleNull = function(x) {
 #' The function \code{styleValue()} uses the column value as the CSS values.
 #'
 #' The function \code{styleRow()} applies the CSS values based on Row Indexes.
+#' This only works expected in the client-side processing mode, i.e., \code{server = FALSE}.
 #'
 #' @param cuts a vector of cut points (sorted increasingly)
 #' @param values a vector of CSS values

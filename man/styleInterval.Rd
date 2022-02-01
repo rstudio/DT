@@ -74,4 +74,5 @@ column values.
 The function \code{styleValue()} uses the column value as the CSS values.
 
 The function \code{styleRow()} applies the CSS values based on Row Indexes.
+This only works expected in the client-side processing mode, i.e., \code{server = FALSE}.
 }
