@@ -1389,6 +1389,12 @@ HTMLWidgets.widget({
     var framingHeight = dtWrapper.innerHeight() - dtScrollBody.innerHeight();
     var scrollBodyHeight = availableHeight - framingHeight;
 
+    // we need to set `max-height` to none as datatables library now sets this
+    // to a fixed height, disabling the ability to resize to fill the window,
+    // as it will be set to a fixed 100px under such circumstances, e.g., RStudio IDE,
+    // or FlexDashboard
+    // see https://github.com/rstudio/DT/issues/951#issuecomment-1026464509
+    dtScrollBody.css('max-height', 'none');
     // set the height
     dtScrollBody.height(scrollBodyHeight + 'px');
   },
