@@ -19,10 +19,11 @@ formatCurrency(
   digits = 2,
   dec.mark = getOption("OutDec"),
   before = TRUE,
-  zero.print = NULL
+  zero.print = NULL,
+  rows = NULL
 )
 
-formatString(table, columns, prefix = "", suffix = "")
+formatString(table, columns, prefix = "", suffix = "", rows = NULL)
 
 formatPercentage(
   table,
@@ -31,7 +32,8 @@ formatPercentage(
   interval = 3,
   mark = ",",
   dec.mark = getOption("OutDec"),
-  zero.print = NULL
+  zero.print = NULL,
+  rows = NULL
 )
 
 formatRound(
@@ -41,7 +43,8 @@ formatRound(
   interval = 3,
   mark = ",",
   dec.mark = getOption("OutDec"),
-  zero.print = NULL
+  zero.print = NULL,
+  rows = NULL
 )
 
 formatSignif(
@@ -51,10 +54,11 @@ formatSignif(
   interval = 3,
   mark = ",",
   dec.mark = getOption("OutDec"),
-  zero.print = NULL
+  zero.print = NULL,
+  rows = NULL
 )
 
-formatDate(table, columns, method = "toDateString", params = NULL)
+formatDate(table, columns, method = "toDateString", params = NULL, rows = NULL)
 
 formatStyle(
   table,
@@ -89,6 +93,11 @@ equivalent to \code{c('V1', 'V2')})}
 
 \item{zero.print}{a string to specify how zeros should be formatted.
 Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.}
+
+\item{rows}{an integer vector to specify the only rows that the style applies to.
+By default, it's \code{NULL}, meaning all rows should be formatted. Note,
+\code{formatStyle()} doesn't support this argument and you should use
+\code{styleRow()} instead.}
 
 \item{prefix}{string to put in front of the column values}
 

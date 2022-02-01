@@ -1,4 +1,4 @@
-formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs', 'rowCallback')) {
+formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs', 'rowCallback'), rows = NULL) {
   if (!inherits(table, 'datatables'))
     stop("Invalid table argument; a table object created from datatable() was expected")
   if (inherits(columns, 'formula')) columns = all.vars(columns)
@@ -11,7 +11,7 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
       # must append to the front so that the later formatting
       # can override the previous formatting
       x$options$columnDefs, colFormatter(
-        columns, colnames, rownames, template, ...
+        columns, colnames, rownames, rows, template, ...
       ), after = 0L
     )
   } else {
@@ -41,6 +41,10 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #' @param before whether to place the currency symbol before or after the values
 #' @param zero.print a string to specify how zeros should be formatted.
 #'   Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.
+#' @param rows an integer vector to specify the only rows that the style applies to.
+#'   By default, it's \code{NULL}, meaning all rows should be formatted. Note,
+#'   \code{formatStyle()} doesn't support this argument and you should use
+#'   \code{styleRow()} instead.
 #' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
 #'   documentation and examples.
 #' @note The length of arguments other than \code{table} should be 1 or the same as
@@ -70,44 +74,44 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 #'   )
 formatCurrency = function(
   table, columns, currency = '$', interval = 3, mark = ',', digits = 2,
-  dec.mark = getOption('OutDec'), before = TRUE, zero.print = NULL
+  dec.mark = getOption('OutDec'), before = TRUE, zero.print = NULL, rows = NULL
 ) {
   currency = gsub("'", "\\\\'", currency)
   mark = gsub("'", "\\\\'", mark)
-  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark, before, zero.print)
+  formatColumns(table, columns, tplCurrency, currency, interval, mark, digits, dec.mark, before, zero.print, rows = rows)
 }
 
 #' @export
 #' @rdname formatCurrency
 #' @param prefix string to put in front of the column values
 #' @param suffix string to put after the column values
-formatString = function(table, columns, prefix = '', suffix = '') {
-  formatColumns(table, columns, tplString, prefix, suffix)
+formatString = function(table, columns, prefix = '', suffix = '', rows = NULL) {
+  formatColumns(table, columns, tplString, prefix, suffix, rows = rows)
 }
 
 #' @export
 #' @rdname formatCurrency
 #' @param digits the number of decimal places to round to
 formatPercentage = function(
-  table, columns, digits = 0, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL
+  table, columns, digits = 0, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL, rows = NULL
 ) {
-  formatColumns(table, columns, tplPercentage, digits, interval, mark, dec.mark, zero.print)
+  formatColumns(table, columns, tplPercentage, digits, interval, mark, dec.mark, zero.print, rows = rows)
 }
 
 #' @export
 #' @rdname formatCurrency
 formatRound = function(
-  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL, rows = NULL
 ) {
-  formatColumns(table, columns, tplRound, digits, interval, mark, dec.mark, zero.print)
+  formatColumns(table, columns, tplRound, digits, interval, mark, dec.mark, zero.print, rows = rows)
 }
 
 #' @export
 #' @rdname formatCurrency
 formatSignif = function(
-  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL
+  table, columns, digits = 2, interval = 3, mark = ',', dec.mark = getOption('OutDec'), zero.print = NULL, rows = NULL
 ) {
-  formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark, zero.print)
+  formatColumns(table, columns, tplSignif, digits, interval, mark, dec.mark, zero.print, rows = rows)
 }
 
 #' @export
@@ -120,7 +124,7 @@ formatSignif = function(
 #'   e.g., for the \code{toLocaleDateString()} method, your browser may support
 #'   \code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
 #'   'numeric'))}
-formatDate = function(table, columns, method = 'toDateString', params = NULL) {
+formatDate = function(table, columns, method = 'toDateString', params = NULL, rows = NULL) {
   if (!inherits(table, 'datatables'))
     stop("Invalid table argument; a table object created from datatable() was expected")
   x = table$x
@@ -138,7 +142,7 @@ formatDate = function(table, columns, method = 'toDateString', params = NULL) {
   }
   # the code above is used to ensure the date(time) filter displays the same format or
   # timezone as the column value
-  formatColumns(table, columns, tplDate, method, params)
+  formatColumns(table, columns, tplDate, method, params, rows = rows)
 }
 
 #' @param valueColumns indices of the columns from which the cell values are
@@ -191,13 +195,18 @@ name2int = function(name, names, rownames, noerror = FALSE) {
   i
 }
 
-colFormatter = function(name, names, rownames = TRUE, template, ...) {
+colFormatter = function(name, names, rownames = TRUE, rows = NULL, template, ...) {
   i = name2int(name, names, rownames)
+  rowJS = ''
+  if (length(rows)) {
+    rows = as.integer(rows)
+    rowJS = sprintf(' || $.inArray(meta.row + 1, %s) < 0', toJSON(rows))
+  }
   # see https://datatables.net/reference/option/columns.render
   # #837 we only want to use the formatting for the "display" purpose
   js = sprintf("function(data, type, row, meta) {
-    return type !== 'display' ? data : %s
-  }", template(...))
+    return type !== 'display'%s ? data : %s
+  }", rowJS, template(...))
   Map(function(i, js) list(targets = i, render = JS(js)), i, js, USE.NAMES = FALSE)
 }
 
