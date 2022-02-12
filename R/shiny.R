@@ -573,8 +573,22 @@ sessionDataURL = function(session, data, id, filter) {
   session$registerDataObj(id, data, filterFun)
 }
 
+# this is for searchBuilder extension. it returns the filtered indexes.
+# the reason it doesn't return data is later process can obtain the correct
+# indices relative to original data set
+searchBuilderFilter = function(data, params) {
+  indicies = seq_len(nrow(data))
+  q = params[['searchBuilder']]
+  if (length(q) == 0L) {
+    return(indicies)
+  }
+  indicies
+}
+
 # filter a data frame according to the DataTables request parameters
 dataTablesFilter = function(data, params) {
+  searchBuilderIndicies = searchBuilderFilter(data, params)
+
   n = nrow(data)
   q = params
   ci = q$search[['caseInsensitive']] == 'true'
@@ -611,6 +625,9 @@ dataTablesFilter = function(data, params) {
     }
     which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
   } else seq_len(n)
+
+  # apply searchBuilder filtered indexes here
+  i = intersect(i, searchBuilderIndicies)
 
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
