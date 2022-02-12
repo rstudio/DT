@@ -551,13 +551,12 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
 
 sessionDataURL = function(session, data, id, filter) {
 
-  URLdecode = shinyFun('URLdecode')
   toJSON = shinyFun('toJSON')
   httpResponse = shinyFun('httpResponse')
 
   filterFun = function(data, req) {
     # DataTables requests were sent via POST
-    params = URLdecode(rawToChar(req$rook.input$read()))
+    params = rawToChar(req$rook.input$read())
     Encoding(params) = 'UTF-8'
     params = shiny::parseQueryString(params, nested = TRUE)
 
