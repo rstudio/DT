@@ -16,6 +16,8 @@
 
 - Fix the bug that `addRow()` doesn't support a list of `data` after R 3.4.0, where `structure(NULL, ...)` was deprecated (thanks, @stla @shrektan #959).
 
+- Fix the bug that DT failed to parse ajax request correctly, when special strings like "=" exist (thanks, @shrektan #965).
+
 # CHANGES IN DT VERSION 0.20
 
 ## MAJOR CHANGES
