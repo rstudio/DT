@@ -551,14 +551,15 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
 
 sessionDataURL = function(session, data, id, filter) {
 
-  URLdecode = shinyFun('URLdecode')
   toJSON = shinyFun('toJSON')
   httpResponse = shinyFun('httpResponse')
 
   filterFun = function(data, req) {
     # DataTables requests were sent via POST
-    params = URLdecode(rawToChar(req$rook.input$read()))
+    params = rawToChar(req$rook.input$read())
+    # I don't think the browser would send out nonASCII strings, but keep it as it is
     Encoding(params) = 'UTF-8'
+    # shiny::parseQueryString() calls httpuv::decodeURIComponent() internally and will handle encoding correctly
     params = shiny::parseQueryString(params, nested = TRUE)
 
     res = tryCatch(filter(data, params), error = function(e) {

@@ -18,6 +18,8 @@
 
 - Fix the bug that DT table can't vertically fill the container, e.g., RStudio IDE or FlexDashboard (thanks, @mbojan @shrektan #951).
 
+- Fix the bug that DT failed to parse ajax request correctly, when special strings like "=" exist (thanks, @shrektan #965).
+
 # CHANGES IN DT VERSION 0.20
 
 ## MAJOR CHANGES
