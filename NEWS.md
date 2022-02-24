@@ -4,6 +4,8 @@
 
 - Add the `zero.print` argument to `formatPercentage()`, `formatCurrency()`, `formatSignif()` and `formatRound()`, which allows to control the format of zero values. It's useful when the data is "sparse" (thanks, @shrektan #953).
 
+- `formatXXX()` functions now gain a new argument `rows` (starting from 1), which can be used to specify the rows that the "style" should be applied to. Note that it only works expected in the client-side processing mode, i.e., `server = FALSE`. `formatStyle()` is the only exception that doesn't have this argument and should use `styleRow()` instead (thanks, @jrecasens @shrektan #520).
+
 ## MAJOR CHANGES
 
 - Now users can provide column names of the data to `options$columnDefs$targets`. Previously, it only supports column indexes or "_all" (thanks, @shrektan #948).
