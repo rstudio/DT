@@ -131,7 +131,7 @@ Shiny.addCustomMessageHandler('updateFilters',
       // Update the filters to reflect the updated data
       set_filter_lims(filters[i], x.new_lims[i - 1]);
     }
-})
+});
 
 var transposeArray2D = function(a) {
   return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
