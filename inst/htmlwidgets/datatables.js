@@ -72,87 +72,87 @@ DTWidget.formatDate = function(data, method, params) {
 window.DTWidget = DTWidget;
 
 // Write a helper function to grab the value of a given filter regardless of type
-get_filter_val = function(table_filter) {
+get_filter_val = function(filter) {
   // For each filter, determine its current value
-  if(['factor', 'logical'].includes(table_filter.getAttribute('data-type'))) {
+  if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
     // Find the selectize object
-    var dropdown = $(table_filter).find('.selectized').eq(0)[0].selectize;
-    
+    var dropdown = $(filter).find('.selectized').eq(0)[0].selectize;
+
     return dropdown.getValue()
-    
-  } else if(['number', 'integer', 'date', 'time'].includes(table_filter.getAttribute('data-type'))) {
+
+  } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
     // find the slider object
-    var slider = $(table_filter).find('.noUi-target').eq(0);
-    
+    var slider = $(filter).find('.noUi-target').eq(0);
+
     return slider.val().map(Number)
   }
 }
 
 // Write a helper function to grab the limits of a given filter regardless of type
-get_filter_lims = function(table_filter) {
+get_filter_lims = function(filter) {
   // Based on the filter type, determine its potential values
-  if(['factor', 'logical'].includes(table_filter.getAttribute('data-type'))) {
+  if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
     // Gather the array current options as a character string
-    var dropdownOptions = table_filter.lastElementChild.firstElementChild.dataset.options;
-    
+    var dropdownOptions = filter.lastElementChild.firstElementChild.dataset.options;
+
     // Remove the brackets and quotes from the string and convert it to an array
     return dropdownOptions.slice(1, dropdownOptions.length - 1).replace(/[\"]+/g, '').split(','); // the `\` is inserted to process in runjs
-    
-  } else if(['number', 'integer', 'date', 'time'].includes(table_filter.getAttribute('data-type'))) {
+
+  } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
     // Gather the slider range to note its values
-    var slider = $(table_filter).find('.noUi-target').eq(0).noUiSlider('options').range;
-    
+    var slider = $(filter).find('.noUi-target').eq(0).noUiSlider('options').range;
+
     // get the endpoints of the slider
     return[slider.min, slider.max]
   }
 }
 
 // Write a helper function to update the lims of the existing filters
-set_filter_lims = function(table_filter, new_vals) {
+set_filter_lims = function(filter, new_vals) {
   // Based on the filter type, set its new values
-  if(['factor', 'logical'].includes(table_filter.getAttribute('data-type'))) {
+  if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
     // Reformat the new dropdown options for use with selectize
     new_vals = new_vals.map(function(item) {return {text: item, value: item}});
-    
+
     // Find the selectize object
-    var dropdown = $(table_filter).find('.selectized').eq(0)[0].selectize;
-    
+    var dropdown = $(filter).find('.selectized').eq(0)[0].selectize;
+
     // Note the current values
     // var old_vals = Array(...new Set(dropdown.getValue().concat(get_filter_lims(filter_cell, filter_row)))); // Retain existing filters
     var old_vals = dropdown.getValue();
-    
+
     // Remove the existing values
     dropdown.clearOptions();
-    
+
     // Add the new options
     dropdown.addOption(new_vals);
-    
+
     // Preserve the existing values
     dropdown.setValue(old_vals);
-    
-  } else if(['number', 'integer', 'date', 'time'].includes(table_filter.getAttribute('data-type'))) {
+
+  } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
     // Note what the new limits will be just for this filter
     var new_lims = [...new_vals]
-    
+
     // Determine the current values and limits
-    var old_vals = get_filter_val(table_filter);
-    var old_lims = get_filter_lims(table_filter);
-    
+    var old_vals = get_filter_val(filter);
+    var old_lims = get_filter_lims(filter);
+
     // Preserve the current values if filters have been applied; otherwise, apply no filtering
     if(old_vals[0] != old_lims[0]) {
       new_vals[0] = Math.max(old_vals[0], new_vals[0])
     }
-    
+
     if(old_vals[1] != old_lims[1]) {
       new_vals[1] = Math.min(old_vals[1], new_vals[1])
     }
-    
+
     // Gather the slider to update its values
-    var slider = $(table_filter).find('.noUi-target').eq(0);
-    
+    var slider = $(filter).find('.noUi-target').eq(0);
+
     // Update the endpoints of the slider
     slider.noUiSlider({
-      start: new_vals, 
+      start: new_vals,
       range: {'min': new_lims[0], 'max': new_lims[1]}
     }, true);
   }
@@ -162,12 +162,12 @@ set_filter_lims = function(table_filter, new_vals) {
 Shiny.addCustomMessageHandler('updateFilters',
   function(x) {
     // Grab the filter row of the DT table
-    var table_filters = document.getElementById(x.tableId).getElementsByTagName('table')[0].rows[1].cells;
-    
+    var filters = document.getElementById(x.tableId).getElementsByTagName('table')[0].rows[1].cells;
+
     // loop through each filter in the filter row
-    for (var i = 1; i < table_filters.length; i++) {
+    for (var i = 1; i < filters.length; i++) {
       // Update the filters to reflect the updated data
-      set_filter_lims(table_filters[i], x.new_lims[i - 1]);
+      set_filter_lims(filters[i], x.new_lims[i - 1]);
     }
 })
 
