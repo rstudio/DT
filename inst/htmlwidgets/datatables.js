@@ -71,6 +71,68 @@ DTWidget.formatDate = function(data, method, params) {
 
 window.DTWidget = DTWidget;
 
+// A helper function to update the lims of the existing filters
+var set_filter_lims = function(filter, new_vals) {
+  // Based on the filter type, set its new values
+  if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
+    // Reformat the new dropdown options for use with selectize
+    new_vals = new_vals.map(function(item) {return {text: item, value: item}});
+
+    // Find the selectize object
+    var dropdown = $(filter).find('.selectized').eq(0)[0].selectize;
+
+    // Note the current values
+    var old_vals = dropdown.getValue();
+
+    // Remove the existing values
+    dropdown.clearOptions();
+
+    // Add the new options
+    dropdown.addOption(new_vals);
+
+    // Preserve the existing values
+    dropdown.setValue(old_vals);
+
+  } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
+    // Note what the new limits will be just for this filter
+    var new_lims = [...new_vals];
+
+    // Determine the current values and limits
+    var slider = $(filter).find('.noUi-target').eq(0);
+    var old_vals = slider.val().map(Number);
+    var old_lims = slider.noUiSlider('options').range;
+    old_lims = [old_lims.min, old_lims.max];
+
+    // Preserve the current values if filters have been applied; otherwise, apply no filtering
+    if (old_vals[0] != old_lims[0]) {
+      new_vals[0] = Math.max(old_vals[0], new_vals[0]);
+    }
+
+    if (old_vals[1] != old_lims[1]) {
+      new_vals[1] = Math.min(old_vals[1], new_vals[1]);
+    }
+
+    // Update the endpoints of the slider
+    slider.noUiSlider({
+      start: new_vals,
+      range: {'min': new_lims[0], 'max': new_lims[1]}
+    }, true);
+  }
+};
+
+// When updateFilters() is called, update the table filters
+Shiny.addCustomMessageHandler('updateFilters',
+  function(x) {
+    // Grab the filter row of the DT table
+    var filters = document.getElementById(x.tableId).getElementsByTagName('table')[0].rows[1].cells;
+
+    // loop through each filter in the filter row
+    for (var i = 1; i < filters.length; i++) {
+      // Update the filters to reflect the updated data
+      set_filter_lims(filters[i], x.new_lims[i - 1]);
+    }
+});
+
 var transposeArray2D = function(a) {
   return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
 };
