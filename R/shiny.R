@@ -495,7 +495,7 @@ updateFilters = function(proxy, data) {
   new_lims = unname(lapply(new_lims, function(x) if (is.numeric(x)) x * 10 else x))
 
   # Trigger the JavaScript to update the filters
-  invokeRemote(proxy, 'updateFilters', list(tableId = proxy$id, new_lims = new_lims))
+  invokeRemote(proxy, 'updateFilters', list(new_lims))
 }
 
 invokeRemote = function(proxy, method, args = list()) {

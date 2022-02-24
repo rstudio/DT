@@ -120,19 +120,6 @@ var set_filter_lims = function(td, new_vals) {
   }
 };
 
-// When updateFilters() is called, update the table filters
-Shiny.addCustomMessageHandler('updateFilters',
-  function(x) {
-    // Grab the filter row of the DT table
-    var filters = document.getElementById(x.tableId).getElementsByTagName('table')[0].rows[1].cells;
-
-    // loop through each filter in the filter row
-    for (var i = 1; i < filters.length; i++) {
-      // Update the filters to reflect the updated data
-      set_filter_lims(filters[i], x.new_lims[i - 1]);
-    }
-});
-
 var transposeArray2D = function(a) {
   return a.length === 0 ? a : HTMLWidgets.transposeArray2D(a);
 };
@@ -1427,6 +1414,20 @@ HTMLWidgets.widget({
       if (methods.selectCells && inArray('cell', clearSelection)) methods.selectCells([]);
       table.ajax.reload(null, resetPaging);
     }
+
+    // update table filters (set new limits of sliders)
+    methods.updateFilters = function(newLims) {
+      // loop through each filter in the filter row
+      filterRow.each(function(i, td) {
+        var k = i;
+        if (filterRow.length > newLims.length) {
+          if (i === 0) return;  // first column is row names
+          k = i - 1;
+        }
+        // Update the filters to reflect the updated data
+        set_filter_lims(td, newLims[k]);
+      });
+    };
 
     table.shinyMethods = methods;
   },
