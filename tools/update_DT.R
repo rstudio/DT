@@ -52,7 +52,17 @@ encode_img = function(css) {
     if (length(ps) == 0) return(ps)
     # replace the first and the last `"` with empty
     ps = gsub('^"|^\'|"$|\'$', '', ps)
-    sapply(ps, knitr::image_uri)
+    localfiles = tempfile(fileext = paste0(".", tools::file_ext(ps)))
+    dld_or_cp = \(x, dest) {
+      if (xfun::is_web_path(x)) {
+        download.file(x, dest)
+      } else {
+        file.copy(x, dest)
+      }
+    }
+    Map(dld_or_cp, ps, localfiles) |> invisible()
+    on.exit(unlink(localfiles), add = TRUE)
+    sapply(localfiles, knitr::image_uri)
   })
   writeLines(x, css)
   invisible()

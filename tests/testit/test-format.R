@@ -90,3 +90,18 @@ assert('styleRow works', {
   (out$x$options$rowCallback %==% expect)
 })
 
+assert('jsValuesHandleNull works', {
+  (jsValuesHandleNull(NULL) %==% 'null')
+  (jsValuesHandleNull(123) %==% '123')
+  (jsValuesHandleNull('abc') %==% jsValues('abc'))
+})
+
+assert('styleRow and styleEqual allows scalar values', {
+  result = styleRow(1:2, 'a')
+  expect = JS("$.inArray(dataIndex + 1, [1]) >= 0 ? \"a\" : $.inArray(dataIndex + 1, [2]) >= 0 ? \"a\" : null")
+  (result %==% expect)
+  result = styleEqual(1:2, 'a')
+  expect = JS("value == 1 ? \"a\" : value == 2 ? \"a\" : null")
+  (result %==% expect)
+})
+

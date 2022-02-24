@@ -1,5 +1,32 @@
+# CHANGES IN DT VERSION 0.21
+
+## NEW FEATURES
+
+- Add the `zero.print` argument to `formatPercentage()`, `formatCurrency()`, `formatSignif()` and `formatRound()`, which allows to control the format of zero values. It's useful when the data is "sparse" (thanks, @shrektan #953).
+
+- `formatXXX()` functions now gain a new argument `rows` (starting from 1), which can be used to specify the rows that the "style" should be applied to. Note that it only works expected in the client-side processing mode, i.e., `server = FALSE`. `formatStyle()` is the only exception that doesn't have this argument and should use `styleRow()` instead (thanks, @jrecasens @shrektan #520).
+
+## MAJOR CHANGES
+
+- Now users can provide column names of the data to `options$columnDefs$targets`. Previously, it only supports column indexes or "_all" (thanks, @shrektan #948).
+
+## MINOR CHANGES
+
+- `styleRow()` and `styleEqual()` now allows a scalar `values` argument like other R functions, e.g., `styleRow(1:5, 'abcd')` is the same as `styleRow(1:5, rep('abcd', 5))`. It throws error that `the length(rows) must be equal to length(values)` in the previous version (thanks, @shrektan #955).
+
+## BUG FIXES
+
+- Fix the bug that `addRow()` doesn't support a list of `data` after R 3.4.0, where `structure(NULL, ...)` was deprecated (thanks, @stla @shrektan #959).
+
+- Fix the bug that DT table can't vertically fill the container, e.g., RStudio IDE or FlexDashboard (thanks, @mbojan @shrektan #951).
+
+- Fix the bug that DT failed to parse ajax request correctly, when special strings like "=" exist (thanks, @shrektan #965).
+
 # CHANGES IN DT VERSION 0.20
 
+## MAJOR CHANGES
+
+- Upgraded the DataTables library to v1.11.3 (thanks, @shrektan #942, @michaelquinn32 #940).
 
 # CHANGES IN DT VERSION 0.19
 

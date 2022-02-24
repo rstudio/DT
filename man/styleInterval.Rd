@@ -44,7 +44,7 @@ left to right.}
 
 \item{rows}{the Row Indexes (starting from 1) that applies the CSS style. It could
 be an integer vector or a list of integer vectors, whose length must be equal to
-the length of \code{values}.}
+the length of \code{values}, when \code{values} is not a scalar.}
 }
 \description{
 A few helper functions for the \code{\link{formatStyle}()} function to
@@ -74,4 +74,5 @@ column values.
 The function \code{styleValue()} uses the column value as the CSS values.
 
 The function \code{styleRow()} applies the CSS values based on Row Indexes.
+This only works expected in the client-side processing mode, i.e., \code{server = FALSE}.
 }

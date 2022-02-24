@@ -18,10 +18,12 @@ formatCurrency(
   mark = ",",
   digits = 2,
   dec.mark = getOption("OutDec"),
-  before = TRUE
+  before = TRUE,
+  zero.print = NULL,
+  rows = NULL
 )
 
-formatString(table, columns, prefix = "", suffix = "")
+formatString(table, columns, prefix = "", suffix = "", rows = NULL)
 
 formatPercentage(
   table,
@@ -29,7 +31,9 @@ formatPercentage(
   digits = 0,
   interval = 3,
   mark = ",",
-  dec.mark = getOption("OutDec")
+  dec.mark = getOption("OutDec"),
+  zero.print = NULL,
+  rows = NULL
 )
 
 formatRound(
@@ -38,7 +42,9 @@ formatRound(
   digits = 2,
   interval = 3,
   mark = ",",
-  dec.mark = getOption("OutDec")
+  dec.mark = getOption("OutDec"),
+  zero.print = NULL,
+  rows = NULL
 )
 
 formatSignif(
@@ -47,10 +53,12 @@ formatSignif(
   digits = 2,
   interval = 3,
   mark = ",",
-  dec.mark = getOption("OutDec")
+  dec.mark = getOption("OutDec"),
+  zero.print = NULL,
+  rows = NULL
 )
 
-formatDate(table, columns, method = "toDateString", params = NULL)
+formatDate(table, columns, method = "toDateString", params = NULL, rows = NULL)
 
 formatStyle(
   table,
@@ -82,6 +90,16 @@ equivalent to \code{c('V1', 'V2')})}
 \item{dec.mark}{a character to indicate the decimal point}
 
 \item{before}{whether to place the currency symbol before or after the values}
+
+\item{zero.print}{a string to specify how zeros should be formatted.
+Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.}
+
+\item{rows}{an integer vector (starting from 1) to specify the only rows
+that the style applies to.
+By default, it's \code{NULL}, meaning all rows should be formatted. Note,
+\code{formatStyle()} doesn't support this argument and you should use
+\code{styleRow()} instead. In addition, this only works expected in the
+client-side processing mode, i.e., \code{server = FALSE}.}
 
 \item{prefix}{string to put in front of the column values}
 
