@@ -71,43 +71,7 @@ DTWidget.formatDate = function(data, method, params) {
 
 window.DTWidget = DTWidget;
 
-// Write a helper function to grab the value of a given filter regardless of type
-var get_filter_val = function(filter) {
-  // For each filter, determine its current value
-  if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
-    // Find the selectize object
-    var dropdown = $(filter).find('.selectized').eq(0)[0].selectize;
-
-    return dropdown.getValue()
-
-  } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
-    // find the slider object
-    var slider = $(filter).find('.noUi-target').eq(0);
-
-    return slider.val().map(Number)
-  }
-}
-
-// Write a helper function to grab the limits of a given filter regardless of type
-var get_filter_lims = function(filter) {
-  // Based on the filter type, determine its potential values
-  if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
-    // Gather the array current options as a character string
-    var dropdownOptions = filter.lastElementChild.firstElementChild.dataset.options;
-
-    // Remove the brackets and quotes from the string and convert it to an array
-    return dropdownOptions.slice(1, dropdownOptions.length - 1).replace(/[\"]+/g, '').split(','); // the `\` is inserted to process in runjs
-
-  } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
-    // Gather the slider range to note its values
-    var slider = $(filter).find('.noUi-target').eq(0).noUiSlider('options').range;
-
-    // get the endpoints of the slider
-    return[slider.min, slider.max]
-  }
-}
-
-// Write a helper function to update the lims of the existing filters
+// A helper function to update the lims of the existing filters
 var set_filter_lims = function(filter, new_vals) {
   // Based on the filter type, set its new values
   if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
@@ -118,7 +82,6 @@ var set_filter_lims = function(filter, new_vals) {
     var dropdown = $(filter).find('.selectized').eq(0)[0].selectize;
 
     // Note the current values
-    // var old_vals = Array(...new Set(dropdown.getValue().concat(get_filter_lims(filter_cell, filter_row)))); // Retain existing filters
     var old_vals = dropdown.getValue();
 
     // Remove the existing values
@@ -132,23 +95,22 @@ var set_filter_lims = function(filter, new_vals) {
 
   } else if (['number', 'integer', 'date', 'time'].includes(filter.getAttribute('data-type'))) {
     // Note what the new limits will be just for this filter
-    var new_lims = [...new_vals]
+    var new_lims = [...new_vals];
 
     // Determine the current values and limits
-    var old_vals = get_filter_val(filter);
-    var old_lims = get_filter_lims(filter);
+    var slider = $(filter).find('.noUi-target').eq(0);
+    var old_vals = slider.val().map(Number);
+    var old_lims = slider.noUiSlider('options').range;
+    old_lims = [old_lims.min, old_lims.max];
 
     // Preserve the current values if filters have been applied; otherwise, apply no filtering
-    if(old_vals[0] != old_lims[0]) {
-      new_vals[0] = Math.max(old_vals[0], new_vals[0])
+    if (old_vals[0] != old_lims[0]) {
+      new_vals[0] = Math.max(old_vals[0], new_vals[0]);
     }
 
-    if(old_vals[1] != old_lims[1]) {
-      new_vals[1] = Math.min(old_vals[1], new_vals[1])
+    if (old_vals[1] != old_lims[1]) {
+      new_vals[1] = Math.min(old_vals[1], new_vals[1]);
     }
-
-    // Gather the slider to update its values
-    var slider = $(filter).find('.noUi-target').eq(0);
 
     // Update the endpoints of the slider
     slider.noUiSlider({
@@ -156,7 +118,7 @@ var set_filter_lims = function(filter, new_vals) {
       range: {'min': new_lims[0], 'max': new_lims[1]}
     }, true);
   }
-}
+};
 
 // When updateFilters() is called, update the table filters
 Shiny.addCustomMessageHandler('updateFilters',
