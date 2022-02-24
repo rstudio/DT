@@ -470,22 +470,22 @@ replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'a
 updateFilters = function(proxy, data) {
   # Calculate the values to be supplied to the filters based on column type
   new_lims = lapply(data, function(x) {
-    if(inherits(x, c('numeric'))) {
+    if (inherits(x, c('numeric'))) {
       range(x)
-    } else if(inherits(x, c('factor', 'logical'))) {
+    } else if (inherits(x, c('factor', 'logical'))) {
       as.character(unique(x))
-    } else if(inherits(x, c('Date'))) {
+    } else if (inherits(x, c('Date'))) {
       as.numeric(as.POSIXct.Date(range(x))) * 100
-    } else if(inherits(x, 'POSIXt')) {
-      plyr::round_any(as.numeric(range(x)), accuracy = .01) * 100000
+    } else if (inherits(x, 'POSIXt')) {
+      round(as.numeric(range(x)), digits = 2) * 100000
     } else {
       stop('updateFilters() requires all columns to be one of the following classes: numeric, factor, logical, Date, POSIXt')
     }
   })
   
   # As of DT 0.19, numeric values fed to the sliders need to be multiplied by 10; ex. 5.7 will be converted to 57
-  setNames(
-    lapply(new_lims, function(x) {if(is.numeric(x)) {x*10} else {x}}),
+  new_lims = setNames(
+    lapply(new_lims, function(x) {if (is.numeric(x)) {x*10} else {x}}),
     NULL
   )
   

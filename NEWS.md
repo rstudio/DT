@@ -11,6 +11,8 @@
 
 - Now the user can request text areas for the editing by, e.g., `datatable(..., editable = list(target = "cell", area = 1:2))`. Text areas are useful for cells with large contents (thanks, @stla #860, @fabiangehring #671).
 
+- The new function `updateFilters` has been added to allow users to update the filters of a `datatable` object that has been updated by reference, such as with `replaceData`. (thanks, @giadasp #934, @wholmes105 #939)
+
 ## MAJOR CHANGES
 
 - Upgraded jQuery from v1.12.4 to v3.x imported from the **jquerylib** R package.
