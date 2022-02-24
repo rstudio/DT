@@ -72,7 +72,7 @@ DTWidget.formatDate = function(data, method, params) {
 window.DTWidget = DTWidget;
 
 // Write a helper function to grab the value of a given filter regardless of type
-get_filter_val = function(filter) {
+var get_filter_val = function(filter) {
   // For each filter, determine its current value
   if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
     // Find the selectize object
@@ -89,7 +89,7 @@ get_filter_val = function(filter) {
 }
 
 // Write a helper function to grab the limits of a given filter regardless of type
-get_filter_lims = function(filter) {
+var get_filter_lims = function(filter) {
   // Based on the filter type, determine its potential values
   if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
     // Gather the array current options as a character string
@@ -108,7 +108,7 @@ get_filter_lims = function(filter) {
 }
 
 // Write a helper function to update the lims of the existing filters
-set_filter_lims = function(filter, new_vals) {
+var set_filter_lims = function(filter, new_vals) {
   // Based on the filter type, set its new values
   if (['factor', 'logical'].includes(filter.getAttribute('data-type'))) {
     // Reformat the new dropdown options for use with selectize
