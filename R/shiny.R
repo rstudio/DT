@@ -464,19 +464,18 @@ reloadData = function(
 #'   enabled column filters, you should also make sure the attributes of every
 #'   column remain the same, e.g. factor columns should have the same or fewer
 #'   levels, and numeric columns should have the same or smaller range,
-#'   otherwise the filters may never be able to reach certain rows in the data.
+#'   otherwise the filters may never be able to reach certain rows in the data,
+#'   unless you explicitly update the filters with \code{updateFilters()}.
 #' @export
 replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'all') {
   dataTableAjax(proxy$session, data, ..., outputId = proxy$rawId)
   reloadData(proxy, resetPaging, clearSelection)
 }
 
-#' @rdname proxy
-#' @rdname data
-#' 
+#' @rdname replaceData
 #' @export
 updateFilters = function(proxy, data) {
-  # Calculate the values to be supplied to the filters based on column type
+  # calculate the values to be supplied to the filters based on column type
   new_lims = lapply(data, function(x) {
     if (inherits(x, c('numeric'))) {
       range(x)
@@ -490,15 +489,13 @@ updateFilters = function(proxy, data) {
       stop('updateFilters() requires all columns to be one of the following classes: numeric, factor, logical, Date, POSIXt')
     }
   })
-  
-  # As of DT 0.19, numeric values fed to the sliders need to be multiplied by 10; ex. 5.7 will be converted to 57
-  new_lims = setNames(
-    lapply(new_lims, function(x) {if (is.numeric(x)) {x*10} else {x}}),
-    NULL
-  )
-  
+
+  # as of DT 0.19, numeric values fed to the sliders need to be multiplied by
+  # 10; e.g. 5.7 will be converted to 57
+  new_lims = unname(lapply(new_lims, function(x) if (is.numeric(x)) x * 10 else x))
+
   # Trigger the JavaScript to update the filters
-  invokeRemote(proxy, "updateFilters", list(tableId = proxy$id, new_lims = new_lims))
+  invokeRemote(proxy, 'updateFilters', list(tableId = proxy$id, new_lims = new_lims))
 }
 
 invokeRemote = function(proxy, method, args = list()) {

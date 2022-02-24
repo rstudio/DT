@@ -6,6 +6,8 @@
 
 - `formatXXX()` functions now gain a new argument `rows` (starting from 1), which can be used to specify the rows that the "style" should be applied to. Note that it only works expected in the client-side processing mode, i.e., `server = FALSE`. `formatStyle()` is the only exception that doesn't have this argument and should use `styleRow()` instead (thanks, @jrecasens @shrektan #520).
 
+- Added a new function `updateFilters` to allow users to update the filters of a DataTable object that has been updated by reference, such as with `replaceData()` (thanks, @giadasp #934, @wholmes105 #939).
+
 ## MAJOR CHANGES
 
 - Now users can provide column names of the data to `options$columnDefs$targets`. Previously, it only supports column indexes or "_all" (thanks, @shrektan #948).
@@ -37,8 +39,6 @@
 - Now the user is able to restrict the editing to accept only numbers by, e.g., `datatable(..., editable = list(target = "cell", numeric = 3:5))`. By default, the editing is restricted to numbers for all numeric columns; set `numeric = "none"` to disable this behavior (thanks, @stla, #860 #824).
 
 - Now the user can request text areas for the editing by, e.g., `datatable(..., editable = list(target = "cell", area = 1:2))`. Text areas are useful for cells with large contents (thanks, @stla #860, @fabiangehring #671).
-
-- The new function `updateFilters` has been added to allow users to update the filters of a `datatable` object that has been updated by reference, such as with `replaceData`. (thanks, @giadasp #934, @wholmes105 #939)
 
 ## MAJOR CHANGES
 
