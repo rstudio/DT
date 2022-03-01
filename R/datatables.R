@@ -524,14 +524,19 @@ colDefsTgtHandle = function(columnDefs, names) {
       targets
     }
   }
-  error_msg <- "options$columnDefs must be `NULL` or a list of list, where each of the internal list must contain a `targets` element."
-  lapply(columnDefs, function(x) {
-    if (!is.list(x) || !"targets" %in% names(x)) {
-      stop(error_msg, call. = FALSE)
+  error_msg = "options$columnDefs must be `NULL` or a list of sub-lists, where each sub-list must contain a `targets` element."
+  check = function(x) {
+    if (is.list(x)) {
+      if (is.null(names(x))) return(lapply(x, check))
+      if ('targets' %in% names(x)) {
+        x[['targets']] = convert(x[['targets']], names)
+        return(x)
+      }
     }
-    x[["targets"]] = convert(x[["targets"]], names)
-    x
-  })
+    str(columnDefs)
+    stop(error_msg, call. = FALSE)
+  }
+  lapply(columnDefs, check)
 }
 
 # convert character indices to numeric
