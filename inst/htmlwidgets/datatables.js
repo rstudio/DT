@@ -95,7 +95,7 @@ var set_filter_lims = function(td, new_vals) {
 
   } else if (['number', 'integer', 'date', 'time'].includes(td.getAttribute('data-type'))) {
     // Note what the new limits will be just for this filter
-    var new_lims = new_vals.slice(); 
+    var new_lims = new_vals.slice();
 
     // Determine the current values and limits
     var slider = $(td).find('.noUi-target').eq(0);
