@@ -1424,8 +1424,11 @@ HTMLWidgets.widget({
           if (i === 0) return;  // first column is row names
           k = i - 1;
         }
-        // Update the filters to reflect the updated data
-        set_filter_lims(td, newLims[k]);
+        // Update the filters to reflect the updated data.
+        // Allow "falsy" (e.g. NULL) to signify a no-op.
+        if (newLims[k]) {
+          set_filter_lims(td, newLims[k]);
+        }
       });
     };
 
