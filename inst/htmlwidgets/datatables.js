@@ -94,11 +94,15 @@ var set_filter_lims = function(td, new_vals) {
     dropdown.setValue(old_vals);
 
   } else if (['number', 'integer', 'date', 'time'].includes(td.getAttribute('data-type'))) {
+    // Apply internal scaling to new limits
+    var slider = $(td).find('.noUi-target').eq(0);
+    var scale = Math.pow(10, Math.max(0, +slider.data('scale') || 0));
+    new_vals = new_vals.map(function(x) { return x * scale; });
+
     // Note what the new limits will be just for this filter
     var new_lims = new_vals.slice();
-
+    
     // Determine the current values and limits
-    var slider = $(td).find('.noUi-target').eq(0);
     var old_vals = slider.val().map(Number);
     var old_lims = slider.noUiSlider('options').range;
     old_lims = [old_lims.min, old_lims.max];

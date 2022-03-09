@@ -480,11 +480,13 @@ updateFilters = function(proxy, data) {
     if (is.numeric(x)) {
       range(x)
     } else if (inherits(x, c('Date'))) {
-      as.numeric(as.POSIXct.Date(range(x))) * 100
+      as.numeric(as.POSIXct.Date(range(x))) * 1000
     } else if (inherits(x, 'POSIXt')) {
-      round(as.numeric(range(x)), digits = 2) * 100000
-    } else if (inherits(x, c('factor', 'logical'))) {
-      as.character(unique(x))
+      round(as.numeric(range(x)), digits = 2) * 1000
+    } else if (is.logical(x)) {
+      c("true", "false", if (anyNA(x)) "na")
+    } else if (is.factor(x)) {
+      levels(x)
     } else if (is.character(x)) {
       # Character cols only have search -- no concept of limits. Do nothing.
     } else {
@@ -492,9 +494,11 @@ updateFilters = function(proxy, data) {
     }
   })
 
-  # as of DT 0.19, numeric values fed to the sliders need to be multiplied by
-  # 10; e.g. 5.7 will be converted to 57
-  new_lims = unname(lapply(new_lims, function(x) if (is.numeric(x)) x * 10 else x))
+  # make sure JS gets an array, not an object
+  new_lims = unname(new_lims)
+
+  # ensure limits are always passed as JS arrays, not scalars
+  new_lims = lapply(new_lims, as.list)
 
   # Trigger the JavaScript to update the filters
   invokeRemote(proxy, 'updateFilters', list(new_lims))
