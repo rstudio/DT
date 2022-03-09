@@ -494,6 +494,9 @@ updateFilters = function(proxy, data) {
   # 10; e.g. 5.7 will be converted to 57
   new_lims = unname(lapply(new_lims, function(x) if (is.numeric(x)) x * 10 else x))
 
+  # ensure limits are always passed as JS arrays, not scalars
+  new_lims = lapply(new_lims, as.list)
+
   # Trigger the JavaScript to update the filters
   invokeRemote(proxy, 'updateFilters', list(new_lims))
 }
