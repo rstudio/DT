@@ -1,5 +1,10 @@
 # CHANGES IN DT VERSION 0.22
 
+- Enhancements to `updateFilters()` (#971):
+  - Added support for data with integer and character columns (@mikmart #972).
+  - Fixed an issue with length 1 options causing filters not to update (@mikmart #973).
+  - Fixed an issue with slider limits sometimes being incorrectly scaled (@mikmart #974).
+  - Updates to factor and logical filters now match the initial render (@mikmart #975).
 
 # CHANGES IN DT VERSION 0.21
 

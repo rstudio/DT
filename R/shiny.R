@@ -477,16 +477,18 @@ replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'a
 updateFilters = function(proxy, data) {
   # calculate the values to be supplied to the filters based on column type
   new_lims = lapply(data, function(x) {
-    if (inherits(x, c('numeric'))) {
+    if (is.numeric(x)) {
       range(x)
-    } else if (is.logical(x)) {
-      c("true", "false", if (anyNA(x)) "na")
-    } else if (is.factor(x)) {
-      levels(x)
     } else if (inherits(x, c('Date'))) {
       as.numeric(as.POSIXct.Date(range(x))) * 1000
     } else if (inherits(x, 'POSIXt')) {
       round(as.numeric(range(x)), digits = 2) * 1000
+    } else if (is.logical(x)) {
+      c("true", "false", if (anyNA(x)) "na")
+    } else if (is.factor(x)) {
+      levels(x)
+    } else if (is.character(x)) {
+      # Character cols only have search -- no concept of limits. Do nothing.
     } else {
       stop('updateFilters() requires all columns to be one of the following classes: numeric, factor, logical, Date, POSIXt')
     }
