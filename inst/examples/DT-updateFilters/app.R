@@ -2,6 +2,7 @@ library(shiny)
 library(DT)
 
 tbl <- data.frame(
+  int = -2:2,
   num1 = replace(seq(-2, 2) * 10, 1, Inf),
   num2 = seq(-2, 2) / 1,
   num3 = seq(-2, 2) / 10,
@@ -9,7 +10,8 @@ tbl <- data.frame(
   dttm = round(Sys.time()) + seq(-2, 2) * 3600,
   fct1 = factor(c("A", rep("B", 4)), levels = c("A", "B", "C")),
   fct2 = factor(c(rep("A", 4), "B"), levels = c("A", "B", "C")),
-  bool = c(NA, TRUE, TRUE, FALSE, FALSE)
+  bool = c(NA, TRUE, TRUE, FALSE, FALSE),
+  chr = c("foo", "bar", "baz", "baz", "baz")
 )
 
 ui <- fluidPage(
