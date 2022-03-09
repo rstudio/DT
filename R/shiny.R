@@ -482,17 +482,16 @@ updateFilters = function(proxy, data) {
     } else if (inherits(x, c('factor', 'logical'))) {
       as.character(unique(x))
     } else if (inherits(x, c('Date'))) {
-      as.numeric(as.POSIXct.Date(range(x))) * 100
+      as.numeric(as.POSIXct.Date(range(x))) * 1000
     } else if (inherits(x, 'POSIXt')) {
-      round(as.numeric(range(x)), digits = 2) * 100000
+      round(as.numeric(range(x)), digits = 2) * 1000
     } else {
       stop('updateFilters() requires all columns to be one of the following classes: numeric, factor, logical, Date, POSIXt')
     }
   })
 
-  # as of DT 0.19, numeric values fed to the sliders need to be multiplied by
-  # 10; e.g. 5.7 will be converted to 57
-  new_lims = unname(lapply(new_lims, function(x) if (is.numeric(x)) x * 10 else x))
+  # make sure JS gets an array, not an object
+  new_lims = unname(new_lims)
 
   # ensure limits are always passed as JS arrays, not scalars
   new_lims = lapply(new_lims, as.list)
