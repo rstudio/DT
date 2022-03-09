@@ -479,8 +479,10 @@ updateFilters = function(proxy, data) {
   new_lims = lapply(data, function(x) {
     if (inherits(x, c('numeric'))) {
       range(x)
-    } else if (inherits(x, c('factor', 'logical'))) {
-      as.character(unique(x))
+    } else if (is.logical(x)) {
+      c("true", "false", if (anyNA(x)) "na")
+    } else if (is.factor(x)) {
+      levels(x)
     } else if (inherits(x, c('Date'))) {
       as.numeric(as.POSIXct.Date(range(x))) * 100
     } else if (inherits(x, 'POSIXt')) {
