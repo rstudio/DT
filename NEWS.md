@@ -5,6 +5,7 @@
   - Fixed an issue with length 1 options causing filters not to update (@mikmart #973).
   - Fixed an issue with slider limits sometimes being incorrectly scaled (@mikmart #974).
   - Updates to factor and logical filters now match the initial render (@mikmart #975).
+  - Disabled status is now also affected by updates (@mikmart #977).
 
 # CHANGES IN DT VERSION 0.21
 
