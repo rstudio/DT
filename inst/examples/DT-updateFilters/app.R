@@ -3,12 +3,11 @@ library(DT)
 
 tbl <- data.frame(
   int = -2:2,
-  num1 = replace(seq(-2, 2) * 10, 1, Inf),
-  num2 = seq(-2, 2) / 1,
-  num3 = seq(-2, 2) / 10,
+  num1 = seq(-2, 2) / 10,
+  num2 = replace(seq(-2, 2) * 10, 1, -Inf),
   date = Sys.Date() + seq(-2, 2),
   dttm = round(Sys.time()) + seq(-2, 2) * 3600,
-  fct1 = factor(c("A", rep("B", 4)), levels = c("A", "B", "C")),
+  fct1 = factor(c("A", rep("B", 3), "C")),
   fct2 = factor(c(rep("A", 4), "B"), levels = c("A", "B", "C")),
   bool = c(NA, TRUE, TRUE, FALSE, FALSE),
   chr = c("foo", "bar", "baz", "baz", "baz")
@@ -16,6 +15,7 @@ tbl <- data.frame(
 
 ui <- fluidPage(
   sliderInput("rows", "Slice rows", 0, 5, value = c(1, 4), step = 1),
+  checkboxInput("drop_levels", "Drop unused factor levels"),
   DTOutput("table_sliced"),
   tags$hr(),
   DTOutput("table_original"),
@@ -30,13 +30,16 @@ server <- function(input, output, session) {
   output$table_sliced <- renderDT(simple_dt(tbl, caption = "Sliced data"))
   output$table_original <- renderDT(simple_dt(tbl, caption = "Original data"))
 
-  # Update table_sliced based on input slider row selection
-  tbl_slice <- eventReactive(input$rows, {
+  # Slice the table based on input slider
+  tbl_slice <- reactive({
     r1 <- input$rows[1]
     r2 <- input$rows[2]
-    tbl[seq(r1, r2), ]
+    tbl <- tbl[seq(r1, r2), ]
+    if (input$drop_levels)
+      droplevels(tbl) else tbl
   })
 
+  # Replace data and update filters without re-rendering
   proxy <- dataTableProxy("table_sliced")
   observeEvent(tbl_slice(), {
     replaceData(proxy, tbl_slice())
