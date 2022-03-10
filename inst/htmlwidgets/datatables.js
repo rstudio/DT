@@ -73,6 +73,11 @@ window.DTWidget = DTWidget;
 
 // A helper function to update the properties of existing filters
 var setFilterProps = function(td, props) {
+  // Update enabled/disabled state
+  var $input = $(td).find("input").first();
+  var searchable = $input.data('searchable', searchable);
+  $input.prop('disabled', !searchable || props.disabled);
+
   // Based on the filter type, set its new values
   var type = td.getAttribute('data-type');
   if (['factor', 'logical'].includes(type)) {
@@ -439,6 +444,7 @@ HTMLWidgets.widget({
         var disabled = $input.prop('disabled');
         var searchable = table.settings()[0].aoColumns[i].bSearchable;
         $input.prop('disabled', !searchable || disabled);
+        $input.data('searchable', searchable); // for updating later
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
