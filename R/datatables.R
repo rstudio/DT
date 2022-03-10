@@ -625,13 +625,25 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
   f(tags$tr(lapply(escapeColNames(names, escape), tags$th)), ...)
 }
 
-#' @importFrom htmltools tagList
 filterRow = function(
   data, rownames = TRUE,
   filter = list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
 ) {
   if (filter$position == 'none') return()
-  tds = list()
+
+  filters = columnFilters(data)
+  row = columnFilterRow(filters, options = filter)
+
+  # no filter for row names (may change in future)
+  if (rownames) {
+    row$children[[1]][[1]] = tags$td('')
+  }
+
+  row
+}
+
+# calculate properties needed to represent a filter control in JavaScript
+columnFilters = function(data) {
   decimals = function(x) {
     x = abs(na.omit(x))
     if (length(x) == 0) return()
@@ -639,76 +651,115 @@ filterRow = function(
     while (i < 15 && any(round(x, i) != x)) i = i + 1L
     if (i > 0L) i
   }
-  for (j in seq_len(ncol(data))) {
-    if (j == 1 && rownames) {
-      tds[[j]] = tags$td('')  # no filter for row names (may change in future)
-      next
-    }
-    t = NULL
-    d = data[, j]
-    x = if (is.numeric(d) || is.Date(d)) {
-      t = if (is.numeric(d)) {
+
+  lapply(data, function(d) {
+    type = NULL
+    control = 'none'
+    params = list()
+    disabled = FALSE
+
+    if (is.numeric(d) || is.Date(d)) {
+      control = 'slider'
+      type = if (is.numeric(d)) {
         if (is.integer(d)) 'integer' else 'number'
       } else 'time'
-      if (t == 'time') {
+      
+      # convert date/times to JavaScript format
+      if (type == 'time') {
         # JavaScript does have the Date type like R (YYYY-mm-dd without time)
         if (inherits(d, 'Date')) {
-          d = as.POSIXct(d); t = 'date'
+          d = as.POSIXct(d); type = 'date'
         }
         d = as.numeric(d) * 1000  # use milliseconds for JavaScript
       }
+
+      # find range
       suppressWarnings({
         d1 = min(d, na.rm = TRUE)
         d2 = max(d, na.rm = TRUE)
       })
+
+      # find scale to avoid fp issues
       dec = decimals(d)
       if (!is.null(dec)) {
         d1 = floor(d1 * 10^dec) / 10^dec
         d2 = ceiling(d2 * 10^dec) / 10^dec
       }
-      is_vert <- filter$vertical
 
-      if (is.finite(d1) && is.finite(d2) && d2 > d1) tags$div(
-        style = paste0('display: none;position: absolute;width: 200px;opacity: ', filter$opacity),
-        tags$div(`data-min` = d1, `data-max` = d2, `data-scale` = dec),
-        if (is_vert) tagList(tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
-                             tags$span(style = 'display: none;', HTML('&nbsp;')),
-                             tags$span(style = 'position: absolute; top: 2px; left: 15px;')
-                             )
-        else tagList(tags$span(style = 'float: left;'),
-                     tags$span(style = 'float: right;'))
-      ) else {
-        t = 'disabled'
-        NULL
+      disabled = !(is.finite(d1) && is.finite(d2) && d2 > d1)
+      if (disabled) {
+        # still need some finite numbers for noUiSlider to not crash
+        d1 = 0
+        d2 = 1
       }
+
+      params = list(min = d1, max = d2, scale = dec)
     } else if (is.factor(d) || is.logical(d)) {
-      if (length(unique(d)) <= 1) {
-        t = 'disabled'
-      } else if (is.logical(d)) {
-        t = 'logical'
-        d = c('true', 'false', if (any(is.na(d))) 'na')
+      control = 'select'
+      disabled = (length(unique(d)) <= 1)
+
+      if (is.logical(d)) {
+        type = 'logical'
+        d = c('true', 'false', if (anyNA(d)) 'na')
       } else {
-        t = 'factor'
+        type = 'factor'
         d = levels(d)
       }
-      if (t != 'disabled') tags$div(
+
+      opts = native_encode(jsonlite::toJSON(as.character(d)))
+      params = list(options = opts)
+    } else if (is.character(d)) {
+      type = 'character'
+      disabled = (length(unique(d)) <= 1)
+    }
+
+    list(control = control, type = type, params = params, disabled = disabled)
+  })
+}
+
+#' @importFrom htmltools tagList
+columnFilterRow = function(filters, options = list()) {
+  defaults = list(clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
+  options = modifyList(defaults, options)
+
+  tds = lapply(filters, function(f) {
+    p = f$params
+    
+    # create HTML for the control element
+    ctrl = if (f$control == 'slider') {
+      tags$div(
+        style = paste0('display: none;position: absolute;width: 200px;opacity: ', options$opacity),
+        tags$div(`data-min` = p$min, `data-max` = p$max, `data-scale` = p$scale),
+        if (options$vertical) tagList(
+          tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
+          tags$span(style = 'display: none;', HTML('&nbsp;')),
+          tags$span(style = 'position: absolute; top: 2px; left: 15px;')
+        )
+        else tagList(
+          tags$span(style = 'float: left;'),
+          tags$span(style = 'float: right;')
+        )
+      )
+    } else if (f$control == 'select') {
+      tags$div(
         tags$select(
-          multiple = 'multiple', style = 'width: 100%;',
-          `data-options` = native_encode(jsonlite::toJSON(as.character(d)))
+          multiple = 'multiple',
+          style = 'width: 100%;',
+          `data-options` = p$options
         ),
         style = 'width: 100%; display: none;'
       )
-    } else if (is.character(d)) {
-      t = if (length(unique(d)) <= 1) 'disabled' else 'character'
-      NULL
     }
-    clear = filter$clear
-    input = if (filter$plain) {
+
+    # create HTML for the search box input
+    clear = options$clear
+    input = if (options$plain) {
       tags$div(
         style = 'margin-bottom: auto;',
         tags$input(
           type = if (clear) 'search' else 'text', placeholder = 'All',
-          style = 'width: 100%;'
+          style = 'width: 100%;',
+          disabled = if (f$disabled) ""
         )
       )
     } else {
@@ -717,16 +768,18 @@ filterRow = function(
         style = 'margin-bottom: auto;',
         tags$input(
           type = 'search', placeholder = 'All', class = 'form-control',
-          style = 'width: 100%;'
+          style = 'width: 100%;',
+          disabled = if (f$disabled) ""
         ),
         if (clear) tags$span(
           class = 'glyphicon glyphicon-remove-circle form-control-feedback'
         )
       )
     }
-    x = tagList(input, x)
-    tds[[j]] = tags$td(x, `data-type` = t, style = 'vertical-align: top;')
-  }
+    
+    tags$td(tagList(input, ctrl), `data-type` = f$type, style = 'vertical-align: top;')
+  })
+
   tags$tr(tds)
 }
 

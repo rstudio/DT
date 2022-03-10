@@ -433,7 +433,9 @@ HTMLWidgets.widget({
 
         var $td = $(td), type = $td.data('type'), filter;
         var $input = $td.children('div').first().children('input');
-        $input.prop('disabled', !table.settings()[0].aoColumns[i].bSearchable || type === 'disabled');
+        var disabled = $input.prop('disabled');
+        var searchable = table.settings()[0].aoColumns[i].bSearchable;
+        $input.prop('disabled', !searchable || disabled);
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
