@@ -71,12 +71,20 @@ DTWidget.formatDate = function(data, method, params) {
 
 window.DTWidget = DTWidget;
 
-// A helper function to update the lims of the existing filters
-var set_filter_lims = function(td, new_vals) {
+// A helper function to update the properties of existing filters
+var setFilterProps = function(td, props) {
+  // Update enabled/disabled state
+  var $input = $(td).find("input").first();
+  var searchable = $input.data('searchable', searchable);
+  $input.prop('disabled', !searchable || props.disabled);
+
   // Based on the filter type, set its new values
-  if (['factor', 'logical'].includes(td.getAttribute('data-type'))) {
+  var type = td.getAttribute('data-type');
+  if (['factor', 'logical'].includes(type)) {
     // Reformat the new dropdown options for use with selectize
-    new_vals = new_vals.map(function(item) {return {text: item, value: item}});
+    var new_vals = props.params.options.map(function(item) {
+      return { text: item, value: item };
+    });
 
     // Find the selectize object
     var dropdown = $(td).find('.selectized').eq(0)[0].selectize;
@@ -93,11 +101,11 @@ var set_filter_lims = function(td, new_vals) {
     // Preserve the existing values
     dropdown.setValue(old_vals);
 
-  } else if (['number', 'integer', 'date', 'time'].includes(td.getAttribute('data-type'))) {
-    // Apply internal scaling to new limits
+  } else if (['number', 'integer', 'date', 'time'].includes(type)) {
+    // Apply internal scaling to new limits. Updating scale not yet implemented.
     var slider = $(td).find('.noUi-target').eq(0);
     var scale = Math.pow(10, Math.max(0, +slider.data('scale') || 0));
-    new_vals = new_vals.map(function(x) { return x * scale; });
+    var new_vals = [props.params.min, props.params.max].map(function(x) { return x * scale; });
 
     // Note what the new limits will be just for this filter
     var new_lims = new_vals.slice();
@@ -433,7 +441,10 @@ HTMLWidgets.widget({
 
         var $td = $(td), type = $td.data('type'), filter;
         var $input = $td.children('div').first().children('input');
-        $input.prop('disabled', !table.settings()[0].aoColumns[i].bSearchable || type === 'disabled');
+        var disabled = $input.prop('disabled');
+        var searchable = table.settings()[0].aoColumns[i].bSearchable;
+        $input.prop('disabled', !searchable || disabled);
+        $input.data('searchable', searchable); // for updating later
         $input.on('input blur', function() {
           $input.next('span').toggle(Boolean($input.val()));
         });
@@ -1420,18 +1431,18 @@ HTMLWidgets.widget({
     }
 
     // update table filters (set new limits of sliders)
-    methods.updateFilters = function(newLims) {
+    methods.updateFilters = function(newProps) {
       // loop through each filter in the filter row
       filterRow.each(function(i, td) {
         var k = i;
-        if (filterRow.length > newLims.length) {
+        if (filterRow.length > newProps.length) {
           if (i === 0) return;  // first column is row names
           k = i - 1;
         }
         // Update the filters to reflect the updated data.
         // Allow "falsy" (e.g. NULL) to signify a no-op.
-        if (newLims[k]) {
-          set_filter_lims(td, newLims[k]);
+        if (newProps[k]) {
+          setFilterProps(td, newProps[k]);
         }
       });
     };

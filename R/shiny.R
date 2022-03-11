@@ -475,33 +475,9 @@ replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'a
 #' @rdname replaceData
 #' @export
 updateFilters = function(proxy, data) {
-  # calculate the values to be supplied to the filters based on column type
-  new_lims = lapply(data, function(x) {
-    if (is.numeric(x)) {
-      range(x)
-    } else if (inherits(x, c('Date'))) {
-      as.numeric(as.POSIXct.Date(range(x))) * 1000
-    } else if (inherits(x, 'POSIXt')) {
-      round(as.numeric(range(x)), digits = 2) * 1000
-    } else if (is.logical(x)) {
-      c("true", "false", if (anyNA(x)) "na")
-    } else if (is.factor(x)) {
-      levels(x)
-    } else if (is.character(x)) {
-      # Character cols only have search -- no concept of limits. Do nothing.
-    } else {
-      stop('updateFilters() requires all columns to be one of the following classes: numeric, factor, logical, Date, POSIXt')
-    }
-  })
-
   # make sure JS gets an array, not an object
-  new_lims = unname(new_lims)
-
-  # ensure limits are always passed as JS arrays, not scalars
-  new_lims = lapply(new_lims, as.list)
-
-  # Trigger the JavaScript to update the filters
-  invokeRemote(proxy, 'updateFilters', list(new_lims))
+  filters = unname(columnFilters(data))
+  invokeRemote(proxy, 'updateFilters', list(filters))
 }
 
 invokeRemote = function(proxy, method, args = list()) {
