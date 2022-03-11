@@ -2,10 +2,10 @@ library(shiny)
 library(DT)
 
 tbl <- data.frame(
-  int = -2:2,
+  int = seq(-2, 2),
   num1 = seq(-2, 2) / 10,
   num2 = replace(seq(-2, 2) * 10, 1, -Inf),
-  date = Sys.Date() + seq(-2, 2),
+  date = replace(Sys.Date() + seq(-2, 2), 1, NA),
   dttm = round(Sys.time()) + seq(-2, 2) * 3600,
   fct1 = factor(c("A", rep("B", 3), "C")),
   fct2 = factor(c(rep("A", 4), "B"), levels = c("A", "B", "C")),

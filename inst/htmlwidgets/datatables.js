@@ -74,8 +74,8 @@ window.DTWidget = DTWidget;
 // A helper function to update the properties of existing filters
 var setFilterProps = function(td, props) {
   // Update enabled/disabled state
-  var $input = $(td).find("input").first();
-  var searchable = $input.data('searchable', searchable);
+  var $input = $(td).find('input').first();
+  var searchable = $input.data('searchable');
   $input.prop('disabled', !searchable || props.disabled);
 
   // Based on the filter type, set its new values
@@ -105,11 +105,11 @@ var setFilterProps = function(td, props) {
     // Apply internal scaling to new limits. Updating scale not yet implemented.
     var slider = $(td).find('.noUi-target').eq(0);
     var scale = Math.pow(10, Math.max(0, +slider.data('scale') || 0));
-    var new_vals = [props.params.min, props.params.max].map(function(x) { return x * scale; });
+    var new_vals = [props.params.min * scale, props.params.max * scale];
 
     // Note what the new limits will be just for this filter
     var new_lims = new_vals.slice();
-    
+
     // Determine the current values and limits
     var old_vals = slider.val().map(Number);
     var old_lims = slider.noUiSlider('options').range;
