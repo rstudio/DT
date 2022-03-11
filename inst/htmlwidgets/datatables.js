@@ -75,7 +75,7 @@ window.DTWidget = DTWidget;
 var setFilterProps = function(td, props) {
   // Update enabled/disabled state
   var $input = $(td).find("input").first();
-  var searchable = $input.data('searchable', searchable);
+  var searchable = $input.data('searchable');
   $input.prop('disabled', !searchable || props.disabled);
 
   // Based on the filter type, set its new values
