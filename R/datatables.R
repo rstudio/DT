@@ -734,8 +734,7 @@ columnFilterRow = function(filters, options = list()) {
           tags$span(style = 'position: absolute; bottom: 0px; left: 15px;'),
           tags$span(style = 'display: none;', HTML('&nbsp;')),
           tags$span(style = 'position: absolute; top: 2px; left: 15px;')
-        )
-        else tagList(
+        ) else tagList(
           tags$span(style = 'float: left;'),
           tags$span(style = 'float: right;')
         )
