@@ -630,16 +630,11 @@ dataTablesFilter = function(data, params) {
     if ((k <- col[['search']][['value']]) == '') next
     j = as.integer(j)
     dj = data[, j + 1]
-    ij = if (is.numeric(dj) || is.Date(dj)) {
-      which(filterRange(dj, k))
-    } else if (is.factor(dj)) {
-      which(dj %in% fromJSON(k))
-    } else if (is.logical(dj)) {
-      which(dj %in% as.logical(fromJSON(k)))
-    } else {
-      grep2(k, as.character(dj), fixed = col[['search']][['regex']] == 'false',
-            ignore.case = ci)
-    }
+    col_opts = list(
+      regex = col[['search']][['regex']] != 'false',
+      caseInsensitive = ci
+    )
+    ij = doColumnSearch(dj, k, options = col_opts)
     i = intersect(ij, i)
     if (length(i) == 0) break
   }
@@ -698,6 +693,25 @@ dataTablesFilter = function(data, params) {
     DT_rows_all = iAll,
     DT_rows_current = iCurrent
   )
+}
+
+#' @export
+doColumnSearch = function(x, search_string, options = list()) {
+  if (length(search_string) == 0 || search_string == '') return(seq_along(x))
+  if (is.numeric(x) || is.Date(x)) {
+    which(filterRange(x, search_string))
+  } else if (is.factor(x)) {
+    which(x %in% fromJSON(search_string))
+  } else if (is.logical(x)) {
+    which(x %in% as.logical(fromJSON(search_string)))
+  } else {
+    grep2(
+      search_string,
+      as.character(x),
+      fixed = !(options$regex %||% FALSE),
+      ignore.case = options$caseInsensitive %||% TRUE
+    )
+  }
 }
 
 # when both ignore.case and fixed are TRUE, we use grep(ignore.case = FALSE,
