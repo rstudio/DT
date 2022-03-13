@@ -152,7 +152,6 @@ The length of arguments other than \code{table} should be 1 or the same as
   the length of \code{columns}.
 }
 \examples{
-# !formatR
 library(DT)
 m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
 colnames(m) = head(LETTERS, ncol(m))
