@@ -587,7 +587,6 @@ sessionDataURL = function(session, data, id, filter) {
 dataTablesFilter = function(data, params) {
   n = nrow(data)
   q = params
-  ci = q$search[['caseInsensitive']] == 'true'
   # users may be updating the table too frequently
   if (length(q$columns) != ncol(data)) return(list(
     draw = as.integer(q$draw),
@@ -598,29 +597,21 @@ dataTablesFilter = function(data, params) {
     DT_rows_current = list()
   ))
 
+  # which columns are searchable?
+  searchable = logical(ncol(data))
+  for (j in seq_len(ncol(data))) {
+    if (q$columns[[j]][['searchable']] == 'true') searchable[j] = TRUE
+  }
+
   # global searching
   # for some reason, q$search might be NULL, leading to error `if (logical(0))`
-  if (length(v <- q$search[['value']]) > 0) {
-    if (!identical(q$search[['smart']], 'false')) {
-      v = unlist(strsplit(gsub('^\\s+|\\s+$', '', v), '\\s+'))
-    }
-  }
-  if (length(v) == 0) v = ''
-  m = if ((nv <- length(v)) > 1) array(FALSE, c(dim(data), nv)) else logical(n)
-  # TODO: this searching method may not be efficient and need optimization
-  i = if (!identical(v, '')) {
-    for (j in seq_len(ncol(data))) {
-      if (q$columns[[j]][['searchable']] != 'true') next
-      for (k in seq_len(nv)) {
-        i0 = grep2(
-          v[k], as.character(data[, j]), fixed = q$search[['regex']] == 'false',
-          ignore.case = ci
-        )
-        if (nv > 1) m[i0, j, k] = TRUE else m[i0] = TRUE
-      }
-    }
-    which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
-  } else seq_len(n)
+  global_opts = list(
+    smart = !identical(q$search[['smart']], 'false'),
+    regex = q$search[['regex']] != 'false',
+    caseInsensitive = q$search[['caseInsensitive']] == 'true'
+  )
+
+  i = doGlobalSearch(data[searchable], q$search[['value']], options = global_opts)
 
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
@@ -630,11 +621,11 @@ dataTablesFilter = function(data, params) {
     if ((k <- col[['search']][['value']]) == '') next
     j = as.integer(j)
     dj = data[, j + 1]
-    col_opts = list(
+    column_opts = list(
       regex = col[['search']][['regex']] != 'false',
-      caseInsensitive = ci
+      caseInsensitive = global_opts$caseInsensitive
     )
-    ij = doColumnSearch(dj, k, options = col_opts)
+    ij = doColumnSearch(dj, k, options = column_opts)
     i = intersect(ij, i)
     if (length(i) == 0) break
   }
@@ -693,6 +684,33 @@ dataTablesFilter = function(data, params) {
     DT_rows_all = iAll,
     DT_rows_current = iCurrent
   )
+}
+
+#' @export
+doGlobalSearch = function(data, search_string, options = list()) {
+  n = nrow(data)
+  if (length(v <- search_string) > 0) {
+    if (options$smart %||% TRUE) {
+      # https://datatables.net/reference/option/search.smart
+      v = unlist(strsplit(gsub('^\\s+|\\s+$', '', v), '\\s+'))
+    }
+  }
+  if (length(v) == 0) v = ''
+  m = if ((nv <- length(v)) > 1) array(FALSE, c(dim(data), nv)) else logical(n)
+  # TODO: this searching method may not be efficient and need optimization
+  if (!identical(v, '')) {
+    for (j in seq_len(ncol(data))) {
+      for (k in seq_len(nv)) {
+        i0 = grep2(
+          v[k], as.character(data[, j]),
+          fixed = !(options$regex %||% FALSE),
+          ignore.case = options$caseInsensitive %||% TRUE
+        )
+        if (nv > 1) m[i0, j, k] = TRUE else m[i0] = TRUE
+      }
+    }
+    which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
+  } else seq_len(n)
 }
 
 #' @export
