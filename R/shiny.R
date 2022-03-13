@@ -724,8 +724,7 @@ doColumnSearch = function(x, search_string, options = list()) {
     which(x %in% as.logical(fromJSON(search_string)))
   } else {
     grep2(
-      search_string,
-      as.character(x),
+      search_string, as.character(x),
       fixed = !(options$regex %||% FALSE),
       ignore.case = options$caseInsensitive %||% TRUE
     )
