@@ -46,6 +46,7 @@ table option \code{ajax} automatically. If you are familiar with
 function, you may call this function to get an Ajax URL.
 }
 \examples{
+# !formatR
 DTApp = function(data, ..., options = list()) {
   library(shiny)
   library(DT)
