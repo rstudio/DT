@@ -716,6 +716,8 @@ dataTablesFilter = function(data, params) {
 #'
 #' @examples
 #' doGlobalSearch(iris, 'versi')
+#' doGlobalSearch(iris, "v.r.i", options = list(regex = TRUE))
+#'
 #' doColumnSearch(iris$Species, '["versicolor"]')
 #' doColumnSearch(iris$Sepal.Length, '4 ... 5')
 #' @export
