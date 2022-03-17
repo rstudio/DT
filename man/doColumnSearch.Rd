@@ -20,7 +20,7 @@ associated filter control.}
 \item{options}{a list of options used to control how searching character
 values works. Supported options are \code{regex}, \code{caseInsensitive}
 and (for global search)
-\code{\href{https://datatables.net/reference/option/search.smart}{smart}}.}
+\href{https://datatables.net/reference/option/search.smart}{\code{smart}}.}
 
 \item{data}{a data frame}
 }

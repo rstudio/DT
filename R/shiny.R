@@ -704,7 +704,7 @@ dataTablesFilter = function(data, params) {
 #' @param options a list of options used to control how searching character
 #'   values works. Supported options are \code{regex}, \code{caseInsensitive}
 #'   and (for global search)
-#'   \code{\href{https://datatables.net/reference/option/search.smart}{smart}}.
+#'   \href{https://datatables.net/reference/option/search.smart}{\code{smart}}.
 #' @param data a data frame
 #'
 #' @return An integer vector of filtered row indices
