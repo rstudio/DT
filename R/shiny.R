@@ -686,6 +686,57 @@ dataTablesFilter = function(data, params) {
   )
 }
 
+#' Server-side searching
+#'
+#' \code{doGlobalSearch()} can be used to search a data frame given the search
+#' string typed by the user into the global search box of a
+#' \code{\link{datatable}}. \code{doColumnSearch()} does the same for a vector
+#' given the search string typed into a column filter. These functions are used
+#' internally by the default \code{filter} function passed to
+#' \code{\link{dataTableAjax}()}, allowing you to replicate the search results
+#' that server-side processing returns.
+#'
+#' @param x a vector, the type of which determines the expected
+#'   \code{search_string} format
+#' @param search_string a string that determines what to search for. The format
+#'   depends on the type of input, matching what a user would type in the
+#'   associated filter control.
+#' @param options a list of options used to control how searching character
+#'   values works. Supported options are \code{regex}, \code{caseInsensitive}
+#'   and (for global search)
+#'   \code{\href{https://datatables.net/reference/option/search.smart}{smart}}.
+#' @param data a data frame
+#'
+#' @return An integer vector of filtered row indices
+#'
+#' @seealso The column filters section online for search string formats:
+#'   \url{https://rstudio.github.io/DT/}
+#' @seealso Accessing the search strings typed by a user in a Shiny app:
+#'   \url{https://rstudio.github.io/DT/shiny.html}
+#'
+#' @examples
+#' doGlobalSearch(iris, 'versi')
+#' doColumnSearch(iris$Species, '["versicolor"]')
+#' doColumnSearch(iris$Sepal.Length, '4 ... 5')
+#' @export
+doColumnSearch = function(x, search_string, options = list()) {
+  if (length(search_string) == 0 || search_string == '') return(seq_along(x))
+  if (is.numeric(x) || is.Date(x)) {
+    which(filterRange(x, search_string))
+  } else if (is.factor(x)) {
+    which(x %in% fromJSON(search_string))
+  } else if (is.logical(x)) {
+    which(x %in% as.logical(fromJSON(search_string)))
+  } else {
+    grep2(
+      search_string, as.character(x),
+      fixed = !(options$regex %||% FALSE),
+      ignore.case = options$caseInsensitive %||% TRUE
+    )
+  }
+}
+
+#' @rdname doColumnSearch
 #' @export
 doGlobalSearch = function(data, search_string, options = list()) {
   n = nrow(data)
@@ -711,24 +762,6 @@ doGlobalSearch = function(data, search_string, options = list()) {
     }
     which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
   } else seq_len(n)
-}
-
-#' @export
-doColumnSearch = function(x, search_string, options = list()) {
-  if (length(search_string) == 0 || search_string == '') return(seq_along(x))
-  if (is.numeric(x) || is.Date(x)) {
-    which(filterRange(x, search_string))
-  } else if (is.factor(x)) {
-    which(x %in% fromJSON(search_string))
-  } else if (is.logical(x)) {
-    which(x %in% as.logical(fromJSON(search_string)))
-  } else {
-    grep2(
-      search_string, as.character(x),
-      fixed = !(options$regex %||% FALSE),
-      ignore.case = options$caseInsensitive %||% TRUE
-    )
-  }
 }
 
 # when both ignore.case and fixed are TRUE, we use grep(ignore.case = FALSE,
