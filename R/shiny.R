@@ -587,7 +587,6 @@ sessionDataURL = function(session, data, id, filter) {
 dataTablesFilter = function(data, params) {
   n = nrow(data)
   q = params
-  ci = q$search[['caseInsensitive']] == 'true'
   # users may be updating the table too frequently
   if (length(q$columns) != ncol(data)) return(list(
     draw = as.integer(q$draw),
@@ -598,29 +597,21 @@ dataTablesFilter = function(data, params) {
     DT_rows_current = list()
   ))
 
+  # which columns are searchable?
+  searchable = logical(ncol(data))
+  for (j in seq_len(ncol(data))) {
+    if (q$columns[[j]][['searchable']] == 'true') searchable[j] = TRUE
+  }
+
   # global searching
   # for some reason, q$search might be NULL, leading to error `if (logical(0))`
-  if (length(v <- q$search[['value']]) > 0) {
-    if (!identical(q$search[['smart']], 'false')) {
-      v = unlist(strsplit(gsub('^\\s+|\\s+$', '', v), '\\s+'))
-    }
-  }
-  if (length(v) == 0) v = ''
-  m = if ((nv <- length(v)) > 1) array(FALSE, c(dim(data), nv)) else logical(n)
-  # TODO: this searching method may not be efficient and need optimization
-  i = if (!identical(v, '')) {
-    for (j in seq_len(ncol(data))) {
-      if (q$columns[[j]][['searchable']] != 'true') next
-      for (k in seq_len(nv)) {
-        i0 = grep2(
-          v[k], as.character(data[, j]), fixed = q$search[['regex']] == 'false',
-          ignore.case = ci
-        )
-        if (nv > 1) m[i0, j, k] = TRUE else m[i0] = TRUE
-      }
-    }
-    which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
-  } else seq_len(n)
+  global_opts = list(
+    smart = !identical(q$search[['smart']], 'false'),
+    regex = q$search[['regex']] != 'false',
+    caseInsensitive = q$search[['caseInsensitive']] == 'true'
+  )
+
+  i = doGlobalSearch(data[searchable], q$search[['value']], options = global_opts)
 
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
@@ -630,16 +621,11 @@ dataTablesFilter = function(data, params) {
     if ((k <- col[['search']][['value']]) == '') next
     j = as.integer(j)
     dj = data[, j + 1]
-    ij = if (is.numeric(dj) || is.Date(dj)) {
-      which(filterRange(dj, k))
-    } else if (is.factor(dj)) {
-      which(dj %in% fromJSON(k))
-    } else if (is.logical(dj)) {
-      which(dj %in% as.logical(fromJSON(k)))
-    } else {
-      grep2(k, as.character(dj), fixed = col[['search']][['regex']] == 'false',
-            ignore.case = ci)
-    }
+    column_opts = list(
+      regex = col[['search']][['regex']] != 'false',
+      caseInsensitive = global_opts$caseInsensitive
+    )
+    ij = doColumnSearch(dj, k, options = column_opts)
     i = intersect(ij, i)
     if (length(i) == 0) break
   }
@@ -698,6 +684,86 @@ dataTablesFilter = function(data, params) {
     DT_rows_all = iAll,
     DT_rows_current = iCurrent
   )
+}
+
+#' Server-side searching
+#'
+#' \code{doGlobalSearch()} can be used to search a data frame given the search
+#' string typed by the user into the global search box of a
+#' \code{\link{datatable}}. \code{doColumnSearch()} does the same for a vector
+#' given the search string typed into a column filter. These functions are used
+#' internally by the default \code{filter} function passed to
+#' \code{\link{dataTableAjax}()}, allowing you to replicate the search results
+#' that server-side processing returns.
+#'
+#' @param x a vector, the type of which determines the expected
+#'   \code{search_string} format
+#' @param search_string a string that determines what to search for. The format
+#'   depends on the type of input, matching what a user would type in the
+#'   associated filter control.
+#' @param options a list of options used to control how searching character
+#'   values works. Supported options are \code{regex}, \code{caseInsensitive}
+#'   and (for global search)
+#'   \href{https://datatables.net/reference/option/search.smart}{\code{smart}}.
+#' @param data a data frame
+#'
+#' @return An integer vector of filtered row indices
+#'
+#' @seealso The column filters section online for search string formats:
+#'   \url{https://rstudio.github.io/DT/}
+#' @seealso Accessing the search strings typed by a user in a Shiny app:
+#'   \url{https://rstudio.github.io/DT/shiny.html}
+#'
+#' @examples
+#' doGlobalSearch(iris, 'versi')
+#' doGlobalSearch(iris, "v.r.i", options = list(regex = TRUE))
+#'
+#' doColumnSearch(iris$Species, '["versicolor"]')
+#' doColumnSearch(iris$Sepal.Length, '4 ... 5')
+#' @export
+doColumnSearch = function(x, search_string, options = list()) {
+  if (length(search_string) == 0 || search_string == '') return(seq_along(x))
+  if (is.numeric(x) || is.Date(x)) {
+    which(filterRange(x, search_string))
+  } else if (is.factor(x)) {
+    which(x %in% fromJSON(search_string))
+  } else if (is.logical(x)) {
+    which(x %in% as.logical(fromJSON(search_string)))
+  } else {
+    grep2(
+      search_string, as.character(x),
+      fixed = !(options$regex %||% FALSE),
+      ignore.case = options$caseInsensitive %||% TRUE
+    )
+  }
+}
+
+#' @rdname doColumnSearch
+#' @export
+doGlobalSearch = function(data, search_string, options = list()) {
+  n = nrow(data)
+  if (length(v <- search_string) > 0) {
+    if (options$smart %||% TRUE) {
+      # https://datatables.net/reference/option/search.smart
+      v = unlist(strsplit(gsub('^\\s+|\\s+$', '', v), '\\s+'))
+    }
+  }
+  if (length(v) == 0) v = ''
+  m = if ((nv <- length(v)) > 1) array(FALSE, c(dim(data), nv)) else logical(n)
+  # TODO: this searching method may not be efficient and need optimization
+  if (!identical(v, '')) {
+    for (j in seq_len(ncol(data))) {
+      for (k in seq_len(nv)) {
+        i0 = grep2(
+          v[k], as.character(data[, j]),
+          fixed = !(options$regex %||% FALSE),
+          ignore.case = options$caseInsensitive %||% TRUE
+        )
+        if (nv > 1) m[i0, j, k] = TRUE else m[i0] = TRUE
+      }
+    }
+    which(if (nv > 1) apply(m, 1, function(z) all(colSums(z) > 0)) else m)
+  } else seq_len(n)
 }
 
 # when both ignore.case and fixed are TRUE, we use grep(ignore.case = FALSE,

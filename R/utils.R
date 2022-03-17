@@ -1,3 +1,7 @@
+`%||%` <- function(x, y) {
+  if (!is.null(x)) x else y
+}
+
 dropNULL = function(x) {
   if (length(x) == 0 || !is.list(x)) return(x)
   x[!unlist(lapply(x, is.null))]
