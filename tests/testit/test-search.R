@@ -65,3 +65,86 @@ assert('empty search returns everything', {
   (setequal(doColumnSearch(tbl$foo, ''), 1:2))
   (setequal(doColumnSearch(tbl$foo, NULL), 1:2))
 })
+
+
+# We know from tests above that individual search components work.
+# Here we make sure they are combined correctly for client queries.
+
+# Helpers to create client queries that run without errors
+clientQuery = function(data, global = globalQuery(), columns = list(columnQuery())) {
+  columns = rep_len(columns, ncol(data))
+  names(columns) = seq_len(ncol(data)) - 1
+  list(
+    draw = '0',
+    start = '0',
+    length = '10',
+    escape = 'true',
+    search = global,
+    columns = columns
+  )
+}
+
+globalQuery = function(value = '', regex = FALSE, caseInsensitive = TRUE, smart = TRUE) {
+  list(
+    value = value,
+    regex = tolower(regex),
+    caseInsensitive = tolower(caseInsensitive),
+    smart = tolower(smart)
+  )
+}
+
+columnQuery = function(value = '', searchable = TRUE, regex = FALSE) {
+  list(
+    searchable = tolower(searchable),
+    search = list(value = value, regex = tolower(regex))
+  )
+}
+
+assert('server-side search handler works', {
+  tbl = data.frame(
+    foo = c('foo', 'bar', 'baz'),
+    bar = c('bar', 'baz', 'foo')
+  )
+
+  query = clientQuery(tbl)
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 1:3))
+
+  query = clientQuery(tbl, globalQuery('bar'))
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 1:2))
+
+  query = clientQuery(tbl, globalQuery('foo'))
+  query$columns[[1]] = columnQuery('ba')
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 3L))
+
+  query = clientQuery(tbl)
+  query$columns[[1]] = columnQuery('b')
+  query$columns[[2]] = columnQuery('a')
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 2L))
+})
+
+assert('server-side search handler skips unsearchable columns', {
+  tbl = data.frame(
+    foo = c('foo', 'bar', 'baz'),
+    bar = c('bar', 'baz', 'foo')
+  )
+
+  query = clientQuery(tbl, globalQuery('bar'))
+  query$columns[[1]] = columnQuery(searchable = FALSE)
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 1L))
+
+  query = clientQuery(tbl)
+  query$columns[[1]] = columnQuery('bar', searchable = FALSE)
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 1:3))
+
+  query = clientQuery(tbl)
+  query$columns[[1]] = columnQuery(searchable = FALSE)
+  query$columns[[2]] = columnQuery('bar')
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 1L))
+})
