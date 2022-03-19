@@ -148,3 +148,14 @@ assert('server-side search handler skips unsearchable columns', {
   out = dataTablesFilter(tbl, query)
   (setequal(out$DT_rows_all, 1L))
 })
+
+assert('server-side search handler ignores NULL search', {
+  tbl = data.frame(
+    foo = c('foo', 'bar', 'baz'),
+    bar = c('bar', 'baz', 'foo')
+  )
+
+  query = clientQuery(tbl, NULL)
+  out = dataTablesFilter(tbl, query)
+  (setequal(out$DT_rows_all, 1:3))
+})
