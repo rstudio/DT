@@ -7,6 +7,8 @@
   - Updates to factor and logical filters now match the initial render (@mikmart #975).
   - Disabled status is now also affected by updates (@mikmart #977).
 
+- Server-side searching is now faster when multiple filters are active (@mikmart).
+
 ## BUG FIXES
 
 - Fix a bug that the column filter didn't work for strings like "+" (@stephan-hutter @shrektan #980).
