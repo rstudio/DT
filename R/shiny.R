@@ -619,16 +619,17 @@ dataTablesFilter = function(data, params) {
     # if the j-th column is not searchable or the search string is "", skip it
     if (col[['searchable']] != 'true') next
     if ((k <- col[['search']][['value']]) == '') next
-    j = as.integer(j)
-    dj = data[, j + 1]
     column_opts = list(
       regex = col[['search']][['regex']] != 'false',
       caseInsensitive = global_opts$caseInsensitive
     )
+    j = as.integer(j)
+    dj = data[i, j + 1]
     ij = doColumnSearch(dj, k, options = column_opts)
-    i = intersect(ij, i)
+    i = intersect(i[ij], i)
     if (length(i) == 0) break
   }
+
   if (length(i) != n) data = data[i, , drop = FALSE]
   iAll = i  # row indices of filtered data
 
