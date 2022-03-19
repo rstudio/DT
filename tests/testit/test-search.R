@@ -1,5 +1,9 @@
 library(testit)
 
+# Factors and strings are searched differently.
+# Older versions of R don't have this set.
+op <- options(stringsAsFactors = FALSE)
+
 assert('searching integer values works', {
   x = seq(-2, 2)
   (setequal(doColumnSearch(x, '0 ... 2'), 3:5))
@@ -159,3 +163,6 @@ assert('server-side search handler ignores NULL search', {
   out = dataTablesFilter(tbl, query)
   (setequal(out$DT_rows_all, 1:3))
 })
+
+# Restore stringsAsFactors
+options(op)
