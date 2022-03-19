@@ -7,6 +7,8 @@
   - Updates to factor and logical filters now match the initial render (@mikmart #975).
   - Disabled status is now also affected by updates (@mikmart #977).
 
+- New functions `doColumnSearch()` and `doGlobalSearch()` let you do server-side searching with filter search strings. These are particularly useful in conjunction with `updateFilters()` for implementing dynamic limits for filter controls based on currently filtered data (@mikmart #982).
+
 - Server-side searching is now faster when multiple filters are active (@mikmart).
 
 ## BUG FIXES
