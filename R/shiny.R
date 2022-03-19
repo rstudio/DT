@@ -626,16 +626,14 @@ dataTablesFilter = function(data, params) {
     )
     j = as.integer(j)
     dj = data[i, j + 1]
-    ij = doColumnSearch(dj, k, options = column_opts)
-    i = intersect(i[ij], i)
+    i = i[doColumnSearch(dj, k, options = column_opts)]
     if (length(i) == 0) break
   }
 
   # global searching
   if (length(i) && any((k <- q$search[['value']]) != '')) {
     dg = data[i, searchable, drop = FALSE]
-    ig = doGlobalSearch(dg, k, options = global_opts)
-    i = intersect(i[ig], i)
+    i = i[doGlobalSearch(dg, k, options = global_opts)]
   }
 
   if (length(i) != n) data = data[i, , drop = FALSE]
