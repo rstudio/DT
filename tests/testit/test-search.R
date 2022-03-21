@@ -2,7 +2,7 @@ library(testit)
 
 # Factors and strings are searched differently.
 # Older versions of R don't have this set.
-op <- options(stringsAsFactors = FALSE)
+op = options(stringsAsFactors = FALSE)
 
 assert('searching integer values works', {
   x = seq(-2, 2)
