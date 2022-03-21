@@ -603,7 +603,7 @@ dataTablesFilter = function(data, params) {
     if (q$columns[[j]][['searchable']] == 'true') searchable[j] = TRUE
   }
 
-  # global searching
+  # global searching options (column search shares caseInsensitive)
   # for some reason, q$search might be NULL, leading to error `if (logical(0))`
   global_opts = list(
     smart = !identical(q$search[['smart']], 'false'),
@@ -611,7 +611,8 @@ dataTablesFilter = function(data, params) {
     caseInsensitive = q$search[['caseInsensitive']] == 'true'
   )
 
-  i = doGlobalSearch(data[searchable], q$search[['value']], options = global_opts)
+  # start searching with all rows
+  i = seq_len(n)
 
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
@@ -619,16 +620,22 @@ dataTablesFilter = function(data, params) {
     # if the j-th column is not searchable or the search string is "", skip it
     if (col[['searchable']] != 'true') next
     if ((k <- col[['search']][['value']]) == '') next
-    j = as.integer(j)
-    dj = data[, j + 1]
     column_opts = list(
       regex = col[['search']][['regex']] != 'false',
       caseInsensitive = global_opts$caseInsensitive
     )
-    ij = doColumnSearch(dj, k, options = column_opts)
-    i = intersect(ij, i)
+    j = as.integer(j)
+    dj = data[i, j + 1]
+    i = i[doColumnSearch(dj, k, options = column_opts)]
     if (length(i) == 0) break
   }
+
+  # global searching
+  if (length(i) && any((k <- q$search[['value']]) != '')) {
+    dg = data[i, searchable, drop = FALSE]
+    i = i[doGlobalSearch(dg, k, options = global_opts)]
+  }
+
   if (length(i) != n) data = data[i, , drop = FALSE]
   iAll = i  # row indices of filtered data
 
