@@ -11,8 +11,6 @@
 
 - Server-side searching is now faster when multiple filters are active (@mikmart).
 
-## BUG FIXES
-
 - Fix a bug that the column filter didn't work for strings like "+" (@stephan-hutter @shrektan #980).
 
 # CHANGES IN DT VERSION 0.21
