@@ -7,6 +7,13 @@
 // a global object
 var DTWidget = {};
 
+// in order that the type=number inputs return a number
+$.valHooks.number = {
+  get: function( elem ) {
+    return elem.value * 1;
+  }
+};
+
 // 123456666.7890 -> 123,456,666.7890
 var markInterval = function(d, digits, interval, mark, decMark, precision) {
   x = precision ? d.toPrecision(digits) : d.toFixed(digits);
