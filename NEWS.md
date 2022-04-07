@@ -1,8 +1,46 @@
+# CHANGES IN DT VERSION 0.23
+
+
+# CHANGES IN DT VERSION 0.22
+
+- Enhancements to `updateFilters()` (#971):
+  - Added support for data with integer and character columns (@mikmart #972).
+  - Fixed an issue with length 1 options causing filters not to update (@mikmart #973).
+  - Fixed an issue with slider limits sometimes being incorrectly scaled (@mikmart #974).
+  - Updates to factor and logical filters now match the initial render (@mikmart #975).
+  - Disabled status is now also affected by updates (@mikmart #977).
+
+- New functions `doColumnSearch()` and `doGlobalSearch()` let you do server-side searching with filter search strings. These are particularly useful in conjunction with `updateFilters()` for implementing dynamic limits for filter controls based on currently filtered data (@mikmart #982).
+
+- Server-side searching is now faster when multiple filters are active (@mikmart).
+
+- Fix a bug that the column filter didn't work for strings like "+" (@stephan-hutter @shrektan #980).
+
 # CHANGES IN DT VERSION 0.21
+
+## NEW FEATURES
+
+- Add the `zero.print` argument to `formatPercentage()`, `formatCurrency()`, `formatSignif()` and `formatRound()`, which allows to control the format of zero values. It's useful when the data is "sparse" (thanks, @shrektan #953).
+
+- `formatXXX()` functions now gain a new argument `rows` (starting from 1), which can be used to specify the rows that the "style" should be applied to. Note that it only works expected in the client-side processing mode, i.e., `server = FALSE`. `formatStyle()` is the only exception that doesn't have this argument and should use `styleRow()` instead (thanks, @jrecasens @shrektan #520).
+
+- Added a new function `updateFilters` to allow users to update the filters of a DataTable object that has been updated by reference, such as with `replaceData()` (thanks, @giadasp #934, @wholmes105 #939).
 
 ## MAJOR CHANGES
 
 - Now users can provide column names of the data to `options$columnDefs$targets`. Previously, it only supports column indexes or "_all" (thanks, @shrektan #948).
+
+## MINOR CHANGES
+
+- `styleRow()` and `styleEqual()` now allows a scalar `values` argument like other R functions, e.g., `styleRow(1:5, 'abcd')` is the same as `styleRow(1:5, rep('abcd', 5))`. It throws error that `the length(rows) must be equal to length(values)` in the previous version (thanks, @shrektan #955).
+
+## BUG FIXES
+
+- Fix the bug that `addRow()` doesn't support a list of `data` after R 3.4.0, where `structure(NULL, ...)` was deprecated (thanks, @stla @shrektan #959).
+
+- Fix the bug that DT table can't vertically fill the container, e.g., RStudio IDE or FlexDashboard (thanks, @mbojan @shrektan #951).
+
+- Fix the bug that DT failed to parse ajax request correctly, when special strings like "=" exist (thanks, @shrektan #965).
 
 # CHANGES IN DT VERSION 0.20
 
