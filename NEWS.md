@@ -1,5 +1,6 @@
 # CHANGES IN DT VERSION 0.23
 
+- Make sure number inputs return numeric values when editing numeric table cells (thanks, @stla, #987).
 
 # CHANGES IN DT VERSION 0.22
 
