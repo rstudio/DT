@@ -166,7 +166,8 @@ HTMLWidgets.widget({
     // in order that the type=number inputs return a number
     $.valHooks.number = {
       get: function(el) {
-        return el.value * 1;
+        var value = el.value;
+        return isNaN(parseFloat(value)) ? "" : value * 1;
       }
     };
     $(el).html('&nbsp;');
