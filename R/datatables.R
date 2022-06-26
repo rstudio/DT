@@ -234,6 +234,9 @@ datatable = function(
   # applied to the "original" column names, instead of the "modified“ ones, e.g., via the `colnames` arg
   options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], base::colnames(data))
 
+  # box scalar elements of list columns
+  data = boxListColumnAtomicScalars(data)
+
   # align numeric columns to the right
   if (length(numc)) {
     # if the `className` of the column has already been defined by the user,

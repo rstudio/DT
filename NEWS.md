@@ -1,6 +1,7 @@
 # CHANGES IN DT VERSION 0.24
 
 - Fixed a bug with missing numeric values rendered as `0` (thanks, @tverbeke, #1000).
+- Box scalar elements of 'list' columns so that, e.g., df(col = I(integer(), 1, 2:3)) is represented in javascript as [[], [1], [2, 3]] instead of [[], 1, [2, 3]].
 
 # CHANGES IN DT VERSION 0.23
 
