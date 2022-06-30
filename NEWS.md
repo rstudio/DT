@@ -2,6 +2,8 @@
 
 - Fixed a bug with missing numeric values rendered as `0` (thanks, @tverbeke, #1000).
 
+- Box scalar elements of 'list' columns so that, e.g., `data.frame(col = I(integer(), 1, 2:3))` is represented in JavaScript as `[[], [1], [2, 3]]` instead of `[[], 1, [2, 3]]` (thanks, @mtmorgan, #1005).
+
 # CHANGES IN DT VERSION 0.23
 
 - Make sure number inputs return numeric values when editing numeric table cells (thanks, @stla, #987).

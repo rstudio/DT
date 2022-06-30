@@ -38,6 +38,25 @@ captionString = function(caption) {
   if (length(caption)) caption
 }
 
+# 'box' list column atomic scalars so that the data are represented
+# consistently (as arrays) in javascript, e.g.,
+# data.frame(col = I(list(integer(), 1, 2:3))) --> [[], [1], [2, 3]]
+# instead of [[], 1, [2, 3]]
+boxAtomicScalarElements = function(x) {
+  is_atomic = vapply(x, is.atomic, logical(1))
+  if (all(is_atomic)) {
+    is_scalar = lengths(x) == 1L
+    x[is_scalar] = lapply(x[is_scalar], list)
+  }
+  x
+}
+
+boxListColumnAtomicScalars = function(x) {
+  is_list = vapply(x, is.list, logical(1))
+  x[is_list] = lapply(x[is_list], boxAtomicScalarElements)
+  x
+}
+
 toJSON = function(...) {
   FUN = getFromNamespace('toJSON', 'htmlwidgets')
   FUN(...)
