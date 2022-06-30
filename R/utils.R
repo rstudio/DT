@@ -40,22 +40,20 @@ captionString = function(caption) {
 
 # 'box' list column atomic scalars so that the data are represented
 # consistently (as arrays) in javascript, e.g.,
-# df(col = I(list(integer(), 1, 2:3))) --> [[], [1], [2, 3]]
+# data.frame(col = I(list(integer(), 1, 2:3))) --> [[], [1], [2, 3]]
 # instead of [[], 1, [2, 3]]
 boxAtomicScalarElements = function(x) {
-  stopifnot(is.list(x))
-  is_atomic <- vapply(x, is.atomic, logical(1))
+  is_atomic = vapply(x, is.atomic, logical(1))
   if (all(is_atomic)) {
-    is_scalar <- lengths(x) == 1L
-    x[is_scalar] <- lapply(x[is_scalar], list)
+    is_scalar = lengths(x) == 1L
+    x[is_scalar] = lapply(x[is_scalar], list)
   }
   x
 }
 
 boxListColumnAtomicScalars = function(x) {
-  stopifnot(is.data.frame(x))
-  is_list <- vapply(x, is.list, logical(1))
-  x[is_list] <- lapply(x[is_list], boxAtomicScalarElements)
+  is_list = vapply(x, is.list, logical(1))
+  x[is_list] = lapply(x[is_list], boxAtomicScalarElements)
   x
 }
 
