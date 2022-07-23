@@ -1,3 +1,8 @@
+
+## NEW FEATURES
+
+- Server-side filtering is now able to be ran as a future. (@andyquinterom, #1011).
+
 # CHANGES IN DT VERSION 0.24
 
 - Fixed a bug with missing numeric values rendered as `0` (thanks, @tverbeke, #1000).

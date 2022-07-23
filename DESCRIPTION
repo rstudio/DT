@@ -17,6 +17,7 @@ Authors@R: c(
     person("Alex", "Pickering", role = c("ctb")),
     person("William", "Holmes", role = c("ctb")),
     person("Mikko", "Marttila", role = c("ctb")),
+    person("Andres", "Quintero", role = c("ctb")),
     person("RStudio, PBC", role = "cph")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
@@ -42,5 +43,5 @@ Suggests:
     bslib,
     testit
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8
