@@ -37,11 +37,11 @@ internally by the default \code{filter} function passed to
 that server-side processing returns.
 }
 \examples{
-doGlobalSearch(iris, 'versi')
+doGlobalSearch(iris, "versi")
 doGlobalSearch(iris, "v.r.i", options = list(regex = TRUE))
 
-doColumnSearch(iris$Species, '["versicolor"]')
-doColumnSearch(iris$Sepal.Length, '4 ... 5')
+doColumnSearch(iris$Species, "[\"versicolor\"]")
+doColumnSearch(iris$Sepal.Length, "4 ... 5")
 }
 \seealso{
 The column filters section online for search string formats:

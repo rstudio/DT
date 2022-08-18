@@ -27,11 +27,11 @@ This function only works with integer, double, date, time (\code{POSIXlt} or
 }
 \examples{
 library(DT)
-coerceValue('100', 1L)
-coerceValue('1.23', 3.1416)
-coerceValue('2018-02-14', Sys.Date())
-coerceValue('2018-02-14T22:18:52Z', Sys.time())
-coerceValue('setosa', iris$Species)
-coerceValue('setosa2', iris$Species)  # NA
-coerceValue('FALSE', TRUE)  # not supported
+coerceValue("100", 1L)
+coerceValue("1.23", 3.1416)
+coerceValue("2018-02-14", Sys.Date())
+coerceValue("2018-02-14T22:18:52Z", Sys.time())
+coerceValue("setosa", iris$Species)
+coerceValue("setosa2", iris$Species)  # NA
+coerceValue("FALSE", TRUE)  # not supported
 }

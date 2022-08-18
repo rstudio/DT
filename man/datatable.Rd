@@ -218,7 +218,6 @@ You are recommended to escape the table content for security reasons
   web applications.
 }
 \examples{
-# !formatR
 library(DT)
 
 # see the package vignette for examples and the link to website
