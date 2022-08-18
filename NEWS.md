@@ -1,4 +1,6 @@
 
+# CHANGES IN DT VERSION 0.25
+
 ## NEW FEATURES
 
 - Server-side filtering is now able to be ran as a future. (@andyquinterom, #1011).
