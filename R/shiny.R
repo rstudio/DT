@@ -51,12 +51,15 @@ DTOutput = dataTableOutput
 #'   \code{FALSE}.
 #' @param funcFilter (for expert use only) passed to the \code{filter} argument
 #'   of \code{\link{dataTableAjax}()}
+#' @param future whether the server-side filter function should be executed
+#'   as a future or as a standard synchronous function. If true, the future
+#'   will be evaluated according to the session's \link[future]{plan}.
 #' @param ... ignored when \code{expr} returns a table widget, and passed as
 #'   additional arguments to \code{\link{datatable}()} when \code{expr} returns
 #'   a data object
 renderDataTable = function(
     expr, server = TRUE, env = parent.frame(), quoted = FALSE,
-    funcFilter = dataTablesFilter, ...
+    funcFilter = dataTablesFilter, future = FALSE, ...
   ) {
   if (!quoted) expr = substitute(expr)
 
@@ -124,7 +127,7 @@ renderDataTable = function(
       }
 
       if (is.null(options[['ajax']][['url']])) {
-        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], funcFilter)
+        url = sessionDataURL(outputInfoEnv[["session"]], origData, outputInfoEnv[["outputName"]], funcFilter, future)
         options$ajax$url = url
       }
       instance$x$options = fixServerOptions(options)
@@ -555,10 +558,10 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
   data = as.data.frame(data)  # think dplyr
   if (length(rn)) data = cbind(' ' = rn, data)
 
-  sessionDataURL(session, data, outputId, filter)
+  sessionDataURL(session, data, outputId, filter, future)
 }
 
-sessionDataURL = function(session, data, id, filter) {
+sessionDataURL = function(session, data, id, filter, future) {
 
   toJSON = shinyFun('toJSON')
   httpResponse = shinyFun('httpResponse')
@@ -578,9 +581,16 @@ sessionDataURL = function(session, data, id, filter) {
     jsonArgs = c(list(x = res, dataframe = 'rows'),
                  getOption('DT.TOJSON_ARGS', getOption('htmlwidgets.TOJSON_ARGS')))
     httpResponse(200, 'application/json', enc2utf8(do.call(toJSON, jsonArgs)))
+
   }
 
-  session$registerDataObj(id, data, filterFun)
+  filterFunExecute = function(data, req) {
+    if (future) {
+      promises::future_promise(seed = TRUE, { filterFun(data, req) })
+    } else filterFun(data, req)
+  }
+
+  session$registerDataObj(id, data, filterFunExecute)
 }
 
 # filter a data frame according to the DataTables request parameters

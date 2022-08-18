@@ -17,6 +17,7 @@ renderDataTable(
   env = parent.frame(),
   quoted = FALSE,
   funcFilter = dataTablesFilter,
+  future = FALSE,
   ...
 )
 
@@ -26,6 +27,7 @@ renderDT(
   env = parent.frame(),
   quoted = FALSE,
   funcFilter = dataTablesFilter,
+  future = FALSE,
   ...
 )
 }
@@ -60,6 +62,10 @@ would like to use its expression as a value for \code{expr}, then you must set
 
 \item{funcFilter}{(for expert use only) passed to the \code{filter} argument
 of \code{\link{dataTableAjax}()}}
+
+\item{future}{whether the server-side filter function should be executed
+as a future or as a standard synchronous function. If true, the future
+will be evaluated according to the session's \link[future]{plan}.}
 
 \item{...}{ignored when \code{expr} returns a table widget, and passed as
 additional arguments to \code{\link{datatable}()} when \code{expr} returns
