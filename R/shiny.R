@@ -561,7 +561,6 @@ dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, out
   sessionDataURL(session, data, outputId, filter, future)
 }
 
-#' @importFrom promises future_promise
 sessionDataURL = function(session, data, id, filter, future) {
 
   toJSON = shinyFun('toJSON')
@@ -586,7 +585,9 @@ sessionDataURL = function(session, data, id, filter, future) {
   }
 
   filterFunExecute = function(data, req) {
-    if (future) future_promise(seed = TRUE, { filterFun(data, req) }) else filterFun(data, req)
+    if (future) {
+      promises::future_promise(seed = TRUE, { filterFun(data, req) })
+    } else filterFun(data, req)
   }
 
   session$registerDataObj(id, data, filterFunExecute)
