@@ -1,8 +1,8 @@
 # CHANGES IN DT VERSION 0.25
 
-## NEW FEATURES
-
 - Server-side filtering is now able to be ran as a `future` via the **promises** package (@andyquinterom, #1011). See the argument `future` on the help page `?DT::renderDataTable` for more info.
+
+- Updated the `jszip` library to v3.10.1 (thanks, @hedsnz, #1017).
 
 # CHANGES IN DT VERSION 0.24
 
