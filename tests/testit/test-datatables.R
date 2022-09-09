@@ -227,6 +227,6 @@ assert("colDefsTgtHandle() works", {
 assert("buttons load", {
   out <- datatable(iris, extensions = "Buttons", options = list(
     dom = "Bt", buttons = c("excel", "csv", "pdf")))
-  out$x$extensions[[1]][1] %==% "Buttons"
-  unlist(out$x$options$buttons) %==% c("excel", "csv", "pdf")
+  (out$x$extensions[[1]][1] %==% "Buttons")
+  (unlist(out$x$options$buttons) %==% c("excel", "csv", "pdf"))
 })
