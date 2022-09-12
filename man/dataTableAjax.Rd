@@ -4,7 +4,14 @@
 \alias{dataTableAjax}
 \title{Register a data object in a shiny session for DataTables}
 \usage{
-dataTableAjax(session, data, rownames, filter = dataTablesFilter, outputId)
+dataTableAjax(
+  session,
+  data,
+  rownames,
+  filter = dataTablesFilter,
+  outputId,
+  future = FALSE
+)
 }
 \arguments{
 \item{session}{the \code{session} object in the shiny server function
@@ -26,6 +33,10 @@ filtered table result according to the DataTables Ajax request}
 \code{dataTableOutput()}; if missing, an attempt to infer it from
 \code{session} is made. If it can't be inferred, a random id is
 generated.)}
+
+\item{future}{whether the server-side filter function should be executed
+as a future or as a standard synchronous function. If true, the future
+will be evaluated according to the session's \link[future]{plan}.}
 }
 \value{
 A character string (an Ajax URL that can be queried by DataTables).

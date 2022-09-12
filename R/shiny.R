@@ -524,6 +524,7 @@ getCurrentOutputName = function(session) {
 #' table option \code{ajax} automatically. If you are familiar with
 #' \pkg{DataTables}' server-side processing, and want to use a custom filter
 #' function, you may call this function to get an Ajax URL.
+#' @inheritParams renderDataTable
 #' @param session the \code{session} object in the shiny server function
 #'   (\code{function(input, output, session)})
 #' @param data a data object (will be coerced to a data frame internally)
@@ -543,7 +544,9 @@ getCurrentOutputName = function(session) {
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
 #' @export
-dataTableAjax = function(session, data, rownames, filter = dataTablesFilter, outputId) {
+dataTableAjax = function(
+  session, data, rownames, filter = dataTablesFilter, outputId, future = FALSE
+) {
 
   oop = options(stringsAsFactors = FALSE); on.exit(options(oop), add = TRUE)
 
