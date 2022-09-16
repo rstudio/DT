@@ -1,5 +1,8 @@
 # CHANGES IN DT VERSION 0.26
 
+- Upgraded DataTables to v1.12.1.
+
+- New extension [StateRestore](https://datatables.net/extensions/staterestore/examples/initialisation/index.html). It allows to save and restore DataTables states.
 
 # CHANGES IN DT VERSION 0.25
 
