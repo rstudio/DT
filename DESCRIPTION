@@ -18,6 +18,7 @@ Authors@R: c(
     person("William", "Holmes", role = c("ctb")),
     person("Mikko", "Marttila", role = c("ctb")),
     person("Andres", "Quintero", role = c("ctb")),
+    person("Stéphane", "Laurent", role = c("ctb")),
     person("RStudio, PBC", role = "cph")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
