@@ -3,12 +3,12 @@ library(DT)
 
 function(input, output, session) {
 
-  dat <- data.frame(
+  dat = data.frame(
     car = c("Mazda", "Mazda RX4", "Mazda RX4 Wag", "Ford", "Mercedes"),
     pet = c("dog", "dog", "cat", "cat", "cat")
   )
 
-  output[["dtable1"]] <- renderDT({
+  output[["dtable1"]] = renderDT({
 
     datatable(
       dat, filter = "top",
@@ -22,9 +22,9 @@ function(input, output, session) {
 
   })
 
-  output[["dtable2"]] <- renderDT({
+  output[["dtable2"]] = renderDT({
 
-    js <- c(
+    js = c(
       "function(settings) {",
       "  var instance = settings.oInstance;",
       "  var table = instance.api();",

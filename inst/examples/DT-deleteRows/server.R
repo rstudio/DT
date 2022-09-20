@@ -3,7 +3,7 @@ library(DT)
 
 function(input, output, session) {
 
-  output[["dtable"]] <- renderDT({
+  output[["dtable"]] = renderDT({
 
     datatable(
       mtcars,
