@@ -391,7 +391,9 @@ datatable = function(
     'datatables', if (hideDataTable) NULL else params,
     package = 'DT', width = width, height = height, elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(
-      knitr.figure = FALSE, knitr.defaultWidth = "100%", knitr.defaultHeight = "auto"
+      knitr.figure = FALSE,
+      defaultWidth = "100%",
+      defaultHeight = "auto"
     ),
     dependencies = deps, preRenderHook = function(instance) {
 
