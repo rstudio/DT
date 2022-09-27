@@ -4,6 +4,8 @@
 
 - New extension [StateRestore](https://datatables.net/extensions/staterestore/examples/initialisation/index.html). It allows to save and restore DataTables states.
 
+- Default to `width: 100%; height: auto` instead of `500px x 960px` when statically rendering in browser (thanks, @cpsievert, #1022).
+
 # CHANGES IN DT VERSION 0.25
 
 - Server-side filtering is now able to be ran as a `future` via the **promises** package (@andyquinterom, #1011). See the argument `future` on the help page `?DT::renderDataTable` for more info.
