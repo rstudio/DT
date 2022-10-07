@@ -2,4 +2,7 @@ dependencies:
   - name: datatables-css
     version: 0.0.0
     src: "htmlwidgets/css"
-    stylesheet: datatables-crosstalk.css
+    stylesheet: [
+      datatables.css,
+      datatables-crosstalk.css
+    ]
