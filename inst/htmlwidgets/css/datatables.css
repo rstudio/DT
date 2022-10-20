@@ -1,0 +1,11 @@
+/*
+dataTableOutput() no longer supplies a default size via inline styles, so define those defaults here.
+
+We also define `flex-basis` since when dataTableOutput() (and thus htmlwidgets::shinyWidgetOutput()) has height = NULL, it receives a CSS class which effectively amounts to `flex: 1 1 auto` in a `{bslib}` app (to make it so widgets can stretch vertically inside of resizable card()s). That's mostly fine, but `fillContainer=TRUE`+`height:auto`+`flex-basis:auto` is problematic for DT since the table wants to fit the parent but the parent wants to fit the table. Thankfully, setting `flex-basis` to a fixed size seems to resolve that issue.
+*/
+
+.datatables.html-widget {
+  width: 100%;
+  height: auto;
+  flex-basis: 400px;
+}

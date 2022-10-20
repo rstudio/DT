@@ -22,7 +22,7 @@
 #'     }
 #'   )
 #' }
-dataTableOutput = function(outputId, width = '100%', height = 'auto') {
+dataTableOutput = function(outputId, width = NULL, height = NULL) {
   htmltools::attachDependencies(
     htmlwidgets::shinyWidgetOutput(
       outputId, 'datatables', width, height, package = 'DT'
