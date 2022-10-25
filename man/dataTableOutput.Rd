@@ -7,9 +7,9 @@
 \alias{renderDT}
 \title{Helper functions for using DT in Shiny}
 \usage{
-dataTableOutput(outputId, width = NULL, height = NULL)
+dataTableOutput(outputId, width = "100\%", height = "auto")
 
-DTOutput(outputId, width = NULL, height = NULL)
+DTOutput(outputId, width = "100\%", height = "auto")
 
 renderDataTable(
   expr,

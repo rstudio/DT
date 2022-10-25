@@ -1,7 +1,5 @@
 # CHANGES IN DT VERSION 0.27
 
-- `dataTableOutput()`'s `height` and `width` now defaults to `NULL`, allowing it have more flexible default sizing behavior, which will be primarily useful in combination with `{bslib}`'s new `card()` API (thanks, @cpsievert, #1026).
-
 # CHANGES IN DT VERSION 0.26
 
 - Upgraded DataTables to v1.12.1.
