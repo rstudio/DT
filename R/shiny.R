@@ -22,11 +22,13 @@
 #'     }
 #'   )
 #' }
-dataTableOutput = function(outputId, width = '100%', height = 'auto') {
+dataTableOutput = function(outputId, width = '100%', height = 'auto', fill = TRUE) {
+  args = list(outputId, 'datatables', width, height, package = 'DT')
+  if ("fill" %in% names(formals(htmlwidgets::shinyWidgetOutput)))
+    args$fill = fill
+
   htmltools::attachDependencies(
-    htmlwidgets::shinyWidgetOutput(
-      outputId, 'datatables', width, height, package = 'DT'
-    ),
+    do.call(htmlwidgets::shinyWidgetOutput, args),
     crosstalk::crosstalkLibs(),
     append = TRUE
   )
