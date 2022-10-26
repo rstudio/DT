@@ -38,6 +38,9 @@ renderDT(
 
 \item{height}{the height of the table container}
 
+\item{fill}{passed to [htmlwidgets::shinyWidgetOutput()], see there for
+explanation (requires an htmlwidgets version greater than 1.5.4).}
+
 \item{expr}{an expression to create a table widget (normally via
 \code{\link{datatable}()}), or a data object to be passed to
 \code{datatable()} to create a table widget}

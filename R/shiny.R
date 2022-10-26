@@ -7,6 +7,8 @@
 #' @inheritParams shiny::dataTableOutput
 #' @param width the width of the table container
 #' @param height the height of the table container
+#' @param fill passed to [htmlwidgets::shinyWidgetOutput()], see there for
+#'   explanation (requires an htmlwidgets version greater than 1.5.4).
 #' @references \url{https://rstudio.github.io/DT/shiny.html}
 #' @export
 #' @examples # !formatR
