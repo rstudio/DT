@@ -7,9 +7,9 @@
 \alias{renderDT}
 \title{Helper functions for using DT in Shiny}
 \usage{
-dataTableOutput(outputId, width = NULL, height = NULL)
+dataTableOutput(outputId, width = "100\%", height = "auto", fill = TRUE)
 
-DTOutput(outputId, width = NULL, height = NULL)
+DTOutput(outputId, width = "100\%", height = "auto", fill = TRUE)
 
 renderDataTable(
   expr,
@@ -37,6 +37,9 @@ renderDT(
 \item{width}{the width of the table container}
 
 \item{height}{the height of the table container}
+
+\item{fill}{passed to \code{htmlwidgets::\link{shinyWidgetOutput}()}, see
+there for explanation (requires \pkg{htmlwidgets} > v1.5.4).}
 
 \item{expr}{an expression to create a table widget (normally via
 \code{\link{datatable}()}), or a data object to be passed to
