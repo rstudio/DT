@@ -4,7 +4,7 @@
 
   - The primary motivation for this is to allow DT to grow/shrink [inside `bslib::card_body_fill()`](https://rstudio.github.io/bslib/articles/cards.html#responsive-sizing). When doing so, you'll also want to set `fillContainer = TRUE` in `datatable()`.
   
-- Bug fixed: when editing a table, it was impossible to switch from an empty cell to 0 and vice-versa (thanks, @RozennGZ, #1038).
+- Bug fixed: when editing a table, it was impossible to switch from an empty cell to 0 and vice-versa (thanks, @RozennGZ #1038, @stla #1039).
 
 # CHANGES IN DT VERSION 0.26
 
