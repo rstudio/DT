@@ -6,6 +6,8 @@
   
 - Bug fixed: when editing a table, it was impossible to switch from an empty cell to 0 and vice-versa (thanks, @RozennGZ #1038, @stla #1039).
 
+- When a `datatable()` is created outside a Shiny app, the `selection` argument won't work (thanks, @bartekch, #1043).
+
 # CHANGES IN DT VERSION 0.26
 
 - Upgraded DataTables to v1.12.1.

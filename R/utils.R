@@ -20,8 +20,7 @@ upperToDash = function(x) {
 }
 
 inShiny = function() {
-  getOption('DT.datatable.shiny', FALSE) ||
-    ('shiny' %in% loadedNamespaces() && !is.null(shiny::getDefaultReactiveDomain()))
+  getOption('DT.datatable.shiny', 'shiny' %in% loadedNamespaces())
 }
 
 in_dir = function(dir, expr) {
