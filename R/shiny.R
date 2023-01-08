@@ -779,7 +779,7 @@ doGlobalSearch = function(data, search_string, options = list()) {
     for (j in seq_len(ncol(data))) {
       for (k in seq_len(nv)) {
         i0 = grep2(
-          v[k], as.character(data[, j]),
+          v[k], as.character(data[, j, drop = TRUE]),
           fixed = !(options$regex %||% FALSE),
           ignore.case = options$caseInsensitive %||% TRUE
         )
