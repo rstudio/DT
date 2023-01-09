@@ -8,6 +8,8 @@
 
 - When a `datatable()` is created outside a Shiny app, the `selection` argument won't work (thanks, @bartekch, #1043).
 
+- `doGloblSearch()` now works correctly when the input data frame is a tibble (@mikmart, #1044).
+
 # CHANGES IN DT VERSION 0.26
 
 - Upgraded DataTables to v1.12.1.

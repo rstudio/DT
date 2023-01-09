@@ -43,7 +43,8 @@ Suggests:
     shiny (>= 1.6),
     bslib,
     future,
-    testit
+    testit,
+    tibble
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 Encoding: UTF-8

@@ -70,6 +70,16 @@ assert('empty search returns everything', {
   (setequal(doColumnSearch(tbl$foo, NULL), 1:2))
 })
 
+assert('global search works for tibbles', {
+  if (requireNamespace("tibble", quietly = TRUE)) {
+    tbl = tibble::tibble(
+      foo = c('foo', 'bar', 'baz'),
+      bar = c('bar', 'baz', 'foo')
+    )
+    (setequal(doGlobalSearch(tbl, 'ba'), 1:3))
+  }
+})
+
 
 # We know from tests above that individual search components work.
 # Here we make sure they are combined correctly for client queries.
