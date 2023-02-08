@@ -24,7 +24,8 @@ datatable(
   selection = c("multiple", "single", "none"),
   extensions = list(),
   plugins = NULL,
-  editable = FALSE
+  editable = FALSE,
+  columnFilterPlaceholder = "All"
 )
 }
 \arguments{
@@ -151,6 +152,10 @@ all columns. Of course, you can request the numeric editing for some
 columns and the text areas for some other columns by setting
 \code{editable} to a list of the form \code{list(target = TARGET, numeric
 = INDICES1, area = INDICES2)}.}
+
+\item{columnFilterPlaceholder}{a length-one character vector to specify the
+placeholder text for the column filter input boxes. Defaults to
+\code{"All"}.}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
@@ -218,6 +223,7 @@ You are recommended to escape the table content for security reasons
   web applications.
 }
 \examples{
+# !formatR
 library(DT)
 
 # see the package vignette for examples and the link to website
