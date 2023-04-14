@@ -5,7 +5,7 @@ output:
     includes: null
 ---
 
-By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option `search = list(regex = TRUE)`, and perform case-sensitive searching by `list(search = caseInsensitive = FALSE)` (the two options are orthogonal).
+By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option `search = list(regex = TRUE)`, and perform case-sensitive searching by `list(search = list(caseInsensitive = FALSE))` (the two options are orthogonal).
 
 ```{r}
 library(DT)
