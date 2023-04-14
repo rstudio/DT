@@ -7,6 +7,7 @@ html_document:
   toc_depth: 2
   lib_dir: libs
   css: include/site.css
+  pandoc_args: --wrap=none
   includes:
     in_header: include/in_header.html
     before_body: include/before_body.html
