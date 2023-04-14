@@ -88,8 +88,7 @@
 
 </div>
 
-
-<p>By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option <code>search = list(regex = TRUE)</code>, and perform case-sensitive searching by <code>list(search = caseInsensitive = FALSE)</code> (the two options are orthogonal).</p>
+<p>By default, searching does not use regular expressions, and is case-insensitive. You can turn on regular expressions by using the option <code>search = list(regex = TRUE)</code>, and perform case-sensitive searching by <code>list(search = list(caseInsensitive = FALSE))</code> (the two options are orthogonal).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mtcars2 <span class="ot">=</span> mtcars[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">9</span>)]</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mtcars2<span class="sc">$</span>am <span class="ot">=</span> <span class="fu">factor</span>(mtcars<span class="sc">$</span>am, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="st">&#39;automatic&#39;</span>, <span class="st">&#39;manual&#39;</span>))</span>
