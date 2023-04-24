@@ -36,7 +36,7 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <link href="libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider/jquery.nouislider.min.js"></script>
@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
 
 
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
@@ -122,22 +123,31 @@
 <p>You may install the stable version from CRAN, or the development version using <code>remotes::install_github('rstudio/DT')</code> if necessary (this website reflects the development version of <strong>DT</strong>):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if (!require(&quot;DT&quot;)) install.packages(&#39;DT&#39;)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>xfun<span class="sc">::</span><span class="fu">session_info</span>(<span class="st">&#39;DT&#39;</span>)</span></code></pre>
-<pre><code>## R version 4.1.0 (2021-05-18)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur 10.16
+<pre><code>## R version 4.3.0 (2023-04-21)
+## Platform: x86_64-apple-darwin20 (64-bit)
+## Running under: macOS Monterey 12.6.5
+## 
 ## 
 ## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
 ## 
+## time zone: America/Chicago
+## tzcode source: internal
+## 
 ## Package version:
-##   base64enc_0.1.3   crosstalk_1.1.1   digest_0.6.27     DT_0.19.2        
-##   fastmap_1.1.0     graphics_4.1.0    grDevices_4.1.0   htmltools_0.5.2  
-##   htmlwidgets_1.5.3 jquerylib_0.1.4   jsonlite_1.7.2    later_1.2.0      
-##   lazyeval_0.2.2    magrittr_2.0.1    methods_4.1.0     promises_1.2.0.1 
-##   R6_2.5.0          Rcpp_1.0.7        rlang_0.4.11      stats_4.1.0      
-##   utils_4.1.0       yaml_2.2.1</code></pre>
+##   base64enc_0.1.3   bslib_0.4.2       cachem_1.0.7      cli_3.6.1        
+##   crosstalk_1.2.0   digest_0.6.31     DT_0.27           ellipsis_0.3.2   
+##   evaluate_0.20.1   fastmap_1.1.1     fontawesome_0.5.1 fs_1.6.1         
+##   glue_1.6.2        graphics_4.3.0    grDevices_4.3.0   highr_0.10       
+##   htmltools_0.5.5   htmlwidgets_1.6.2 jquerylib_0.1.4   jsonlite_1.8.4   
+##   knitr_1.42.7      later_1.3.0       lazyeval_0.2.2    lifecycle_1.0.3  
+##   magrittr_2.0.3    memoise_2.0.1     methods_4.3.0     mime_0.12        
+##   promises_1.2.0.1  R6_2.5.1          rappdirs_0.3.3    Rcpp_1.0.10      
+##   rlang_1.1.0       rmarkdown_2.21    sass_0.4.5        stats_4.3.0      
+##   stringi_1.7.12    stringr_1.5.0     tinytex_0.45.1    tools_4.3.0      
+##   utils_4.3.0       vctrs_0.6.2       xfun_0.39         yaml_2.3.7</code></pre>
 <p>Please use <a href="https://github.com/rstudio/DT/issues">Github issues</a> to file bug reports or feature requests, and use <a href="http://stackoverflow.com/questions/tagged/dt">StackOverflow</a> to ask questions.</p>
 <div id="usage" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Usage</h1>
+<h1><span class="header-section-number">1</span> Usage</h1>
 <p>The main function in this package is <code>datatable()</code>. It creates an HTML widget to display R data objects with <strong>DataTables</strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(data, <span class="at">options =</span> <span class="fu">list</span>(), <span class="at">class =</span> <span class="st">&quot;display&quot;</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">callback =</span> <span class="fu">JS</span>(<span class="st">&quot;return table;&quot;</span>), rownames, colnames, container,</span>
@@ -150,7 +160,7 @@
 <p>Here is a “hello world” example with zero configuration:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris)</span></code></pre>
-<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
@@ -185,13 +195,13 @@
 }</script>
 </div>
 <div id="arguments" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Arguments</h1>
+<h1><span class="header-section-number">2</span> Arguments</h1>
 <p>If you are familiar with <strong>DataTables</strong> already, you may use the <code>options</code> argument to customize the table. See the page <a href="options.html">Options</a> for details. Here we explain the rest of the arguments of the <code>datatable()</code> function.</p>
 <div id="table-css-classes" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Table CSS Classes</h2>
+<h2><span class="header-section-number">2.1</span> Table CSS Classes</h2>
 <p>The <code>class</code> argument specifies the CSS classes of the table. The possible values can be found on the page of <a href="http://datatables.net/manual/styling/classes">default styling options</a>. The default value <code>display</code> basically enables row striping, row highlighting on mouse over, row borders, and highlighting ordered columns. You can choose a different combination of CSS classes, such as <code>cell-border</code> and <code>stripe</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">class =</span> <span class="st">&#39;cell-border stripe&#39;</span>)</span></code></pre>
-<div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
@@ -226,7 +236,7 @@
 }</script>
 </div>
 <div id="styling" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Styling</h2>
+<h2><span class="header-section-number">2.2</span> Styling</h2>
 <p>Currently, <strong>DT</strong> only supports the Bootstrap style besides the default style. You can use the argument <code>style = 'bootstrap'</code> to enable the Bootstrap style, and adjust the table classes accordingly using <a href="http://getbootstrap.com/css/#tables">Bootstrap table class names</a>, such as <code>table-stripe</code> and <code>table-hover</code>. Actually, <strong>DT</strong> will automatically adjust the class names even if you provided the DataTables class names such as <code>stripe</code> and <code>hover</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">:::</span><span class="fu">DT2BSClass</span>(<span class="st">&#39;display&#39;</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;table table-striped table-hover row-border order-column display&quot;</span></span>
@@ -235,10 +245,10 @@
 <p>Note you can only use one style for all tables on one page. Please see <a href="005-bootstrap.html">this separate page</a> for examples using the Bootstrap style.</p>
 </div>
 <div id="table-editing" class="section level2" number="2.3">
-<h2 number="2.3"><span class="header-section-number">2.3</span> Table Editing</h2>
+<h2><span class="header-section-number">2.3</span> Table Editing</h2>
 <p>You can enable table editing using the argument <code>editable</code> (see <code>?DT::datatable</code> for its possible values). Then you will be able to double-click a cell to edit its value. It works in both client-side and <a href="server.html">server-side processing</a> modes. Below are two client-side examples (also see <a href="https://yihui.shinyapps.io/DT-edit/">a Shiny example</a> with server-side processing):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">editable =</span> <span class="st">&#39;cell&#39;</span>)</span></code></pre>
-<div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
     "filter": "none",
@@ -287,7 +297,7 @@
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">editable =</span> <span class="fu">list</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">&#39;row&#39;</span>, <span class="at">disable =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
-<div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
     "filter": "none",
@@ -335,10 +345,10 @@
 }</script>
 </div>
 <div id="display-row-names" class="section level2" number="2.4">
-<h2 number="2.4"><span class="header-section-number">2.4</span> Display Row Names</h2>
+<h2><span class="header-section-number">2.4</span> Display Row Names</h2>
 <p>If the data object has row names, they will be displayed as the first column of the table by default. You can suppress row names via the argument <code>rownames = FALSE</code>, and you can also change row names by providing a different character vector to <code>rownames</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(mtcars))</span></code></pre>
-<div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
     "filter": "none",
@@ -378,7 +388,7 @@
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(mtcars), <span class="at">rownames =</span> <span class="cn">FALSE</span>)  <span class="co"># no row names</span></span></code></pre>
-<div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-6">{
   "x": {
     "filter": "none",
@@ -413,7 +423,7 @@
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(mtcars), <span class="at">rownames =</span> <span class="fu">head</span>(LETTERS))  <span class="co"># new row names</span></span></code></pre>
-<div id="htmlwidget-7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-7">{
   "x": {
     "filter": "none",
@@ -467,11 +477,11 @@ Influence of Row Names on Column Indices in JavaScript
 </div>
 </div>
 <div id="custom-column-names" class="section level2" number="2.5">
-<h2 number="2.5"><span class="header-section-number">2.5</span> Custom Column Names</h2>
+<h2><span class="header-section-number">2.5</span> Custom Column Names</h2>
 <p>By default, <code>datatable()</code> shows the column names of the data in the table, and you can use a custom character vector for the table header. There are a few possibilities. The first one is, you provide a new character vector to completely replace the column names of the data, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(iris) is a character vector of length 5, and we replace it</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&#39;Here&#39;</span>, <span class="st">&#39;Are&#39;</span>, <span class="st">&#39;Some&#39;</span>, <span class="st">&#39;New&#39;</span>, <span class="st">&#39;Names&#39;</span>))</span></code></pre>
-<div id="htmlwidget-8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-8">{
   "x": {
     "filter": "none",
@@ -506,7 +516,7 @@ Influence of Row Names on Column Indices in JavaScript
 }</script>
 <p>This can be cumbersome if you only want to replace one or two names, and you do not want to provide a whole vector of names. Then here is the second possibility: you can provide a shorter numeric or character vector as the index vector to replace a subset of the column names. For example, if you only want the 2nd name to be <code>'A Nicer Name'</code>, you can use <code>datatable(..., colnames = c('A Nicer Name' = 2))</code>; or if you want to replace the name <code>'X5'</code> with <code>'A Better Name'</code>, you can use <code>colnames = c('A Better Name' = 'X5')</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&#39;A Better Name&#39;</span> <span class="ot">=</span> <span class="st">&#39;Sepal.Width&#39;</span>))</span></code></pre>
-<div id="htmlwidget-9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-9">{
   "x": {
     "filter": "none",
@@ -540,7 +550,7 @@ Influence of Row Names on Column Indices in JavaScript
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&#39;Another Better Name&#39;</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">&#39;Yet Another Name&#39;</span> <span class="ot">=</span> <span class="dv">4</span>))</span></code></pre>
-<div id="htmlwidget-10" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-10" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-10">{
   "x": {
     "filter": "none",
@@ -576,7 +586,7 @@ Influence of Row Names on Column Indices in JavaScript
 <p>When you display row names of the data, its column name will be a white space by default. That is why you cannot see its column name. You can certainly choose to use a column name for rownames as well, e.g.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the first column name to &#39;ID&#39;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(iris), <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&#39;ID&#39;</span> <span class="ot">=</span> <span class="dv">1</span>))</span></code></pre>
-<div id="htmlwidget-11" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-11" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-11">{
   "x": {
     "filter": "none",
@@ -607,7 +617,7 @@ Influence of Row Names on Column Indices in JavaScript
 }</script>
 </div>
 <div id="custom-table-container" class="section level2" number="2.6">
-<h2 number="2.6"><span class="header-section-number">2.6</span> Custom Table Container</h2>
+<h2><span class="header-section-number">2.6</span> Custom Table Container</h2>
 <p>The <code>container</code> argument allows you to provide a different table container to hold the table cells. By default, the container is generated from the column names. Below is an example of a custom table header:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a custom table container</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sketch <span class="ot">=</span> htmltools<span class="sc">::</span><span class="fu">withTags</span>(<span class="fu">table</span>(</span>
@@ -642,7 +652,7 @@ Influence of Row Names on Column Indices in JavaScript
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use rownames = FALSE here because we did not generate a cell for row names in</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the header, and the header only contains five columns</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)], <span class="at">container =</span> sketch, <span class="at">rownames =</span> <span class="cn">FALSE</span>)</span></code></pre>
-<div id="htmlwidget-12" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-12" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-12">{
   "x": {
     "filter": "none",
@@ -702,7 +712,7 @@ Influence of Row Names on Column Indices in JavaScript
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(iris, <span class="dv">10</span>),</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">container =</span> sketch, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>, <span class="at">dom =</span> <span class="st">&#39;tip&#39;</span>), <span class="at">rownames =</span> <span class="cn">FALSE</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
-<div id="htmlwidget-13" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-13" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-13">{
   "x": {
     "filter": "none",
@@ -736,13 +746,13 @@ Influence of Row Names on Column Indices in JavaScript
 }</script>
 </div>
 <div id="table-caption" class="section level2" number="2.7">
-<h2 number="2.7"><span class="header-section-number">2.7</span> Table Caption</h2>
+<h2><span class="header-section-number">2.7</span> Table Caption</h2>
 <p>You can add a table caption via the <code>caption</code> argument. It can be either a character vector, or a tag object created from <code>htmltools::tags$caption()</code>. See this <a href="http://datatables.net/blog/2014-11-07">blog post</a> for more information on table captions.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(iris),</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;Table 1: This is a simple caption for the table.&#39;</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
-<div id="htmlwidget-14" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-14" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-14">{
   "x": {
     "filter": "none",
@@ -784,7 +794,7 @@ Influence of Row Names on Column Indices in JavaScript
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Table 2: &#39;</span>, htmltools<span class="sc">::</span><span class="fu">em</span>(<span class="st">&#39;This is a simple caption for the table.&#39;</span>)</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
-<div id="htmlwidget-15" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-15" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-15">{
   "x": {
     "filter": "none",
@@ -820,13 +830,13 @@ Influence of Row Names on Column Indices in JavaScript
 }</script>
 </div>
 <div id="column-filters" class="section level2" number="2.8">
-<h2 number="2.8"><span class="header-section-number">2.8</span> Column Filters</h2>
+<h2><span class="header-section-number">2.8</span> Column Filters</h2>
 <p><strong>DataTables</strong> does not provide column filters by default. There is only a global filter (the search box on the top-right). We added a <code>filter</code> argument in <code>datatable()</code> to automatically generate column filters. By default, the filters are not shown since <code>filter = 'none'</code>. You can enable these filters by <code>filter = 'top'</code> or <code>'bottom'</code>, depending on whether you want to put the filters on the top or bottom of the table.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">=</span> iris[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">51</span><span class="sc">:</span><span class="dv">60</span>, <span class="dv">101</span><span class="sc">:</span><span class="dv">110</span>), ]</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris2, <span class="at">filter =</span> <span class="st">&#39;top&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">5</span>, <span class="at">autoWidth =</span> <span class="cn">TRUE</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre>
-<div id="htmlwidget-16" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-16" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-16">{
   "x": {
     "filter": "top",
@@ -888,7 +898,7 @@ Influence of Row Names on Column Indices in JavaScript
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ date : Date, format: &quot;2015-03-24&quot; &quot;2015-03-25&quot; ...</span></span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ time : POSIXct, format: &quot;2015-03-23 13:23:20&quot; &quot;2015-03-23 14:46:40&quot; ...</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(d, <span class="at">filter =</span> <span class="st">&#39;bottom&#39;</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span></code></pre>
-<div id="htmlwidget-17" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-17" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-17">{
   "x": {
     "filter": "bottom",
@@ -903,15 +913,15 @@ Influence of Row Names on Column Indices in JavaScript
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> </th>\n      <th>names</th>\n      <th>date</th>\n      <th>time</th>\n    </tr>\n  </thead>\n</table>",
     "options": {
       "pageLength": 5,
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false,
       "columnDefs": [
         {
           "orderable": false,
           "targets": 0
         }
       ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100]
     }
   },
@@ -929,10 +939,10 @@ Known Issues of Column Filters
 </div>
 </div>
 <div id="the-callback-argument" class="section level2" number="2.9">
-<h2 number="2.9"><span class="header-section-number">2.9</span> The <code>callback</code> argument</h2>
+<h2><span class="header-section-number">2.9</span> The <code>callback</code> argument</h2>
 <p>The argument <code>callback</code> takes the body of a JavaScript function that will be applied to the <strong>DataTables</strong> object after initialization. Below is an example to show the next page after the table is initialized<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(iris, <span class="dv">30</span>), <span class="at">callback =</span> <span class="fu">JS</span>(<span class="st">&#39;table.page(&quot;next&quot;).draw(false);&#39;</span>))</span></code></pre>
-<div id="htmlwidget-18" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-18" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-18">{
   "x": {
     "filter": "none",
@@ -977,7 +987,7 @@ Known Issues of Column Filters
 <p>Please note this <code>callback</code> argument is only an argument of the <code>datatable()</code> function, and do not confuse it with the callbacks in the <strong>DataTables</strong> <a href="options.html">options</a>. The purpose of this argument is to allow users to manipulate the <strong>DataTables</strong> object after its creation.</p>
 </div>
 <div id="escaping-table-content" class="section level2" number="2.10">
-<h2 number="2.10"><span class="header-section-number">2.10</span> Escaping Table Content</h2>
+<h2><span class="header-section-number">2.10</span> Escaping Table Content</h2>
 <p>The argument <code>escape</code> determines whether the HTML entities in the table are escaped or not. There can be potential security problems when the table is rendered in dynamic web applications such as Shiny if you do not escape them. Here is a quick example:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;&lt;b&gt;Bold&lt;/b&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Emphasize&lt;/em&gt;&#39;</span>, <span class="st">&#39;&lt;a href=&quot;http://rstudio.com&quot;&gt;RStudio&lt;/a&gt;&#39;</span>,</span>
@@ -985,7 +995,7 @@ Known Issues of Column Filters
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>), <span class="dv">2</span>)</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;&lt;span style=&quot;color:red&quot;&gt;Column 1&lt;/span&gt;&#39;</span>, <span class="st">&#39;&lt;em&gt;Column 2&lt;/em&gt;&#39;</span>)</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m)  <span class="co"># escape = TRUE by default</span></span></code></pre>
-<div id="htmlwidget-19" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-19" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-19">{
   "x": {
     "filter": "none",
@@ -996,6 +1006,7 @@ Known Issues of Column Filters
     ],
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th>&lt;span style=\"color:red\"&gt;Column 1&lt;/span&gt;</th>\n      <th>&lt;em&gt;Column 2&lt;/em&gt;</th>\n    </tr>\n  </thead>\n</table>",
     "options": {
+      "columnDefs": [],
       "order": [],
       "autoWidth": false,
       "orderClasses": false
@@ -1005,7 +1016,7 @@ Known Issues of Column Filters
   "jsHooks": []
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m, <span class="at">escape =</span> <span class="cn">FALSE</span>)</span></code></pre>
-<div id="htmlwidget-20" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-20" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-20">{
   "x": {
     "filter": "none",
@@ -1016,6 +1027,7 @@ Known Issues of Column Filters
     ],
     "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th><span style=\"color:red\">Column 1</span></th>\n      <th><em>Column 2</em></th>\n    </tr>\n  </thead>\n</table>",
     "options": {
+      "columnDefs": [],
       "order": [],
       "autoWidth": false,
       "orderClasses": false
@@ -1035,7 +1047,7 @@ Known Issues of Column Filters
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m, <span class="at">escape =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span>)  <span class="co"># escape the first column </span></span></code></pre>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
 <li id="fn1"><p>By comparison, R indexes from 1.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>

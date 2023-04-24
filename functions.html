@@ -36,11 +36,12 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
 
 
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
@@ -116,7 +117,7 @@
 <p><strong>DT</strong> has provided a few helper functions to make it convenient to tweak the table without writing a lot of HTML or JavaScript code.</p>
 <hr />
 <div id="format-columns" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Format Columns</h1>
+<h1><span class="header-section-number">1</span> Format Columns</h1>
 <p>You can use the functions <code>format*()</code> to format the table columns as currency, percentages, or round numbers. Here are some examples:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">60</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>), <span class="dv">20</span>), <span class="fu">runif</span>(<span class="dv">20</span>), <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">100</span>))</span>
@@ -133,7 +134,7 @@
 ## [6,] 1815065 -1586693 -1023109 0.9842192 101.02557</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># format the columns A and C as currency, and D as percentages</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m) <span class="sc">%&gt;%</span> <span class="fu">formatCurrency</span>(<span class="fu">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>)) <span class="sc">%&gt;%</span> <span class="fu">formatPercentage</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">2</span>)</span></code></pre>
-<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
@@ -150,15 +151,15 @@
       "columnDefs": [
         {
           "targets": 3,
-          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 2, 3, \",\", \".\");\n  }"
+          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 2, 3, \",\", \".\", null);\n  }"
         },
         {
           "targets": 0,
-          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"$\", 2, 3, \",\", \".\", true);\n  }"
+          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"$\", 2, 3, \",\", \".\", true, null);\n  }"
         },
         {
           "targets": 2,
-          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"$\", 2, 3, \",\", \".\", true);\n  }"
+          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"$\", 2, 3, \",\", \".\", true, null);\n  }"
         },
         {
           "className": "dt-right",
@@ -175,7 +176,7 @@
 }</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the first two columns are Euro currency, and round column E to 3 decimal places</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m) <span class="sc">%&gt;%</span> <span class="fu">formatCurrency</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="st">&#39;\U20AC&#39;</span>, <span class="at">digits =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">formatRound</span>(<span class="st">&#39;E&#39;</span>, <span class="dv">3</span>)</span></code></pre>
-<div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-2">{
   "x": {
     "filter": "none",
@@ -192,15 +193,15 @@
       "columnDefs": [
         {
           "targets": 4,
-          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\");\n  }"
+          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"
         },
         {
           "targets": 0,
-          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"€\", 0, 3, \",\", \".\", true);\n  }"
+          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"€\", 0, 3, \",\", \".\", true, null);\n  }"
         },
         {
           "targets": 1,
-          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"€\", 0, 3, \",\", \".\", true);\n  }"
+          "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"€\", 0, 3, \",\", \".\", true, null);\n  }"
         },
         {
           "className": "dt-right",
@@ -239,7 +240,7 @@
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ toUTCString       : POSIXct, format: &quot;2015-07-23 22:05:22&quot; &quot;2015-07-25 04:57:13&quot; ...</span></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(d, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>, <span class="at">dom =</span> <span class="st">&#39;tip&#39;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatDate</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(d), m)</span></code></pre>
-<div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-3">{
   "x": {
     "filter": "none",
@@ -255,9 +256,6 @@
     "options": {
       "pageLength": 5,
       "dom": "tip",
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false,
       "columnDefs": [
         {
           "targets": 1,
@@ -280,6 +278,9 @@
           "targets": 0
         }
       ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false,
       "lengthMenu": [5, 10, 25, 50, 100]
     }
   },
@@ -289,11 +290,11 @@
 <p>Please note that these conversion methods may be dependent on your system locale and web browser. The same method may lead to different output in different web browsers and system languages.</p>
 </div>
 <div id="style-table-cells" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Style Table Cells</h1>
+<h1><span class="header-section-number">2</span> Style Table Cells</h1>
 <p>You can apply CSS styles to the table cells in a column according to the values of the cells using the function <code>formatStyle()</code>. We have picked a few commonly used CSS properties as the arguments of <code>formatStyle()</code>, such as <code>color</code> and <code>fontWeight</code>. You can pass arbitrary CSS properties to <code>formatStyle()</code>. Here is a quick example to show the syntax:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(iris, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatStyle</span>(<span class="st">&#39;Sepal.Length&#39;</span>,  <span class="at">color =</span> <span class="st">&#39;red&#39;</span>, <span class="at">backgroundColor =</span> <span class="st">&#39;orange&#39;</span>, <span class="at">fontWeight =</span> <span class="st">&#39;bold&#39;</span>)</span></code></pre>
-<div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-4">{
   "x": {
     "filter": "none",
@@ -359,7 +360,7 @@ CSS Property Names
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unique</span>(iris<span class="sc">$</span>Species), <span class="fu">c</span>(<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;lightgreen&#39;</span>, <span class="st">&#39;lightpink&#39;</span>)</span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre>
-<div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-5">{
   "x": {
     "filter": "none",
@@ -397,7 +398,7 @@ CSS Property Names
 <p>You can find more examples about styling cells on <a href="010-style.html">this page</a>. Another R package you may consider for formatting tables is <a href="https://github.com/renkun-ken/formattable"><strong>formattable</strong></a>; see <a href="https://github.com/rstudio/DT/issues/31">#31</a> for an example.</p>
 </div>
 <div id="table-utilities" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Table Utilities</h1>
+<h1><span class="header-section-number">3</span> Table Utilities</h1>
 <p>The functions <code>tableHeader()</code> and <code>tableFooter</code> are wrappers of <code>htmltools::tags</code> to generate a table header or footer. It may be convenient when you want to define a custom <a href="./">table container</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tableHeader</span>(iris)</span></code></pre>
 <pre><code>&lt;thead&gt;
@@ -453,7 +454,7 @@ CSS Property Names
 &lt;/table&gt;</code></pre>
 </div>
 <div id="functions-imported-from-htmlwidgets" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Functions Imported from htmlwidgets</h1>
+<h1><span class="header-section-number">4</span> Functions Imported from htmlwidgets</h1>
 <p>We imported and re-exported a few functions from the <strong>htmlwidgets</strong> package. The function <code>JS()</code> can be used to wrap literal JavaScript code. You can pass either a single character string, or a character vector to <code>JS()</code>. In the latter case, the vector will be concatenated into a single string using the separator <code>\n</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">JS</span>(<span class="st">&#39;alter(&quot;OK&quot;);&#39;</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">JS</span>(<span class="fu">c</span>(</span>
@@ -469,7 +470,7 @@ CSS Property Names
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">datatable</span>(iris)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWidget</span>(x, <span class="st">&#39;iris-table.html&#39;</span>)</span></code></pre>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
 <li id="fn1"><p>If you use Internet Explorer, its version should be at least 10. Other modern web browsers should just work.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>

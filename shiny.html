@@ -36,11 +36,12 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
 
 
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
@@ -116,7 +117,7 @@
 <hr />
 <p>You can render a table widget in shiny, and obtain some information about its current state, such as the indices of the rows on the current page.</p>
 <div id="a-minimal-example" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> A Minimal Example</h1>
+<h1><span class="header-section-number">1</span> A Minimal Example</h1>
 <p>Here is a minimal example of (client-side) DataTables in Shiny using the convenience functions <code>DTOutput()</code> and <code>renderDT()</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
@@ -152,15 +153,15 @@
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>})</span></code></pre>
 </div>
 <div id="interaction-with-shiny" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Interaction with Shiny</h1>
+<h1><span class="header-section-number">2</span> Interaction with Shiny</h1>
 <p>There are some information exposed to Shiny from the table widget as you interact with the table in Shiny. In the following sections, we use <code>tableId</code> to denote the output id of the table (i.e. the <code>outputId</code> in <code>DTOutput()</code>). You need to replace <code>tableId</code> with the actual id of the table in your own app.</p>
 <div id="selecting-rowscolumnscells" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Selecting Rows/Columns/Cells</h2>
+<h2><span class="header-section-number">2.1</span> Selecting Rows/Columns/Cells</h2>
 <p>You may select rows, columns, or cells in the table, and obtain the indices of the selected objects. See <a href="https://yihui.shinyapps.io/DT-selection">this Shiny app</a> for a comprehensive example (you can find its source code under <code>system.file('examples', 'DT-selection', package = 'DT')</code>).</p>
 <div id="row-selection" class="section level3" number="2.1.1">
-<h3 number="2.1.1"><span class="header-section-number">2.1.1</span> Row Selection</h3>
+<h3><span class="header-section-number">2.1.1</span> Row Selection</h3>
 <p>The feature of row selection is enabled automatically when a table is embedded in a Shiny app. You can click on a row to toggle its selection status, and the indices of the selected rows are available through <code>input$tableId_rows_selected</code>. See <a href="https://yihui.shinyapps.io/DT-rows/">a live example here</a>. You can disable row selection by <code>datatable(..., selection = 'none')</code>, or use the single selection mode by <code>selection = 'single'</code>. The default selection mode is multiple selections (try the table below).</p>
-<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
@@ -202,21 +203,21 @@
 <p>You can also obtain the index of the last clicked row via <code>input$tableId_row_last_clicked</code> (it may be <code>NULL</code> initially and when the table is redrawn).</p>
 </div>
 <div id="column-selection" class="section level3" number="2.1.2">
-<h3 number="2.1.2"><span class="header-section-number">2.1.2</span> Column Selection</h3>
+<h3><span class="header-section-number">2.1.2</span> Column Selection</h3>
 <p>Row selection is the default mode in <strong>DT</strong>. You can turn on column selection using <code>datatable(..., selection = list(target = 'column'))</code>. In this case, you can click on any cell to select a column, and the (numeric) indices of the selected columns will be available in <code>input$tableId_columns_selected</code>.</p>
 <p>You may also select rows and columns simultaneously using <code>target = 'row+column'</code>. In this case, column selection is achieved by clicking on the table footer. Clicking on the table body will select/deselect rows.</p>
 </div>
 <div id="cell-selection" class="section level3" number="2.1.3">
-<h3 number="2.1.3"><span class="header-section-number">2.1.3</span> Cell Selection</h3>
+<h3><span class="header-section-number">2.1.3</span> Cell Selection</h3>
 <p>Cell selection is enabled by <code>target = 'cell'</code> in the <code>selection</code> argument. The indices of selected cells are available through <code>input$tableId_cells_selected</code> as a matrix of two columns: each row of the matrix contains the row index and column index of a selected cell. When no cells are selected, the matrix has zero rows.</p>
 </div>
 <div id="pre-selection" class="section level3" number="2.1.4">
-<h3 number="2.1.4"><span class="header-section-number">2.1.4</span> Pre-selection</h3>
+<h3><span class="header-section-number">2.1.4</span> Pre-selection</h3>
 <p>The <code>selection</code> argument of <code>datatable()</code> can also include a component <code>selected</code> to specify which rows/columns/cells to be pre-selected when the table is initialized. When <code>target = 'row'</code> or <code>'column'</code>, <code>selected</code> is a vector of row or column indices. For the case of <code>target = 'row+column'</code>, <code>selected</code> should be a list of two components <code>rows</code> and <code>cols</code>, e.g. <code>list(rows = c(1, 2, 4, 9), cols = c(1, 3))</code>. For <code>target = 'cell'</code>, it should be a matrix of two columns: the first column is the row indices of selected cells, and the second column is the column indices.</p>
 </div>
 </div>
 <div id="datatables-information" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> DataTables Information</h2>
+<h2><span class="header-section-number">2.2</span> DataTables Information</h2>
 <p>As you interact with the table (e.g. sort columns, search the table, or navigate through pages), <strong>DT</strong> will expose some information about the current state of the table to Shiny. At the moment, these information are available in the <code>input</code> object of the Shiny server function (suppose the table output id is <code>tableId</code>):</p>
 <ul>
 <li><code>input$tableId_cell_clicked</code>: information about the cell being clicked of the form <code>list(row = row_index, col = column_index, value = cell_value)</code> (<a href="https://yihui.shinyapps.io/DT-click">example</a>)</li>
@@ -232,20 +233,20 @@
 <p><a href="https://yihui.shinyapps.io/DT-info/"><img src="https://user-images.githubusercontent.com/163582/57483283-17a16b80-726c-11e9-82a7-9fc52c7565c3.png" alt="DataTables information in shiny" /></a></p>
 </div>
 <div id="manipulate-an-existing-datatables-instance" class="section level2" number="2.3">
-<h2 number="2.3"><span class="header-section-number">2.3</span> Manipulate An Existing DataTables Instance</h2>
+<h2><span class="header-section-number">2.3</span> Manipulate An Existing DataTables Instance</h2>
 <p>After a table has been rendered in a Shiny app, you can use the proxy object returned from <code>dataTableProxy()</code> to manipulate it. Currently supported methods are <code>selectRows()</code>, <code>selectColumns()</code>, <code>selectCells()</code>, <code>selectPage()</code>, and <code>addRow()</code>. See <a href="https://yihui.shinyapps.io/DT-proxy">this Shiny app</a> for an example of using these methods to update a table.</p>
 <p>Sometimes the data behind the table may change, and you do not want to regenerate the whole table, but only want to replace the data values. The state of the table (sorting, filtering, and pagination) can be preserved after you replace the data with <code>replaceData()</code>. Here is a short example:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>app <span class="ot">=</span> <span class="fu">system.file</span>(<span class="st">&#39;examples&#39;</span>, <span class="st">&#39;DT-reload&#39;</span>, <span class="at">package =</span> <span class="st">&#39;DT&#39;</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>(app)</span></code></pre>
 </div>
 <div id="edit-tables" class="section level2" number="2.4">
-<h2 number="2.4"><span class="header-section-number">2.4</span> Edit Tables</h2>
+<h2><span class="header-section-number">2.4</span> Edit Tables</h2>
 <p>You can edit a table via the <code>editable</code> argument of <code>datatable()</code>. After you finish editing, you can obtain the row/column indices and the new values of the cells that were edited via <code>input$tableId_cell_info</code>. See <a href="https://yihui.shinyapps.io/DT-edit/">this Shiny app</a> for more concrete examples.</p>
 <p><a href="https://yihui.shinyapps.io/DT-edit/"><img src="https://user-images.githubusercontent.com/163582/55591093-47ec6c00-56fa-11e9-8b59-a8da9c13dccc.png" alt="Edit DT tables" /></a></p>
 </div>
 </div>
 <div id="more-examples" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> More Examples</h1>
+<h1><span class="header-section-number">3</span> More Examples</h1>
 <p>Below is a list of miscellaneous examples:</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="011-radio.html">Radio Buttons in Tables</a></p></li>

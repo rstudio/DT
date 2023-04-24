@@ -36,10 +36,11 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk/js/crosstalk.min.js"></script>
 
 <link rel="stylesheet" href="css/style-1.css" type="text/css" />
+
 
 
 <link rel="stylesheet" href="css/style-2.css" type="text/css" />
@@ -108,7 +109,7 @@
 <p>After we have got the character matrix of HTML code, we can pass it to <code>datatable()</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(m, <span class="at">escape =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">dom =</span> <span class="st">&#39;t&#39;</span>, <span class="at">paging =</span> <span class="cn">FALSE</span>, <span class="at">ordering =</span> <span class="cn">FALSE</span>))</span></code></pre>
-<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1">{
   "x": {
     "filter": "none",
@@ -126,15 +127,15 @@
       "dom": "t",
       "paging": false,
       "ordering": false,
-      "order": [],
-      "autoWidth": false,
-      "orderClasses": false,
       "columnDefs": [
         {
           "orderable": false,
           "targets": 0
         }
-      ]
+      ],
+      "order": [],
+      "autoWidth": false,
+      "orderClasses": false
     }
   },
   "evals": [],
