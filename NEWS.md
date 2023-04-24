@@ -1,6 +1,6 @@
 # CHANGES IN DT VERSION 0.28
 
-- Upgraded DataTables to v1.13.4.
+- Upgraded DataTables to v1.13.4 (thanks, @stla, #1063).
 
 # CHANGES IN DT VERSION 0.27
 
