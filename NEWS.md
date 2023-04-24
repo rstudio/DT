@@ -1,3 +1,7 @@
+# CHANGES IN DT VERSION 0.28
+
+- Upgraded DataTables to v1.13.4.
+
 # CHANGES IN DT VERSION 0.27
 
 - `dataTableOutput()` gains a new `fill` parameter. When `TRUE` (the default), the widget's container element is allowed to grow/shrink to fit it's parent container so long as that parent is opinionated about its height and has been marked with `htmltools::bindFillRole(x, container = TRUE)`. (#2198)
