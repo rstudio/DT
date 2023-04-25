@@ -303,7 +303,7 @@ jsValues = function(x) {
   } else if (inherits(x, "Date")) {
     x = format(x, "%Y-%m-%d")
   }
-  vapply(x, jsonlite::toJSON, character(1), auto_unbox = TRUE)
+  vapply(x, jsonlite::toJSON, character(1), auto_unbox = TRUE, USE.NAMES = FALSE)
 }
 
 jsValuesHandleNull = function(x) {

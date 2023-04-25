@@ -107,6 +107,9 @@
 #'   columns and the text areas for some other columns by setting
 #'   \code{editable} to a list of the form \code{list(target = TARGET, numeric
 #'   = INDICES1, area = INDICES2)}.
+#' @param formatter should be a named list of formatting functions. Users can use
+#'   arbitrage R formatting function to style the DT columns. See details for more
+#'   information.
 #' @details \code{selection}:
 #'   \enumerate{
 #'     \item The argument could be a scalar string, which means the selection
@@ -161,6 +164,19 @@
 #'       results in a table whose first column is \emph{invisible}.
 #'     \item See \url{https://datatables.net/reference/option/columnDefs} for more.
 #'   }
+#'   \code{formatter}:
+#'   \enumerate{
+#'     \item The formatting function must take a vector as input and return
+#'       a character vector (or can be converted into charactor vector via \code{as.character()})
+#'       and it will be applied on the column of data with the same name. Unnamed or non-exists
+#'       values will be omited.
+#'     \item The value applied the function will be store into the column, without \bold{escaping}.
+#'       Thus, if it's intent to be escaped please escape the value via `htmltools::htmlEscape()` in
+#'       the function body.
+#'     \item The formatted value of the column will be renamed to "_FORMAT_{COLUMNNAME}_" internally.
+#'       Thus, DataTables can read the formatted values when rendering. This will be set
+#'       to invisible automatically so that the users won't see them.
+#'   }
 #' @note You are recommended to escape the table content for security reasons
 #'   (e.g. XSS attacks) when using this function in Shiny or any other dynamic
 #'   web applications.
@@ -176,7 +192,7 @@ datatable = function(
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
-  editable = FALSE
+  editable = FALSE, formatter = NULL
 ) {
 
   # yes, we all hate it
@@ -229,6 +245,10 @@ datatable = function(
     data = cbind(' ' = rn, data)
     numc = numc + 1  # move indices of numeric columns to the right by 1
   }
+  escape = makeLogicalEscape(escape, base::colnames(data))
+
+  # convert the string targets
+  options[["columnDefs"]] = colDefsTgtHandle(options[["columnDefs"]], base::colnames(data))
 
   # convert the string targets; it must be defined here (not after), as it's supported to be
   # applied to the "original" column names, instead of the "modified“ ones, e.g., via the `colnames` arg
@@ -253,6 +273,14 @@ datatable = function(
   if (is.null(options[['autoWidth']])) options$autoWidth = FALSE
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
+
+  data = applyFormatter(data, formatter, options)
+  options = attr(data, "DT.format.options", exact = TRUE)
+  attr(data, "DT.format.options") = NULL
+  if (ncol(data) - length(escape)>0) {
+    # escape now a logical vector and we can append FALSE value after it
+    escape = c(escape, rep(FALSE, ncol(data) - length(escape)))
+  }
 
   cn = base::colnames(data)
   if (missing(colnames)) {
@@ -586,12 +614,67 @@ escapeToConfig = function(escape, colnames) {
   sprintf('"%s"', paste(escape, collapse = ','))
 }
 
+# `escape` can take many forms, making it difficult to process later, thus
+# we standardize it into a logical vector
+makeLogicalEscape = function(escape, colnames) {
+  out = rep(FALSE, length(colnames))
+  if (isTRUE(escape)) out[] = TRUE
+  if (isFALSE(escape)) { } # do nothing
+  if (!is.numeric(escape)) out[convertIdx(escape, colnames)] = TRUE
+  if (is.logical(escape)) out[which(escape)] = TRUE
+  out
+}
+
 sameSign = function(x, zero = 0L) {
   if (length(x) == 0L) return(TRUE)
   if (is.list(x)) return(all(vapply(x, sameSign, TRUE, zero = zero)))
   sign = base::sign(x)
   sign[x == 0L] = base::sign(zero)
   length(unique(as.vector(sign))) == 1L
+}
+
+applyFormatter = function(data, formatter, options) {
+  is_fun = vapply(formatter, is.function, TRUE)
+  if (any(!is_fun)) stop(sprintf(
+    "The formatter values at indexes %s are not functions",
+    toString(which(!is_fun))
+  ), call. = FALSE)
+
+  opt_attr = "DT.format.options"
+  attr(data, opt_attr) = options
+  # only keep formatter with valid names
+  formatter = formatter[names(formatter) %in% colnames(data)]
+  if (!length(formatter)) return(data)
+
+  raw_cols = names(formatter)
+  format_cols = sprintf("_FORMAT_%s_", htmlEscape(raw_cols))
+  for (i in seq_along(formatter)) {
+    raw_col = raw_cols[i]
+    format_col = format_cols[i]
+    format_fun = formatter[[i]]
+    # so that the function can be applied recursively
+    value = if (is.null(data[[format_col]])) data[[raw_col]] else data[[format_col]]
+    data[[format_col]] = format_fun(value)
+  }
+
+  # There probably be duplicated cols, but we only apply them for columnDefs once
+  unique_cols = unique(cbind(raw_cols, format_cols))
+  raw_idx = targetIdx(unique_cols[, 1], base::colnames(data))
+  fmt_idx = targetIdx(unique_cols[, 2], base::colnames(data))
+  # must convert into character explicilty so that functions like formattable::percent can work
+  data[, fmt_idx] = lapply(data[, fmt_idx, drop = FALSE], as.character)
+  options = appendColumnDefs(options, list(
+    visible = FALSE, targets = fmt_idx
+  ))
+  for (i in seq_along(fmt_idx)) options = appendColumnDefs(options, list(
+    targets = raw_idx[i],
+    render = JS(sprintf(
+      "function(data,type,row,meta) {return type!=='display'?data:row[%d];}",
+      fmt_idx[i]
+    ))
+  ))
+  attr(data, opt_attr) = options
+  data
 }
 
 #' Generate a table header or footer from column names

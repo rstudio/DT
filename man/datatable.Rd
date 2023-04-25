@@ -24,7 +24,8 @@ datatable(
   selection = c("multiple", "single", "none"),
   extensions = list(),
   plugins = NULL,
-  editable = FALSE
+  editable = FALSE,
+  formatter = NULL
 )
 }
 \arguments{
@@ -151,6 +152,10 @@ all columns. Of course, you can request the numeric editing for some
 columns and the text areas for some other columns by setting
 \code{editable} to a list of the form \code{list(target = TARGET, numeric
 = INDICES1, area = INDICES2)}.}
+
+\item{formatter}{should be a named list of formatting functions. Users can use
+arbitrage R formatting function to style the DT columns. See details for more
+information.}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or
@@ -210,6 +215,19 @@ data frame) using the JavaScript library DataTables.
       For example, \code{list(list(visible=FALSE, target=1), list(visible=TRUE, target=1))}
       results in a table whose first column is \emph{invisible}.
     \item See \url{https://datatables.net/reference/option/columnDefs} for more.
+  }
+  \code{formatter}:
+  \enumerate{
+    \item The formatting function must take a vector as input and return
+      a character vector (or can be converted into charactor vector via \code{as.character()})
+      and it will be applied on the column of data with the same name. Unnamed or non-exists
+      values will be omited.
+    \item The value applied the function will be store into the column, without \bold{escaping}.
+      Thus, if it's intent to be escaped please escape the value via `htmltools::htmlEscape()` in
+      the function body.
+    \item The formatted value of the column will be renamed to "_FORMAT_{COLUMNNAME}_" internally.
+      Thus, DataTables can read the formatted values when rendering. This will be set
+      to invisible automatically so that the users won't see them.
   }
 }
 \note{
