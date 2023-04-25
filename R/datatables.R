@@ -107,6 +107,9 @@
 #'   columns and the text areas for some other columns by setting
 #'   \code{editable} to a list of the form \code{list(target = TARGET, numeric
 #'   = INDICES1, area = INDICES2)}.
+#' @param columnFilterPlaceholder a length-one character vector to specify the
+#'   placeholder text for the column filter input boxes. Defaults to
+#'   \code{"All"}.
 #' @details \code{selection}:
 #'   \enumerate{
 #'     \item The argument could be a scalar string, which means the selection
@@ -176,7 +179,7 @@ datatable = function(
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
-  editable = FALSE
+  editable = FALSE, columnFilterPlaceholder = 'All'
 ) {
 
   # yes, we all hate it
@@ -281,7 +284,7 @@ datatable = function(
   if (is.character(filter)) filter = list(position = match.arg(filter))
   filter = modifyList(list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1), filter)
   # HTML code for column filters
-  filterHTML = as.character(filterRow(data, !is.null(rn) && colnames[1] == ' ', filter))
+  filterHTML = as.character(filterRow(data, !is.null(rn) && colnames[1] == ' ', filter, placeholder = columnFilterPlaceholder))
   # use the first row in the header as the sorting cells when I put the filters
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
@@ -630,12 +633,13 @@ tableHead = function(names, type = c('head', 'foot'), escape = TRUE, ...) {
 
 filterRow = function(
   data, rownames = TRUE,
-  filter = list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
+  filter = list(position = 'none', clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1),
+  placeholder = 'All'
 ) {
   if (filter$position == 'none') return()
 
   filters = columnFilters(data)
-  row = columnFilterRow(filters, options = filter)
+  row = columnFilterRow(filters, options = filter, placeholder = placeholder)
 
   # no filter for row names (may change in future)
   if (rownames) {
@@ -721,7 +725,7 @@ columnFilters = function(data) {
 }
 
 #' @importFrom htmltools tagList
-columnFilterRow = function(filters, options = list()) {
+columnFilterRow = function(filters, options = list(), placeholder = 'All') {
   defaults = list(clear = TRUE, plain = FALSE, vertical = FALSE, opacity = 1)
   options = modifyList(defaults, options)
 
@@ -759,7 +763,7 @@ columnFilterRow = function(filters, options = list()) {
       tags$div(
         style = 'margin-bottom: auto;',
         tags$input(
-          type = if (clear) 'search' else 'text', placeholder = 'All',
+          type = if (clear) 'search' else 'text', placeholder = placeholder,
           style = 'width: 100%;',
           disabled = if (f$disabled) ""
         )
@@ -769,7 +773,7 @@ columnFilterRow = function(filters, options = list()) {
         class = if (clear) 'form-group has-feedback' else 'form-group',
         style = 'margin-bottom: auto;',
         tags$input(
-          type = 'search', placeholder = 'All', class = 'form-control',
+          type = 'search', placeholder = placeholder, class = 'form-control',
           style = 'width: 100%;',
           disabled = if (f$disabled) ""
         ),
