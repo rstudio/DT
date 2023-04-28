@@ -31,7 +31,8 @@ shinyApp(
 
   server = function(input, output, session) {
     d1 = iris
-    d1$Date = Sys.time() + seq_len(nrow(d1))
+    d1$Date = Sys.Date() + seq_len(nrow(d1))
+    d1$Datetime = Sys.time() + seq_len(nrow(d1))
     d10 = d9 = d8 = d7 = d6 = d5 = d4 = d3 = d2 = d1
 
     options(DT.options = list(pageLength = 5))

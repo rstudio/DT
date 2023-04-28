@@ -823,6 +823,7 @@ HTMLWidgets.widget({
       var disableCols = data.editable.disable ? data.editable.disable.columns : null;
       var numericCols = data.editable.numeric;
       var areaCols = data.editable.area;
+      var dateCols = data.editable.date;
       for (var i = 0; i < target.length; i++) {
         (function(cell, current) {
           var $cell = $(cell), html = $cell.html();
@@ -832,6 +833,8 @@ HTMLWidgets.widget({
             $input = $('<input type="number">');
           } else if (inArray(index, areaCols)) {
             $input = $('<textarea></textarea>');
+          } else if (inArray(index, dateCols)) {
+            $input = $('<input type="date">');
           } else {
             $input = $('<input type="text">');
           }
