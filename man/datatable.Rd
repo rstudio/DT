@@ -151,9 +151,9 @@ all columns. Of course, you can request the numeric editing for some
 columns and the text areas for some other columns by setting
 \code{editable} to a list of the form \code{list(target = TARGET, numeric
 = INDICES1, area = INDICES2)}. Finally, you can edit date cells with a
-calendar with \code{list(target = TARGET, date = INDICES)}; the targeted
+calendar with \code{list(target = TARGET, date = INDICES)}; the target
 columns must have the \code{Date} type. If you don't set \code{date} in
-the \code{editable} list, then the editing with the calendar is automatically
+the \code{editable} list, the editing with the calendar is automatically
 set for all \code{Date} columns.}
 }
 \description{
