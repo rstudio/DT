@@ -142,7 +142,7 @@ indices of the columns for which you want to restrict the editing to
 numbers or \code{"all"} to restrict the editing to numbers for all columns.
 If you don't set \code{numeric}, then the editing is restricted to numbers
 for all numeric columns; set \code{numeric = "none"} to disable this
-behavior. Finally, you can also edit the cells in text areas, which are
+behavior. It is also possible to edit the cells in text areas, which are
 useful for large contents. For that, set the \code{editable} argument to a
 list of the form \code{list(target = TARGET, area = INDICES)} where
 \code{INDICES} can be the vector of the indices of the columns for which
@@ -150,7 +150,11 @@ you want the text areas, or \code{"all"} if you want the text areas for
 all columns. Of course, you can request the numeric editing for some
 columns and the text areas for some other columns by setting
 \code{editable} to a list of the form \code{list(target = TARGET, numeric
-= INDICES1, area = INDICES2)}.}
+= INDICES1, area = INDICES2)}. Finally, you can edit date cells with a
+calendar with \code{list(target = TARGET, date = INDICES)}; the target
+columns must have the \code{Date} type. If you don't set \code{date} in
+the \code{editable} list, the editing with the calendar is automatically
+set for all \code{Date} columns.}
 }
 \description{
 This function creates an HTML widget to display rectangular data (a matrix or

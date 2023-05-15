@@ -98,7 +98,7 @@
 #'   numbers or \code{"all"} to restrict the editing to numbers for all columns.
 #'   If you don't set \code{numeric}, then the editing is restricted to numbers
 #'   for all numeric columns; set \code{numeric = "none"} to disable this
-#'   behavior. Finally, you can also edit the cells in text areas, which are
+#'   behavior. It is also possible to edit the cells in text areas, which are
 #'   useful for large contents. For that, set the \code{editable} argument to a
 #'   list of the form \code{list(target = TARGET, area = INDICES)} where
 #'   \code{INDICES} can be the vector of the indices of the columns for which
@@ -106,7 +106,11 @@
 #'   all columns. Of course, you can request the numeric editing for some
 #'   columns and the text areas for some other columns by setting
 #'   \code{editable} to a list of the form \code{list(target = TARGET, numeric
-#'   = INDICES1, area = INDICES2)}.
+#'   = INDICES1, area = INDICES2)}. Finally, you can edit date cells with a
+#'   calendar with \code{list(target = TARGET, date = INDICES)}; the target
+#'   columns must have the \code{Date} type. If you don't set \code{date} in
+#'   the \code{editable} list, the editing with the calendar is automatically
+#'   set for all \code{Date} columns.
 #' @details \code{selection}:
 #'   \enumerate{
 #'     \item The argument could be a scalar string, which means the selection
@@ -315,11 +319,8 @@ datatable = function(
   if (isTRUE(editable)) editable = 'cell'
   if (is.character(editable))
     editable = list(target = editable, disable = list(columns = NULL))
-  if (is.list(editable)) {
-    editable$numeric = makeEditableNumericField(editable$numeric, data, rn)
-    editable$area = makeEditableAreaField(editable$area, data, rn)
-    params$editable = editable
-  }
+  if (is.list(editable))
+    params$editable = makeEditableField(editable, data, rn)
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
@@ -413,32 +414,24 @@ datatable = function(
   )
 }
 
-makeEditableNumericField = function(x, data, rn) {
-  as.list(
-    if (is.null(x))
-      which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
-    else if (identical(x, 'none'))
-      NULL
-    else if (identical(x, 'all'))
-      seq_along(data) - 1L
-    else if (is.null(rn))
-      x - 1
-    else
-      x
-  )
-}
-
-makeEditableAreaField = function(x, data, rn) {
-  as.list(
-    if (is.null(x))
-      NULL
-    else if (identical(x, 'all'))
-      seq_along(data) - 1L
-    else if (is.null(rn))
-      x - 1
-    else
-      x
-  )
+makeEditableField = function(x, data, rn) {
+  for (i in c('numeric', 'area', 'date')) {
+    xi = x[[i]]
+    if (i == 'area' && is.null(xi)) next  # no default editable fields for textareas
+    test = switch(
+      i, numeric = is.numeric, date = function(x) inherits(x, 'Date')
+    )
+    make = function(z) {
+      if (identical(z, 'none')) return(NULL)
+      if (identical(z, 'all')) return(seq_along(data) - 1)
+      if (is.null(z)) return(
+        which(unname(vapply(data, test, logical(1)))) - 1
+      )
+      z - is.null(rn)
+    }
+    x[[i]] = as.list(make(xi))
+  }
+  x
 }
 
 validateSelection = function(x) {

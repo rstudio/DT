@@ -2,6 +2,8 @@
 
 - Upgraded DataTables to v1.13.4 (thanks, @stla, #1063).
 
+- It is now possible to edit date columns with the help of calendar inputs (thanks, @stla, #1064).
+
 # CHANGES IN DT VERSION 0.27
 
 - `dataTableOutput()` gains a new `fill` parameter. When `TRUE` (the default), the widget's container element is allowed to grow/shrink to fit it's parent container so long as that parent is opinionated about its height and has been marked with `htmltools::bindFillRole(x, container = TRUE)`. (#2198)
