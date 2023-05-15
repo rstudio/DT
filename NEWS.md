@@ -2,7 +2,7 @@
 
 - Upgraded DataTables to v1.13.4 (thanks, @stla, #1063).
 
-- It is now possible to edit date columns with the help of a calendar (thanks, @stla, #1064). 
+- It is now possible to edit date columns with the help of calendar inputs (thanks, @stla, #1064).
 
 # CHANGES IN DT VERSION 0.27
 

@@ -319,12 +319,8 @@ datatable = function(
   if (isTRUE(editable)) editable = 'cell'
   if (is.character(editable))
     editable = list(target = editable, disable = list(columns = NULL))
-  if (is.list(editable)) {
-    editable$numeric = makeEditableNumericField(editable$numeric, data, rn)
-    editable$area = makeEditableAreaField(editable$area, data, rn)
-    editable$date = makeEditableDateField(editable$date, data, rn)
-    params$editable = editable
-  }
+  if (is.list(editable))
+    params$editable = makeEditableField(editable, data, rn)
 
   if (!identical(class(callback), class(JS(''))))
     stop("The 'callback' argument only accept a value returned from JS()")
@@ -418,43 +414,24 @@ datatable = function(
   )
 }
 
-makeEditableNumericField = function(x, data, rn) {
-  as.list(
-    if (is.null(x))
-      which(unname(vapply(data, is.numeric, logical(1L)))) - 1L
-    else if (identical(x, 'none'))
-      NULL
-    else if (identical(x, 'all'))
-      seq_along(data) - 1L
-    else if (is.null(rn))
-      x - 1
-    else
-      x
-  )
-}
-
-makeEditableAreaField = function(x, data, rn) {
-  as.list(
-    if (is.null(x))
-      NULL
-    else if (identical(x, 'all'))
-      seq_along(data) - 1L
-    else if (is.null(rn))
-      x - 1
-    else
-      x
-  )
-}
-
-makeEditableDateField = function(x, data, rn) {
-  as.list(
-    if (is.null(x))
-      which(unname(vapply(data, function(x) inherits(x, "Date"), logical(1L)))) - 1L
-    else if (is.null(rn))
-      x - 1
-    else
-      x
-  )
+makeEditableField = function(x, data, rn) {
+  for (i in c('numeric', 'area', 'date')) {
+    xi = x[[i]]
+    if (i == 'area' && is.null(xi)) next  # no default editable fields for textareas
+    test = switch(
+      i, numeric = is.numeric, date = function(x) inherits(x, 'Date')
+    )
+    make = function(z) {
+      if (identical(z, 'none')) return(NULL)
+      if (identical(z, 'all')) return(seq_along(data) - 1)
+      if (is.null(z)) return(
+        which(unname(vapply(data, test, logical(1)))) - 1
+      )
+      z - is.null(rn)
+    }
+    x[[i]] = as.list(make(xi))
+  }
+  x
 }
 
 validateSelection = function(x) {
