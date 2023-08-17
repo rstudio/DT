@@ -637,6 +637,7 @@ dataTablesFilter = function(data, params) {
     # if the j-th column is not searchable or the search string is "", skip it
     if (col[['searchable']] != 'true') next
     if ((k <- col[['search']][['value']]) == '') next
+    k = httpuv::decodeURIComponent(k)
     column_opts = list(
       regex = col[['search']][['regex']] != 'false',
       caseInsensitive = global_opts$caseInsensitive
