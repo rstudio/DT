@@ -889,7 +889,12 @@ normalizeStyle = function(style) {
   if (is.null(theme)) {
     return('default')
   }
-  style = if ('3' %in% bslib::theme_version(theme)) 'bootstrap' else 'bootstrap4'
+
+  bs_v = as.numeric(bslib::theme_version(theme)[1])
+  # TODO: If DT adds support for BS > 5, update this logic
+  if (bs_v > 5) bs_v = 5
+  style = paste0("bootstrap", if (bs_v > 3) bs_v)
+
   # Have style remember if bslib should be a dependency
   structure(style, bslib = TRUE)
 }

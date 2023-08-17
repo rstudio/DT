@@ -1,5 +1,6 @@
 # CHANGES IN DT VERSION 0.29
 
+- Support Bootstrap 5 with `datatable(style = "auto")` (thanks, @gadenbuie, #1074).
 
 # CHANGES IN DT VERSION 0.28
 
