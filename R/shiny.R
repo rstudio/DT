@@ -651,6 +651,7 @@ dataTablesFilter = function(data, params) {
   # global searching
   if (length(i) && any((k <- q$search[['value']]) != '')) {
     dg = data[i, searchable, drop = FALSE]
+    k = httpuv::decodeURIComponent(k)
     i = i[doGlobalSearch(dg, k, options = global_opts)]
   }
 
