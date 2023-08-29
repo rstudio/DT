@@ -4,6 +4,8 @@
 
 - Fixed a bug that searching would fail when the keyword contains special characters such as `&` (thanks, @dfriend21 @olivier7121, #1075).
 
+- Deleted `()` after `eval` in a JS *comment* to prevent Google from treating it as malware, which is just a false alarm (thanks, @gorkang, #1080).
+
 # CHANGES IN DT VERSION 0.28
 
 - Upgraded DataTables to v1.13.4 (thanks, @stla, #1063).
