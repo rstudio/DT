@@ -933,8 +933,7 @@ DTDependencies = function(style) {
 # translate DataTables classes to Bootstrap table classes
 DT2BSClass = function(class) {
   if (is.list(class)) {
-    chosen_classes = Filter(function(x) isTRUE(x), class)
-    class = names(chosen_classes)
+    class = names(which(unlist(class)))
   } else {
     class = unlist(strsplit(class, '\\s+'))
   }
