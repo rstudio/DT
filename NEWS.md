@@ -2,6 +2,8 @@
 
 - Fixed a bug that when using `updateSearch()`, the clear button inside the input box doesn't show up, and the table doesn't update when the input is cleared (thanks, @DavidBlairs, #1082).
 
+- Handle `NULL` return from `bslib::theme_version()` (thanks, @slodge-work, #1090).
+
 # CHANGES IN DT VERSION 0.29
 
 - Support Bootstrap 5 with `datatable(style = "auto")` (thanks, @gadenbuie, #1074).
