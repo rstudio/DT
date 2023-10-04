@@ -933,7 +933,11 @@ DTDependencies = function(style) {
 
 # translate DataTables classes to Bootstrap table classes
 DT2BSClass = function(class) {
-  class = unlist(strsplit(class, '\\s+'))
+  class = if (is.list(class)) {
+    names(which(unlist(class)))
+  } else {
+    unlist(strsplit(class, '\\s+'))
+  }
   if ('display' %in% class)
     class = unique(c('stripe', 'hover', 'row-border', 'order-column', class))
   BSclass = c(

@@ -2,6 +2,12 @@
 
 - Fixed a bug that when using `updateSearch()`, the clear button inside the input box doesn't show up, and the table doesn't update when the input is cleared (thanks, @DavidBlairs, #1082).
 
+- Added support for a list of Booleans as input to the `class` argument of `DT::datatable()` when `style = 'bootstrap'` (thanks, @pedropark99, #1089). In other words, you can now select the Bootstrap classes you want to use at `DT::datatable()` by using a list of Booleans that select the classes you want to use. In the example below, we are producing an HTML table that uses the `stripe` and `hover` Bootstrap classes:
+
+    ```r
+    DT::datatable(mtcars, class = list(stripe = TRUE, compact = FALSE, hover = TRUE), style = "bootstrap")
+    ```
+
 - Handle `NULL` return from `bslib::theme_version()` (thanks, @slodge-work, #1090).
 
 # CHANGES IN DT VERSION 0.29
