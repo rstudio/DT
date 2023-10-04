@@ -938,10 +938,8 @@ DT2BSClass = function(class) {
   } else {
     unlist(strsplit(class, '\\s+'))
   }
-
-  if ('display' %in% class) {
+  if ('display' %in% class)
     class = unique(c('stripe', 'hover', 'row-border', 'order-column', class))
-  }
 
   BSclass = c(
     'cell-border' = 'table-bordered', 'compact' = 'table-condensed',
