@@ -2,6 +2,8 @@
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
 
+- Fixed disabling selection on hyperlink click. (@guoci, #1093)
+
 # CHANGES IN DT VERSION 0.30
 
 - Fixed a bug that when using `updateSearch()`, the clear button inside the input box doesn't show up, and the table doesn't update when the input is cleared (thanks, @DavidBlairs, #1082).
