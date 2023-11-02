@@ -2,7 +2,7 @@
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
 
-- Fixed disabling selection on hyperlink click. (@guoci, #1093)
+- Fixed disabling selection on hyperlink clicks (thanks, @guoci, #1093).
 
 # CHANGES IN DT VERSION 0.30
 
