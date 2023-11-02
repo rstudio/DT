@@ -1372,7 +1372,7 @@ HTMLWidgets.widget({
     changeInput('cell_clicked', {});
 
     // do not trigger table selection when clicking on links unless they have classes
-    table.on('click.dt', 'tbody td a', function(e) {
+    table.on('mousedown.dt', 'tbody td a', function(e) {
       if (this.className === '') e.stopPropagation();
     });
 
