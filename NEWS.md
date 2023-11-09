@@ -4,6 +4,8 @@
 
 - Fixed disabling selection on hyperlink clicks (thanks, @guoci, #1093).
 
+- Fixed an error for R >= 4.3.0 (thanks, @AntoineMichelet, #1095).
+
 # CHANGES IN DT VERSION 0.30
 
 - Fixed a bug that when using `updateSearch()`, the clear button inside the input box doesn't show up, and the table doesn't update when the input is cleared (thanks, @DavidBlairs, #1082).

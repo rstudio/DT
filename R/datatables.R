@@ -435,7 +435,7 @@ makeEditableField = function(x, data, rn) {
 }
 
 validateSelection = function(x) {
-  isRowColList = function(x) is.list(x) && names(x) %in% c('rows', 'cols')
+  isRowColList = function(x) is.list(x) && all(names(x) %in% c('rows', 'cols'))
   is2ColMatrix = function(x) is.matrix(x) && ncol(x) == 2L
   validator = list(
     mode = function(x) {
