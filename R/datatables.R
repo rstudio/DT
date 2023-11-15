@@ -257,6 +257,10 @@ datatable = function(
   if (is.null(options[['autoWidth']])) options$autoWidth = FALSE
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
+  # enable column names for column reordering by default
+  if (is.null(options[['columns']])) {
+    options$columns = lapply(names(data), function(e) list(name = e))
+  }
 
   cn = base::colnames(data)
   if (missing(colnames)) {
