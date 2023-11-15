@@ -511,7 +511,7 @@ HTMLWidgets.widget({
               if (value.length) $input.trigger('input');
               $input.attr('title', $input.val());
               if (server) {
-                table.column(i).search(value.length ? JSON.stringify(value) : '').draw();
+                searchColumn(i, value.length ? JSON.stringify(value) : '').draw();
                 return;
               }
               // turn off filter if nothing selected
@@ -682,7 +682,7 @@ HTMLWidgets.widget({
             updateSliderText(val[0], val[1]);
             if (e.type === 'slide') return;  // no searching when sliding only
             if (server) {
-              table.column(i).search($td.data('filter') ? ival : '').draw();
+              searchColumn(i, $td.data('filter') ? ival : '').draw();
               return;
             }
             table.draw();
