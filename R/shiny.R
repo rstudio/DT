@@ -614,10 +614,22 @@ dataTablesFilter = function(data, params) {
     DT_rows_current = list()
   ))
 
+  # map DataTables's column index in the query (`i` here) to the actual column
+  # index in data via its name because the two indices won't match when columns
+  # are reordered via the colReorder extension
+  imap = unlist(lapply(q$columns, function(col) {
+    k = col[['name']]
+    if (!is.character(k) || k == '') return(0L)
+    i = match(k, names(data))
+    if (is.na(i)) stop("The column name '", k, "' is not found in data.")
+    i
+  }))
+  if (all(imap == 0)) imap[] = seq_len(ncol(data))
+
   # which columns are searchable?
   searchable = logical(ncol(data))
-  for (j in seq_len(ncol(data))) {
-    if (q$columns[[j]][['searchable']] == 'true') searchable[j] = TRUE
+  for (j in names(q$columns)) {
+    if (q$columns[[j]][['searchable']] == 'true') searchable[imap[j]] = TRUE
   }
 
   # global searching options (column search shares caseInsensitive)
@@ -634,16 +646,16 @@ dataTablesFilter = function(data, params) {
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
     col = q$columns[[j]]
+    j = imap[j]
     # if the j-th column is not searchable or the search string is "", skip it
-    if (col[['searchable']] != 'true') next
+    if (!searchable[j]) next
     if ((k <- col[['search']][['value']]) == '') next
     k = httpuv::decodeURIComponent(k)
     column_opts = list(
       regex = col[['search']][['regex']] != 'false',
       caseInsensitive = global_opts$caseInsensitive
     )
-    j = as.integer(j)
-    dj = data[i, j + 1]
+    dj = data[i, j]
     i = i[doColumnSearch(dj, k, options = column_opts)]
     if (length(i) == 0) break
   }
@@ -663,11 +675,8 @@ dataTablesFilter = function(data, params) {
   for (ord in q$order) {
     k = ord[['column']]  # which column to sort
     d = ord[['dir']]     # direction asc/desc
-    # If colReorder is enabled, need to find column name rather than index
-    l = q$columns[[k]][['name']]
-    if (l %in% names(data)) k = as.character(match(l, names(data)) - 1)
     if (q$columns[[k]][['orderable']] != 'true') next
-    col = data[, as.integer(k) + 1]
+    col = data[, imap[k]]
     oList[[length(oList) + 1]] = (if (d == 'asc') identity else `-`)(
       if (is.numeric(col)) col else xtfrm(col)
     )
