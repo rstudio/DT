@@ -257,10 +257,6 @@ datatable = function(
   if (is.null(options[['autoWidth']])) options$autoWidth = FALSE
   # disable CSS classes for ordered columns
   if (is.null(options[['orderClasses']])) options$orderClasses = FALSE
-  # enable column names for column reordering by default
-  if (is.null(options[['columns']])) {
-    options$columns = lapply(names(data), function(e) list(name = e))
-  }
 
   cn = base::colnames(data)
   if (missing(colnames)) {
@@ -278,6 +274,10 @@ datatable = function(
   # do not order the first column if the name is empty (a column for row names)
   if (length(colnames) && colnames[1] == ' ')
     options = appendColumnDefs(options, list(orderable = FALSE, targets = 0))
+
+  # enable column names for column reordering by default
+  for (j in seq_len(ncol(data)))
+    options = appendColumnDefs(options, list(name = names(data)[j], targets = j - 1))
 
   style = normalizeStyle(style)
   if (grepl('^bootstrap', style)) class = DT2BSClass(class)
