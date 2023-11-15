@@ -1,5 +1,9 @@
 library(testit)
 
+# Factors and strings are searched differently.
+# Older versions of R don't have this set.
+op = options(stringsAsFactors = FALSE)
+
 # Helpers to create client queries that run without errors
 clientQuery = function(data, columns = lapply(names(data), columnQuery)) {
   columns = rep_len(columns, ncol(data))
