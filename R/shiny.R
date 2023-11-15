@@ -663,6 +663,9 @@ dataTablesFilter = function(data, params) {
   for (ord in q$order) {
     k = ord[['column']]  # which column to sort
     d = ord[['dir']]     # direction asc/desc
+    # If colReorder is enabled, need to find column name rather than index
+    l = q$columns[[k]][['name']]
+    if (l %in% names(data)) k = as.character(match(l, names(data)) - 1)
     if (q$columns[[k]][['orderable']] != 'true') next
     col = data[, as.integer(k) + 1]
     oList[[length(oList) + 1]] = (if (d == 'asc') identity else `-`)(
