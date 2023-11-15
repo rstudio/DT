@@ -432,6 +432,8 @@ HTMLWidgets.widget({
         regex = options.search.regex,
         ci = options.search.caseInsensitive !== false;
       }
+      // need to transpose the column index when colReorder is enabled
+      if (table.colReorder) i = table.colReorder.transpose(i);
       return table.column(i).search(value, regex, !regex, ci);
     };
 
