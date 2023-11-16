@@ -2,6 +2,8 @@
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
 
+- Searching and sorting work now when columns are re-ordered by the `ColReorder` extension (thanks, @ashbaldry #1096, @gergness #534, @nmoraesmunter #921, @isthisthat #1069).
+
 - Fixed disabling selection on hyperlink clicks (thanks, @guoci, #1093).
 
 - Fixed an error for R >= 4.3.0 (thanks, @AntoineMichelet, #1095).
