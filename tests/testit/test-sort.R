@@ -48,19 +48,19 @@ assert('server-side sort handler works', {
 
   query = clientQuery(tbl)
   out = dataTablesFilter(tbl, query)
-  (identical(out$data, unname(tbl)))
+  (out$data %==% unname(tbl))
 
   query = clientQuery(tbl)
   query$order[[1]] = orderQuery('0', 'asc')
   tbl_sort = tbl[order(tbl$foo), ]
   out = dataTablesFilter(tbl, query)
-  (identical(out$data, unname(tbl_sort)))
+  (out$data %==% unname(tbl_sort))
 
   query = clientQuery(tbl)
   query$order[[1]] = orderQuery('1', 'desc')
   tbl_sort = tbl[order(tbl$bar, decreasing = TRUE), ]
   out = dataTablesFilter(tbl, query)
-  (identical(out$data, unname(tbl_sort)))
+  (out$data %==% unname(tbl_sort))
 })
 
 assert('server-side sort handler works with re-ordered columns', {
@@ -74,5 +74,7 @@ assert('server-side sort handler works with re-ordered columns', {
   query$order[[1]] = orderQuery('0', 'asc')
   tbl_sort = tbl[order(tbl$bar), ]
   out = dataTablesFilter(tbl, query)
-  (identical(out$data, unname(tbl_sort)))
+  (out$data %==% unname(tbl_sort))
 })
+
+options(op)
