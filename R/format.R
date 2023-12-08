@@ -199,6 +199,7 @@ name2int = function(name, names, rownames, noerror = FALSE) {
 
 colFormatter = function(name, names, rownames = TRUE, rows = NULL, template, ...) {
   i = name2int(name, names, rownames)
+  i = strToHex(names[i + 1])
   rowJS = ''
   if (length(rows)) {
     rows = as.integer(rows)

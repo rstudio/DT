@@ -19,6 +19,11 @@ upperToDash = function(x) {
   x
 }
 
+# e.g., abc -> u61-u62-u63
+strToHex = function(x) {
+  unlist(lapply(x, function(z) paste0('u', charToRaw(z), collapse = '-')))
+}
+
 inShiny = function() {
   getOption('DT.datatable.shiny', 'shiny' %in% loadedNamespaces())
 }

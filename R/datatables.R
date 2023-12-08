@@ -268,6 +268,12 @@ datatable = function(
     cn[i] = names(colnames)
     colnames = cn
   }
+
+  # encode column names as hex strings and assign them to className
+  for (j in seq_along(cn)) options = appendColumnDefs(
+    options, list(className = strToHex(cn[j]), targets = j - 1)
+  )
+
   # when rownames = TRUE, user may have only provided colnames for original
   # data, and we need to add a name for the first column, i.e. row names
   if (ncol(data) - length(colnames) == 1) colnames = c(' ', colnames)
