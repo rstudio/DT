@@ -1,5 +1,6 @@
 # CHANGES IN DT VERSION 0.32
 
+- `updateSearch()` now sets the slider values based on the new search string for numeric columns (thanks, @mikmart, #1110).
 
 # CHANGES IN DT VERSION 0.31
 
