@@ -1402,7 +1402,8 @@ HTMLWidgets.widget({
           console.log('The search keyword for column ' + i + ' is undefined')
           return;
         }
-        $(td).find('input').first().val(v).trigger('input');
+        // Change event is needed to update numeric slider values.
+        $(td).find('input').first().val(v).trigger('input').trigger('change');
         searchColumn(i, v);
       });
       table.draw();
