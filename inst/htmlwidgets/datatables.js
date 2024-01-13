@@ -1402,9 +1402,9 @@ HTMLWidgets.widget({
           console.log('The search keyword for column ' + i + ' is undefined')
           return;
         }
-        // Change event is needed to update numeric slider values.
+        // Update column search string and values on linked filter widgets.
+        // 'input' for factor and char filters, 'change' for numeric filters.
         $(td).find('input').first().val(v).trigger('input').trigger('change');
-        searchColumn(i, v);
       });
       table.draw();
     }
