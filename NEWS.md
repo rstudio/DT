@@ -2,6 +2,8 @@
 
 - Fixed the bug that `replaceData()` failed to work with data that has no column names (thanks, @mmuurr, #1108).
 
+- `updateSearch()` now sets the slider values based on the new search string for numeric columns (thanks, @mikmart, #1110).
+
 # CHANGES IN DT VERSION 0.31
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
