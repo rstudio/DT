@@ -498,9 +498,6 @@ HTMLWidgets.widget({
               var v1 = JSON.stringify(filter[0].selectize.getValue()), v2 = $input.val();
               if (v1 === '[]') v1 = '';
               if (v1 !== v2) filter[0].selectize.setValue(v2 === '' ? [] : JSON.parse(v2));
-            },
-            updatesearch: function() {
-              $input.trigger('input');
             }
           });
           var $input2 = $x.children('select');
@@ -536,13 +533,7 @@ HTMLWidgets.widget({
           if (server) {
             fun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
           }
-          $input.on({
-            input: fun,
-            updatesearch: function() {
-              // Bypass any throttling.
-              searchColumn(i, $input.val()).draw();
-            }
-          });
+          $input.on('input', fun);
         } else if (inArray(type, ['number', 'integer', 'date', 'time'])) {
           var $x0 = $x;
           $x = $x0.children('div').first();
@@ -626,10 +617,6 @@ HTMLWidgets.widget({
               if (v[0] != slider_min()) v[0] *= scale;
               if (v[1] != slider_max()) v[1] *= scale;
               filter.val(v);
-            },
-            updatesearch: function () {
-              $input.trigger('input'); // Resets slider if search is empty.
-              $input.trigger('change');
             }
           });
           var formatDate = function(d, isoFmt) {
@@ -1415,7 +1402,9 @@ HTMLWidgets.widget({
           console.log('The search keyword for column ' + i + ' is undefined')
           return;
         }
-        $(td).find('input').first().val(v).trigger('updatesearch');
+        // Update column search string and values on linked filter widgets.
+        // 'input' for factor and char filters, 'change' for numeric filters.
+        $(td).find('input').first().val(v).trigger('input').trigger('change');
       });
       table.draw();
     }
