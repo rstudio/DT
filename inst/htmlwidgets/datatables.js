@@ -530,10 +530,16 @@ HTMLWidgets.widget({
           var fun = function() {
             searchColumn(i, $input.val()).draw();
           };
-          if (server) {
-            fun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
-          }
-          $input.on('input', fun);
+          var throttledFun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
+          $input.on('input', function(e, immediate) {
+            if (immediate) {
+              fun(); // Allows updateSearch to bypass throttling.
+            } else if (server) {
+              throttledFun();
+            } else {
+              fun();
+            }
+          });
         } else if (inArray(type, ['number', 'integer', 'date', 'time'])) {
           var $x0 = $x;
           $x = $x0.children('div').first();
@@ -1404,7 +1410,7 @@ HTMLWidgets.widget({
         }
         // Update column search string and values on linked filter widgets.
         // 'input' for factor and char filters, 'change' for numeric filters.
-        $(td).find('input').first().val(v).trigger('input').trigger('change');
+        $(td).find('input').first().val(v).trigger('input', [true]).trigger('change');
       });
       table.draw();
     }
