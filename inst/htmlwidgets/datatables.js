@@ -530,15 +530,11 @@ HTMLWidgets.widget({
           var fun = function() {
             searchColumn(i, $input.val()).draw();
           };
+          // throttle searching for server-side processing
           var throttledFun = $.fn.dataTable.util.throttle(fun, options.searchDelay);
           $input.on('input', function(e, immediate) {
-            if (immediate) {
-              fun(); // Allows updateSearch to bypass throttling.
-            } else if (server) {
-              throttledFun();
-            } else {
-              fun();
-            }
+            // always bypass throttling when immediate = true (via the updateSearch method)
+            (immediate || !server) ? fun() : throttledFun();
           });
         } else if (inArray(type, ['number', 'integer', 'date', 'time'])) {
           var $x0 = $x;
