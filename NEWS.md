@@ -1,5 +1,6 @@
 # CHANGES IN DT VERSION 0.32
 
+- Fixed the bug that `replaceData()` failed to work with data that has no column names (thanks, @mmuurr, #1108).
 
 # CHANGES IN DT VERSION 0.31
 

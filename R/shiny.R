@@ -473,6 +473,9 @@ reloadData = function(
 #'   levels, and numeric columns should have the same or smaller range,
 #'   otherwise the filters may never be able to reach certain rows in the data,
 #'   unless you explicitly update the filters with \code{updateFilters()}.
+#'
+#'   If the \code{ColReorder} extension is used, the new \code{data} must have
+#'   column names that match the original data column names exactly.
 #' @export
 replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'all') {
   dataTableAjax(proxy$session, data, ..., outputId = proxy$rawId)
@@ -618,6 +621,9 @@ dataTablesFilter = function(data, params) {
   # index in data via its name because the two indices won't match when columns
   # are reordered via the colReorder extension
   imap = unlist(lapply(q$columns, function(col) {
+    # if data doesn't have column names (e.g., #1108), assume it's not reordered
+    # (which may not be true)
+    if (is.null(names(data))) return(0L)
     k = col[['name']]
     if (!is.character(k) || k == '') return(0L)
     i = match(k, names(data))

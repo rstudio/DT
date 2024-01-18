@@ -31,4 +31,7 @@ When you replace the data in an existing table, please make sure the
   levels, and numeric columns should have the same or smaller range,
   otherwise the filters may never be able to reach certain rows in the data,
   unless you explicitly update the filters with \code{updateFilters()}.
+
+  If the \code{ColReorder} extension is used, the new \code{data} must have
+  column names that match the original data column names exactly.
 }
