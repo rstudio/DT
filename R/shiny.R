@@ -649,6 +649,11 @@ dataTablesFilter = function(data, params) {
   # start searching with all rows
   i = seq_len(n)
 
+  # apply SearchBuilder query if present
+  if (!is.null(q$searchBuilder)) {
+    i = which(sbEvaluateSearch(q$searchBuilder, data))
+  }
+
   # search by columns
   if (length(i)) for (j in names(q$columns)) {
     col = q$columns[[j]]
