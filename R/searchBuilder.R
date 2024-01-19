@@ -1,4 +1,8 @@
+# server-side processing for the SearchBuilder extension
+# https://datatables.net/extensions/searchbuilder/
+
 sbEvaluateSearch = function(search, data) {
+  # https://datatables.net/reference/option/searchBuilder.preDefined
   stopifnot(search$logic %in% c('AND', 'OR'))
   Reduce(
     switch(search$logic, AND = `&`, OR = `|`),
