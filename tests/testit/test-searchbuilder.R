@@ -4,6 +4,7 @@ assert('SearchBuilder condition evaluation works', {
   (sbEvaluateCondition('>', 'num', 1:2, 1) == c(FALSE, TRUE))
   (sbEvaluateCondition('between', 'num', 7, c(2, 4)) == FALSE)
   (sbEvaluateCondition('starts', 'string', 'foo', 'f') == TRUE)
+  (sbEvaluateCondition('starts', 'string', factor('foo'), 'f') == TRUE)
 })
 
 assert('SearchBuilder logic evaluation works', {

@@ -57,11 +57,11 @@ sbEvaluateCondition = function(condition, type, x, value) {
       '=' = x == value,
       'contains' = grepl(value, x, fixed = TRUE),
       '!contains' = !grepl(value, x, fixed = TRUE),
-      'ends' = endsWith(x, value),
-      '!ends' = !endsWith(x, value),
+      'ends' = endsWith(as.character(x), value),
+      '!ends' = !endsWith(as.character(x), value),
       'null' = is.na(x) | x == '',
-      'starts' = startsWith(x, value),
-      '!starts' = !startsWith(x, value),
+      'starts' = startsWith(as.character(x), value),
+      '!starts' = !startsWith(as.character(x), value),
       stop(sprintf('unsupported condition "%s" for criteria type "%s"', condition, type))
     )
   } else if (type %in% c('num', 'num-fmt', 'html-num', 'html-num-fmt')) {
