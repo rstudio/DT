@@ -4,6 +4,8 @@
 
 - `updateSearch()` now sets the slider values based on the new search string for numeric columns (thanks, @mikmart, #1110).
 
+- Added server-side processing support for the [SearchBuilder](https://datatables.net/extensions/searchbuilder/) extension (thanks, @AhmedKhaled945, @shrektan, @mikmart, #963).
+
 # CHANGES IN DT VERSION 0.31
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
