@@ -41,3 +41,7 @@ assert('SearchBuilder complex queries work', {
   )  
   (setequal(which(res), c(2:4, 7)))
 })
+
+assert('SearchBuilder skips evaluating invalid conditions', {
+  (is.null(sbEvaluateCriteria(list(data = 'Sepal.Length'), iris)))
+})

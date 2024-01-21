@@ -1,12 +1,13 @@
 # server-side processing for the SearchBuilder extension
 # https://datatables.net/extensions/searchbuilder/
 
+# returns NULL if none of the search criteria are valid
 sbEvaluateSearch = function(search, data) {
   # https://datatables.net/reference/option/searchBuilder.preDefined
   stopifnot(search$logic %in% c('AND', 'OR'))
   Reduce(
     switch(search$logic, AND = `&`, OR = `|`),
-    lapply(search$criteria, sbEvaluateCriteria, data)
+    dropNULL(lapply(search$criteria, sbEvaluateCriteria, data))
   )
 }
 
@@ -15,18 +16,25 @@ sbEvaluateCriteria = function(criteria, data) {
   if ('logic' %in% names(criteria)) {
     # this is a sub-group
     sbEvaluateSearch(criteria, data)
-  } else {
+  } else if (sbHasValidCondition(criteria)) {
     # this is a criteria
     cond = criteria$condition
     type = criteria$type
     x = data[[criteria$origData %||% criteria$data]]
     v = sbParseValue(sbExtractValue(criteria), type)
     sbEvaluateCondition(cond, type, x, v)
+  } else {
+    # just return NULL for criteria with an invalid condition
   }
 }
 
+# check that condition is present and values are non-empty
+sbHasValidCondition = function(criteria) {
+  'condition' %in% names(criteria) && all(sapply(criteria, nzchar))
+}
+
 sbExtractValue = function(criteria) {
-  if (criteria$condition %in% c('between', '!between')) {
+  if ('value2' %in% names(criteria)) {
     # array values are passed in a funny way to R
     c(criteria$value1, criteria$value2)
   } else {
