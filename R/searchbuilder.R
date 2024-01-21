@@ -1,7 +1,7 @@
 # server-side processing for the SearchBuilder extension
 # https://datatables.net/extensions/searchbuilder/
 
-# returns NULL if the search doesn't contain any valid conditions
+# returns NULL if none of the search criteria are valid
 sbEvaluateSearch = function(search, data) {
   # https://datatables.net/reference/option/searchBuilder.preDefined
   stopifnot(search$logic %in% c('AND', 'OR'))
@@ -24,10 +24,11 @@ sbEvaluateCriteria = function(criteria, data) {
     v = sbParseValue(sbExtractValue(criteria), type)
     sbEvaluateCondition(cond, type, x, v)
   } else {
-    # skip evaluating invalid conditions
+    # just return NULL for criteria with an invalid condition
   }
 }
 
+# check that condition is present and values are non-empty
 sbHasValidCondition = function(criteria) {
   'condition' %in% names(criteria) && all(sapply(criteria, nzchar))
 }
