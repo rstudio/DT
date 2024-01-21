@@ -651,7 +651,8 @@ dataTablesFilter = function(data, params) {
 
   # apply SearchBuilder query if present
   if (!is.null(s <- q$searchBuilder)) {
-    i = which(sbEvaluateSearch(s, data))
+    r = sbEvaluateSearch(s, data)
+    if (!is.null(r)) i = which(r)
   }
 
   # search by columns
