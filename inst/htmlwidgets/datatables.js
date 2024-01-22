@@ -501,7 +501,7 @@ HTMLWidgets.widget({
             }
           });
           var $input2 = $x.children('select');
-          filter = $input2.selectize({
+          filter = $input2.selectize($.extend({
             options: $input2.data('options').map(function(v, i) {
               return ({text: v, value: v});
             }),
@@ -520,7 +520,7 @@ HTMLWidgets.widget({
               $td.data('filter', value.length > 0);
               table.draw();  // redraw table, and filters will be applied
             }
-          });
+          }, $input2.data('settings')));
           filter[0].selectize.on('blur', function() {
             $x.hide().trigger('hide'); $input.parent().show(); $input.trigger('blur');
           });
