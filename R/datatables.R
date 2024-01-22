@@ -837,6 +837,7 @@ extDependency = function(extension, style, options) {
   } else js = sprintf('dataTables.%s.min.js', ext)
   if (style != 'default') js = c(js, sprintf('%s.%s.min.js', ext, style))
   css = sprintf('%s.%s.min.css', ext, if (style == 'default') 'dataTables' else style)
+  if (extension == 'DateTime') css = sprintf('dataTables.%s.min.css', ext)
   js = file.path('js', js); css = file.path('css', css)
   in_dir(src, {
     js = existing_files(js); css = existing_files(css)
