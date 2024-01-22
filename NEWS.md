@@ -8,6 +8,8 @@
 
 - Added server-side processing support for the [SearchBuilder](https://datatables.net/extensions/searchbuilder/) extension (thanks, @AhmedKhaled945, @shrektan, @mikmart, #963).
 
+- Fixed a bug that caused the date picker widget from the DateTime extension to render incorrectly (thanks, @mikmart, #1116).
+
 # CHANGES IN DT VERSION 0.31
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
