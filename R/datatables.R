@@ -744,7 +744,8 @@ columnFilterRow = function(filters, options = list()) {
         tags$select(
           multiple = 'multiple',
           style = 'width: 100%;',
-          `data-options` = p$options
+          `data-options` = p$options,
+          `data-settings` = native_encode(jsonlite::toJSON(options$settings, auto_unbox = TRUE))
         ),
         style = 'width: 100%; display: none;'
       )
