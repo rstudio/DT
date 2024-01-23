@@ -674,8 +674,12 @@ HTMLWidgets.widget({
             });
             // we only know how to use function renderers
             if (colDef && typeof colDef.render === 'function') {
-              $span1.text(colDef.render(scaleBack(v1, scale), 'display'));
-              $span2.text(colDef.render(scaleBack(v2, scale), 'display'));
+              var restore = function(v) {
+                v = scaleBack(v, scale);
+                return type !== 'date' ? v : new Date(+v);
+              }
+              $span1.text(colDef.render(restore(v1), 'display'));
+              $span2.text(colDef.render(restore(v2), 'display'));
             } else {
               $span1.text(formatDate(v1, false));
               $span2.text(formatDate(v2, false));
