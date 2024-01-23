@@ -668,11 +668,12 @@ HTMLWidgets.widget({
             r1  = t1; r2 = t2;
           })();
           var updateSliderText = function(v1, v2) {
-            // apply column formatting if defined
+            // format with active column renderer, if defined
             var colDef = data.options.columnDefs.find(function(def) {
               return (def.targets === i || inArray(i, def.targets)) && 'render' in def;
             });
-            if (colDef) {
+            // we only know how to use function renderers
+            if (colDef && typeof colDef.render === 'function') {
               $span1.text(colDef.render(scaleBack(v1, scale), 'display'));
               $span2.text(colDef.render(scaleBack(v2, scale), 'display'));
             } else {
