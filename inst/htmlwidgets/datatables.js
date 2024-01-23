@@ -668,7 +668,17 @@ HTMLWidgets.widget({
             r1  = t1; r2 = t2;
           })();
           var updateSliderText = function(v1, v2) {
-            $span1.text(formatDate(v1, false)); $span2.text(formatDate(v2, false));
+            // apply column formatting if defined
+            var colDef = data.options.columnDefs.find(function(def) {
+              return (def.targets === i || inArray(i, def.targets)) && 'render' in def;
+            });
+            if (colDef) {
+              $span1.text(colDef.render(scaleBack(v1, scale), 'display'));
+              $span2.text(colDef.render(scaleBack(v2, scale), 'display'));
+            } else {
+              $span1.text(formatDate(v1, false));
+              $span2.text(formatDate(v2, false));
+            }
           };
           updateSliderText(r1, r2);
           var updateSlider = function(e) {
