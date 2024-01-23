@@ -10,6 +10,8 @@
 
 - Fixed a bug that caused the date picker widget from the DateTime extension to render incorrectly (thanks, @mikmart, #1116).
 
+- Column formatting now also applies to range labels shown on filter sliders (thanks, @GitChub, @mikmart, #247).
+
 # CHANGES IN DT VERSION 0.31
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
