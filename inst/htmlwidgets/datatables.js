@@ -520,7 +520,7 @@ HTMLWidgets.widget({
               $td.data('filter', value.length > 0);
               table.draw();  // redraw table, and filters will be applied
             }
-          }, $input2.data('settings')));
+          }, data.filterSettings.select));
           filter[0].selectize.on('blur', function() {
             $x.hide().trigger('hide'); $input.parent().show(); $input.trigger('blur');
           });
@@ -647,7 +647,7 @@ HTMLWidgets.widget({
             start: [r1, r2],
             range: {min: r1, max: r2},
             connect: true
-          }, opts));
+          }, opts, data.filterSettings.slider));
           if (scale > 1) (function() {
             var t1 = r1, t2 = r2;
             var val = filter.val();
