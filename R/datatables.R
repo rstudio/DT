@@ -294,6 +294,7 @@ datatable = function(
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
   params$filter = filter$position
+  params$filterSettings = filter$settings %||% setNames(list(), character()) # empty JS object
   params$vertical = filter$vertical
   if (filter$position != 'none') params$filterHTML = filterHTML
 
@@ -744,8 +745,7 @@ columnFilterRow = function(filters, options = list()) {
         tags$select(
           multiple = 'multiple',
           style = 'width: 100%;',
-          `data-options` = p$options,
-          `data-settings` = native_encode(jsonlite::toJSON(options$settings, auto_unbox = TRUE))
+          `data-options` = p$options
         ),
         style = 'width: 100%; display: none;'
       )
