@@ -12,6 +12,8 @@
 
 - Column formatting now also applies to range labels shown on filter sliders (thanks, @GitChub, @mikmart, #247).
 
+- Added support for passing custom configuration for initializing filter widgets in JavaScript. Use the `filter` parameter to `datatable()` in the form `filter = list(settings = list(select = ..., slider = ...))` (thanks, @yogat3ch, @DavidBlairs, @mikmart, #1072, #1083).
+
 # CHANGES IN DT VERSION 0.31
 
 - Upgraded DataTables version to 1.13.6 (thanks, @stla, #1091).
