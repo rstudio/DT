@@ -662,7 +662,7 @@ HTMLWidgets.widget({
                 start: [t1, t2],
                 range: {min: t1, max: t2},
                 connect: true
-              }, opts), true);
+              }, opts, data.filterSettings.slider), true);
               val = filter.val();
             }
             r1  = t1; r2 = t2;
