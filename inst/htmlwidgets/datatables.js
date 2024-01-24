@@ -667,11 +667,11 @@ HTMLWidgets.widget({
             }
             r1  = t1; r2 = t2;
           })();
+          // format with active column renderer, if defined
+          var colDef = data.options.columnDefs.find(function(def) {
+            return (def.targets === i || inArray(i, def.targets)) && 'render' in def;
+          });
           var updateSliderText = function(v1, v2) {
-            // format with active column renderer, if defined
-            var colDef = data.options.columnDefs.find(function(def) {
-              return (def.targets === i || inArray(i, def.targets)) && 'render' in def;
-            });
             // we only know how to use function renderers
             if (colDef && typeof colDef.render === 'function') {
               var restore = function(v) {
