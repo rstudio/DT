@@ -322,9 +322,14 @@ datatable = function(
   # in the second row
   if (filter$position == 'top') options$orderCellsTop = TRUE
   params$filter = filter$position
-  params$filterSettings = filter$settings %||% setNames(list(), character()) # empty JS object
   params$vertical = filter$vertical
   if (filter$position != 'none') params$filterHTML = filterHTML
+  params$filterSettings = filter$settings %||% list()
+  if (!is.list(params$filterSettings)) {
+    stop("`filter$settings` must be a named list.")
+  } else if (!all(names(params$filterSettings) %in% c('select', 'slider'))) {
+    stop("`filter$settings` must only contain `$select` or `$slider` elements.")
+  }
 
   if (missing(container)) {
     container = tags$table(tableHeader(colnames, escape), class = class)
