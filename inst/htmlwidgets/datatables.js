@@ -684,7 +684,7 @@ HTMLWidgets.widget({
             if (colDef && typeof colDef.render === 'function') {
               var restore = function(v) {
                 v = scaleBack(v, scale);
-                return type !== 'date' ? v : new Date(+v);
+                return inArray(type, ['date', 'time']) ? new Date(+v) : v;
               }
               $span1.text(colDef.render(restore(v1), 'display'));
               $span2.text(colDef.render(restore(v2), 'display'));
