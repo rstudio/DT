@@ -348,6 +348,15 @@ HTMLWidgets.widget({
     var table = $table.DataTable(options);
     $el.data('datatable', table);
 
+    if ('rowGroup' in options) {
+      // Maintain RowGroup dataSrc when columns are reordered (#1109)
+      table.on('column-reorder', function(e, settings, details) {
+        var oldDataSrc = table.rowGroup().dataSrc();
+        var newDataSrc = details.mapping[oldDataSrc];
+        table.rowGroup().dataSrc(newDataSrc);
+      });
+    }
+
     // Unregister previous Crosstalk event subscriptions, if they exist
     if (instance.ctfilterSubscription) {
       instance.ctfilterHandle.off("change", instance.ctfilterSubscription);
