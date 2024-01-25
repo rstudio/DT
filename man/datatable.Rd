@@ -67,11 +67,8 @@ generated from \code{htmltools::tags$caption()}}
 \code{bottom/top}: put column filters at the bottom/top of the table; range
 sliders are used to filter numeric/date/time columns, select lists are used
 for factor columns, and text input boxes are used for character columns; if
-you want more control over the styles of filters, you can provide a list to
-this argument of the form \code{list(position = 'top', clear = TRUE, plain
-= FALSE)}, where \code{clear} indicates whether you want the clear buttons
-in the input boxes, and \code{plain} means if you want to use Bootstrap
-form styles or plain text input styles for the text input boxes}
+you want more control over the styles of filters, you can provide a named
+list to this argument; see Details for more}
 
 \item{escape}{whether to escape HTML entities in the table: \code{TRUE} means
 to escape the whole table, and \code{FALSE} means not to escape it;
@@ -214,6 +211,37 @@ data frame) using the JavaScript library DataTables.
       For example, \code{list(list(visible=FALSE, target=1), list(visible=TRUE, target=1))}
       results in a table whose first column is \emph{invisible}.
     \item See \url{https://datatables.net/reference/option/columnDefs} for more.
+  }
+  \code{filter}:
+  \enumerate{
+    \item \code{filter} can be used to position and customize column filters.
+      A scalar string value defines the position, and must be one of \code{'none'}
+      (the default), \code{'bottom'} and \code{'top'}. A named list can be used
+      for further control. In the named list form:
+    \item \code{$position} is a string as described above. It defaults to \code{'none'}.
+    \item \code{$clear} is a logical value indicating if clear
+      buttons should appear in input boxes. It defaults to \code{TRUE}.
+    \item \code{$plain} is a logical value indicating if plain styling
+      should be used for input boxes instead of Bootstrap styling. It
+      defaults to \code{FALSE}.
+    \item \code{$vertical} is a logical value indicating if slider
+      widgets should be oriented vertically rather than horizontally.
+      It defaults to \code{FALSE}.
+    \item \code{$opacity} is a numeric value between 0 and 1 used to set
+      the level of transparency of slider widgets. It defaults to \code{1}.
+    \item \code{$settings} is a named list used to directly pass configuration
+      for initializing filter widgets in JavaScript.
+      \itemize{
+         \item The \code{$select} element is passed to the select widget, and
+           \code{$slider} is passed to the slider widget.
+         \item Valid values depend on the settings accepted by the underlying
+           JavaScript libraries, \href{https://selectize.dev/}{Selectize}
+           and \href{https://refreshless.com/nouislider/}{noUiSlider}.
+           Please note that the versions bundled with DT are currently quite old,
+           so accepted settings may not match their most recent documentation.
+         \item These settings can override values set by DT, so specifying
+           a setting already in use may break something. Use with care.
+      }
   }
 }
 \note{
