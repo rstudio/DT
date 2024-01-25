@@ -438,6 +438,7 @@ HTMLWidgets.widget({
     };
 
     if (data.filter !== 'none') {
+      if (!data.hasOwnProperty('filterSettings')) data.filterSettings = {};
 
       filterRow.each(function(i, td) {
 

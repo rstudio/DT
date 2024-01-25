@@ -229,7 +229,7 @@ data frame) using the JavaScript library DataTables.
       It defaults to \code{FALSE}.
     \item \code{$opacity} is a numeric value between 0 and 1 used to set
       the level of transparency of slider widgets. It defaults to \code{1}.
-    \item \code{$settings} is a named list used to directly pass configuration 
+    \item \code{$settings} is a named list used to directly pass configuration
       for initializing filter widgets in JavaScript.
       \itemize{
          \item The \code{$select} element is passed to the select widget, and

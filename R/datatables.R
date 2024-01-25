@@ -179,7 +179,7 @@
 #'       It defaults to \code{FALSE}.
 #'     \item \code{$opacity} is a numeric value between 0 and 1 used to set
 #'       the level of transparency of slider widgets. It defaults to \code{1}.
-#'     \item \code{$settings} is a named list used to directly pass configuration 
+#'     \item \code{$settings} is a named list used to directly pass configuration
 #'       for initializing filter widgets in JavaScript.
 #'       \itemize{
 #'          \item The \code{$select} element is passed to the select widget, and
@@ -324,12 +324,7 @@ datatable = function(
   params$filter = filter$position
   params$vertical = filter$vertical
   if (filter$position != 'none') params$filterHTML = filterHTML
-  params$filterSettings = filter$settings %||% list()
-  if (!is.list(params$filterSettings)) {
-    stop("`filter$settings` must be a named list.")
-  } else if (!all(names(params$filterSettings) %in% c('select', 'slider'))) {
-    stop("`filter$settings` must only contain `$select` or `$slider` elements.")
-  }
+  params$filterSettings = filter$settings
 
   if (missing(container)) {
     container = tags$table(tableHeader(colnames, escape), class = class)
