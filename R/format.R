@@ -129,21 +129,6 @@ formatSignif = function(
 formatDate = function(table, columns, method = 'toDateString', params = NULL, rows = NULL) {
   if (!inherits(table, 'datatables'))
     stop("Invalid table argument; a table object created from datatable() was expected")
-  x = table$x
-  if (x$filter != 'none') {
-    if (inherits(columns, 'formula')) columns = all.vars(columns)
-    colnames = base::attr(x, 'colnames', exact = TRUE)
-    rownames = base::attr(x, 'rownames', exact = TRUE)
-    if (is.null(params)) params = list()
-    cols = sprintf("%d", name2int(columns, colnames, rownames))
-    x$filterDateFmt = as.list(x$filterDateFmt)
-    for (col in cols) x$filterDateFmt[[col]] = list(
-      method = method, params = toJSON(params)
-    )
-    table$x = x
-  }
-  # the code above is used to ensure the date(time) filter displays the same format or
-  # timezone as the column value
   formatColumns(table, columns, tplDate, method, params, rows = rows)
 }
 
