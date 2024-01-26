@@ -630,13 +630,11 @@ HTMLWidgets.widget({
               filter.val(v);
             }
           });
-          var formatDate = function(d, isoFmt) {
+          var formatDate = function(d) {
             d = scaleBack(d, scale);
             if (type === 'number') return d;
             if (type === 'integer') return parseInt(d);
             var x = new Date(+d);
-            var fmt = ('filterDateFmt' in data) ? data.filterDateFmt[i] : undefined;
-            if (fmt !== undefined && isoFmt === false) return x[fmt.method].apply(x, fmt.params);
             if (type === 'date') {
               var pad0 = function(x) {
                 return ('0' + x).substr(-2, 2);
@@ -686,13 +684,13 @@ HTMLWidgets.widget({
             if (colDef && typeof colDef.render === 'function') {
               var restore = function(v) {
                 v = scaleBack(v, scale);
-                return type !== 'date' ? v : new Date(+v);
+                return inArray(type, ['date', 'time']) ? new Date(+v) : v;
               }
               $span1.text(colDef.render(restore(v1), 'display'));
               $span2.text(colDef.render(restore(v2), 'display'));
             } else {
-              $span1.text(formatDate(v1, false));
-              $span2.text(formatDate(v2, false));
+              $span1.text(formatDate(v1));
+              $span2.text(formatDate(v2));
             }
           };
           updateSliderText(r1, r2);
