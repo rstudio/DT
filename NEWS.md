@@ -1,3 +1,6 @@
+# CHANGES IN DT VERSION 0.33
+
+
 # CHANGES IN DT VERSION 0.32
 
 - Fixed a bug that caused the column used for grouping with the RowGroup extension to change when relocated by the ColReorder extension (thanks, @isthisthat, @mikmart, #1109).
