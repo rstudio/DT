@@ -2,6 +2,8 @@
 
 - Added `outputArgs` parameter to `renderDataTable`, to allow width and height to be set when using interactive R Markdown documents.
 
+- Fixed a bug in `renderDT()`'s evaluation of `...` arguments when `quoted = TRUE` (#1130). 
+
 # CHANGES IN DT VERSION 0.32
 
 - Fixed a bug that caused the column used for grouping with the RowGroup extension to change when relocated by the ColReorder extension (thanks, @isthisthat, @mikmart, #1109).

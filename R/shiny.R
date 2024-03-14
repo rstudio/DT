@@ -99,7 +99,7 @@ renderDataTable = function(
   outputInfoEnv[["session"]] = NULL
 
   exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
-  argFunc = shiny::exprToFunction(list(..., server = server), env, quoted = FALSE)
+  argFunc = shiny::exprToFunction(list(..., server = server), parent.frame(), quoted = FALSE)
   widgetFunc = function() {
     opts = options(DT.datatable.shiny = TRUE); on.exit(options(opts), add = TRUE)
     instance = exprFunc()
