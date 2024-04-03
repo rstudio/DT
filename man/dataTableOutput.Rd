@@ -60,18 +60,17 @@ this is the calling environment, the same as when defining an ordinary
 non-reactive expression. If \code{expr} is a quosure and \code{quoted} is
 \code{TRUE}, then \code{env} is ignored.}
 
-\item{quoted}{If it is \code{TRUE}, then the
-\code{\link[substitute]{quote}()}ed value of \code{expr} will be used when
-\code{expr} is evaluated. If \code{expr} is a quosure and you would like to
-use its expression as a value for \code{expr}, then you must set
-\code{quoted} to \code{TRUE}.}
+\item{quoted}{If it is \code{TRUE}, then the \code{\link{quote}()}ed value of
+\code{expr} will be used when \code{expr} is evaluated. If \code{expr} is a
+quosure and you would like to use its expression as a value for
+\code{expr}, then you must set \code{quoted} to \code{TRUE}.}
 
 \item{funcFilter}{(for expert use only) passed to the \code{filter} argument
 of \code{\link{dataTableAjax}()}}
 
-\item{future}{whether the server-side filter function should be executed
-as a future or as a standard synchronous function. If true, the future
-will be evaluated according to the session's \link[future]{plan}.}
+\item{future}{whether the server-side filter function should be executed as a
+future or as a standard synchronous function. If true, the future will be
+evaluated according to the session's \link[future]{plan}.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
 call to \code{\link{dataTableOutput}()} when
