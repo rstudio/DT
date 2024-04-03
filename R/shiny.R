@@ -57,7 +57,7 @@ DTOutput = dataTableOutput
 #'   non-reactive expression. If \code{expr} is a quosure and \code{quoted} is
 #'   \code{TRUE}, then \code{env} is ignored.
 #' @param quoted If it is \code{TRUE}, then the
-#'   \code{\link[substitute]{quote}()}ed value of \code{expr} will be used when
+#'   \code{\link{quote}()}ed value of \code{expr} will be used when
 #'   \code{expr} is evaluated. If \code{expr} is a quosure and you would like to
 #'   use its expression as a value for \code{expr}, then you must set
 #'   \code{quoted} to \code{TRUE}.
