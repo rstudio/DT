@@ -1,3 +1,6 @@
+# CHANGES IN DT VERSION 0.34
+
+
 # CHANGES IN DT VERSION 0.33
 
 - Added `outputArgs` parameter to `renderDataTable`, to allow width and height to be set when using interactive R Markdown documents.
