@@ -10,10 +10,10 @@
 # Note: This ensures we always have the most up-to-date DataTables resources
 # while maintaining a consistent structure for our download process.
 
-
+version = "2.1.4" # this must be the same as the version in the html_text
 html_text = r"{
 <link href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/autofill/2.7.0/css/autoFill.dataTables.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/autofill/2.7.0/css/autoFill.dataTables.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/colreorder/2.0.4/css/colReorder.dataTables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/datetime/1.5.3/css/dataTables.dateTime.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@ html_text = r"{
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/autofill/2.7.0/js/dataTables.autoFill.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.min.js"></script>
@@ -52,10 +52,14 @@ html_text = r"{
 <script src="https://cdn.datatables.net/select/2.0.5/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/staterestore/1.4.1/js/dataTables.stateRestore.min.js"></script>
 }"
-
 download_datatables_files = function(html_text) {
-    # Create the base directory
-    dir.create("download/DataTables", recursive = TRUE, showWarnings = FALSE)
+    # Define the base directory as a variable
+    base_dir = "download/DataTables"
+    # Create the base directory and ensure it's empty
+    if (dir.exists(base_dir)) {
+        unlink(base_dir, recursive = TRUE)
+    }
+    dir.create(base_dir, recursive = TRUE, showWarnings = FALSE)
 
     # Extract URLs from the HTML text
     urls = unlist(regmatches(html_text, gregexpr("https://[^\"]+", html_text)))
@@ -66,8 +70,8 @@ download_datatables_files = function(html_text) {
     # Use non-minified versions for 'pdfmake.js' and 'vfs_fonts.js'
     # This is due to compatibility issues with pdfmake.min.js on Windows for self-contained HTML pages
     # Reference: https://github.com/rstudio/DT/issues/774#issuecomment-595277726
-    urls = gsub("pdfmake\\.min\\.js", "pdfmake.js", urls, fixed = TRUE)
-    urls = gsub("vfs_fonts\\.min\\.js", "vfs_fonts.js", urls, fixed = TRUE)
+    urls = gsub("pdfmake.min.js", "pdfmake.js", urls, fixed = TRUE)
+    urls = gsub("vfs_fonts.min.js", "vfs_fonts.js", urls, fixed = TRUE)
 
     # Download and save each file
     for (url in urls) {
@@ -78,7 +82,7 @@ download_datatables_files = function(html_text) {
         rel_path = gsub("/[0-9.]+/", "/", rel_path)
 
         # Create the full local path
-        local_path = file.path("download/DataTables", rel_path)
+        local_path = file.path(base_dir, rel_path)
 
         # Ensure the directory exists
         dir.create(dirname(local_path), recursive = TRUE, showWarnings = FALSE)
@@ -94,6 +98,11 @@ download_datatables_files = function(html_text) {
             }
         )
     }
+    # should change the download/$version$/* to download/datatables/*
+    file.rename(
+        from = sprintf("%s/%s", base_dir, version),
+        to = sprintf("%s/datatables", base_dir)
+    )
 }
 
 # Run
