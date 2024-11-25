@@ -64,6 +64,8 @@
 #'   (only display the table body) when the number of total records is less
 #'   than the page size. Note, it only works on the client-side processing mode
 #'   and the `pageLength` option should be provided explicitly.
+#' @param lazyRender \code{TRUE} to delay rendering until the table becomes visible
+#'   (the default) or \code{FALSE} to render the table immediately on page load.
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
@@ -207,6 +209,7 @@ datatable = function(
   escape = TRUE, style = 'auto', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
+  lazyRender = TRUE,
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
   editable = FALSE
 ) {
@@ -374,6 +377,9 @@ datatable = function(
               immediate. = TRUE)
     params$autoHideNavigation = autoHideNavigation
   }
+
+  # record lazyRender
+  params$lazyRender = lazyRender
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
