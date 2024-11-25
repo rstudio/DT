@@ -1,6 +1,6 @@
 # CHANGES IN DT VERSION 0.34
 
-- Added `lazyRender` parameter to `datatable`, which gives the option for the table to be rendered immediately rather than waiting for it to become visible (#1156).
+- Added `lazyRender` parameter to `DT::datatable()`, which gives the option for the table to be rendered immediately rather than waiting for it to become visible (thanks, @Mosk915, #1156).
 
 # CHANGES IN DT VERSION 0.33
 
