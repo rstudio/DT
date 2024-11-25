@@ -180,9 +180,7 @@ HTMLWidgets.widget({
     };
   },
   renderValue: function(el, data, instance) {
-    if(!data.hasOwnProperty("lazyRender"))
-      data.lazyRender = true;
-    if ((el.offsetWidth === 0 || el.offsetHeight === 0) && data.lazyRender) {
+    if ((el.offsetWidth === 0 || el.offsetHeight === 0) && data.lazyRender !== false) {
       instance.data = data;
       return;
     }
