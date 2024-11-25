@@ -209,7 +209,7 @@ datatable = function(
   escape = TRUE, style = 'auto', width = NULL, height = NULL, elementId = NULL,
   fillContainer = getOption('DT.fillContainer', NULL),
   autoHideNavigation = getOption('DT.autoHideNavigation', NULL),
-  lazyRender = TRUE,
+  lazyRender = NULL,
   selection = c('multiple', 'single', 'none'), extensions = list(), plugins = NULL,
   editable = FALSE
 ) {
