@@ -21,6 +21,7 @@ datatable(
   elementId = NULL,
   fillContainer = getOption("DT.fillContainer", NULL),
   autoHideNavigation = getOption("DT.autoHideNavigation", NULL),
+  lazyRender = NULL,
   selection = c("multiple", "single", "none"),
   extensions = list(),
   plugins = NULL,
@@ -104,6 +105,9 @@ then vertical and/or horizontal scrolling of the table cells will occur.}
 (only display the table body) when the number of total records is less
 than the page size. Note, it only works on the client-side processing mode
 and the `pageLength` option should be provided explicitly.}
+
+\item{lazyRender}{\code{FALSE} to render the table immediately on page load,
+otherwise delay rendering until the table becomes visible.}
 
 \item{selection}{the row/column selection mode (single or multiple selection
 or disable selection) when a table widget is rendered in a Shiny app;
