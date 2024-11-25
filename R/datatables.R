@@ -64,8 +64,8 @@
 #'   (only display the table body) when the number of total records is less
 #'   than the page size. Note, it only works on the client-side processing mode
 #'   and the `pageLength` option should be provided explicitly.
-#' @param lazyRender \code{TRUE} to delay rendering until the table becomes visible
-#'   (the default) or \code{FALSE} to render the table immediately on page load.
+#' @param lazyRender \code{FALSE} to render the table immediately on page load,
+#'   otherwise delay rendering until the table becomes visible.
 #' @param selection the row/column selection mode (single or multiple selection
 #'   or disable selection) when a table widget is rendered in a Shiny app;
 #'   alternatively, you can use a list of the form \code{list(mode = 'multiple',
