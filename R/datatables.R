@@ -379,7 +379,7 @@ datatable = function(
   }
 
   # record lazyRender
-  if(isFALSE(lazyRender)) params$lazyRender = lazyRender
+params$lazyRender = lazyRender
 
   params = structure(modifyList(params, list(
     data = data, container = as.character(container), options = options,
