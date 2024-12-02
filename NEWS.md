@@ -2,6 +2,8 @@
 
 - Added `lazyRender` parameter to `DT::datatable()`, which gives the option for the table to be rendered immediately rather than waiting for it to become visible (thanks, @Mosk915, #1156).
 
+- Moved **httpuv** from `Imports` to `Suggests` in `DESCRIPTION` (thanks, @MichaelChirico, #1159).
+
 # CHANGES IN DT VERSION 0.33
 
 - Added `outputArgs` parameter to `renderDataTable`, to allow width and height to be set when using interactive R Markdown documents.
