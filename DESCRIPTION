@@ -1,7 +1,7 @@
 Type: Package
 Package: DT
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.33.3
+Version: 0.34.0
 Authors@R: c(
     person("Yihui", "Xie", role = "aut"),
     person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
