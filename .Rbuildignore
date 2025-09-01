@@ -9,3 +9,4 @@
 ^cran-comments\.md$
 ^LICENSE\.md$
 ^_dev$
+^revdep$

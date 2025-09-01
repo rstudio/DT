@@ -7,6 +7,5 @@ rsconnect/
 large.txt
 inst/examples/random.R
 .*.Rnb.cached
-revdep/
 .DS_Store
 download/
