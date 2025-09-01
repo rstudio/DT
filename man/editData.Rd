@@ -15,8 +15,8 @@ containing columns \code{row}, \code{col}, and \code{value}.}
 
 \item{proxy, resetPaging, ...}{(Optional) If \code{proxy} is provided, it must
 be either a character string of the output ID of the table or a proxy
-object created from \code{\link{dataTableProxy}()}, and the rest of
-arguments are passed to \code{\link{replaceData}()} to update the data in a
+object created from \code{\link[=dataTableProxy]{dataTableProxy()}}, and the rest of
+arguments are passed to \code{\link[=replaceData]{replaceData()}} to update the data in a
 DataTable instance in a Shiny app.}
 
 \item{rownames}{Whether row names are displayed in the table.}
@@ -31,5 +31,5 @@ can update the data object behind the DataTable accordingly.
 }
 \note{
 For factor columns, new levels would be automatically added when necessary
-  to avoid \code{NA} coercing.
+to avoid \code{NA} coercing.
 }

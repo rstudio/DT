@@ -30,23 +30,23 @@ An integer vector of filtered row indices
 \description{
 \code{doGlobalSearch()} can be used to search a data frame given the search
 string typed by the user into the global search box of a
-\code{\link{datatable}}. \code{doColumnSearch()} does the same for a vector
+\code{\link[=datatable]{datatable()}}. \code{doColumnSearch()} does the same for a vector
 given the search string typed into a column filter. These functions are used
 internally by the default \code{filter} function passed to
-\code{\link{dataTableAjax}()}, allowing you to replicate the search results
+\code{\link[=dataTableAjax]{dataTableAjax()}}, allowing you to replicate the search results
 that server-side processing returns.
 }
 \examples{
-doGlobalSearch(iris, "versi")
+doGlobalSearch(iris, 'versi')
 doGlobalSearch(iris, "v.r.i", options = list(regex = TRUE))
 
-doColumnSearch(iris$Species, "[\"versicolor\"]")
-doColumnSearch(iris$Sepal.Length, "4 ... 5")
+doColumnSearch(iris$Species, '["versicolor"]')
+doColumnSearch(iris$Sepal.Length, '4 ... 5')
 }
 \seealso{
 The column filters section online for search string formats:
-  \url{https://rstudio.github.io/DT/}
+\url{https://rstudio.github.io/DT/}
 
 Accessing the search strings typed by a user in a Shiny app:
-  \url{https://rstudio.github.io/DT/shiny.html}
+\url{https://rstudio.github.io/DT/shiny.html}
 }

@@ -22,16 +22,16 @@ an integer.
 \details{
 This function only works with integer, double, date, time (\code{POSIXlt} or
 \code{POSIXct}), and factor values. The date must be of the format
-\code{\%Y-\%m-\%dT\%H:\%M:\%SZ}. The factor value must be in the levels of
+\verb{\\\%Y-\\\%m-\\\%dT\\\%H:\\\%M:\\\%SZ}. The factor value must be in the levels of
 \code{old}, otherwise it will be coerced to \code{NA}.
 }
 \examples{
 library(DT)
-coerceValue("100", 1L)
-coerceValue("1.23", 3.1416)
-coerceValue("2018-02-14", Sys.Date())
-coerceValue("2018-02-14T22:18:52Z", Sys.time())
-coerceValue("setosa", iris$Species)
-coerceValue("setosa2", iris$Species)  # NA
-coerceValue("FALSE", TRUE)  # not supported
+coerceValue('100', 1L)
+coerceValue('1.23', 3.1416)
+coerceValue('2018-02-14', Sys.Date())
+coerceValue('2018-02-14T22:18:52Z', Sys.time())
+coerceValue('setosa', iris$Species)
+coerceValue('setosa2', iris$Species)  # NA
+coerceValue('FALSE', TRUE)  # not supported
 }
