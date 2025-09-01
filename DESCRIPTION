@@ -4,8 +4,10 @@ Title: A Wrapper of the JavaScript Library 'DataTables'
 Version: 0.33.3
 Authors@R: c(
     person("Yihui", "Xie", role = "aut"),
-    person("Joe", "Cheng", email = "joe@posit.co", role = c("aut", "cre")),
+    person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
     person("Xianying", "Tan", role = "aut"),
+    person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7111-0077")),
     person("JJ", "Allaire", role = "ctb"),
     person("Maximilian", "Girlich", role = "ctb"),
     person("Greg", "Freedman Ellis", role = "ctb"),
