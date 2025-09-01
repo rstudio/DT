@@ -25,32 +25,32 @@ formatColumns = function(table, columns, template, ..., appendTo = c('columnDefs
 
 #' Format table columns
 #'
-#' Format numeric columns in a table as currency (\code{formatCurrency()}) or
-#' percentages (\code{formatPercentage()}), or round numbers to a specified
-#' number of decimal places (\code{formatRound()}), or a specified number
-#' of significant figures (\code{formatSignif()}).  The function
-#' \code{formatStyle()} applies CSS styles to table cells by column.
-#' @param table a table object created from \code{\link{datatable}()}
+#' Format numeric columns in a table as currency (`formatCurrency()`) or
+#' percentages (`formatPercentage()`), or round numbers to a specified
+#' number of decimal places (`formatRound()`), or a specified number
+#' of significant figures (`formatSignif()`).  The function
+#' `formatStyle()` applies CSS styles to table cells by column.
+#' @param table a table object created from [datatable()]
 #' @param columns the indices of the columns to be formatted (can be character,
-#'   numeric, logical, or a formula of the form \code{~ V1 + V2}, which is
-#'   equivalent to \code{c('V1', 'V2')})
+#'   numeric, logical, or a formula of the form `~ V1 + V2`, which is
+#'   equivalent to `c('V1', 'V2')`)
 #' @param currency the currency symbol
 #' @param interval put a marker after how many digits of the numbers
-#' @param mark the marker after every \code{interval} decimals in the numbers
+#' @param mark the marker after every `interval` decimals in the numbers
 #' @param dec.mark a character to indicate the decimal point
 #' @param before whether to place the currency symbol before or after the values
 #' @param zero.print a string to specify how zeros should be formatted.
-#'   Useful for when many zero values exist. If \code{NULL}, keeps zero as it is.
+#'   Useful for when many zero values exist. If `NULL`, keeps zero as it is.
 #' @param rows an integer vector (starting from 1) to specify the only rows
 #'   that the style applies to.
-#'   By default, it's \code{NULL}, meaning all rows should be formatted. Note,
-#'   \code{formatStyle()} doesn't support this argument and you should use
-#'   \code{styleRow()} instead. In addition, this only works expected in the
-#'   client-side processing mode, i.e., \code{server = FALSE}.
-#' @references See \url{https://rstudio.github.io/DT/functions.html} for detailed
+#'   By default, it's `NULL`, meaning all rows should be formatted. Note,
+#'   `formatStyle()` doesn't support this argument and you should use
+#'   `styleRow()` instead. In addition, this only works expected in the
+#'   client-side processing mode, i.e., `server = FALSE`.
+#' @references See <https://rstudio.github.io/DT/functions.html> for detailed
 #'   documentation and examples.
-#' @note The length of arguments other than \code{table} should be 1 or the same as
-#'   the length of \code{columns}.
+#' @note The length of arguments other than `table` should be 1 or the same as
+#'   the length of `columns`.
 #' @export
 #' @examples # !formatR
 #' library(DT)
@@ -119,35 +119,35 @@ formatSignif = function(
 #' @export
 #' @rdname formatCurrency
 #' @param method the method(s) to convert a date to string in JavaScript; see
-#'   \code{DT:::DateMethods} for a list of possible methods, and
-#'   \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
+#'   `DT:::DateMethods` for a list of possible methods, and
+#'   <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date>
 #'   for a full reference
 #' @param params a list parameters for the specific date conversion method,
-#'   e.g., for the \code{toLocaleDateString()} method, your browser may support
-#'   \code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
-#'   'numeric'))}
+#'   e.g., for the `toLocaleDateString()` method, your browser may support
+#'   `params = list('ko-KR', list(year = 'numeric', month = 'long', day =
+#'   'numeric'))`
 formatDate = function(table, columns, method = 'toDateString', params = NULL, rows = NULL) {
   formatColumns(table, columns, tplDate, method, params, rows = rows)
 }
 
 #' @param valueColumns indices of the columns from which the cell values are
-#'   obtained; this can be different with the \code{columns} argument, e.g. you
+#'   obtained; this can be different with the `columns` argument, e.g. you
 #'   may style one column based on the values of a different column
 #' @param target the target to apply the CSS styles to (the current cell or the
 #'   full row)
-#' @param fontWeight the font weight, e.g. \code{'bold'} and \code{'normal'}
-#' @param color the font color, e.g. \code{'red'} and \code{'#ee00aa'}
+#' @param fontWeight the font weight, e.g. `'bold'` and `'normal'`
+#' @param color the font color, e.g. `'red'` and `'#ee00aa'`
 #' @param backgroundColor the background color of table cells
 #' @param background the background of table cells
-#' @param ... other CSS properties, e.g. \code{'border'}, \code{'font-size'},
-#'   \code{'text-align'}, and so on; if you want to condition CSS styles on the
+#' @param ... other CSS properties, e.g. `'border'`, `'font-size'`,
+#'   `'text-align'`, and so on; if you want to condition CSS styles on the
 #'   cell values, you may use the helper functions such as
-#'   \code{\link{styleInterval}()}; note the actual CSS property names are
+#'   [styleInterval()]; note the actual CSS property names are
 #'   dash-separated, but you can use camelCase names in this function (otherwise
-#'   you will have to use backticks to quote the names, e.g. \code{`font-size` =
-#'   '12px'}), and this function will automatically convert camelCase names to
-#'   dash-separated names (e.g. \code{'fontWeight'} will be converted to
-#'   \code{'font-weight'} internally)
+#'   you will have to use backticks to quote the names, e.g. ``font-size` =
+#'   '12px'`), and this function will automatically convert camelCase names to
+#'   dash-separated names (e.g. `'fontWeight'` will be converted to
+#'   `'font-weight'` internally)
 #' @export
 #' @rdname formatCurrency
 formatStyle = function(
@@ -300,33 +300,33 @@ jsValuesHandleNull = function(x) {
 
 #' Conditional CSS styles
 #'
-#' A few helper functions for the \code{\link{formatStyle}()} function to
+#' A few helper functions for the [formatStyle()] function to
 #' calculate CSS styles for table cells based on the cell values. Under the
 #' hood, they just generate JavaScript and CSS code from the values specified in
 #' R.
 #'
-#' The function \code{styleInterval()} maps intervals to CSS values. Its
-#' argument \code{values} must be of length \code{n + 1} where \code{n =
-#' length(cuts)}. The right-closed interval \samp{(cuts[i - 1], cuts[i]]} is
+#' The function `styleInterval()` maps intervals to CSS values. Its
+#' argument `values` must be of length `n + 1` where `n =
+#' length(cuts)`. The right-closed interval \samp{(cuts[i - 1], cuts[i]]} is
 #' mapped to \samp{values[i]} for \samp{i = 2, 3, ..., n}; \samp{values[1]} is
 #' for the interval \samp{(-Inf, cuts[1]]}, and \samp{values[n + 1]} is for
-#' \samp{(cuts[n], +Inf)}. You can think of the order of \code{cuts} and
-#' \code{values} using this diagram: \samp{-Inf -> values[1] -> cuts[1] ->
+#' \samp{(cuts[n], +Inf)}. You can think of the order of `cuts` and
+#' `values` using this diagram: \samp{-Inf -> values[1] -> cuts[1] ->
 #' values[2] -> cuts[2] -> ... -> values[n] -> cuts[n] -> values[n + 1] ->
 #' +Inf}.
 #'
-#' The function \code{styleEqual()} maps data values to CSS values in the
-#' one-to-one manner, i.e. \code{values[i]} is used when the table cell value is
-#' \code{levels[i]}.
+#' The function `styleEqual()` maps data values to CSS values in the
+#' one-to-one manner, i.e. `values[i]` is used when the table cell value is
+#' `levels[i]`.
 #'
-#' The function \code{styleColorBar()} can be used to draw background color bars
+#' The function `styleColorBar()` can be used to draw background color bars
 #' behind table cells in a column, and the width of bars is proportional to the
 #' column values.
 #'
-#' The function \code{styleValue()} uses the column value as the CSS values.
+#' The function `styleValue()` uses the column value as the CSS values.
 #'
-#' The function \code{styleRow()} applies the CSS values based on Row Indexes.
-#' This only works expected in the client-side processing mode, i.e., \code{server = FALSE}.
+#' The function `styleRow()` applies the CSS values based on Row Indexes.
+#' This only works expected in the client-side processing mode, i.e., `server = FALSE`.
 #'
 #' @param cuts a vector of cut points (sorted increasingly)
 #' @param values a vector of CSS values
@@ -348,8 +348,8 @@ styleInterval = function(cuts, values) {
 
 #' @param levels a character vector of data values to be mapped (one-to-one) to
 #'   CSS values
-#' @param default a string or \code{NULL} used as the the default CSS value
-#'   for values other than levels. If \code{NULL}, the CSS value of non-matched
+#' @param default a string or `NULL` used as the the default CSS value
+#'   for values other than levels. If `NULL`, the CSS value of non-matched
 #'   cells will be left unchanged.
 #' @export
 #' @rdname styleInterval
@@ -406,7 +406,7 @@ styleColorBar = function(data, color, angle=90) {
 
 #' @param rows the Row Indexes (starting from 1) that applies the CSS style. It could
 #' be an integer vector or a list of integer vectors, whose length must be equal to
-#' the length of \code{values}, when \code{values} is not a scalar.
+#' the length of `values`, when `values` is not a scalar.
 #' @rdname styleInterval
 #' @export
 styleRow = function(rows, values, default = NULL) {

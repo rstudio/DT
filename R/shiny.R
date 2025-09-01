@@ -1,15 +1,15 @@
 #' Helper functions for using DT in Shiny
 #'
-#' These two functions are like most \code{fooOutput()} and \code{renderFoo()}
+#' These two functions are like most `fooOutput()` and `renderFoo()`
 #' functions in the \pkg{shiny} package. The former is used to create a
 #' container for table, and the latter is used in the server logic to render the
 #' table.
 #' @param outputId output variable to read the table from
 #' @param width the width of the table container
 #' @param height the height of the table container
-#' @param fill passed to \code{htmlwidgets::\link{shinyWidgetOutput}()}, see
+#' @param fill passed to [htmlwidgets::shinyWidgetOutput()], see
 #'   there for explanation (requires \pkg{htmlwidgets} > v1.5.4).
-#' @references \url{https://rstudio.github.io/DT/shiny.html}
+#' @references <https://rstudio.github.io/DT/shiny.html>
 #' @export
 #' @examples # !formatR
 #' if (interactive()) {
@@ -43,34 +43,34 @@ DTOutput = dataTableOutput
 #' @export
 #' @rdname dataTableOutput
 #' @param expr an expression to create a table widget (normally via
-#'   \code{\link{datatable}()}), or a data object to be passed to
-#'   \code{datatable()} to create a table widget
-#' @param server whether to use server-side processing. If \code{TRUE}, then the
+#'   [datatable()]), or a data object to be passed to
+#'   `datatable()` to create a table widget
+#' @param server whether to use server-side processing. If `TRUE`, then the
 #'   data is kept on the server and the browser requests a page at a time; if
-#'   \code{FALSE}, then the entire data frame is sent to the browser at once.
+#'   `FALSE`, then the entire data frame is sent to the browser at once.
 #'   Highly recommended for medium to large data frames, which can cause
 #'   browsers to slow down or crash. Note that if you want to use
-#'   \code{renderDataTable} with \code{shiny::bindCache()}, this must be
-#'   \code{FALSE}.
+#'   `renderDataTable` with `shiny::bindCache()`, this must be
+#'   `FALSE`.
 #' @param env The parent environment for the reactive expression. By default,
 #'   this is the calling environment, the same as when defining an ordinary
-#'   non-reactive expression. If \code{expr} is a quosure and \code{quoted} is
-#'   \code{TRUE}, then \code{env} is ignored.
-#' @param quoted If it is \code{TRUE}, then the \code{\link{quote}()}ed value of
-#'   \code{expr} will be used when \code{expr} is evaluated. If \code{expr} is a
+#'   non-reactive expression. If `expr` is a quosure and `quoted` is
+#'   `TRUE`, then `env` is ignored.
+#' @param quoted If it is `TRUE`, then the [quote()]ed value of
+#'   `expr` will be used when `expr` is evaluated. If `expr` is a
 #'   quosure and you would like to use its expression as a value for
-#'   \code{expr}, then you must set \code{quoted} to \code{TRUE}.
-#' @param funcFilter (for expert use only) passed to the \code{filter} argument
-#'   of \code{\link{dataTableAjax}()}
+#'   `expr`, then you must set `quoted` to `TRUE`.
+#' @param funcFilter (for expert use only) passed to the `filter` argument
+#'   of [dataTableAjax()]
 #' @param future whether the server-side filter function should be executed as a
 #'   future or as a standard synchronous function. If true, the future will be
-#'   evaluated according to the session's \link[future]{plan}.
+#'   evaluated according to the session's [plan][future::plan].
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to \code{\link{dataTableOutput}()} when
-#'   \code{\link{renderDataTable}()} is used in an interactive R Markdown
+#'   call to [dataTableOutput()] when
+#'   [renderDataTable()] is used in an interactive R Markdown
 #'   document.
-#' @param ... ignored when \code{expr} returns a table widget, and passed as
-#'   additional arguments to \code{\link{datatable}()} when \code{expr} returns
+#' @param ... ignored when `expr` returns a table widget, and passed as
+#'   additional arguments to [datatable()] when `expr` returns
 #'   a data object
 renderDataTable = function(
     expr, server = TRUE, env = parent.frame(), quoted = FALSE,
@@ -285,22 +285,22 @@ tempVarsPromiseDomain = function(env, ...) {
 
 #' Manipulate an existing DataTables instance in a Shiny app
 #'
-#' The function \code{dataTableProxy()} creates a proxy object that can be used
+#' The function `dataTableProxy()` creates a proxy object that can be used
 #' to manipulate an existing DataTables instance in a Shiny app, e.g. select
 #' rows/columns, or add rows.
 #' @param outputId the id of the table to be manipulated (the same id as the one
-#'   you used in \code{\link{dataTableOutput}()})
+#'   you used in [dataTableOutput()])
 #' @param session the Shiny session object (from the server function of the
 #'   Shiny app)
 #' @param deferUntilFlush whether an action should be carried out right away, or
 #'   should be held until after the next time all of the outputs are updated
-#' @note \code{addRow()} only works for client-side tables. If you want to use
-#'   it in a Shiny app, make sure to use \code{renderDataTable(..., server =
-#'   FALSE)}. Also note that the column filters (if used) of the table will not
+#' @note `addRow()` only works for client-side tables. If you want to use
+#'   it in a Shiny app, make sure to use `renderDataTable(..., server =
+#'   FALSE)`. Also note that the column filters (if used) of the table will not
 #'   be automatically updated when a new row is added, e.g., the range of the
 #'   slider of a column will stay the same even if you have added a value
 #'   outside the range of the original data column.
-#' @references \url{https://rstudio.github.io/DT/shiny.html}
+#' @references <https://rstudio.github.io/DT/shiny.html>
 #' @rdname proxy
 #' @export
 dataTableProxy = function(
@@ -315,12 +315,12 @@ dataTableProxy = function(
   ), class = 'dataTableProxy')
 }
 
-#' @param proxy a proxy object returned by \code{dataTableProxy()}
+#' @param proxy a proxy object returned by `dataTableProxy()`
 #' @param selected an integer vector of row/column indices, or a matrix of two
 #'   columns (row and column indices, respectively) for cell indices; you may
-#'   use \code{NULL} to clear existing selections
-#' @param ignore.selectable when \code{FALSE} (the default), the "non-selectable"
-#'   range specified by \code{selection = list(selectable= )} is respected, i.e.,
+#'   use `NULL` to clear existing selections
+#' @param ignore.selectable when `FALSE` (the default), the "non-selectable"
+#'   range specified by `selection = list(selectable= )` is respected, i.e.,
 #'   you can't select "non-selectable" range. Otherwise, it is ignored.
 #'
 #' @rdname proxy
@@ -355,7 +355,7 @@ selectCells = function(proxy, selected, ignore.selectable = FALSE) {
 #' @param data a single row of data to be added to the table; it can be a matrix
 #'   or data frame of one row, or a vector or list of row data (in the latter
 #'   case, please be cautious about the row name: if your table contains row
-#'   names, here \code{data} must also contain the row name as the first
+#'   names, here `data` must also contain the row name as the first
 #'   element)
 #' @rdname proxy
 #' @export
@@ -382,17 +382,17 @@ selectPage = function(proxy, page) {
   invokeRemote(proxy, 'selectPage', list(page))
 }
 
-#' @param caption a new table caption (see the \code{caption} argument of
-#'   \code{\link{datatable}()})
+#' @param caption a new table caption (see the `caption` argument of
+#'   [datatable()])
 #' @rdname proxy
 #' @export
 updateCaption = function(proxy, caption) {
   invokeRemote(proxy, 'updateCaption', list(captionString(caption)))
 }
 
-#' @param keywords a list of two components: \code{global} is the global search
-#'   keyword of a single character string (ignored if \code{NULL});
-#'   \code{columns} is a character vector of the search keywords for all columns
+#' @param keywords a list of two components: `global` is the global search
+#'   keyword of a single character string (ignored if `NULL`);
+#'   `columns` is a character vector of the search keywords for all columns
 #'   (when the table has one column for the row names, this vector of keywords
 #'   should contain one keyword for the row names as well)
 #' @rdname proxy
@@ -431,7 +431,7 @@ showCols = function(proxy, show, reset = FALSE) {
 }
 
 #' @param hide a vector of column positions to hide
-#' @param reset if \code{TRUE}, will only show/hide the columns indicated.
+#' @param reset if `TRUE`, will only show/hide the columns indicated.
 #' @rdname proxy
 #' @export
 hideCols = function(proxy, hide, reset = FALSE) {
@@ -454,12 +454,12 @@ colReorder = function(proxy, order, origOrder = FALSE) {
 
 #' @param resetPaging whether to reset the paging position
 #' @param clearSelection which existing selections to clear: it can be any
-#'   combinations of \code{row}, \code{column}, and \code{cell}, or \code{all}
-#'   for all three, or \code{none} to keep current selections (by default, all
+#'   combinations of `row`, `column`, and `cell`, or `all`
+#'   for all three, or `none` to keep current selections (by default, all
 #'   selections are cleared after the data is reloaded)
-#' @note \code{reloadData()} only works for tables in the server-side processing
-#'   mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}. The
-#'   data to be reloaded (i.e. the one you pass to \code{dataTableAjax()}) must
+#' @note `reloadData()` only works for tables in the server-side processing
+#'   mode, e.g. tables rendered with `renderDataTable(server = TRUE)`. The
+#'   data to be reloaded (i.e. the one you pass to `dataTableAjax()`) must
 #'   have exactly the same number of columns as the previous data object in the
 #'   table.
 #' @rdname proxy
@@ -476,19 +476,19 @@ reloadData = function(
 #' Replace the data object of a table output and avoid regenerating the full
 #' table, in which case the state of the current table will be preserved
 #' (sorting, filtering, and pagination) and applied to the table with new data.
-#' @param proxy a proxy object created by \code{dataTableProxy()}
+#' @param proxy a proxy object created by `dataTableProxy()`
 #' @param data the new data object to be loaded in the table
-#' @param ... other arguments to be passed to \code{\link{dataTableAjax}()}
-#' @param resetPaging,clearSelection passed to \code{\link{reloadData}()}
+#' @param ... other arguments to be passed to [dataTableAjax()]
+#' @param resetPaging,clearSelection passed to [reloadData()]
 #' @note When you replace the data in an existing table, please make sure the
 #'   new data has the same number of columns as the current data. When you have
 #'   enabled column filters, you should also make sure the attributes of every
 #'   column remain the same, e.g. factor columns should have the same or fewer
 #'   levels, and numeric columns should have the same or smaller range,
 #'   otherwise the filters may never be able to reach certain rows in the data,
-#'   unless you explicitly update the filters with \code{updateFilters()}.
+#'   unless you explicitly update the filters with `updateFilters()`.
 #'
-#'   If the \code{ColReorder} extension is used, the new \code{data} must have
+#'   If the `ColReorder` extension is used, the new `data` must have
 #'   column names that match the original data column names exactly.
 #' @export
 replaceData = function(proxy, data, ..., resetPaging = TRUE, clearSelection = 'all') {
@@ -535,33 +535,33 @@ getCurrentOutputName = function(session) {
 #'
 #' This function stores a data object in a shiny session and returns a URL that
 #' returns JSON data based on DataTables Ajax requests. The URL can be used as
-#' the \code{url} option inside the \code{ajax} option of the table. It is
+#' the `url` option inside the `ajax` option of the table. It is
 #' basically an implementation of server-side processing of DataTables in R.
 #' Filtering, sorting, and pagination are processed through R instead of
 #' JavaScript (client-side processing).
 #'
 #' Normally you should not need to call this function directly. It is called
 #' internally when a table widget is rendered in a Shiny app to configure the
-#' table option \code{ajax} automatically. If you are familiar with
+#' table option `ajax` automatically. If you are familiar with
 #' \pkg{DataTables}' server-side processing, and want to use a custom filter
 #' function, you may call this function to get an Ajax URL.
 #' @inheritParams renderDataTable
-#' @param session the \code{session} object in the shiny server function
-#'   (\code{function(input, output, session)})
+#' @param session the `session` object in the shiny server function
+#'   (`function(input, output, session)`)
 #' @param data a data object (will be coerced to a data frame internally)
-#' @param rownames see \code{\link{datatable}()}; it must be consistent with
-#'   what you use in \code{datatable()}, e.g. if the widget is generated by
-#'   \code{datatable(rownames = FALSE)}, you must also use
-#'   \code{dataTableAjax(rownames = FALSE)} here
-#' @param filter (for expert use only) a function with two arguments \code{data}
-#'   and \code{params} (Ajax parameters, a list of the form \code{list(search =
-#'   list(value = 'FOO', regex = 'false'), length = 10, ...)}) that return the
+#' @param rownames see [datatable()]; it must be consistent with
+#'   what you use in `datatable()`, e.g. if the widget is generated by
+#'   `datatable(rownames = FALSE)`, you must also use
+#'   `dataTableAjax(rownames = FALSE)` here
+#' @param filter (for expert use only) a function with two arguments `data`
+#'   and `params` (Ajax parameters, a list of the form `list(search =
+#'   list(value = 'FOO', regex = 'false'), length = 10, ...)`) that return the
 #'   filtered table result according to the DataTables Ajax request
 #' @param outputId the output ID of the table (the same ID passed to
-#'   \code{dataTableOutput()}; if missing, an attempt to infer it from
-#'   \code{session} is made. If it can't be inferred, a random id is
+#'   `dataTableOutput()`; if missing, an attempt to infer it from
+#'   `session` is made. If it can't be inferred, a random id is
 #'   generated.)
-#' @references \url{https://rstudio.github.io/DT/server.html}
+#' @references <https://rstudio.github.io/DT/server.html>
 #' @return A character string (an Ajax URL that can be queried by DataTables).
 #' @example inst/examples/ajax-shiny.R
 #' @export
@@ -752,31 +752,31 @@ dataTablesFilter = function(data, params) {
 
 #' Server-side searching
 #'
-#' \code{doGlobalSearch()} can be used to search a data frame given the search
+#' `doGlobalSearch()` can be used to search a data frame given the search
 #' string typed by the user into the global search box of a
-#' \code{\link{datatable}}. \code{doColumnSearch()} does the same for a vector
+#' [datatable()]. `doColumnSearch()` does the same for a vector
 #' given the search string typed into a column filter. These functions are used
-#' internally by the default \code{filter} function passed to
-#' \code{\link{dataTableAjax}()}, allowing you to replicate the search results
+#' internally by the default `filter` function passed to
+#' [dataTableAjax()], allowing you to replicate the search results
 #' that server-side processing returns.
 #'
 #' @param x a vector, the type of which determines the expected
-#'   \code{search_string} format
+#'   `search_string` format
 #' @param search_string a string that determines what to search for. The format
 #'   depends on the type of input, matching what a user would type in the
 #'   associated filter control.
 #' @param options a list of options used to control how searching character
-#'   values works. Supported options are \code{regex}, \code{caseInsensitive}
+#'   values works. Supported options are `regex`, `caseInsensitive`
 #'   and (for global search)
-#'   \href{https://datatables.net/reference/option/search.smart}{\code{smart}}.
+#'   [`smart`](https://datatables.net/reference/option/search.smart).
 #' @param data a data frame
 #'
 #' @return An integer vector of filtered row indices
 #'
 #' @seealso The column filters section online for search string formats:
-#'   \url{https://rstudio.github.io/DT/}
+#'   <https://rstudio.github.io/DT/>
 #' @seealso Accessing the search strings typed by a user in a Shiny app:
-#'   \url{https://rstudio.github.io/DT/shiny.html}
+#'   <https://rstudio.github.io/DT/shiny.html>
 #'
 #' @examples
 #' doGlobalSearch(iris, 'versi')
