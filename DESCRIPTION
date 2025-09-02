@@ -6,7 +6,7 @@ Authors@R: c(
     person("Yihui", "Xie", role = "aut"),
     person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
     person("Xianying", "Tan", role = "aut"),
-    person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
+    person("Garrick", "Aden-Buie", , "garrick@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7111-0077")),
     person("JJ", "Allaire", role = "ctb"),
     person("Maximilian", "Girlich", role = "ctb"),
@@ -51,7 +51,7 @@ Suggests:
     shiny (>= 1.6),
     testit,
     tibble
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 RoxygenNote: 7.3.2
