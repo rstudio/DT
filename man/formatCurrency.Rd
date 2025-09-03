@@ -73,7 +73,7 @@ formatStyle(
 )
 }
 \arguments{
-\item{table}{a table object created from \code{\link{datatable}()}}
+\item{table}{a table object created from \code{\link[=datatable]{datatable()}}}
 
 \item{columns}{the indices of the columns to be formatted (can be character,
 numeric, logical, or a formula of the form \code{~ V1 + V2}, which is
@@ -112,8 +112,7 @@ for a full reference}
 
 \item{params}{a list parameters for the specific date conversion method,
 e.g., for the \code{toLocaleDateString()} method, your browser may support
-\code{params = list('ko-KR', list(year = 'numeric', month = 'long', day =
-'numeric'))}}
+\code{params = list('ko-KR', list(year = 'numeric', month = 'long', day = 'numeric'))}}
 
 \item{valueColumns}{indices of the columns from which the cell values are
 obtained; this can be different with the \code{columns} argument, e.g. you
@@ -133,12 +132,11 @@ full row)}
 \item{...}{other CSS properties, e.g. \code{'border'}, \code{'font-size'},
 \code{'text-align'}, and so on; if you want to condition CSS styles on the
 cell values, you may use the helper functions such as
-\code{\link{styleInterval}()}; note the actual CSS property names are
+\code{\link[=styleInterval]{styleInterval()}}; note the actual CSS property names are
 dash-separated, but you can use camelCase names in this function (otherwise
-you will have to use backticks to quote the names, e.g. \code{`font-size` =
-'12px'}), and this function will automatically convert camelCase names to
-dash-separated names (e.g. \code{'fontWeight'} will be converted to
-\code{'font-weight'} internally)}
+you will have to use backticks to quote the names, e.g. ``font-size\verb{ = '12px'}), and this function will automatically convert camelCase names to
+dash-separated names (e.g. `'fontWeight'` will be converted to
+`'font-weight'` internally)}
 }
 \description{
 Format numeric columns in a table as currency (\code{formatCurrency()}) or
@@ -149,9 +147,10 @@ of significant figures (\code{formatSignif()}).  The function
 }
 \note{
 The length of arguments other than \code{table} should be 1 or the same as
-  the length of \code{columns}.
+the length of \code{columns}.
 }
 \examples{
+# !formatR
 library(DT)
 m = cbind(matrix(rnorm(120, 1e5, 1e6), 40), runif(40), rnorm(40, 100))
 colnames(m) = head(LETTERS, ncol(m))
@@ -176,5 +175,5 @@ datatable(iris) \%>\%
 }
 \references{
 See \url{https://rstudio.github.io/DT/functions.html} for detailed
-  documentation and examples.
+documentation and examples.
 }

@@ -79,17 +79,17 @@ classes = function(x) paste(class(x), collapse = ', ')
 #' Coerce a character string to the same type as a target value
 #'
 #' Create a new value from a character string based on an old value, e.g., if
-#' the old value is an integer, call \code{as.integer()} to coerce the string to
+#' the old value is an integer, call `as.integer()` to coerce the string to
 #' an integer.
 #'
-#' This function only works with integer, double, date, time (\code{POSIXlt} or
-#' \code{POSIXct}), and factor values. The date must be of the format
-#' \code{\%Y-\%m-\%dT\%H:\%M:\%SZ}. The factor value must be in the levels of
-#' \code{old}, otherwise it will be coerced to \code{NA}.
+#' This function only works with integer, double, date, time (`POSIXlt` or
+#' `POSIXct`), and factor values. The date must be of the format
+#' `\%Y-\%m-\%dT\%H:\%M:\%SZ`. The factor value must be in the levels of
+#' `old`, otherwise it will be coerced to `NA`.
 #' @param val A character string.
-#' @param old An old value, whose type is the target type of \code{val}.
+#' @param old An old value, whose type is the target type of `val`.
 #' @export
-#' @return A value of the same data type as \code{old} if possible.
+#' @return A value of the same data type as `old` if possible.
 #' @examples library(DT)
 #' coerceValue('100', 1L)
 #' coerceValue('1.23', 3.1416)
@@ -130,16 +130,16 @@ coerceValue = function(val, old) {
 #' can update the data object behind the DataTable accordingly.
 #' @param data The original data object used in the DataTable.
 #' @param info The information about the edited cells. It should be obtained
-#'   from \code{input$tableId_cell_edit} from Shiny, and is a data frame
-#'   containing columns \code{row}, \code{col}, and \code{value}.
+#'   from `input$tableId_cell_edit` from Shiny, and is a data frame
+#'   containing columns `row`, `col`, and `value`.
 #' @param rownames Whether row names are displayed in the table.
-#' @param proxy,resetPaging,... (Optional) If \code{proxy} is provided, it must
+#' @param proxy,resetPaging,... (Optional) If `proxy` is provided, it must
 #'   be either a character string of the output ID of the table or a proxy
-#'   object created from \code{\link{dataTableProxy}()}, and the rest of
-#'   arguments are passed to \code{\link{replaceData}()} to update the data in a
+#'   object created from [dataTableProxy()], and the rest of
+#'   arguments are passed to [replaceData()] to update the data in a
 #'   DataTable instance in a Shiny app.
 #' @note For factor columns, new levels would be automatically added when necessary
-#'   to avoid \code{NA} coercing.
+#'   to avoid `NA` coercing.
 #' @return The updated data object.
 #' @export
 editData = function(data, info, proxy = NULL, rownames = TRUE, resetPaging = FALSE, ...) {

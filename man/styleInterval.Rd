@@ -47,15 +47,14 @@ be an integer vector or a list of integer vectors, whose length must be equal to
 the length of \code{values}, when \code{values} is not a scalar.}
 }
 \description{
-A few helper functions for the \code{\link{formatStyle}()} function to
+A few helper functions for the \code{\link[=formatStyle]{formatStyle()}} function to
 calculate CSS styles for table cells based on the cell values. Under the
 hood, they just generate JavaScript and CSS code from the values specified in
 R.
 }
 \details{
 The function \code{styleInterval()} maps intervals to CSS values. Its
-argument \code{values} must be of length \code{n + 1} where \code{n =
-length(cuts)}. The right-closed interval \samp{(cuts[i - 1], cuts[i]]} is
+argument \code{values} must be of length \code{n + 1} where \code{n = length(cuts)}. The right-closed interval \samp{(cuts[i - 1], cuts[i]]} is
 mapped to \samp{values[i]} for \samp{i = 2, 3, ..., n}; \samp{values[1]} is
 for the interval \samp{(-Inf, cuts[1]]}, and \samp{values[n + 1]} is for
 \samp{(cuts[n], +Inf)}. You can think of the order of \code{cuts} and

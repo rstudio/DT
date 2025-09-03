@@ -1,50 +1,58 @@
-Package: DT
 Type: Package
+Package: DT
 Title: A Wrapper of the JavaScript Library 'DataTables'
-Version: 0.33.3
+Version: 0.34.0
 Authors@R: c(
     person("Yihui", "Xie", role = "aut"),
-    person("Joe", "Cheng", email = "joe@posit.co", role = c("aut", "cre")),
+    person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
     person("Xianying", "Tan", role = "aut"),
+    person("Garrick", "Aden-Buie", , "garrick@posit.co", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7111-0077")),
     person("JJ", "Allaire", role = "ctb"),
     person("Maximilian", "Girlich", role = "ctb"),
     person("Greg", "Freedman Ellis", role = "ctb"),
     person("Johannes", "Rauh", role = "ctb"),
-    person("SpryMedia Limited", role = c("ctb", "cph"), comment = "DataTables in htmlwidgets/lib"),
-    person("Brian", "Reavis", role = c("ctb", "cph"), comment = "selectize.js in htmlwidgets/lib"),
-    person("Leon", "Gersen", role = c("ctb", "cph"), comment = "noUiSlider in htmlwidgets/lib"),
-    person("Bartek", "Szopka", role = c("ctb", "cph"), comment = "jquery.highlight.js in htmlwidgets/lib"),
-    person("Alex", "Pickering", role = c("ctb")),
-    person("William", "Holmes", role = c("ctb")),
-    person("Mikko", "Marttila", role = c("ctb")),
-    person("Andres", "Quintero", role = c("ctb")),
-    person("Stéphane", "Laurent", role = c("ctb")),
-    person(given = "Posit Software, PBC", role = c("cph", "fnd"))
-    )
+    person("SpryMedia Limited", role = c("ctb", "cph"),
+           comment = "DataTables in htmlwidgets/lib"),
+    person("Brian", "Reavis", role = c("ctb", "cph"),
+           comment = "selectize.js in htmlwidgets/lib"),
+    person("Leon", "Gersen", role = c("ctb", "cph"),
+           comment = "noUiSlider in htmlwidgets/lib"),
+    person("Bartek", "Szopka", role = c("ctb", "cph"),
+           comment = "jquery.highlight.js in htmlwidgets/lib"),
+    person("Alex", "Pickering", role = "ctb"),
+    person("William", "Holmes", role = "ctb"),
+    person("Mikko", "Marttila", role = "ctb"),
+    person("Andres", "Quintero", role = "ctb"),
+    person("Stéphane", "Laurent", role = "ctb"),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
+  )
 Description: Data objects in R can be rendered as HTML tables using the
-    JavaScript library 'DataTables' (typically via R Markdown or Shiny). The
-    'DataTables' library has been included in this R package. The package name
-    'DT' is an abbreviation of 'DataTables'.
+    JavaScript library 'DataTables' (typically via R Markdown or Shiny).
+    The 'DataTables' library has been included in this R package. The
+    package name 'DT' is an abbreviation of 'DataTables'.
+License: MIT + file LICENSE
 URL: https://github.com/rstudio/DT
 BugReports: https://github.com/rstudio/DT/issues
-License: MIT + file LICENSE
 Imports:
+    crosstalk,
     htmltools (>= 0.3.6),
     htmlwidgets (>= 1.3),
+    jquerylib,
     jsonlite (>= 0.9.16),
     magrittr,
-    crosstalk,
-    jquerylib,
     promises
 Suggests:
+    bslib,
+    future,
+    httpuv,
     knitr (>= 1.8),
     rmarkdown,
     shiny (>= 1.6),
-    httpuv,
-    bslib,
-    future,
     testit,
     tibble
-VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+VignetteBuilder:
+    knitr
 Encoding: UTF-8
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)

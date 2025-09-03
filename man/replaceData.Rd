@@ -14,9 +14,9 @@ updateFilters(proxy, data)
 
 \item{data}{the new data object to be loaded in the table}
 
-\item{...}{other arguments to be passed to \code{\link{dataTableAjax}()}}
+\item{...}{other arguments to be passed to \code{\link[=dataTableAjax]{dataTableAjax()}}}
 
-\item{resetPaging, clearSelection}{passed to \code{\link{reloadData}()}}
+\item{resetPaging, clearSelection}{passed to \code{\link[=reloadData]{reloadData()}}}
 }
 \description{
 Replace the data object of a table output and avoid regenerating the full
@@ -25,13 +25,13 @@ table, in which case the state of the current table will be preserved
 }
 \note{
 When you replace the data in an existing table, please make sure the
-  new data has the same number of columns as the current data. When you have
-  enabled column filters, you should also make sure the attributes of every
-  column remain the same, e.g. factor columns should have the same or fewer
-  levels, and numeric columns should have the same or smaller range,
-  otherwise the filters may never be able to reach certain rows in the data,
-  unless you explicitly update the filters with \code{updateFilters()}.
+new data has the same number of columns as the current data. When you have
+enabled column filters, you should also make sure the attributes of every
+column remain the same, e.g. factor columns should have the same or fewer
+levels, and numeric columns should have the same or smaller range,
+otherwise the filters may never be able to reach certain rows in the data,
+unless you explicitly update the filters with \code{updateFilters()}.
 
-  If the \code{ColReorder} extension is used, the new \code{data} must have
-  column names that match the original data column names exactly.
+If the \code{ColReorder} extension is used, the new \code{data} must have
+column names that match the original data column names exactly.
 }

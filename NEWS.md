@@ -1,5 +1,7 @@
 # CHANGES IN DT VERSION 0.34
 
+- DT is now released under the MIT license (previously GPL-3) (#1175).
+
 - Added `lazyRender` parameter to `DT::datatable()`, which gives the option for the table to be rendered immediately rather than waiting for it to become visible (thanks, @Mosk915, #1156).
 
 - Moved **httpuv** from `Imports` to `Suggests` in `DESCRIPTION` (thanks, @MichaelChirico, #1159).
@@ -8,7 +10,7 @@
 
 - Added `outputArgs` parameter to `renderDataTable`, to allow width and height to be set when using interactive R Markdown documents.
 
-- Fixed a bug in `renderDT()`'s evaluation of `...` arguments when `quoted = TRUE` (#1130). 
+- Fixed a bug in `renderDT()`'s evaluation of `...` arguments when `quoted = TRUE` (#1130).
 
 - Maintain selected columns/rows/cells upon re-render (thanks, @epruesse, #1125).
 
@@ -71,7 +73,7 @@
 - `dataTableOutput()` gains a new `fill` parameter. When `TRUE` (the default), the widget's container element is allowed to grow/shrink to fit it's parent container so long as that parent is opinionated about its height and has been marked with `htmltools::bindFillRole(x, container = TRUE)`. (#2198)
 
   - The primary motivation for this is to allow DT to grow/shrink [inside `bslib::card_body_fill()`](https://rstudio.github.io/bslib/articles/cards.html#responsive-sizing). When doing so, you'll also want to set `fillContainer = TRUE` in `datatable()`.
-  
+
 - Bug fixed: when editing a table, it was impossible to switch from an empty cell to 0 and vice-versa (thanks, @RozennGZ #1038, @stla #1039).
 
 - When a `datatable()` is created outside a Shiny app, the `selection` argument won't work (thanks, @bartekch, #1043).
@@ -169,7 +171,7 @@
 
 - `datatable()`'s `style` argument now defaults to `'auto'`, which resolves to either `'bootstrap'` or `'bootstrap4'` when a `{bslib}` theme is relevant. If a `{bslib}` theme isn't relevant, `'auto'` resolves to the old default value of `'default'` (thanks, @cpsievert, #852).
 
-- Add a new function `styleRow()`. It's useful when you want to apply CSS styles based on Row Indexes (thanks, @s-fleck, #894). 
+- Add a new function `styleRow()`. It's useful when you want to apply CSS styles based on Row Indexes (thanks, @s-fleck, #894).
 
 ## BUG FIXES
 
@@ -185,7 +187,7 @@
 
 ## MINOR CHANGES
 
-- The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856). 
+- The `autoHideNavigation` argument now works with the default theme. In addition, the prerequisite is properly documented. Specifically speaking, it only works when the `pageLength` option is provided and is rendered in the client-side processing mode (thanks, @bhogan-mitre, #856).
 
 - When editing factor columns, `editData()` now automatically updates the factor levels if it's necessary (thanks, @aman-malik3010, #865).
 
@@ -274,9 +276,9 @@
 
 - Support the Select extension on the client-side processing mode (thanks, @shrektan, #744).
 
-- Support [features/scrollResize plug-in](https://datatables.net/blog/2017-12-31) (thanks, @andrewkho @shrektan, #467 #754).
+- Support [features/scrollResize plug-in](https://datatables.net/blog/2017/vertical-scroll-fitting) (thanks, @andrewkho @shrektan, #467 #754).
 
-- Upgrade DataTables to 1.10.20 and support the new datatables extension [SearchPanes](https://datatables.net/blog/2020-01-13) (thanks, @shrektan, #756).
+- Upgrade DataTables to 1.10.20 and support the new datatables extension [SearchPanes](https://datatables.net/blog/2020/searchpanes) (thanks, @shrektan, #756).
 
 ## BUG FIXES
 

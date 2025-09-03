@@ -52,7 +52,7 @@ reloadData(
 }
 \arguments{
 \item{outputId}{the id of the table to be manipulated (the same id as the one
-you used in \code{\link{dataTableOutput}()})}
+you used in \code{\link[=dataTableOutput]{dataTableOutput()}})}
 
 \item{session}{the Shiny session object (from the server function of the
 Shiny app)}
@@ -81,7 +81,7 @@ element)}
 \item{page}{a number indicating the page to select}
 
 \item{caption}{a new table caption (see the \code{caption} argument of
-\code{\link{datatable}()})}
+\code{\link[=datatable]{datatable()}})}
 
 \item{keywords}{a list of two components: \code{global} is the global search
 keyword of a single character string (ignored if \code{NULL});
@@ -117,17 +117,16 @@ rows/columns, or add rows.
 }
 \note{
 \code{addRow()} only works for client-side tables. If you want to use
-  it in a Shiny app, make sure to use \code{renderDataTable(..., server =
-  FALSE)}. Also note that the column filters (if used) of the table will not
-  be automatically updated when a new row is added, e.g., the range of the
-  slider of a column will stay the same even if you have added a value
-  outside the range of the original data column.
+it in a Shiny app, make sure to use \code{renderDataTable(..., server = FALSE)}. Also note that the column filters (if used) of the table will not
+be automatically updated when a new row is added, e.g., the range of the
+slider of a column will stay the same even if you have added a value
+outside the range of the original data column.
 
 \code{reloadData()} only works for tables in the server-side processing
-  mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}. The
-  data to be reloaded (i.e. the one you pass to \code{dataTableAjax()}) must
-  have exactly the same number of columns as the previous data object in the
-  table.
+mode, e.g. tables rendered with \code{renderDataTable(server = TRUE)}. The
+data to be reloaded (i.e. the one you pass to \code{dataTableAjax()}) must
+have exactly the same number of columns as the previous data object in the
+table.
 }
 \references{
 \url{https://rstudio.github.io/DT/shiny.html}
