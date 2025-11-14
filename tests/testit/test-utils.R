@@ -14,6 +14,7 @@ assert('boxAtomicScalarElements() works with vctrs::list_of lists', {
     (out1 %==% out2)
   } else {
     message("test omitted: vctrs is not installed")
+    TRUE
   }
 })
 
