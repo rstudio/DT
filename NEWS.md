@@ -1,5 +1,7 @@
 # DT (development version)
 
+- Fix error rendering `vctrs::list_of` columns (#1180, @zeehio)
+
 # CHANGES IN DT VERSION 0.34
 
 - DT is now released under the MIT license (previously GPL-3) (#1175).
