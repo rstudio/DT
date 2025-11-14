@@ -5,6 +5,18 @@ assert('dropNULL() works', {
   (dropNULL(list(a = 1, b = NULL)) %==% list(a = 1))
 })
 
+assert('boxAtomicScalarElements() works with vctrs::list_of lists', {
+  if (requireNamespace("vctrs", quietly = TRUE)) {
+    val1 <- list("a", c("a", "b"))
+    out1 <- boxAtomicScalarElements(val1)
+    val2 <- vctrs::as_list_of(val1)
+    out2 <- boxAtomicScalarElements(val2)
+    (out1 %==% out2)
+  } else {
+    message("test omitted: vctrs is not installed")
+  }
+})
+
 assert('upperToDash() works', {
   (upperToDash('fontWeight') %==% 'font-weight')
   (upperToDash('backgroundColor') %==% 'background-color')
