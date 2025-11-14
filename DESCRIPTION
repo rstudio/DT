@@ -50,7 +50,8 @@ Suggests:
     rmarkdown,
     shiny (>= 1.6),
     testit,
-    tibble
+    tibble,
+    vctrs
 VignetteBuilder:
     knitr
 Encoding: UTF-8
