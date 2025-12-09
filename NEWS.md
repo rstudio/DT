@@ -1,6 +1,6 @@
 # DT (development version)
 
-- Fix error rendering `vctrs::list_of` columns (#1180, @zeehio)
+- `datatable()` now renders data frames with `vctrs::list_of()` list-columns (#1180, @zeehio).
 
 # CHANGES IN DT VERSION 0.34
 
