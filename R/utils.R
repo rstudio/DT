@@ -44,6 +44,9 @@ captionString = function(caption) {
 boxAtomicScalarElements = function(x) {
   is_atomic = vapply(x, is.atomic, logical(1))
   if (all(is_atomic)) {
+    if (inherits(x, "vctrs_list_of")) {
+      x <- as.list(x)
+    }
     is_scalar = lengths(x) == 1L
     x[is_scalar] = lapply(x[is_scalar], list)
   }

@@ -2,6 +2,8 @@
 
 - Fixed the bug that all tables will fail to render in Shiny when `DT::renderDT(NULL)` is present (thanks, @Noskario, #1183).
 
+- `datatable()` now renders data frames with `vctrs::list_of()` list-columns (#1180, @zeehio).
+
 # CHANGES IN DT VERSION 0.34
 
 - DT is now released under the MIT license (previously GPL-3) (#1175).
