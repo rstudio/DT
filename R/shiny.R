@@ -99,15 +99,7 @@ renderDataTable = function(
 
   exprFunc = shiny::exprToFunction(expr, env, quoted = TRUE)
   argFunc = shiny::exprToFunction(list(..., server = server), parent.frame(), quoted = FALSE)
-  widgetFunc = function() {
-    opts = options(DT.datatable.shiny = TRUE); on.exit(options(opts), add = TRUE)
-    instance = exprFunc()
-    if (promises::is.promising(instance)) {
-      promises::then(instance, processWidget)
-    } else {
-      processWidget(instance)
-    }
-  }
+
   processWidget = function(instance) {
     args = argFunc()
     server = args$server; args$server = NULL # the last element is `server`
@@ -165,6 +157,16 @@ renderDataTable = function(
     }
 
     instance
+  }
+
+  widgetFunc = function() {
+    opts = options(DT.datatable.shiny = TRUE); on.exit(options(opts), add = TRUE)
+    instance = exprFunc()
+    if (promises::is.promising(instance)) {
+      promises::then(instance, processWidget)
+    } else {
+      processWidget(instance)
+    }
   }
 
   renderFunc = htmlwidgets::shinyRenderWidget(
