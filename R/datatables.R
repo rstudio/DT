@@ -9,6 +9,12 @@
 #'   JavaScript code instead of normal character strings; you can also set
 #'   options globally via `[options](DT.options = list(...))`, and
 #'   global options will be merged into this `options` argument if set
+#'
+#'   DT bundles DataTables 1.13. The upstream reference also covers options
+#'   and option forms introduced in DataTables 2. For example, the
+#'   [column-name object form of `order`](https://datatables.net/reference/option/order)
+#'   requires DataTables 2. In DT, use zero-based column indices, for example
+#'   `options = list(order = list(list(0, "desc")))`.
 #' @param class the CSS class(es) of the table; see
 #'   <https://datatables.net/manual/styling/classes>
 #' @param callback the body of a JavaScript callback function with the argument

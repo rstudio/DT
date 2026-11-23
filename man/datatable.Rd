@@ -36,7 +36,13 @@ datatable(
 wrapped in \code{\link[htmlwidgets:JS]{htmlwidgets::JS()}} will be treated as literal
 JavaScript code instead of normal character strings; you can also set
 options globally via \verb{[options](DT.options = list(...))}, and
-global options will be merged into this \code{options} argument if set}
+global options will be merged into this \code{options} argument if set
+
+DT bundles DataTables 1.13. The upstream reference also covers options
+and option forms introduced in DataTables 2. For example, the
+\href{https://datatables.net/reference/option/order}{column-name object form of \code{order}}
+requires DataTables 2. In DT, use zero-based column indices, for example
+\code{options = list(order = list(list(0, "desc")))}.}
 
 \item{class}{the CSS class(es) of the table; see
 \url{https://datatables.net/manual/styling/classes}}
