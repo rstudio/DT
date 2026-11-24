@@ -517,8 +517,9 @@ HTMLWidgets.widget({
             }),
             plugins: ['remove_button'],
             hideSelected: true,
-            onChange: function(value) {
-              if (value === null) value = []; // compatibility with jQuery 3.0
+            onChange: function() {
+              // The backing select can retain stale options after removal.
+              var value = this.getValue();
               $input.val(value.length ? JSON.stringify(value) : '');
               if (value.length) $input.trigger('input');
               $input.attr('title', $input.val());
