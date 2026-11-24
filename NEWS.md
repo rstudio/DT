@@ -1,5 +1,7 @@
 # CHANGES IN DT VERSION 0.35 (development version)
 
+- Fixed removal of values containing an ampersand from factor filters in Shiny (#1169).
+
 - Fixed the bug that all tables will fail to render in Shiny when `DT::renderDT(NULL)` is present (thanks, @Noskario, #1183).
 
 - `datatable()` now renders data frames with `vctrs::list_of()` list-columns (#1180, @zeehio).
